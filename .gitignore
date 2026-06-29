@@ -1,0 +1,16 @@
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+.env
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Uploads / local data
+backend/uploads/
+
+# OS/editor
+.DS_Store
+.vscode/
