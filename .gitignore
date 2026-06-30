@@ -2,15 +2,18 @@
 backend/venv/
 __pycache__/
 *.pyc
+
+# Environment
 .env
+backend/.env
 
 # Node
 frontend/node_modules/
 frontend/dist/
 
-# Uploads / local data
+# Uploads
 backend/uploads/
 
-# OS/editor
-.DS_Store
+# OS
 .vscode/
+.DS_Store
