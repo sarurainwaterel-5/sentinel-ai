@@ -1,39 +1,28 @@
-from uuid import uuid4
-from pathlib import Path
+from fastapi import APIRouter, UploadFile, File, Depends, Form
+from sqlalchemy.orm import Session
 
-from fastapi import APIRouter, UploadFile, File
-
-from app.services.pdf_service import extract_text_from_pdf
-from app.services.chunking_service import chunk_text
-from app.services.qdrant_service import store_chunks
+from app.database import get_db
+from app.services.upload_service import UploadService
 
 router = APIRouter()
 
-UPLOAD_DIR = "uploads"
-Path(UPLOAD_DIR).mkdir(exist_ok=True)
-
 @router.post("/upload")
-async def upload_document(file: UploadFile = File(...)):
-    document_id = str(uuid4())
-    file_path = f"{UPLOAD_DIR}/{file.filename}"
+async def upload_document(
+    file: UploadFile = File(...),
+    module: str = Form("engineering"),
+    topic: str = Form("general"),
+    collection: str = Form("general"),
+    description: str | None = Form(None),
+    organization_id: str = Form("default"),
+    db: Session = Depends(get_db),
+):
+    upload_service = UploadService(db)
 
-    with open(file_path, "wb") as buffer:
-        buffer.write(await file.read())
-
-    text = extract_text_from_pdf(file_path)
-    chunks = chunk_text(text)
-
-    stored_vectors = store_chunks(
-        document_id=document_id,
-        filename=file.filename,
-        chunks=chunks
+    return await upload_service.process_pdf_upload(
+        file=file,
+        module=module,
+        topic=topic,
+        collection=collection,
+        description=description,
+        organization_id=organization_id,
     )
-
-    return {
-        "document_id": document_id,
-        "filename": file.filename,
-        "characters": len(text),
-        "chunks": len(chunks),
-        "stored_vectors": stored_vectors,
-        "preview": chunks[0][:300] if chunks else ""
-    }

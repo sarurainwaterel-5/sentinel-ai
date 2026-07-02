@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct
+from qdrant_client.models import Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue
 
 from app.services.embedding_service import EmbeddingService
 
@@ -31,7 +31,36 @@ def create_collection_if_not_exists():
         "embedding_model": embedding_service.get_model_name()
     }
 
-def store_chunks(document_id: str, filename: str, chunks: list[str]):
+def find_document_by_hash(file_hash: str):
+    create_collection_if_not_exists()
+
+    points, _ = client.scroll(
+        collection_name=COLLECTION_NAME,
+        scroll_filter=Filter(
+            must=[
+                FieldCondition(
+                    key="file_hash",
+                    match=MatchValue(value=file_hash)
+                )
+            ]
+        ),
+        limit=1,
+        with_payload=True,
+        with_vectors=False
+    )
+
+    if not points:
+        return None
+
+    payload = points[0].payload
+
+    return {
+        "document_id": payload.get("document_id"),
+        "filename": payload.get("filename"),
+        "file_hash": payload.get("file_hash")
+    }
+
+def store_chunks(document_id: str, filename: str, file_hash: str, chunks: list[str]):
     create_collection_if_not_exists()
 
     points = []
@@ -46,6 +75,7 @@ def store_chunks(document_id: str, filename: str, chunks: list[str]):
                 payload={
                     "document_id": document_id,
                     "filename": filename,
+                    "file_hash": file_hash,
                     "chunk_index": index,
                     "text": chunk,
                     "embedding_model": embedding_service.get_model_name()
