@@ -8,5 +8,18 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
 
+  postgres:
+    image: postgres:16
+    container_name: sentinel-postgres
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: sentinelpass
+      POSTGRES_DB: sentinel_ai
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 volumes:
   qdrant_data:
+  postgres_data:
