@@ -1,0 +1,23 @@
+{
+  "constitution_version": "1.0",
+  "constitution_hash": "a9159cc615b51975f736ddfdc7fcc73295bc3e101a600e982badf58e802b4546",
+  "collection": "sentinel_core_memory",
+  "documents_processed": 13,
+  "chunks_embedded": 9,
+  "validation": {
+    "status": "healthy",
+    "required_files": [
+      "BUILDERS_OATH.md",
+      "COGNITIVE_DESIGN_PRINCIPLES.md",
+      "ENGINEERING_PRINCIPLES.md",
+      "LANGUAGE_GUIDE.md",
+      "MANIFESTO.md",
+      "VISION.md"
+    ],
+    "missing_files": []
+  },
+  "build_time_seconds": 0.98,
+  "built_at": "2026-07-03T21:32:50.272780",
+  "builder": "ConstitutionBuilderService",
+  "status": "healthy"
+}
