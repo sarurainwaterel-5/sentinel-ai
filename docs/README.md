@@ -1,8 +1,16 @@
-# SentinelAI Documentation
+# The SentinelAI Canon
 
-Welcome to the SentinelAI documentation.
+This repository contains more than documentation.
 
-This documentation is organized into five domains.
+It contains the permanent knowledge that defines SentinelAI.
+
+These writings preserve the philosophy, identity, architecture,
+engineering practices, and cognitive model that shape the platform.
+
+Every major engineering decision is reflected here.
+
+The Canon exists to ensure SentinelAI remains understandable,
+coherent, and aligned across time.
 
 ## Architecture
 

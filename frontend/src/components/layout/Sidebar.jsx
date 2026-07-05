@@ -12,16 +12,16 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { label: "Bridge", icon: Radar },
-  { label: "Knowledge", icon: BookOpen },
-  { label: "Sentinel", icon: Bot },
-  { label: "Recall", icon: Search },
-  { label: "Intelligence", icon: BarChart3 },
-  { label: "Governance", icon: Shield },
-  { label: "Systems", icon: Settings },
+  { key: "bridge", label: "Bridge", icon: Radar },
+  { key: "teach", label: "Teach", icon: BookOpen },
+  { key: "recall", label: "Recall", icon: Search },
+  { key: "reason", label: "Reason", icon: Brain },
+  { key: "intelligence", label: "Intelligence", icon: BarChart3 },
+  { key: "governance", label: "Governance", icon: Shield },
+  { key: "systems", label: "Systems", icon: Settings },
 ];
 
-export default function Sidebar({ collapsed, onToggle }) {
+export default function Sidebar({ collapsed, onToggle, activePage, setActivePage }) {
   const ToggleIcon = collapsed ? PanelLeftOpen : PanelLeftClose;
 
   return (
@@ -48,12 +48,13 @@ export default function Sidebar({ collapsed, onToggle }) {
       </button>
 
       <nav className="nav">
-        {navItems.map(({ label, icon: Icon }) => (
+        {navItems.map(({ key, label, icon: Icon }) => (
           <button
             type="button"
-            className="nav-item"
-            key={label}
+            className={`nav-item ${activePage === key ? "active" : ""}`}
+            key={key}
             title={collapsed ? label : ""}
+            onClick={() => setActivePage(key)}
           >
             <Icon size={18} />
             {!collapsed && <span>{label}</span>}
