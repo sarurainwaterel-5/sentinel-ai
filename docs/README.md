@@ -32,6 +32,10 @@ Vision, Manifesto, Principles, Builder's Oath, and SentinelAI's governing philos
 
 Historical record of SentinelAI's evolution.
 
+## Canon
+
+The Canon is a living architectural artifact that continuously discovers, classifies, and reflects upon SentinelAI's permanent knowledge.
+
 ---
 
 ## Documentation Philosophy

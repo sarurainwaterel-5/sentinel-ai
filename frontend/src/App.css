@@ -333,3 +333,74 @@
   border: 1px solid rgba(34, 211, 238, 0.3);
   color: var(--accent-cyan);
 }
+
+.identity-hero h2,
+.reflection-card h2 {
+  font-size: 2rem;
+  margin-bottom: var(--space-2);
+}
+
+.identity-hero p:last-child,
+.reflection-card p {
+  color: var(--text-muted);
+}
+
+.identity-overview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.status-badge {
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--accent-cyan);
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+.identity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.metric-list,
+.layer-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.metric-row,
+.layer-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-2);
+  color: var(--text-secondary);
+}
+
+.metric-row strong,
+.layer-row strong {
+  color: var(--text-primary);
+}
+
+.layer-row span {
+  text-transform: capitalize;
+}
+
+@media (max-width: 900px) {
+  .identity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .identity-overview {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

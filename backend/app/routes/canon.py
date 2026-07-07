@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from app.core.canon.canon_registry import get_canon_manifest
-from app.core.canon.canon_model import CanonManifest
+from app.core.canon.manifest import build_canon_manifest
+from app.core.canon.report import build_canon_report
 
 router = APIRouter(
     prefix="/canon",
@@ -9,6 +9,11 @@ router = APIRouter(
 )
 
 
-@router.get("/manifest", response_model=CanonManifest)
+@router.get("/manifest")
 def canon_manifest():
-    return get_canon_manifest()
+    return build_canon_manifest()
+
+
+@router.get("/health")
+def canon_health():
+    return build_canon_report()

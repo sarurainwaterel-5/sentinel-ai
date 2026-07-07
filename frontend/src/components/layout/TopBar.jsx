@@ -5,7 +5,12 @@ const pageTitles = {
     eyebrow: "Bridge",
     title: "Bridge",
     subtitle: "Operational intelligence overview",
-  },
+  }, 
+  identity: {
+    eyebrow: "Identity",
+    title: "SentinelAI Identity",
+    subtitle: "Canon health and self-knowledge",
+},
   teach: {
     eyebrow: "Teaching Session",
     title: "Teach SentinelAI",

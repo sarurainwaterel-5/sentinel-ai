@@ -3,6 +3,7 @@ import Layout from "./components/layout/Layout";
 import KnowledgeDashboard from "./pages/KnowledgeDashboard";
 import TeachSentinel from "./pages/TeachSentinel";
 import "./App.css";
+import Identity from "./pages/Identity";
 
 const Placeholder = ({ title }) => (
   <div className="panel">
@@ -16,14 +17,15 @@ function App() {
   const [activePage, setActivePage] = useState("bridge");
 
   const pages = {
-    bridge: <KnowledgeDashboard />,
-    teach: <TeachSentinel />,
-    recall: <Placeholder title="Recall" />,
-    reason: <Placeholder title="Reason" />,
-    intelligence: <Placeholder title="Intelligence" />,
-    governance: <Placeholder title="Governance" />,
-    systems: <Placeholder title="Systems" />,
-  };
+  bridge: <KnowledgeDashboard />,
+  teach: <TeachSentinel />,
+  identity: <Identity />,
+  recall: <Placeholder title="Recall" />,
+  reason: <Placeholder title="Reason" />,
+  intelligence: <Placeholder title="Intelligence" />,
+  governance: <Placeholder title="Governance" />,
+  systems: <Placeholder title="Systems" />,
+};
 
   return (
     <Layout activePage={activePage} setActivePage={setActivePage}>

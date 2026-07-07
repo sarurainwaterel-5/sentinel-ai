@@ -69,3 +69,32 @@ Defines SentinelAI's awareness of itself.
 ### Experience
 
 Defines how humans interact with SentinelAI.
+
+
+### Architecture Map
+
+Canon
+
+↓
+
+Discovery
+
+↓
+
+Classification
+
+↓
+
+Manifest
+
+↓
+
+Reflection
+
+↓
+
+Health API
+
+↓
+
+Bridge Identity

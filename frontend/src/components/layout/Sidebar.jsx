@@ -1,4 +1,5 @@
 import {
+  Fingerprint,
   Radar,
   BookOpen,
   Bot,
@@ -13,6 +14,7 @@ import {
 
 const navItems = [
   { key: "bridge", label: "Bridge", icon: Radar },
+  { key: "identity", label: "Identity", icon: Fingerprint },
   { key: "teach", label: "Teach", icon: BookOpen },
   { key: "recall", label: "Recall", icon: Search },
   { key: "reason", label: "Reason", icon: Brain },
