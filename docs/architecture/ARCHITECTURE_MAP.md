@@ -98,3 +98,16 @@ Health API
 ↓
 
 Bridge Identity
+
+
+
+### Canon
+
+├── Discovery
+├── Classification
+├── Manifest
+├── Report
+└── Knowledge Graph
+    ├── Nodes
+    ├── Edges
+    └── Graph Builder
