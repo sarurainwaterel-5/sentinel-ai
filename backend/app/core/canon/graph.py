@@ -1,6 +1,9 @@
 from app.core.canon.manifest import build_canon_manifest
 from app.core.canon.nodes import make_node
 from app.core.canon.edges import make_layer_edge, make_type_edge
+from app.core.canon.resolver import resolve_document_relationships
+from pathlib import Path
+from collections import Counter
 
 
 def build_canon_graph():
@@ -47,12 +50,18 @@ def build_canon_graph():
     for node in document_nodes:
         edges.append(make_layer_edge(node))
         edges.append(make_type_edge(node))
-
+    for document in manifest["documents"]:
+        edges.extend(resolve_document_relationships(Path(document["path"])))
+    relationships = Counter(
+        edge["relationship"]
+        for edge in edges
+    )
     return {
         "name": "SentinelAI Canon Graph",
         "version": "1.0",
         "node_count": len(document_nodes) + len(layer_nodes) + len(type_nodes),
         "edge_count": len(edges),
+        "relationships": dict(sorted(relationships.items())),
         "nodes": document_nodes + layer_nodes + type_nodes,
         "edges": edges,
     }
