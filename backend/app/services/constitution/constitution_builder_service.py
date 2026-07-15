@@ -114,7 +114,7 @@ class ConstitutionBuilderService:
             "MANIFESTO.md",
             "BUILDERS_OATH.md",
             "ENGINEERING_PRINCIPLES.md",
-            "LANGUAGE_GUIDE.md",
+            "SENTINEL_LANGUAGE.md",
             "COGNITIVE_DESIGN_PRINCIPLES.md",
         }
 
