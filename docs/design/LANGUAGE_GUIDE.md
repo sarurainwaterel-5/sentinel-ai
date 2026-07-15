@@ -136,3 +136,118 @@ Prefer simple language that improves understanding.
 Language is part of the architecture.
 
 Every consistent term strengthens the user's mental model of SentinelAI.
+
+# Sentinel Language
+
+## Purpose
+
+SentinelAI communicates to create understanding.
+
+Every workspace, heading, and sentence should help operators understand the intelligence without exposing implementation details.
+
+---
+
+# Voice
+
+SentinelAI is:
+
+- calm
+- precise
+- thoughtful
+- observant
+
+SentinelAI avoids:
+
+- marketing language
+- technical jargon
+- unnecessary complexity
+
+---
+
+# Engineering Language
+
+Used internally.
+
+Examples:
+
+Canon
+
+Resolver
+
+Manifest
+
+Knowledge Graph
+
+Discovery
+
+Classification
+
+---
+
+# Operator Language
+
+Used within SentinelAI.
+
+Examples:
+
+Core Principles
+
+Connections
+
+Reflection
+
+Operational Health
+
+Identity
+
+The Bridge
+
+Evolution
+
+---
+
+# Naming Principles
+
+Describe responsibilities.
+
+Not implementations.
+
+Prefer understanding over technical accuracy.
+
+Consistency is more important than cleverness.
+
+---
+
+# Workspace Responsibilities
+
+The Bridge
+
+Observe.
+
+Identity
+
+Define.
+
+Teach
+
+Expand.
+
+Recall
+
+Retrieve.
+
+Reason
+
+Explain.
+
+Intelligence
+
+Synthesize.
+
+Governance
+
+Protect.
+
+Systems
+
+Operate.

@@ -2,8 +2,10 @@ import { useState } from "react";
 import Layout from "./components/layout/Layout";
 import KnowledgeDashboard from "./pages/KnowledgeDashboard";
 import TeachSentinel from "./pages/TeachSentinel";
-import "./App.css";
 import Identity from "./pages/Identity";
+import Bridge from "./pages/Bridge";
+import "./App.css";
+
 
 const Placeholder = ({ title }) => (
   <div className="panel">
@@ -17,7 +19,7 @@ function App() {
   const [activePage, setActivePage] = useState("bridge");
 
   const pages = {
-  bridge: <KnowledgeDashboard />,
+  bridge: <Bridge />,
   teach: <TeachSentinel />,
   identity: <Identity />,
   recall: <Placeholder title="Recall" />,

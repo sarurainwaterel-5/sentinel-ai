@@ -403,4 +403,16 @@
     align-items: flex-start;
     flex-direction: column;
   }
+.operational-health h2 {
+  margin-bottom: var(--space-2);
+}
+
+.operational-health .metric-row strong {
+  text-transform: none;
+}
+
+.operational-health .metric-row strong::first-letter {
+  color: var(--accent-cyan);
+}
+
 }

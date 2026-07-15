@@ -9,7 +9,7 @@ const metrics = [
 export default function CanonHealthCard({ canonHealth }) {
   return (
     <section className="panel">
-      <h2>Canon Health</h2>
+      <h2>Core Principles</h2>
 
       <div className="metric-list">
         {metrics.map(([label, key]) => (

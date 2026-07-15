@@ -34,7 +34,7 @@ export default function Sidebar({ collapsed, onToggle, activePage, setActivePage
         {!collapsed && (
           <div>
             <h2>SentinelAI</h2>
-            <small>Knowledge OS</small>
+            <small>Intelligence OS</small>
           </div>
         )}
       </div>

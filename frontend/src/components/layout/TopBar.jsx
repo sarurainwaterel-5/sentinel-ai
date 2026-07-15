@@ -4,42 +4,42 @@ const pageTitles = {
   bridge: {
     eyebrow: "Bridge",
     title: "Bridge",
-    subtitle: "Operational intelligence overview",
+    subtitle: "Operational Intelligence Overview",
   }, 
   identity: {
     eyebrow: "Identity",
     title: "SentinelAI Identity",
-    subtitle: "Canon health and self-knowledge",
+    subtitle: "Define the principles that shape SentinelAI.",
 },
   teach: {
     eyebrow: "Teaching Session",
     title: "Teach SentinelAI",
-    subtitle: "Expand SentinelAI's operational knowledge",
+    subtitle: "Expand SentinelAI's Operational knowledge",
   },
   recall: {
     eyebrow: "Recall",
     title: "Recall Knowledge",
-    subtitle: "Ask SentinelAI what it remembers",
+    subtitle: "Ask SentinelAI what it Remembers",
   },
   reason: {
     eyebrow: "Reason",
     title: "Reason",
-    subtitle: "Analyze evidence and build understanding",
+    subtitle: "Analyze Evidence and Build Understanding",
   },
   intelligence: {
     eyebrow: "Intelligence",
     title: "Intelligence",
-    subtitle: "Discover patterns across knowledge",
+    subtitle: "Discover Patterns Across Knowledge",
   },
   governance: {
     eyebrow: "Governance",
     title: "Governance",
-    subtitle: "Protect SentinelAI's principles and memory",
+    subtitle: "Protect SentinelAI's Principles and Memory",
   },
   systems: {
     eyebrow: "Systems",
     title: "Systems",
-    subtitle: "Maintain the platform",
+    subtitle: "Maintain the Platform",
   },
 };
 
@@ -61,12 +61,12 @@ export default function TopBar({ activePage }) {
       <div className="topbar-actions">
         <button className="primary-action">
           <UploadCloud size={18} />
-          <span>Remember Knowledge</span>
+          <span>Refresh Knowledge</span>
         </button>
 
         <div className="system-status">
           <span className="status-dot"></span>
-          <span>System Healthy</span>
+          <span>Operational</span>
         </div>
       </div>
     </header>
