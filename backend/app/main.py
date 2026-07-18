@@ -12,6 +12,7 @@ from app.routes.canon import router as canon_router
 from app.routes.bridge import router as bridge_router
 from app.services.qdrant_service import create_collection_if_not_exists
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes.domains import router as domains_router
 
 app = FastAPI(title="SentinelAI API")
 
@@ -26,12 +27,15 @@ app.include_router(constitution_router)
 app.include_router(cognition_router)
 app.include_router(canon_router)
 app.include_router(bridge_router)
+app.include_router(domains_router)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "http://localhost:5175",
+        "http://127.0.0.1:5175",
     ],
     allow_credentials=True,
     allow_methods=["*"],

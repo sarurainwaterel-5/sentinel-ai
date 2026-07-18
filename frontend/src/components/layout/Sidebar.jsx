@@ -2,12 +2,12 @@ import {
   Fingerprint,
   Radar,
   BookOpen,
-  Bot,
   Search,
   BarChart3,
   Shield,
   Settings,
   Brain,
+  Layers3,
   PanelLeftClose,
   PanelLeftOpen
 } from "lucide-react";
@@ -15,6 +15,7 @@ import {
 const navItems = [
   { key: "bridge", label: "Bridge", icon: Radar },
   { key: "identity", label: "Identity", icon: Fingerprint },
+  { key: "domains", label: "Domains", icon: Layers3 },
   { key: "teach", label: "Teach", icon: BookOpen },
   { key: "recall", label: "Recall", icon: Search },
   { key: "reason", label: "Reason", icon: Brain },

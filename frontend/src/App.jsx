@@ -5,6 +5,7 @@ import TeachSentinel from "./pages/TeachSentinel";
 import Identity from "./pages/Identity";
 import Bridge from "./pages/Bridge";
 import "./App.css";
+import Domains from "./pages/Domains";
 
 
 const Placeholder = ({ title }) => (
@@ -22,6 +23,7 @@ function App() {
   bridge: <Bridge />,
   teach: <TeachSentinel />,
   identity: <Identity />,
+ domains: <Domains />,
   recall: <Placeholder title="Recall" />,
   reason: <Placeholder title="Reason" />,
   intelligence: <Placeholder title="Intelligence" />,
