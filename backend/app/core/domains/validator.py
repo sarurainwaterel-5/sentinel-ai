@@ -3,11 +3,13 @@ from typing import Any, Literal
 
 from app.core.domains.builder import build_domain_registry
 from app.core.domains.models import OperationalDomain
+from app.core.self.discover import PROJECT_ROOT
 
 
 ValidationLevel = Literal["pass", "warning", "error"]
 
 VALID_KINDS = {"system", "user"}
+
 VALID_STATUSES = {
     "planned",
     "developing",
@@ -19,6 +21,10 @@ VALID_STATUSES = {
 
 @dataclass
 class DomainValidationCheck:
+    """
+    One validation performed against an Operational Domain.
+    """
+
     domain_id: str
     name: str
     level: ValidationLevel
@@ -31,6 +37,10 @@ class DomainValidationCheck:
 
 @dataclass
 class DomainValidationReport:
+    """
+    Validation result for SentinelAI's registered Operational Domains.
+    """
+
     status: str
     passed: int
     warnings: int
@@ -51,6 +61,10 @@ def add_check(
     failure_message: str,
     failure_level: ValidationLevel = "error",
 ) -> None:
+    """
+    Add a pass, warning, or error without modifying the domain.
+    """
+
     checks.append(
         DomainValidationCheck(
             domain_id=domain_id,
@@ -61,12 +75,102 @@ def add_check(
     )
 
 
+def validate_domain_evidence(
+    domain: OperationalDomain,
+    checks: list[DomainValidationCheck],
+) -> None:
+    """
+    Verify structured evidence references without modifying the domain.
+    """
+
+    seen_ids: set[str] = set()
+
+    for evidence in domain.evidence:
+        evidence_id = evidence.evidence_id or "<missing>"
+
+        add_check(
+            checks,
+            domain_id=domain.domain_id,
+            name=f"evidence_id:{evidence_id}",
+            condition=bool(evidence.evidence_id.strip()),
+            success_message="Evidence identifier is defined.",
+            failure_message="Evidence identifier is missing.",
+        )
+
+        add_check(
+            checks,
+            domain_id=domain.domain_id,
+            name=f"evidence_id_unique:{evidence_id}",
+            condition=evidence.evidence_id not in seen_ids,
+            success_message=(
+                "Evidence identifier is unique within the domain."
+            ),
+            failure_message=(
+                f"Duplicate evidence identifier "
+                f"'{evidence.evidence_id}' was found."
+            ),
+        )
+
+        seen_ids.add(evidence.evidence_id)
+
+        add_check(
+            checks,
+            domain_id=domain.domain_id,
+            name=f"evidence_title:{evidence_id}",
+            condition=bool(evidence.title.strip()),
+            success_message="Evidence title is defined.",
+            failure_message="Evidence title is missing.",
+        )
+
+        add_check(
+            checks,
+            domain_id=domain.domain_id,
+            name=f"evidence_kind:{evidence_id}",
+            condition=bool(evidence.kind),
+            success_message="Evidence kind is defined.",
+            failure_message="Evidence kind is missing.",
+        )
+
+        add_check(
+            checks,
+            domain_id=domain.domain_id,
+            name=f"evidence_source:{evidence_id}",
+            condition=bool(evidence.source.strip()),
+            success_message="Evidence source is defined.",
+            failure_message="Evidence source is missing.",
+        )
+
+        add_check(
+            checks,
+            domain_id=domain.domain_id,
+            name=f"evidence_description:{evidence_id}",
+            condition=bool(evidence.description.strip()),
+            success_message="Evidence description is defined.",
+            failure_message="Evidence description is missing.",
+        )
+
+        source_path = PROJECT_ROOT / evidence.source
+
+        add_check(
+            checks,
+            domain_id=domain.domain_id,
+            name=f"evidence_source_exists:{evidence_id}",
+            condition=source_path.exists(),
+            success_message=(
+                f"Evidence source '{evidence.source}' exists."
+            ),
+            failure_message=(
+                f"Evidence source '{evidence.source}' does not exist."
+            ),
+        )
+
+
 def validate_domain(
     domain: OperationalDomain,
     checks: list[DomainValidationCheck],
 ) -> None:
     """
-    Validate one operational domain without modifying it.
+    Validate one Operational Domain without modifying it.
     """
 
     domain_id = domain.domain_id or "<missing>"
@@ -139,13 +243,15 @@ def validate_domain(
         failure_level="warning",
     )
 
+    validate_domain_evidence(domain, checks)
+
 
 def build_domain_validation_report() -> DomainValidationReport:
     """
-    Validate all registered operational domains.
+    Validate all registered Operational Domains.
 
     Validator reports.
-    Validator never repairs or activates domains.
+    Validator never repairs, activates, or modifies domains.
     """
 
     registry = build_domain_registry()

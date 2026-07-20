@@ -12,22 +12,50 @@ SYSTEM_DOMAINS = [
         kind="system",
         status="active",
         evidence=[
-            DomainEvidence(
-                source="docs/architecture/ARCHITECTURE_MAP.md",
-                description="Documents SentinelAI's engineering architecture.",
-            )
-        ],
-    ),
-    OperationalDomain(
-        domain_id="trading",
-        name="Trading",
+    DomainEvidence(
+        evidence_id="engineering-architecture-map",
+        title="SentinelAI Architecture Map",
+        kind="document",
+        source="docs/architecture/ARCHITECTURE_MAP.md",
         description=(
-            "Support market analysis, risk management, execution planning, "
-            "and trading education."
+            "Documents SentinelAI's engineering architecture "
+            "and system organization."
         ),
-        kind="system",
-        status="developing",
+    )
+],
     ),
+OperationalDomain(
+    domain_id="trading",
+    name="Trading",
+    description=(
+        "Support evidence-driven market analysis, risk management, "
+        "trade planning, performance review, and trading education."
+    ),
+    kind="system",
+    status="developing",
+    evidence=[
+        DomainEvidence(
+            evidence_id="trading-domain-foundation",
+            title="Trading Domain Foundation",
+            kind="document",
+            source="docs/domains/trading/DOMAIN.md",
+            description=(
+                "Defines the Trading Domain's purpose, scope, boundaries, "
+                "maturity, and evidence requirements."
+            ),
+        ),
+        DomainEvidence(
+            evidence_id="trading-principles",
+            title="Trading Principles",
+            kind="principle",
+            source="docs/domains/trading/PRINCIPLES.md",
+            description=(
+                "Defines the enduring principles governing market reasoning, "
+                "risk, explainability, probability, and reflection."
+            ),
+        ),
+    ],
+),
     OperationalDomain(
         domain_id="security",
         name="Security",
@@ -74,3 +102,4 @@ SYSTEM_DOMAINS = [
         status="planned",
     ),
 ]
+
