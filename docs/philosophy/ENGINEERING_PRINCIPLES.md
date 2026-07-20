@@ -133,6 +133,12 @@ If the answer is "yes," the contribution aligns with SentinelAI's engineering ph
 
 ---
 
+Names are architecture.
+
+A poorly named system cannot remain coherent.
+
+Every name should represent a stable concept rather than an implementation detail.
+
 # Closing Principle
 
 SentinelAI is engineered deliberately.

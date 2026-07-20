@@ -75,10 +75,35 @@ We inherit the work of those before us and leave a stronger foundation for those
 
 ---
 
+## Language
+
+Before implementing architecture,
+we establish shared language.
+
+Shared language produces shared understanding.
+
+Shared understanding produces coherent architecture.
+
+We will define our terms before we define our systems.
+
+We define language before implementation.
+
+## Stewardship
+
+We build for those who come after us.
+
+We leave SentinelAI more understandable
+than we found it.
+
+Every contribution should reduce ambiguity.
+
+Every contribution should strengthen coherence.
+
 # Closing Oath
 
 We do not build software merely to make computers behave differently.
 
-We build systems that help people think more clearly, understand more deeply, and make better decisions.
+We build systems that help people think more clearly, understand more de>
 
 That responsibility guides every line of code we write.
+

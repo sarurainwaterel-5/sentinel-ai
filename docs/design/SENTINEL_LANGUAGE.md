@@ -251,3 +251,216 @@ Protect.
 Systems
 
 Operate.
+
+
+
+# Cognitive Vocabulary
+
+SentinelAI uses a precise cognitive vocabulary to ensure that every
+subsystem speaks the same language.
+
+The meaning of these terms is constitutional.
+
+Subsystems shall not redefine them.
+
+---
+
+## Reality
+
+Reality is the only editable source of truth.
+
+Reality exists independently of SentinelAI.
+
+Sentinel observes reality but never replaces it.
+
+---
+
+## Observation
+
+An Observation records something Sentinel has perceived.
+
+Observations are descriptive.
+
+They contain no interpretation or conclusions.
+
+Example:
+
+- A document was uploaded.
+- A log entry was received.
+- Price closed above resistance.
+
+---
+
+## Evidence
+
+Evidence anchors claims to reality.
+
+Evidence supports concepts, principles, relationships, or conclusions.
+
+Evidence is observable, verifiable, and traceable.
+
+Evidence is never opinion.
+
+---
+
+## Concept
+
+A Concept represents a reusable unit of knowledge.
+
+Concepts describe objects, ideas, events, or processes that Sentinel
+recognizes.
+
+Examples:
+
+- Fair Value Gap
+- Docker Volume
+- Incident Timeline
+- Dependency Injection
+
+---
+
+## Principle
+
+A Principle is an enduring rule that governs reasoning.
+
+Principles remain stable even when knowledge evolves.
+
+Examples:
+
+- Reality is the only editable source of truth.
+- Every trade begins with uncertainty.
+- Builders construct.
+- Validators verify.
+
+---
+
+## Relationship
+
+A Relationship connects two or more cognitive objects.
+
+Relationships organize knowledge into understanding.
+
+Examples:
+
+Displacement creates Fair Value Gap.
+
+Evidence supports Principle.
+
+Document contains Concept.
+
+---
+
+## Learning Event
+
+A Learning Event records how Sentinel's understanding changed.
+
+Every Learning Event shall answer:
+
+- What changed?
+- Why did it change?
+- What evidence caused the change?
+- Which domains were affected?
+
+Learning Events preserve the history of Sentinel's intellectual growth.
+
+---
+
+## Understanding
+
+Understanding is organized knowledge produced through disciplined
+reasoning.
+
+Understanding emerges when evidence is organized according to enduring
+principles.
+
+Understanding is explainable.
+
+---
+
+## Wisdom
+
+Wisdom is disciplined application of understanding.
+
+Wisdom recognizes uncertainty.
+
+Wisdom remains accountable to reality.
+
+Wisdom changes when reality changes.
+
+---
+
+# Cognitive Pipeline
+
+Reality
+
+↓
+
+Observation
+
+↓
+
+Evidence
+
+↓
+
+Concept
+
+↓
+
+Relationship
+
+↓
+
+Principle
+
+↓
+
+Learning Event
+
+↓
+
+Understanding
+
+↓
+
+Wisdom
+
+---
+
+# Language Laws
+
+SentinelAI shall use these terms consistently across every subsystem.
+
+Subsystems may extend this vocabulary but shall not redefine it.
+
+Observation records reality.
+
+Evidence anchors reality.
+
+Concepts organize reality.
+
+Principles govern interpretation.
+
+Relationships connect knowledge.
+
+Learning Events record growth.
+
+Understanding explains.
+
+Wisdom applies.
+
+---
+
+# Constitutional Reminder
+
+SentinelAI does not ask:
+
+"What information do I have?"
+
+SentinelAI asks:
+
+"What understanding have I earned?"
+
+The purpose of cognition is not accumulation.
+
+The purpose of cognition is disciplined understanding.
