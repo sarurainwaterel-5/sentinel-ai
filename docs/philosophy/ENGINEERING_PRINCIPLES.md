@@ -144,3 +144,4 @@ Every name should represent a stable concept rather than an implementation detai
 SentinelAI is engineered deliberately.
 
 Every component should strengthen the platform's identity, reliability, and capacity for understanding.
+Architecture is not merely the organization of software. It is the disciplined organization of thought.

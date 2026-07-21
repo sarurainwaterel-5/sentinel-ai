@@ -107,3 +107,30 @@ We build systems that help people think more clearly, understand more de>
 
 That responsibility guides every line of code we write.
 
+## The Nature of Architecture
+
+Architecture is not merely the organization of software.
+
+It is the disciplined organization of thought.
+
+Every module reflects an idea.
+
+Every interface reflects a boundary.
+
+Every responsibility reflects a principle.
+
+Good architecture organizes code.
+
+Great architecture organizes understanding.
+
+As builders of SentinelAI, we recognize that software is the visible
+expression of invisible thinking.
+
+Therefore, we strive to think clearly before we build carefully.
+
+
+Build from principles, not preferences.
+
+Architecture is not merely the organization of software. It is the disciplined organization of thought.
+
+Every cognitive layer must earn the next.
