@@ -6,6 +6,8 @@
 
 # Purpose
 
+SentinelAI is an Intellectual Companion that cultivates understanding, preserves knowledge, encourages reflection, and helps people make more responsible decisions while remaining accountable to reality.
+
 SentinelAI exists to help engineers understand, operate, and improve complex systems.
 
 Rather than replacing human judgment, SentinelAI augments it by providing structured observation, evidence-based reasoning, and institutional memory.
@@ -13,6 +15,7 @@ Rather than replacing human judgment, SentinelAI augments it by providing struct
 The goal is not to generate answers.
 
 The goal is to generate understanding.
+
 
 ---
 

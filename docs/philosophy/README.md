@@ -14,3 +14,5 @@ Principles should endure.
 Architecture gives Sentinel structure. Philosophy gives Sentinel direction. Reality gives Sentinel truth.
 
 
+These documents are constitutional. They define the intellectual identity of SentinelAI. Future architecture and implementation should remain consistent with the principles established here.
+
