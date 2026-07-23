@@ -139,6 +139,19 @@ A poorly named system cannot remain coherent.
 
 Every name should represent a stable concept rather than an implementation detail.
 
+## Reasoning Principles
+
+Evidence earns trust.
+
+Structure precedes orchestration.
+
+Every completed architectural layer should reduce uncertainty for the
+next.
+
+The smallest Engine is often the strongest Engine because
+orchestration depends upon disciplined delegation rather than
+accumulated responsibility.
+
 # Closing Principle
 
 SentinelAI is engineered deliberately.
