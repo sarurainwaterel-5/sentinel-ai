@@ -61,11 +61,16 @@ class UploadService:
         chunks = chunk_text(text)
 
         stored_vectors = store_chunks(
-            document_id=document_id,
-            filename=file.filename,
-            file_hash=file_hash,
-            chunks=chunks
-        )
+    document_id=document_id,
+    filename=file.filename,
+    file_hash=file_hash,
+    chunks=chunks,
+    module=module,
+    topic=topic,
+    collection=collection,
+    organization_id=organization_id,
+    description=description,
+)
 
         document = self.document_repository.create_document(
             document_id=document_id,

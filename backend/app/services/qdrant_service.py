@@ -60,7 +60,19 @@ def find_document_by_hash(file_hash: str):
         "file_hash": payload.get("file_hash")
     }
 
-def store_chunks(document_id: str, filename: str, file_hash: str, chunks: list[str]):
+def store_chunks(
+    *,
+    document_id: str,
+    filename: str,
+    file_hash: str,
+    chunks: list[str],
+    module: str,
+    topic: str,
+    collection: str,
+    organization_id: str,
+    description: str | None = None,
+):
+
     create_collection_if_not_exists()
 
     points = []
@@ -73,13 +85,18 @@ def store_chunks(document_id: str, filename: str, file_hash: str, chunks: list[s
                 id=str(uuid4()),
                 vector=vector,
                 payload={
-                    "document_id": document_id,
-                    "filename": filename,
-                    "file_hash": file_hash,
-                    "chunk_index": index,
-                    "text": chunk,
-                    "embedding_model": embedding_service.get_model_name()
-                }
+    "document_id": document_id,
+    "filename": filename,
+    "file_hash": file_hash,
+    "chunk_index": index,
+    "text": chunk,
+    "module": module,
+    "topic": topic,
+    "collection": collection,
+    "organization_id": organization_id,
+    "description": description,
+    "embedding_model": embedding_service.get_model_name(),
+}
             )
         )
 

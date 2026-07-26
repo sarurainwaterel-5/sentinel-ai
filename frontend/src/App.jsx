@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Layout from "./components/layout/Layout";
-import KnowledgeDashboard from "./pages/KnowledgeDashboard";
 import TeachSentinel from "./pages/TeachSentinel";
 import Identity from "./pages/Identity";
 import Bridge from "./pages/Bridge";
