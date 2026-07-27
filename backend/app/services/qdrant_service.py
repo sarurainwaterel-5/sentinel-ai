@@ -71,38 +71,63 @@ def store_chunks(
     collection: str,
     organization_id: str,
     description: str | None = None,
+    batch_size: int = 128,
 ):
+    """
+    Embed and store document chunks in bounded Qdrant batches.
+
+    Batching prevents large documents from exceeding Qdrant's
+    request-payload limit.
+    """
 
     create_collection_if_not_exists()
 
-    points = []
+    stored_count = 0
+    batch = []
 
     for index, chunk in enumerate(chunks):
         vector = embedding_service.generate_embedding(chunk)
 
-        points.append(
+        batch.append(
             PointStruct(
                 id=str(uuid4()),
                 vector=vector,
                 payload={
-    "document_id": document_id,
-    "filename": filename,
-    "file_hash": file_hash,
-    "chunk_index": index,
-    "text": chunk,
-    "module": module,
-    "topic": topic,
-    "collection": collection,
-    "organization_id": organization_id,
-    "description": description,
-    "embedding_model": embedding_service.get_model_name(),
-}
+                    "document_id": document_id,
+                    "filename": filename,
+                    "file_hash": file_hash,
+                    "chunk_index": index,
+                    "text": chunk,
+                    "module": module,
+                    "topic": topic,
+                    "collection": collection,
+                    "organization_id": organization_id,
+                    "description": description,
+                    "embedding_model": (
+                        embedding_service.get_model_name()
+                    ),
+                },
             )
         )
 
-    client.upsert(
-        collection_name=COLLECTION_NAME,
-        points=points
-    )
+        if len(batch) >= batch_size:
+            client.upsert(
+                collection_name=COLLECTION_NAME,
+                points=batch,
+                wait=True,
+            )
 
-    return len(points)
+            stored_count += len(batch)
+            batch = []
+
+    if batch:
+        client.upsert(
+            collection_name=COLLECTION_NAME,
+            points=batch,
+            wait=True,
+        )
+
+        stored_count += len(batch)
+
+    return stored_count
+

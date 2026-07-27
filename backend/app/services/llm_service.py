@@ -1,27 +1,60 @@
 import os
-from openai import OpenAI
+
 from dotenv import load_dotenv
+from openai import OpenAI
+
+from app.schemas.recall import RecallGeneration
+
 
 load_dotenv()
 
+
 class LLMService:
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        api_key = os.getenv("OPENAI_API_KEY")
 
-    def generate_answer(self, prompt: str):
-        response = self.client.chat.completions.create(
+        if not api_key:
+            raise RuntimeError(
+                "OPENAI_API_KEY is not configured."
+            )
+
+        self.client = OpenAI(api_key=api_key)
+
+    def generate_recall(
+        self,
+        prompt: str,
+    ) -> RecallGeneration:
+        completion = self.client.chat.completions.parse(
             model="gpt-4.1-mini",
             messages=[
                 {
                     "role": "system",
-                    "content": "You are SentinelAI. Answer only using the provided context. If the context is insufficient, say you do not have enough evidence."
+                    "content": (
+                        "You are SentinelAI's evidence-based Recall "
+                        "capability. Use only the supplied evidence. "
+                        "Do not fill gaps with outside knowledge."
+                    ),
                 },
                 {
                     "role": "user",
-                    "content": prompt
-                }
+                    "content": prompt,
+                },
             ],
-            temperature=0.2
+            response_format=RecallGeneration,
+            temperature=0.2,
         )
 
-        return response.choices[0].message.content
+        message = completion.choices[0].message
+
+        if message.refusal:
+            raise RuntimeError(
+                f"Sentinel generation was refused: "
+                f"{message.refusal}"
+            )
+
+        if message.parsed is None:
+            raise RuntimeError(
+                "Sentinel returned no parsed structured response."
+            )
+
+        return message.parsed

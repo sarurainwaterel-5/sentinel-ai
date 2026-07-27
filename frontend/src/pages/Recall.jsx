@@ -1,30 +1,41 @@
 import { useState } from "react";
-import { Search } from "lucide-react";
+
+import RecallAnswer from "../components/recall/RecallAnswer";
+import RecallConfidence from "../components/recall/RecallConfidence";
+import RecallEvidence from "../components/recall/RecallEvidence";
+import RecallFollowUp from "../components/recall/RecallFollowUp";
+import RecallLoading from "../components/recall/RecallLoading";
+import RecallNextStep from "../components/recall/RecallNextStep";
+import RecallQuestion from "../components/recall/RecallQuestion";
+import RecallTopics from "../components/recall/RecallTopics";
+import RecallWorkspaceCard from "../components/recall/RecallWorkspaceCard";
+import RecallEmpty from "../components/recall/RecallEmpty";
 
 import { useDomain } from "../context/useDomain";
 import { recallKnowledge } from "../services/recallApi";
-
 
 export default function Recall() {
   const { activeDomain } = useDomain();
 
   const [question, setQuestion] = useState("");
   const [result, setResult] = useState(null);
-  const [isRecalling, setIsRecalling] = useState(false);
   const [error, setError] = useState(null);
+  const [isRecalling, setIsRecalling] = useState(false);
 
-  const handleRecall = async (event) => {
+  async function handleRecall(event) {
     event.preventDefault();
 
     if (!question.trim()) {
-      setError("Ask Sentinel what you want it to remember.");
+      setError(
+        "Ask Sentinel what you want it to remember."
+      );
       return;
     }
 
     try {
-      setIsRecalling(true);
       setError(null);
       setResult(null);
+      setIsRecalling(true);
 
       const response = await recallKnowledge({
         question,
@@ -32,99 +43,102 @@ export default function Recall() {
       });
 
       setResult(response);
-    } catch (recallError) {
+    } catch (err) {
       setError(
-        recallError instanceof Error
-          ? recallError.message
-          : "Sentinel could not recall knowledge.",
+        err instanceof Error
+          ? err.message
+          : "Sentinel could not recall knowledge."
       );
     } finally {
       setIsRecalling(false);
     }
-  };
+  }
 
   return (
     <section className="recall-workspace">
-      <div className="panel recall-query-panel">
-        <p className="eyebrow">Evidence-Based Recall</p>
 
-        <h2>What do you want Sentinel to remember?</h2>
+      <RecallQuestion
+        question={question}
+        setQuestion={setQuestion}
+        activeDomain={activeDomain}
+        isRecalling={isRecalling}
+        onSubmit={handleRecall}
+        error={error}
+      />
 
-        <p className="muted">
-          Recall is grounded in the currently selected workspace:
-          {" "}
-          <strong>{activeDomain?.name ?? "All Domains"}</strong>.
-        </p>
+      {isRecalling && (
+        <RecallLoading />
+      )}
 
-        <form onSubmit={handleRecall}>
-          <label htmlFor="recall-question">
-            Recall Question
-          </label>
-
-          <textarea
-            id="recall-question"
-            value={question}
-            onChange={(event) => setQuestion(event.target.value)}
-            placeholder="What is ICT market structure?"
-            rows={5}
-          />
-
-          <button
-            type="submit"
-            className="primary-action"
-            disabled={isRecalling}
-          >
-            <Search size={18} />
-
-            <span>
-              {isRecalling ? "Recalling..." : "Recall Knowledge"}
-            </span>
-          </button>
-        </form>
-
-        {error && (
-          <p className="teach-status">
-            {error}
-          </p>
-        )}
-      </div>
+      {!isRecalling && !result && (
+        <RecallEmpty />
+      )}
 
       {result && (
-        <div className="panel recall-result-panel">
-          <p className="eyebrow">Sentinel Response</p>
+        <section className="recall-report">
 
-          <h2>Recall Result</h2>
+          <RecallWorkspaceCard
+            activeDomain={activeDomain}
+            result={result}
+          />
 
-          <div className="recall-answer">
-            {result.answer}
+          <RecallAnswer
+            answer={result.answer}
+            domainLabel={
+              result.module ??
+              activeDomain?.name ??
+              "All Domains"
+            }
+          />
+
+          <RecallConfidence
+            confidence={result.confidence}
+            sourceCount={
+              result.sources?.length ?? 0
+            }
+          />
+
+          <div className="recall-report-grid">
+
+            <RecallNextStep
+              nextStep={
+                result.recommended_next_step
+              }
+            />
+
+            <RecallFollowUp
+              question={
+                result.suggested_follow_up
+              }
+              onSelect={(followUp) => {
+                setQuestion(followUp);
+
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+            />
+
           </div>
 
-          <div className="recall-evidence">
-            <h3>Evidence</h3>
+          <RecallTopics
+            topics={
+              result.related_knowledge
+            }
+          />
 
-            {result.sources?.length ? (
-              <ul>
-                {result.sources.map((source, index) => (
-                  <li
-                    key={`${source.document_id ?? source.filename}-${index}`}
-                  >
-                    <strong>{source.filename}</strong>
-                    <span>
-                      Chunk {source.chunk_index}
-                      {" · "}
-                      Score {Number(source.score).toFixed(3)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="muted">
-                No supporting evidence was returned.
-              </p>
-            )}
-          </div>
-        </div>
+          <article className="panel">
+
+            <RecallEvidence
+              sources={result.sources}
+            />
+
+          </article>
+
+        </section>
       )}
+
     </section>
   );
 }
