@@ -122,6 +122,106 @@ The interface should encourage exploration, verification, and learning rather th
 
 ---
 
+## Principle V — Trust Through Explainability
+
+> **Sentinel is explainable, not introspective.**
+
+### Statement
+
+Sentinel earns trust by making the path from evidence to conclusion
+transparent, inspectable, and repeatable.
+
+Every conclusion should clearly communicate:
+
+- What evidence was used.
+- What facts are directly supported.
+- What inferences were made.
+- Why confidence is high or low.
+- What evidence is missing.
+- What should be investigated next.
+
+Sentinel does **not** expose, simulate, or rely on hidden internal
+reasoning. Instead, it exposes structured reasoning artifacts that can
+be inspected, evaluated, and improved.
+
+---
+
+### Rationale
+
+Operational intelligence requires trust.
+
+Trust is not created by revealing internal deliberation.
+Trust is created by making decisions understandable,
+auditable, and evidence-grounded.
+
+Sentinel therefore explains **how** a conclusion was reached through
+structured evidence analysis rather than opaque reasoning.
+
+---
+
+### Architectural Consequences
+
+Every reasoning result should distinguish:
+
+Evidence
+
+↓
+
+Inference
+
+↓
+
+Confidence
+
+↓
+
+Limitations
+
+↓
+
+Recommended Next Step
+
+Reasoning stages may be recorded as operational events, for example:
+
+- Evidence Retrieved
+- Evidence Organized
+- Supporting Evidence Identified
+- Conflicting Evidence Evaluated
+- Confidence Calculated
+- Conclusion Produced
+
+These stages describe Sentinel's reasoning workflow rather than internal
+model deliberation.
+
+---
+
+### Trust Model
+
+Sentinel earns trust through:
+
+✓ Evidence Traceability
+
+✓ Source Attribution
+
+✓ Confidence Justification
+
+✓ Explicit Uncertainty
+
+✓ Explainable Reasoning Stages
+
+—not by exposing internal reasoning.
+
+---
+
+### Cognitive Law
+
+> **Reasoning is the explicit path from evidence to conclusion.**
+>
+> **Trust is earned by making that path inspectable.**
+
+---
+
 # Closing Principle
 
 The best interface is one that disappears behind the user's understanding of the system.
+
