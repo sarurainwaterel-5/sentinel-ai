@@ -16,6 +16,9 @@ from app.routes.domains import router as domains_router
 from app.routes.planning import (
     router as planning_router,
 )
+from app.routes.verification import (
+    router as verification_router,
+)
 
 
 app = FastAPI(title="SentinelAI API")
@@ -33,6 +36,7 @@ app.include_router(canon_router)
 app.include_router(bridge_router)
 app.include_router(domains_router)
 app.include_router(planning_router)
+app.include_router(verification_router)
 
 app.add_middleware(
     CORSMiddleware,
