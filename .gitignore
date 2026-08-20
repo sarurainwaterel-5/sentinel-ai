@@ -17,3 +17,8 @@ backend/uploads/
 # OS
 .vscode/
 .DS_Store
+
+# SentinelAI runtime cognitive data
+backend/data/*.sqlite3
+backend/data/*.sqlite3-wal
+backend/data/*.sqlite3-shm
