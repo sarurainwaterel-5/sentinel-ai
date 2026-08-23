@@ -56,6 +56,57 @@ class ReasoningEngine:
         self.inference = InferenceEngine()
         self.confidence = ConfidenceEngine()
 
+    @staticmethod
+    def _missing_information(
+        *,
+        strongest,
+        evidence_bundle,
+    ) -> list[str]:
+        """
+        Identify evidence that is absent but would materially
+        improve the current judgment.
+
+        Missing information is distinct from:
+
+        - inference limitations, which constrain the current
+          conclusion;
+        - confidence uncertainty, which explains why confidence
+          remains bounded.
+        """
+
+        missing: list[str] = [
+            gap.description
+            for gap in evidence_bundle.gaps
+            if gap.description
+        ]
+
+        if (
+            not missing
+            and len(
+                strongest.supporting_evidence_ids
+            ) <= 1
+        ):
+            missing.append(
+                "Additional independent corroborating evidence "
+                "is needed to strengthen the current conclusion."
+            )
+
+        if (
+            evidence_bundle.unknown
+            and not any(
+                "usable evidence" in item.casefold()
+                for item in missing
+            )
+        ):
+            missing.append(
+                "Usable evidence is needed from sources that "
+                "could not be evaluated."
+            )
+
+        return list(
+            dict.fromkeys(missing)
+        )
+
     def reason(
         self,
         *,
@@ -144,7 +195,10 @@ class ReasoningEngine:
             alternatives=[],
 
             missing_information=(
-                confidence.uncertainty
+                self._missing_information(
+                    strongest=strongest,
+                    evidence_bundle=evidence_bundle,
+                )
             ),
 
             recommended_next_step=(

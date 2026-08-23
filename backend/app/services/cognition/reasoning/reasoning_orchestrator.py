@@ -144,7 +144,12 @@ class ReasoningOrchestrator:
                 inference_summary=None,
                 confidence=confidence_summary,
                 evidence=evidence_summary,
-                limitations=gap_descriptions,
+                limitations=[
+                    (
+                        "The available evidence was insufficient "
+                        "to support a conclusion."
+                    )
+                ],
                 alternatives=[],
                 missing_information=gap_descriptions,
                 recommended_next_step=(

@@ -6,6 +6,7 @@ import Bridge from "./pages/Bridge";
 import "./App.css";
 import Domains from "./pages/Domains";
 import Recall from "./pages/Recall";
+import Reason from "./pages/Reason";
 
 const Placeholder = ({ title }) => (
   <div className="panel">
@@ -24,7 +25,7 @@ function App() {
   identity: <Identity />,
  domains: <Domains />,
   recall: <Recall />,
-  reason: <Placeholder title="Reason" />,
+  reason: <Reason />,
   intelligence: <Placeholder title="Intelligence" />,
   governance: <Placeholder title="Governance" />,
   systems: <Placeholder title="Systems" />,
