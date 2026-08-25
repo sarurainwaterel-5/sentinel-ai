@@ -141,6 +141,36 @@ class EvidenceBundle(BaseModel):
         default_factory=dict,
     )
 
+class Premise(BaseModel):
+    """
+    One explicit proposition extracted from evidence.
+
+    A Premise preserves the evidence lineage from which
+    the proposition was derived.
+
+    Premises do not represent final conclusions.
+    """
+
+    premise_id: str = Field(
+        min_length=1,
+    )
+
+    statement: str = Field(
+        min_length=1,
+    )
+
+    evidence_ids: list[str] = Field(
+        min_length=1,
+    )
+
+    domain_ids: list[str] = Field(
+        default_factory=list,
+    )
+
+    metadata: dict[str, Any] = Field(
+        default_factory=dict,
+    )
+
 
 class Assumption(BaseModel):
     """An assumption required to move from evidence toward an inference."""
