@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class EvidenceDisposition(StrEnum):
@@ -172,6 +172,101 @@ class Premise(BaseModel):
     )
 
 
+class PremiseRelationshipKind(StrEnum):
+    """
+    Canonical relationship types between reasoning premises.
+    """
+
+    SUPPORTS = "supports"
+    CONFLICTS = "conflicts"
+    COMPLEMENTS = "complements"
+    INDEPENDENT = "independent"
+    UNRESOLVED = "unresolved"
+
+
+class PremiseRelationship(BaseModel):
+    """
+    One explicit directional relationship between two Premises.
+
+    Relationship assessment describes how propositions relate.
+
+    It does not synthesize a new proposition.
+    """
+
+    source_premise_id: str = Field(
+        min_length=1,
+    )
+
+    target_premise_id: str = Field(
+        min_length=1,
+    )
+
+    kind: PremiseRelationshipKind
+
+    basis: str = Field(
+        min_length=1,
+    )
+
+    confidence: float = Field(
+        ge=0.0,
+        le=1.0,
+    )
+
+    @model_validator(mode="after")
+    def validate_distinct_premises(
+        self,
+    ):
+        if (
+            self.source_premise_id
+            == self.target_premise_id
+        ):
+            raise ValueError(
+                "A premise relationship must reference "
+                "two distinct premises."
+            )
+
+        return self
+
+
+class SynthesizedProposition(BaseModel):
+    """
+    One higher-order proposition derived from multiple
+    evidence-grounded Premises.
+
+    A SynthesizedProposition preserves its complete lineage
+    back to the Premises and Evidence that support it.
+
+    It is not itself a final inference or conclusion.
+    """
+
+    proposition_id: str = Field(
+        min_length=1,
+    )
+
+    statement: str = Field(
+        min_length=1,
+    )
+
+    premise_ids: list[str] = Field(
+        min_length=2,
+        description=(
+            "A synthesized proposition must be derived "
+            "from at least two Premises."
+        ),
+    )
+
+    evidence_ids: list[str] = Field(
+        min_length=1,
+    )
+
+    domain_ids: list[str] = Field(
+        default_factory=list,
+    )
+
+    metadata: dict[str, Any] = Field(
+        default_factory=dict,
+    )
+
 class Assumption(BaseModel):
     """An assumption required to move from evidence toward an inference."""
 
@@ -284,6 +379,20 @@ class ReasoningResult(BaseModel):
     question: str
 
     evidence: EvidenceBundle
+    
+    premises: list[Premise] = Field(
+        default_factory=list,
+    )
+
+    premise_relationships: list[PremiseRelationship] = Field(
+        default_factory=list,
+    )
+
+    synthesized_propositions: list[
+        SynthesizedProposition
+    ] = Field(
+        default_factory=list,
+    )
 
     inferences: list[Inference] = Field(
         default_factory=list,

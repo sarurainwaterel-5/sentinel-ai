@@ -1,0 +1,320 @@
+[1mdiff --git a/backend/app/services/cognition/reasoning/models.py b/backend/app/services/cognition/reasoning/models.py[m
+[1mindex 8cecd4f..12f58e5 100644[m
+[1m--- a/backend/app/services/cognition/reasoning/models.py[m
+[1m+++ b/backend/app/services/cognition/reasoning/models.py[m
+[36m@@ -10,7 +10,7 @@[m [mfrom __future__ import annotations[m
+ from enum import StrEnum[m
+ from typing import Any[m
+ [m
+[31m-from pydantic import BaseModel, Field[m
+[32m+[m[32mfrom pydantic import BaseModel, Field, model_validator[m
+ [m
+ [m
+ class EvidenceDisposition(StrEnum):[m
+[36m@@ -172,6 +172,101 @@[m [mclass Premise(BaseModel):[m
+     )[m
+ [m
+ [m
+[32m+[m[32mclass PremiseRelationshipKind(StrEnum):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    Canonical relationship types between reasoning premises.[m
+[32m+[m[32m    """[m
+[32m+[m
+[32m+[m[32m    SUPPORTS = "supports"[m
+[32m+[m[32m    CONFLICTS = "conflicts"[m
+[32m+[m[32m    COMPLEMENTS = "complements"[m
+[32m+[m[32m    INDEPENDENT = "independent"[m
+[32m+[m[32m    UNRESOLVED = "unresolved"[m
+[32m+[m
+[32m+[m
+[32m+[m[32mclass PremiseRelationship(BaseModel):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    One explicit directional relationship between two Premises.[m
+[32m+[m
+[32m+[m[32m    Relationship assessment describes how propositions relate.[m
+[32m+[m
+[32m+[m[32m    It does not synthesize a new proposition.[m
+[32m+[m[32m    """[m
+[32m+[m
+[32m+[m[32m    source_premise_id: str = Field([m
+[32m+[m[32m        min_length=1,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    target_premise_id: str = Field([m
+[32m+[m[32m        min_length=1,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    kind: PremiseRelationshipKind[m
+[32m+[m
+[32m+[m[32m    basis: str = Field([m
+[32m+[m[32m        min_length=1,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    confidence: float = Field([m
+[32m+[m[32m        ge=0.0,[m
+[32m+[m[32m        le=1.0,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    @model_validator(mode="after")[m
+[32m+[m[32m    def validate_distinct_premises([m
+[32m+[m[32m        self,[m
+[32m+[m[32m    ):[m
+[32m+[m[32m        if ([m
+[32m+[m[32m            self.source_premise_id[m
+[32m+[m[32m            == self.target_premise_id[m
+[32m+[m[32m        ):[m
+[32m+[m[32m            raise ValueError([m
+[32m+[m[32m                "A premise relationship must reference "[m
+[32m+[m[32m                "two distinct premises."[m
+[32m+[m[32m            )[m
+[32m+[m
+[32m+[m[32m        return self[m
+[32m+[m
+[32m+[m
+[32m+[m[32mclass SynthesizedProposition(BaseModel):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    One higher-order proposition derived from multiple[m
+[32m+[m[32m    evidence-grounded Premises.[m
+[32m+[m
+[32m+[m[32m    A SynthesizedProposition preserves its complete lineage[m
+[32m+[m[32m    back to the Premises and Evidence that support it.[m
+[32m+[m
+[32m+[m[32m    It is not itself a final inference or conclusion.[m
+[32m+[m[32m    """[m
+[32m+[m
+[32m+[m[32m    proposition_id: str = Field([m
+[32m+[m[32m        min_length=1,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    statement: str = Field([m
+[32m+[m[32m        min_length=1,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    premise_ids: list[str] = Field([m
+[32m+[m[32m        min_length=2,[m
+[32m+[m[32m        description=([m
+[32m+[m[32m            "A synthesized proposition must be derived "[m
+[32m+[m[32m            "from at least two Premises."[m
+[32m+[m[32m        ),[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    evidence_ids: list[str] = Field([m
+[32m+[m[32m        min_length=1,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    domain_ids: list[str] = Field([m
+[32m+[m[32m        default_factory=list,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    metadata: dict[str, Any] = Field([m
+[32m+[m[32m        default_factory=dict,[m
+[32m+[m[32m    )[m
+[32m+[m
+ class Assumption(BaseModel):[m
+     """An assumption required to move from evidence toward an inference."""[m
+ [m
+[36m@@ -284,6 +379,20 @@[m [mclass ReasoningResult(BaseModel):[m
+     question: str[m
+ [m
+     evidence: EvidenceBundle[m
+[32m+[m[41m    [m
+[32m+[m[32m    premises: list[Premise] = Field([m
+[32m+[m[32m        default_factory=list,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    premise_relationships: list[PremiseRelationship] = Field([m
+[32m+[m[32m        default_factory=list,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    synthesized_propositions: list[[m
+[32m+[m[32m        SynthesizedProposition[m
+[32m+[m[32m    ] = Field([m
+[32m+[m[32m        default_factory=list,[m
+[32m+[m[32m    )[m
+ [m
+     inferences: list[Inference] = Field([m
+         default_factory=list,[m
+[1mdiff --git a/backend/app/services/cognition/reasoning/reasoning_engine.py b/backend/app/services/cognition/reasoning/reasoning_engine.py[m
+[1mindex fe2c098..7eae662 100644[m
+[1m--- a/backend/app/services/cognition/reasoning/reasoning_engine.py[m
+[1m+++ b/backend/app/services/cognition/reasoning/reasoning_engine.py[m
+[36m@@ -12,12 +12,19 @@[m [mInstead it orchestrates:[m
+ Evidence[m
+ ↓[m
+ [m
+[31m-Inference[m
+[32m+[m[32mPremises[m
+[32m+[m[32m↓[m
+ [m
+[32m+[m[32mPremise Relationships[m
+ ↓[m
+ [m
+[31m-Confidence[m
+[32m+[m[32mSynthesized Propositions[m
+[32m+[m[32m↓[m
+ [m
+[32m+[m[32mInference[m
+[32m+[m[32m↓[m
+[32m+[m
+[32m+[m[32mConfidence[m
+ ↓[m
+ [m
+ Structured Conclusion[m
+[36m@@ -42,6 +49,18 @@[m [mfrom app.services.cognition.reasoning.confidence_engine import ([m
+     ConfidenceEngine,[m
+ )[m
+ [m
+[32m+[m[32mfrom app.services.cognition.reasoning.premise_extractor import ([m
+[32m+[m[32m    PremiseExtractor,[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mfrom app.services.cognition.reasoning.premise_relationship_assessor import ([m
+[32m+[m[32m    PremiseRelationshipAssessor,[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mfrom app.services.cognition.reasoning.proposition_synthesizer import ([m
+[32m+[m[32m    PropositionSynthesizer,[m
+[32m+[m[32m)[m
+[32m+[m
+ [m
+ class ReasoningEngine:[m
+     """[m
+[36m@@ -53,6 +72,9 @@[m [mclass ReasoningEngine:[m
+ [m
+     def __init__(self):[m
+         self.evidence = EvidenceAnalyzer()[m
+[32m+[m[32m        self.premises = PremiseExtractor()[m
+[32m+[m[32m        self.relationships = PremiseRelationshipAssessor()[m
+[32m+[m[32m        self.propositions = None[m
+         self.inference = InferenceEngine()[m
+         self.confidence = ConfidenceEngine()[m
+ [m
+[36m@@ -137,6 +159,46 @@[m [mclass ReasoningEngine:[m
+             "Organized evidence."[m
+         )[m
+ [m
+[32m+[m[32m        premises = self.premises.extract([m
+[32m+[m[32m            evidence_bundle[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m        trace.append([m
+[32m+[m[32m            "Extracted reasoning premises."[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m        premise_relationships = [][m
+[32m+[m
+[32m+[m[32m        for index, source in enumerate(premises):[m
+[32m+[m[32m            for target in premises[index + 1:]:[m
+[32m+[m[32m                relationship = self.relationships.assess([m
+[32m+[m[32m                    source=source,[m
+[32m+[m[32m                    target=target,[m
+[32m+[m[32m                )[m
+[32m+[m
+[32m+[m[32m                if relationship is not None:[m
+[32m+[m[32m                    premise_relationships.append([m
+[32m+[m[32m                        relationship[m
+[32m+[m[32m                    )[m
+[32m+[m
+[32m+[m[32m        trace.append([m
+[32m+[m[32m            "Assessed premise relationships."[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m        synthesized_propositions = [][m
+[32m+[m
+[32m+[m[32m        if self.propositions is not None:[m
+[32m+[m[32m            synthesized_propositions = ([m
+[32m+[m[32m                self.propositions.synthesize([m
+[32m+[m[32m                    premises=premises,[m
+[32m+[m[32m                    relationships=premise_relationships,[m
+[32m+[m[32m                )[m
+[32m+[m[32m            )[m
+[32m+[m
+[32m+[m[32m            trace.append([m
+[32m+[m[32m                "Synthesized propositions."[m
+[32m+[m[32m            )[m
+[32m+[m
+         candidate_inferences = ([m
+             self.inference.infer([m
+                 evidence_bundle[m
+[36m@@ -148,7 +210,6 @@[m [mclass ReasoningEngine:[m
+         )[m
+ [m
+         if not candidate_inferences:[m
+[31m-[m
+             trace.append([m
+                 "No supported inference could be produced."[m
+             )[m
+[36m@@ -156,6 +217,9 @@[m [mclass ReasoningEngine:[m
+             return ReasoningResult([m
+                 question=question,[m
+                 evidence=evidence_bundle,[m
+[32m+[m[32m                premises=premises,[m
+[32m+[m[32m                premise_relationships=premise_relationships,[m
+[32m+[m[32m                synthesized_propositions=synthesized_propositions,[m
+                 inferences=[],[m
+                 conclusion=None,[m
+                 reasoning_trace=trace,[m
+[36m@@ -164,11 +228,9 @@[m [mclass ReasoningEngine:[m
+ [m
+         strongest = candidate_inferences[0][m
+ [m
+[31m-        confidence = ([m
+[31m-            self.confidence.assess([m
+[31m-                inference=strongest,[m
+[31m-                evidence=evidence_bundle,[m
+[31m-            )[m
+[32m+[m[32m        confidence = self.confidence.assess([m
+[32m+[m[32m            inference=strongest,[m
+[32m+[m[32m            evidence=evidence_bundle,[m
+         )[m
+ [m
+         trace.append([m
+[36m@@ -177,30 +239,23 @@[m [mclass ReasoningEngine:[m
+ [m
+         conclusion = ReasoningConclusion([m
+             statement=strongest.statement,[m
+[31m-[m
+             evidence_summary=([m
+                 f"{len(strongest.supporting_evidence_ids)} "[m
+                 "supporting evidence item(s)."[m
+             ),[m
+[31m-[m
+             inference_summary=([m
+                 "Conclusion selected from the "[m
+                 "highest-supported candidate inference."[m
+             ),[m
+[31m-[m
+             confidence=confidence,[m
+[31m-[m
+             limitations=strongest.limitations,[m
+[31m-[m
+             alternatives=[],[m
+[31m-[m
+             missing_information=([m
+                 self._missing_information([m
+                     strongest=strongest,[m
+                     evidence_bundle=evidence_bundle,[m
+                 )[m
+             ),[m
+[31m-[m
+             recommended_next_step=([m
+                 "Collect additional corroborating "[m
+                 "evidence if higher confidence is "[m
+[36m@@ -214,14 +269,12 @@[m [mclass ReasoningEngine:[m
+ [m
+         return ReasoningResult([m
+             question=question,[m
+[31m-[m
+             evidence=evidence_bundle,[m
+[31m-[m
+[32m+[m[32m            premises=premises,[m
+[32m+[m[32m            premise_relationships=premise_relationships,[m
+[32m+[m[32m            synthesized_propositions=synthesized_propositions,[m
+             inferences=candidate_inferences,[m
+[31m-[m
+             conclusion=conclusion,[m
+[31m-[m
+             reasoning_trace=trace,[m
+[31m-[m
+             status="complete",[m
+         )[m

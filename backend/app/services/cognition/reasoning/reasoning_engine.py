@@ -12,12 +12,19 @@ Instead it orchestrates:
 Evidence
 ↓
 
-Inference
+Premises
+↓
 
+Premise Relationships
+↓
+
+Synthesized Propositions
+↓
+
+Inference
 ↓
 
 Confidence
-
 ↓
 
 Structured Conclusion
@@ -42,6 +49,18 @@ from app.services.cognition.reasoning.confidence_engine import (
     ConfidenceEngine,
 )
 
+from app.services.cognition.reasoning.premise_extractor import (
+    PremiseExtractor,
+)
+
+from app.services.cognition.reasoning.premise_relationship_assessor import (
+    PremiseRelationshipAssessor,
+)
+
+from app.services.cognition.reasoning.proposition_synthesizer import (
+    PropositionSynthesizer,
+)
+
 
 class ReasoningEngine:
     """
@@ -53,6 +72,9 @@ class ReasoningEngine:
 
     def __init__(self):
         self.evidence = EvidenceAnalyzer()
+        self.premises = PremiseExtractor()
+        self.relationships = PremiseRelationshipAssessor()
+        self.propositions = None
         self.inference = InferenceEngine()
         self.confidence = ConfidenceEngine()
 
@@ -137,6 +159,46 @@ class ReasoningEngine:
             "Organized evidence."
         )
 
+        premises = self.premises.extract(
+            evidence_bundle
+        )
+
+        trace.append(
+            "Extracted reasoning premises."
+        )
+
+        premise_relationships = []
+
+        for index, source in enumerate(premises):
+            for target in premises[index + 1:]:
+                relationship = self.relationships.assess(
+                    source=source,
+                    target=target,
+                )
+
+                if relationship is not None:
+                    premise_relationships.append(
+                        relationship
+                    )
+
+        trace.append(
+            "Assessed premise relationships."
+        )
+
+        synthesized_propositions = []
+
+        if self.propositions is not None:
+            synthesized_propositions = (
+                self.propositions.synthesize(
+                    premises=premises,
+                    relationships=premise_relationships,
+                )
+            )
+
+            trace.append(
+                "Synthesized propositions."
+            )
+
         candidate_inferences = (
             self.inference.infer(
                 evidence_bundle
@@ -148,7 +210,6 @@ class ReasoningEngine:
         )
 
         if not candidate_inferences:
-
             trace.append(
                 "No supported inference could be produced."
             )
@@ -156,6 +217,9 @@ class ReasoningEngine:
             return ReasoningResult(
                 question=question,
                 evidence=evidence_bundle,
+                premises=premises,
+                premise_relationships=premise_relationships,
+                synthesized_propositions=synthesized_propositions,
                 inferences=[],
                 conclusion=None,
                 reasoning_trace=trace,
@@ -164,11 +228,9 @@ class ReasoningEngine:
 
         strongest = candidate_inferences[0]
 
-        confidence = (
-            self.confidence.assess(
-                inference=strongest,
-                evidence=evidence_bundle,
-            )
+        confidence = self.confidence.assess(
+            inference=strongest,
+            evidence=evidence_bundle,
         )
 
         trace.append(
@@ -177,30 +239,23 @@ class ReasoningEngine:
 
         conclusion = ReasoningConclusion(
             statement=strongest.statement,
-
             evidence_summary=(
                 f"{len(strongest.supporting_evidence_ids)} "
                 "supporting evidence item(s)."
             ),
-
             inference_summary=(
                 "Conclusion selected from the "
                 "highest-supported candidate inference."
             ),
-
             confidence=confidence,
-
             limitations=strongest.limitations,
-
             alternatives=[],
-
             missing_information=(
                 self._missing_information(
                     strongest=strongest,
                     evidence_bundle=evidence_bundle,
                 )
             ),
-
             recommended_next_step=(
                 "Collect additional corroborating "
                 "evidence if higher confidence is "
@@ -214,14 +269,12 @@ class ReasoningEngine:
 
         return ReasoningResult(
             question=question,
-
             evidence=evidence_bundle,
-
+            premises=premises,
+            premise_relationships=premise_relationships,
+            synthesized_propositions=synthesized_propositions,
             inferences=candidate_inferences,
-
             conclusion=conclusion,
-
             reasoning_trace=trace,
-
             status="complete",
         )
