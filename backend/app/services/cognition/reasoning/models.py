@@ -228,6 +228,36 @@ class PremiseRelationship(BaseModel):
         return self
 
 
+class CandidateProposition(BaseModel):
+    """
+    Untrusted semantic proposition proposed by a semantic generator.
+
+    A CandidateProposition is not evidence-grounded merely because
+    it references valid premises. It must pass Sentinel governance
+    before promotion to SynthesizedProposition.
+    """
+
+    statement: str = Field(
+        min_length=1,
+    )
+
+    premise_ids: list[str] = Field(
+        min_length=2,
+    )
+
+    relationship_ids: list[str] = Field(
+        default_factory=list,
+    )
+
+    qualifications: list[str] = Field(
+        default_factory=list,
+    )
+
+    generator_metadata: dict[str, Any] = Field(
+        default_factory=dict,
+    )
+
+
 class SynthesizedProposition(BaseModel):
     """
     One higher-order proposition derived from multiple
