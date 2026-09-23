@@ -10,7 +10,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class EvidenceDisposition(StrEnum):
@@ -228,6 +228,22 @@ class PremiseRelationship(BaseModel):
         return self
 
 
+class CandidateRelationshipReference(BaseModel):
+    """Untrusted structural reference to an assessed directional relationship."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    source_premise_id: str = Field(min_length=1)
+    target_premise_id: str = Field(min_length=1)
+    kind: PremiseRelationshipKind
+
+    @model_validator(mode="after")
+    def validate_distinct_premises(self):
+        if self.source_premise_id == self.target_premise_id:
+            raise ValueError("A relationship reference requires distinct premises.")
+        return self
+
+
 class CandidateProposition(BaseModel):
     """
     Untrusted semantic proposition proposed by a semantic generator.
@@ -237,6 +253,8 @@ class CandidateProposition(BaseModel):
     before promotion to SynthesizedProposition.
     """
 
+    model_config = ConfigDict(extra="forbid")
+
     statement: str = Field(
         min_length=1,
     )
@@ -245,7 +263,7 @@ class CandidateProposition(BaseModel):
         min_length=2,
     )
 
-    relationship_ids: list[str] = Field(
+    relationship_references: list[CandidateRelationshipReference] = Field(
         default_factory=list,
     )
 
@@ -443,4 +461,3 @@ class ReasoningResult(BaseModel):
     metadata: dict[str, Any] = Field(
         default_factory=dict,
     )
-
