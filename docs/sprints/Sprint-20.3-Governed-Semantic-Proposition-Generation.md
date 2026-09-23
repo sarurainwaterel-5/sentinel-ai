@@ -34,10 +34,12 @@ confidence, or provenance.
 
 ### 20.3-B — Deterministic grounding validator
 
-Validate premise and directional relationship membership and semantic
-admissibility against supplied evidence-grounded premises. Reject uncertain,
-unsupported, or inconsistent candidates with inspectable bounded reasons.
-Validation must address the statement itself, not only its references.
+Validate premise and directional relationship membership and reconstruct
+provenance from trusted inputs. Reject missing, conflicting, or inadmissible
+references with inspectable bounded reasons. This deterministic gate does not
+certify that an arbitrary natural-language statement is entailed by premises.
+Semantic admissibility and statement-level validation remain required before
+promotion to a trusted synthesized proposition in 20.3-C and later evaluation.
 
 ### 20.3-C — PropositionSynthesizer governance integration
 
