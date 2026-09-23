@@ -1,4 +1,6 @@
 from app.services.cognition.reasoning.models import (
+    CandidateProposition,
+    CandidateRelationshipReference,
     Premise,
     PremiseRelationship,
     PremiseRelationshipKind,
@@ -16,7 +18,7 @@ class FakePropositionGenerator:
         self.statement = statement
         self.calls = []
 
-    def synthesize(
+    def generate(
         self,
         *,
         premises,
@@ -29,7 +31,18 @@ class FakePropositionGenerator:
             }
         )
 
-        return self.statement
+        return CandidateProposition(
+            statement=self.statement,
+            premise_ids=[premise.premise_id for premise in premises],
+            relationship_references=[
+                CandidateRelationshipReference(
+                    source_premise_id=relationship.source_premise_id,
+                    target_premise_id=relationship.target_premise_id,
+                    kind=relationship.kind,
+                )
+                for relationship in relationships
+            ],
+        )
 
 
 def test_synthesizer_derives_proposition_from_related_premises():

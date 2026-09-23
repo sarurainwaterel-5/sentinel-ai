@@ -47,6 +47,14 @@ candidate statement as well as its provenance. A validated reference list
 alone is insufficient. `INDEPENDENT` and `UNRESOLVED` relationships do not
 qualify for synthesis. `CONFLICTS` cannot silently become `SUPPORTS`.
 
+During Sprint 20.3-C, a structural pass can be represented as a
+`SynthesizedProposition` with an explicit `semantic_grounding_verified=false`
+marker. This marker identifies the limit of that artifact: its provenance is
+validated, but its arbitrary natural-language statement is not certified as
+entailed. It must not be supplied to inference as grounded input. Acceptance
+for semantic use requires the separate statement-level gate before the future
+Proposition → Inference boundary is opened.
+
 Provider implementations sit behind a provider-neutral generation boundary.
 Provider or model errors yield no proposition; they never trigger fabricated
 fallback content. `ReasoningEngine` accepts dependencies without constructing
@@ -61,7 +69,8 @@ accepted artifacts for inspection. They must not expose private chain-of-thought
 Sprint 20.3 does not make `InferenceEngine` consume propositions. Existing
 evidence-based inference continues unchanged. Proposition → Inference is a
 future architectural decision. This ADR extends ADR-036's provenance
-requirement with validation of the candidate's meaning before promotion.
+requirement with structural validation during Sprint 20.3-C and requires
+statement-level validation before semantic grounding can be claimed.
 
 ## Consequences
 

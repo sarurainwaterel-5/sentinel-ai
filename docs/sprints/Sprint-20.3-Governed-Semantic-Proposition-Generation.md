@@ -39,14 +39,19 @@ provenance from trusted inputs. Reject missing, conflicting, or inadmissible
 references with inspectable bounded reasons. This deterministic gate does not
 certify that an arbitrary natural-language statement is entailed by premises.
 Semantic admissibility and statement-level validation remain required before
-promotion to a trusted synthesized proposition in 20.3-C and later evaluation.
+a synthesized proposition can be treated as semantically grounded or used
+at the future inference boundary.
 
 ### 20.3-C — PropositionSynthesizer governance integration
 
 Generate candidates, validate them, and construct accepted propositions from
 trusted inputs only. Exclude `INDEPENDENT` and `UNRESOLVED`; preserve
 `CONFLICTS` without recasting them as support. No rejection or provider
-failure may produce a fallback proposition.
+failure may produce a fallback proposition. A structural pass may produce a
+proposition with Sentinel-owned provenance, but must explicitly report that
+semantic grounding has not been verified. The synthesizer exposes bounded
+rejection reasons. Statement-level semantic admissibility remains an open
+gate and cannot be inferred from valid references alone.
 
 ### 20.3-D — Semantic generation provider boundary
 

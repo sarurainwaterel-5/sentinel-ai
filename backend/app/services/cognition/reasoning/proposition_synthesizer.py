@@ -1,31 +1,45 @@
+"""Governed promotion of untrusted candidate propositions."""
+
 from uuid import uuid4
 
+from pydantic import BaseModel, ConfigDict, Field
+
 from app.services.cognition.reasoning.models import (
+    CandidateProposition,
     Premise,
     PremiseRelationship,
     PremiseRelationshipKind,
     SynthesizedProposition,
 )
+from app.services.cognition.reasoning.proposition_grounding_validator import (
+    PropositionGroundingValidator,
+    PropositionGroundingValidationResult,
+)
+from app.services.cognition.reasoning.semantic_proposition_generator import (
+    SemanticPropositionGenerator,
+)
+
+
+class PropositionSynthesisOutcome(BaseModel):
+    """Inspectable high-level outcome; contains no private model reasoning."""
+
+    model_config = ConfigDict(frozen=True)
+
+    propositions: list[SynthesizedProposition] = Field(default_factory=list)
+    rejection_reasons: tuple[str, ...] = ()
+    validation: PropositionGroundingValidationResult | None = None
 
 
 class PropositionSynthesizer:
-    """
-    Synthesizes higher-order propositions from related,
-    evidence-grounded premises.
-
-    The synthesizer preserves complete lineage back to
-    the premises, evidence, and domains that produced the
-    synthesized proposition.
-
-    It does not produce final conclusions.
-    """
+    """Coordinates candidate generation, validation, and trusted promotion."""
 
     def __init__(
         self,
         *,
-        semantic_generator,
+        semantic_generator: SemanticPropositionGenerator,
     ):
         self.semantic_generator = semantic_generator
+        self.grounding_validator = PropositionGroundingValidator()
 
     def synthesize(
         self,
@@ -33,88 +47,71 @@ class PropositionSynthesizer:
         premises: list[Premise],
         relationships: list[PremiseRelationship],
     ) -> list[SynthesizedProposition]:
-        """
-        Derive synthesized propositions from premises that
-        have meaningful semantic relationships.
-        """
+        return self.synthesize_with_validation(
+            premises=premises, relationships=relationships
+        ).propositions
 
+    def synthesize_with_validation(
+        self,
+        *,
+        premises: list[Premise],
+        relationships: list[PremiseRelationship],
+    ) -> PropositionSynthesisOutcome:
         if len(premises) < 2:
-            return []
+            return PropositionSynthesisOutcome(rejection_reasons=("insufficient_premises",))
 
-        premise_by_id = {
-            premise.premise_id: premise
-            for premise in premises
-        }
+        premise_ids = {premise.premise_id for premise in premises}
+        eligible = [
+            relationship for relationship in relationships
+            if relationship.kind not in {
+                PremiseRelationshipKind.INDEPENDENT,
+                PremiseRelationshipKind.UNRESOLVED,
+            }
+            and relationship.source_premise_id in premise_ids
+            and relationship.target_premise_id in premise_ids
+        ]
+        if not eligible:
+            return PropositionSynthesisOutcome(rejection_reasons=("no_eligible_relationships",))
 
-        relevant_relationships = [
-            relationship
-            for relationship in relationships
-            if (
-                relationship.kind
-                not in {
-                    PremiseRelationshipKind.INDEPENDENT,
-                    PremiseRelationshipKind.UNRESOLVED,
-                }
-                and relationship.source_premise_id
-                in premise_by_id
-                and relationship.target_premise_id
-                in premise_by_id
+        # Validate against all assessed relationships to catch omitted conflicts.
+        participating_ids = set()
+        for relationship in eligible:
+            participating_ids.update((relationship.source_premise_id,
+                                      relationship.target_premise_id))
+        participating = [p for p in premises if p.premise_id in participating_ids]
+
+        try:
+            candidate = self.semantic_generator.generate(
+                premises=participating, relationships=eligible
             )
-        ]
+        except Exception:
+            return PropositionSynthesisOutcome(rejection_reasons=("generator_failure",))
 
-        if not relevant_relationships:
-            return []
+        if not isinstance(candidate, CandidateProposition):
+            return PropositionSynthesisOutcome(rejection_reasons=("invalid_candidate",))
 
-        participating_ids: list[str] = []
-
-        for relationship in relevant_relationships:
-            for premise_id in (
-                relationship.source_premise_id,
-                relationship.target_premise_id,
-            ):
-                if premise_id not in participating_ids:
-                    participating_ids.append(premise_id)
-
-        participating_premises = [
-            premise_by_id[premise_id]
-            for premise_id in participating_ids
-        ]
-
-        if len(participating_premises) < 2:
-            return []
-
-        statement = self.semantic_generator.synthesize(
-            premises=participating_premises,
-            relationships=relevant_relationships,
+        validation = self.grounding_validator.validate(
+            candidate=candidate, premises=participating, relationships=relationships
         )
-
-        if not statement or not statement.strip():
-            return []
-
-        evidence_ids: list[str] = []
-        domain_ids: list[str] = []
-
-        for premise in participating_premises:
-            for evidence_id in premise.evidence_ids:
-                if evidence_id not in evidence_ids:
-                    evidence_ids.append(evidence_id)
-
-            for domain_id in premise.domain_ids:
-                if domain_id not in domain_ids:
-                    domain_ids.append(domain_id)
+        if not validation.structurally_valid:
+            return PropositionSynthesisOutcome(
+                rejection_reasons=validation.rejection_reasons,
+                validation=validation,
+            )
 
         proposition = SynthesizedProposition(
             proposition_id=f"proposition-{uuid4()}",
-            statement=statement.strip(),
-            premise_ids=participating_ids,
-            evidence_ids=evidence_ids,
-            domain_ids=domain_ids,
+            statement=candidate.statement.strip(),
+            premise_ids=list(validation.premise_ids),
+            evidence_ids=list(validation.evidence_ids),
+            domain_ids=list(validation.domain_ids),
             metadata={
+                "semantic_grounding_verified": validation.semantic_grounding_verified,
                 "relationship_kinds": [
-                    relationship.kind.value
-                    for relationship in relevant_relationships
+                    relation.kind.value for relation in validation.relationships
                 ],
             },
         )
-
-        return [proposition]
+        return PropositionSynthesisOutcome(
+            propositions=[proposition], validation=validation
+        )
