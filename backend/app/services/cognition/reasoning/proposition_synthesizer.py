@@ -3,6 +3,7 @@
 from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
+from pydantic import ValidationError
 
 from app.services.cognition.reasoning.models import (
     CandidateProposition,
@@ -17,6 +18,9 @@ from app.services.cognition.reasoning.proposition_grounding_validator import (
 )
 from app.services.cognition.reasoning.semantic_proposition_generator import (
     SemanticPropositionGenerator,
+)
+from app.services.cognition.reasoning.semantic_generation_provider import (
+    SemanticGenerationFailure,
 )
 
 
@@ -83,6 +87,14 @@ class PropositionSynthesizer:
         try:
             candidate = self.semantic_generator.generate(
                 premises=participating, relationships=eligible
+            )
+        except SemanticGenerationFailure as error:
+            return PropositionSynthesisOutcome(
+                rejection_reasons=(f"provider_{error.reason}",)
+            )
+        except ValidationError:
+            return PropositionSynthesisOutcome(
+                rejection_reasons=("malformed_generation",)
             )
         except Exception:
             return PropositionSynthesisOutcome(rejection_reasons=("generator_failure",))

@@ -56,7 +56,13 @@ gate and cannot be inferred from valid references alone.
 ### 20.3-D — Semantic generation provider boundary
 
 Keep generation behind a provider-neutral interface with isolated provider
-adapters and explicit error behavior.
+adapters and explicit error behavior. The narrow
+`SemanticGenerationProvider` contract accepts Sentinel premise and relationship
+artifacts and returns untrusted text plus observational metadata. Its bounded
+failure reasons are unavailable, refused, and malformed response. It does not
+parse a `CandidateProposition`; that translation belongs to the future
+production `SemanticPropositionGenerator` in 20.3-E. No provider adapter or
+model configuration is selected by this milestone.
 
 ### 20.3-E — Production semantic generator
 
