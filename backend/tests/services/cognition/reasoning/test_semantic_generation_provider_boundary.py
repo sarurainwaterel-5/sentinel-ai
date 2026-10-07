@@ -95,6 +95,7 @@ def test_provider_output_remains_untrusted_through_future_generator_boundary():
     assert candidate.generator_metadata["evidence_ids"] == "forged"
 
     outcome = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=FutureGeneratorStub(provider)
     ).synthesize_with_validation(premises=premises, relationships=relationships)
     assert outcome.validation.structurally_valid
@@ -114,6 +115,7 @@ def test_provider_failure_has_bounded_reason_and_no_fallback(reason):
     assert raised.value.reason == reason
 
     outcome = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=FutureGeneratorStub(provider)
     ).synthesize_with_validation(premises=premises, relationships=relationships)
     assert outcome.propositions == []
@@ -125,6 +127,7 @@ def test_malformed_provider_output_cannot_be_promoted(content):
     premises, relationships = trusted_inputs()
     provider = FakeProvider(SemanticGenerationResponse(content=content))
     outcome = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=FutureGeneratorStub(provider)
     ).synthesize_with_validation(premises=premises, relationships=relationships)
     assert outcome.propositions == []

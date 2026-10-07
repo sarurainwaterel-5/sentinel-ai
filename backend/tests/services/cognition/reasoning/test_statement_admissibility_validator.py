@@ -41,6 +41,7 @@ def synthesize(statement, *, conflict=False, qualifications=None, enabled=True):
     return PropositionSynthesizer(
         semantic_generator=ProviderSemanticPropositionGenerator(provider=Provider(statement, qualifications)),
         statement_validator=VerbatimPremiseStatementValidator() if enabled else None,
+        structural_only_compatibility=not enabled,
     ).synthesize_with_validation(premises=premises, relationships=relationships)
 
 

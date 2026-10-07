@@ -57,6 +57,7 @@ class Provider:
 def outcome(provider):
     premises, relationships = inputs()
     return PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=ProviderSemanticPropositionGenerator(provider=provider)
     ).synthesize_with_validation(premises=premises, relationships=relationships)
 
@@ -151,6 +152,7 @@ def test_provider_mutation_cannot_replace_trusted_lineage():
 
     premises, relationships = inputs()
     result = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=ProviderSemanticPropositionGenerator(provider=MutatingProvider())
     ).synthesize_with_validation(premises=premises, relationships=relationships)
     assert result.propositions[0].evidence_ids == ["e-a", "e-b"]

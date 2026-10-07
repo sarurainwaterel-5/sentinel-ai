@@ -92,3 +92,63 @@ frontend: 17 passed and build passed. The restored test environment uses CPU
 PyTorch after a CUDA-loading crash. No repository dependency pins changed.
 General natural-language semantic acceptance, PostgreSQL, and live generation
 remain unverified; the inference boundary remains closed.
+
+## Independent free-form gate follow-up
+
+The new 61-case `test_free_form_statement_admissibility.py` evaluates the real
+production parser, structural gate, free-form verdict governance, synthesizer
+and engine using scripted independent judge responses. Six semantic attack
+verdicts reject; five faithful control verdicts accept (paraphrase, multi-premise,
+qualification, conflict-preserving and conservative uncertainty). All six
+attacks also reject on both complete and insufficient-evidence engine paths,
+while evidence-based inferences/conclusions match baseline.
+
+Additional cases cover omitted conflicting premises, altered relationship kinds,
+forged generation/provider authority metadata, missing gates, explicit isolated
+compatibility, self-assessment dependencies, all relationship kinds, malformed
+and contradictory verdicts, provider/validator failure, mutation isolation,
+unsupported qualifications, uncertain support, and SDK-adapter bounded errors.
+
+| Category | Governed scripted-verdict result | Actual judge quality |
+| --- | --- | --- |
+| Unsupported facts | Rejected: unsupported_fact | Unverified |
+| Certainty inflation | Rejected: certainty_inflation | Unverified |
+| Causal overreach | Rejected: causal_overreach | Unverified |
+| Negation reversal | Rejected: negation_reversal | Unverified |
+| Fabricated precision | Rejected: fabricated_precision | Unverified |
+| Conflict suppression | Rejected: conflict_suppression | Unverified |
+| Five faithful controls | Accepted with independent-model scope; grounding false | Unverified |
+
+These are enforcement observations, not an entailment benchmark. A scripted
+judge with a predetermined response cannot demonstrate that a real assessor
+understands the candidate text. An internally consistent but semantically wrong
+judge verdict remains possible. G therefore stays PARTIAL and ADR-037 Proposed.
+The remaining requirement is reviewed evaluation of an independently configured
+assessor, using actual recorded or offline judgments rather than invented
+responses. No live API dependency is required in regression tests.
+
+Production acceptance no longer silently uses the old structural-only mode.
+That mode is retained only with explicit `structural_only_compatibility=True`.
+The original 22-case suite records that compatibility limitation; the separate
+free-form suite verifies required judge enforcement. All accepted scopes keep
+`semantic_grounding_verified=false`; Proposition → Inference remains closed.
+
+## Follow-up verification (independent gate)
+
+- New free-form gate tests: 61 passed.
+- Gate + original adversarial + exact-report evaluation: 103 passed.
+- Existing candidate/synthesizer/grounding/provider/generator/injection tests: 95 passed.
+- Complete reasoning suite: 220 passed, 1 warning.
+- Complete cognition suite: 538 passed, 3 warnings.
+- Full backend: 538 passed, 4 warnings.
+- Frontend: 17 passed; production build passed.
+- `git diff --check`: passed.
+
+Python 3.12, CPU PyTorch, cached existing embedding model, SQLite database imports
+and a placeholder API key for existing constructors were used. No live
+generation or judge call was made. Docker and psql executables are unavailable,
+so PostgreSQL integration was not validated. Backend warnings remain the
+embedding-dimension rename, unavailable Qdrant compatibility check,
+Starlette/httpx deprecation and AnyIO BlockingPortal alias. npm additionally
+warns about the execution environment's deprecated http-proxy configuration.
+No dependency pins or inference implementation changed.

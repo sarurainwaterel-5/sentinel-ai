@@ -1,7 +1,7 @@
-"""20.3-G: structural rejection and the still-open semantic acceptance gate.
+"""20.3-G: explicit structural-only compatibility observations.
 
 Passing these tests is not an entailment benchmark pass. Semantic attacks
-with valid references currently pass the structural gate, but remain marked
+with valid references pass only in explicit structural-only compatibility mode, but remain marked
 unverified and are excluded from inference. Those cases document a known
 limitation that must be closed before ADR-037 can be accepted for semantic use.
 """
@@ -60,6 +60,7 @@ class Provider:
 
 def synthesizer(provider):
     return PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=ProviderSemanticPropositionGenerator(provider=provider)
     )
 

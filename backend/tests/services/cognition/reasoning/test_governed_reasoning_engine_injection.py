@@ -82,6 +82,7 @@ def test_injected_governance_preserves_inference_and_reports_safe_outcomes(
 ):
     provider = Provider(mode)
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=ProviderSemanticPropositionGenerator(provider=provider)
     )
     baseline = configured_engine(monkeypatch, supported=supported).reason(

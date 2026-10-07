@@ -204,6 +204,7 @@ class ReasoningEngine:
                 "status": "accepted" if synthesized_propositions else "rejected",
                 "rejection_reasons": list(synthesis.rejection_reasons),
                 "semantic_grounding_verified": False,
+                "acceptance_mode": synthesis.acceptance_mode,
             }
             if synthesis.statement_validation is not None:
                 result_metadata["proposition_synthesis"]["statement_validation"] = {
