@@ -2,8 +2,9 @@
 
 ## Status
 
-A–F implemented and regression verified. G remains outstanding.
-ADR-037 remains Proposed until implementation review.
+A–F implemented and regression verified. G's adversarial suite is implemented;
+its statement-level semantic acceptance gate remains open. ADR-037 remains
+Proposed. Sprint semantic acceptance is not complete.
 
 ## Sprint Intent
 
@@ -109,7 +110,7 @@ conclusion behavior. All 435 backend tests passed after F; all 17 frontend
 tests and the production build passed. Checks ran on Python 3.12 with SQLite
 for database imports and a placeholder API key for existing constructors;
 no live model generation was tested and PostgreSQL was not validated.
-Semantic grounding remains false. G's full adversarial/evaluation gate and
+Semantic grounding remains false. Statement-level semantic acceptance and
 ADR-037 implementation review remain outstanding.
 
 ### 20.3-G — Adversarial/evaluation suite
@@ -117,6 +118,20 @@ ADR-037 implementation review remain outstanding.
 Test unsupported facts, certainty inflation, causal overreach, negation
 reversal, conflict suppression, fabricated precision, invalid premise and
 relationship references, provenance laundering, and provider failure.
+
+The 22-case suite in `test_semantic_proposition_adversarial_evaluation.py`
+exercises all listed categories through the production parser and governed
+synthesis pipeline, including evidence-inference isolation on both engine
+result paths. Structural attacks fail closed. Semantic attacks with valid
+references currently pass the structural gate but remain explicitly unverified;
+the suite records that limitation rather than claiming semantic rejection.
+See [the evaluation matrix](Sprint-20.3-Adversarial-Evaluation.md).
+
+The exact remaining acceptance work is a separate statement-level admissibility
+gate with actual rejection of unsupported facts, certainty inflation, causal
+overreach, negation reversal, fabricated precision, and statement-level conflict
+suppression. Faithful controls must also be evaluated. ADR-037 remains Proposed
+and propositions remain excluded from inference until those gates are satisfied.
 
 ## Definition of done
 

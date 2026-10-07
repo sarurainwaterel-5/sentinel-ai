@@ -78,3 +78,14 @@ The additional validation stage may reject plausible but unprovable semantic
 synthesis. That is the intended safe outcome. A production generator must be
 evaluated with adversarial cases; successful generation alone is not evidence
 of grounded acceptance.
+
+## Sprint 20.3-G evaluation finding
+
+The deterministic adversarial suite confirms structural rejection and
+evidence-inference isolation, but also demonstrates that unsupported facts,
+certainty inflation, causal overreach, negation reversal, fabricated precision,
+and statement-level conflict suppression can pass when their references are
+valid. These artifacts remain explicitly semantically unverified. This is an
+open acceptance requirement, not evidence that statement-level validation is
+implemented. See the [evaluation matrix](../../sprints/Sprint-20.3-Adversarial-Evaluation.md).
+This ADR remains Proposed pending that gate and implementation review.
