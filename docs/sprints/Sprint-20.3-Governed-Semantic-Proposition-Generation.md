@@ -2,9 +2,8 @@
 
 ## Status
 
-A–D implemented. E implemented with targeted verification; full backend
-regression remains pending in an environment with embedding dependencies.
-F and G remain outstanding. ADR-037 remains Proposed until implementation review.
+A–F implemented and regression verified. G remains outstanding.
+ADR-037 remains Proposed until implementation review.
 
 ## Sprint Intent
 
@@ -82,21 +81,36 @@ their bounded reasons, and an invalid provider response type yields
 untrusted `generator_metadata.provider_metadata` namespace. No vendor adapter,
 model, credentials, or engine wiring is selected here.
 
-Verification on Python 3.12 with the relevant repository-pinned dependencies:
-22 new generator cases and 71 targeted generator/provider/governance cases
-passed; 100 reasoning tests passed excluding the existing uncertainty module;
-412 backend tests passed excluding the uncertainty and reflection-route
-modules. Both excluded modules fail collection because `sentence_transformers`
-is absent; this is not a full backend regression pass. Database-import tests
-used `DATABASE_URL=sqlite:///:memory:`; PostgreSQL was not validated. Frontend:
-17 tests passed and production build passed. Semantic grounding remains false
-and the evidence-based inference implementation is unchanged.
+Verification: 22 new generator cases and 71 targeted generator/provider/
+governance cases passed. The initial embedding-dependency collection gap was
+resolved by installing sentence-transformers and caching the existing
+all-MiniLM-L6-v2 model in the execution environment. All 420 backend tests
+passed before F implementation. No repository dependency pins were changed.
 
 ### 20.3-F — ReasoningEngine dependency injection
 
 Inject governed synthesis without direct provider construction. Preserve the
 existing evidence-based inference path and expose safe high-level trace and
 result information without private chain-of-thought.
+
+`ReasoningEngine(proposition_synthesizer=...)` now accepts governed synthesis
+as an optional constructor dependency. The default remains disabled and does
+not construct a model or provider. The engine consumes the inspectable synthesis
+outcome, records bounded rejection reasons in result metadata, and reports
+structural acceptance separately from semantic grounding in high-level traces.
+Outcome metadata is retained for both complete and insufficient-evidence
+results. Inference still receives only the original EvidenceBundle.
+
+Verification: 15 new injection cases cover accepted candidates, malformed
+generation, invalid references, bounded provider failures, unexpected errors,
+private-payload exclusion, and default operation without credentials. Both
+complete and insufficient-evidence paths preserve baseline inference and
+conclusion behavior. All 435 backend tests passed after F; all 17 frontend
+tests and the production build passed. Checks ran on Python 3.12 with SQLite
+for database imports and a placeholder API key for existing constructors;
+no live model generation was tested and PostgreSQL was not validated.
+Semantic grounding remains false. G's full adversarial/evaluation gate and
+ADR-037 implementation review remain outstanding.
 
 ### 20.3-G — Adversarial/evaluation suite
 
