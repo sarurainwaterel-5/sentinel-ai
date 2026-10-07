@@ -2,7 +2,9 @@
 
 ## Status
 
-Planned. ADR-037 remains Proposed until implementation review.
+A–D implemented. E implemented with targeted verification; full backend
+regression remains pending in an environment with embedding dependencies.
+F and G remain outstanding. ADR-037 remains Proposed until implementation review.
 
 ## Sprint Intent
 
@@ -68,6 +70,27 @@ model configuration is selected by this milestone.
 
 Implement a production adapter that returns only untrusted candidates. Its
 prompt or model configuration is not a substitute for grounding validation.
+
+`ProviderSemanticPropositionGenerator` accepts an injected
+`SemanticGenerationProvider` and parses one strict `CandidateProposition` JSON
+object. It performs no response repair, markdown extraction, fallback, or
+grounding decision. Providers receive deep copies of the trusted artifacts so
+provider mutation cannot replace the lineage later validated by Sentinel.
+Schema/JSON errors remain `malformed_generation`; provider failures retain
+their bounded reasons, and an invalid provider response type yields
+`provider_malformed_response`. Provider metadata is copied into the candidate's
+untrusted `generator_metadata.provider_metadata` namespace. No vendor adapter,
+model, credentials, or engine wiring is selected here.
+
+Verification on Python 3.12 with the relevant repository-pinned dependencies:
+22 new generator cases and 71 targeted generator/provider/governance cases
+passed; 100 reasoning tests passed excluding the existing uncertainty module;
+412 backend tests passed excluding the uncertainty and reflection-route
+modules. Both excluded modules fail collection because `sentence_transformers`
+is absent; this is not a full backend regression pass. Database-import tests
+used `DATABASE_URL=sqlite:///:memory:`; PostgreSQL was not validated. Frontend:
+17 tests passed and production build passed. Semantic grounding remains false
+and the evidence-based inference implementation is unchanged.
 
 ### 20.3-F — ReasoningEngine dependency injection
 
