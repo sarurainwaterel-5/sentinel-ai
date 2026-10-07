@@ -205,6 +205,11 @@ class ReasoningEngine:
                 "rejection_reasons": list(synthesis.rejection_reasons),
                 "semantic_grounding_verified": False,
             }
+            if synthesis.statement_validation is not None:
+                result_metadata["proposition_synthesis"]["statement_validation"] = {
+                    "admissible": synthesis.statement_validation.admissible,
+                    "scope": synthesis.statement_validation.validation_scope,
+                }
             if synthesized_propositions:
                 trace.append(
                     "Synthesized structurally validated propositions; "

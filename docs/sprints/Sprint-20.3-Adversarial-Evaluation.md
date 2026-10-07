@@ -16,6 +16,9 @@ limitation, not a successful semantic rejection result.
 
 ## Evaluation matrix
 
+These observations describe structural-only compatibility mode. The bounded
+report-mode follow-up below is evaluated separately.
+
 | Category | Observed result | Semantic acceptance gate |
 | --- | --- | --- |
 | Unsupported fact | Valid references pass; statement remains unverified | Open |
@@ -70,3 +73,22 @@ faithful controls that avoid blanket rejection. Prompts, valid provenance,
 provider metadata, and passing structural tests cannot satisfy this requirement.
 The Proposition → Inference boundary remains closed. The evaluation suite is
 implemented; Sprint 20.3 semantic acceptance is not complete.
+
+## Bounded report-mode follow-up
+
+The opt-in `VerbatimPremiseStatementValidator` rejects all six semantic attack
+categories above as unsupported statement forms. It accepts exact
+Sentinel-rendered, JSON-quoted premise reports with complete premise coverage,
+unchanged source wording, preserved assessed relationships, and no unvalidated
+qualifications. It rejects other prose, including possibly faithful paraphrases.
+It records reporting-fidelity scope rather than semantic entailment:
+`statement_admissibility=verbatim_premise_report`; semantic grounding stays false.
+
+Twenty new cases verify rejection, faithful controls including conflict reports,
+mutated reports, missing premises, embedded source text, qualification rejection,
+engine outcome metadata, legacy compatibility, and validator failure without a
+fallback or private-payload disclosure. Full backend: 477 passed, 4 warnings;
+frontend: 17 passed and build passed. The restored test environment uses CPU
+PyTorch after a CUDA-loading crash. No repository dependency pins changed.
+General natural-language semantic acceptance, PostgreSQL, and live generation
+remain unverified; the inference boundary remains closed.

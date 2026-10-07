@@ -6,6 +6,10 @@ A–F implemented and regression verified. G's adversarial suite is implemented;
 its statement-level semantic acceptance gate remains open. ADR-037 remains
 Proposed. Sprint semantic acceptance is not complete.
 
+A bounded opt-in statement gate now accepts only exact Sentinel-rendered
+verbatim premise reports. This closes rejection for unsupported statement forms
+in that mode; arbitrary natural-language semantic grounding remains open.
+
 ## Sprint Intent
 
 Build on ADR-036 and completed Sprint 20.2. Introduce semantic proposition
@@ -132,6 +136,35 @@ gate with actual rejection of unsupported facts, certainty inflation, causal
 overreach, negation reversal, fabricated precision, and statement-level conflict
 suppression. Faithful controls must also be evaluated. ADR-037 remains Proposed
 and propositions remain excluded from inference until those gates are satisfied.
+
+### Bounded statement admissibility follow-up
+
+`VerbatimPremiseStatementValidator` renders a JSON-quoted report of all supplied
+participating premises and eligible assessed relationships. An exact statement
+match, complete premise coverage, and no unvalidated qualifications are required.
+Unsupported facts, inflated certainty, causal additions, negation reversal,
+fabricated precision, and conflict suppression are rejected by the allowed-form
+rule rather than an inferred understanding of arbitrary prose. Faithful exact
+reports, including conflict reports, are positive controls. Paraphrases are
+rejected even when they might be faithful.
+
+Enable this gate explicitly through
+`PropositionSynthesizer(semantic_generator=..., statement_validator=VerbatimPremiseStatementValidator())`.
+Structural-only compatibility mode remains available when omitted. Gate rejection
+or validator failure produces no fallback proposition. Accepted report metadata
+records the bounded scope `statement_admissibility=verbatim_premise_report`;
+`semantic_grounding_verified` remains false. Engine result metadata exposes the
+scope and admissibility result without private validation payloads. Inference
+continues to consume evidence only. This verifies reporting fidelity, not the
+truth of sources or general semantic entailment; ADR-037 remains Proposed.
+
+Verification: 20 new bounded-gate cases passed; 57 combined gate, evaluation,
+and injection cases passed; full backend 477 passed with 4 warnings. Frontend
+17 passed and production build passed. The restored Python 3.12 test environment
+uses a CPU PyTorch build after the CUDA build crashed during collection; no
+repository dependency pins changed. PostgreSQL and live generation remain
+unverified. Warnings cover the embedding dimension rename, unavailable Qdrant,
+Starlette/httpx deprecation, and the AnyIO portal alias.
 
 ## Definition of done
 

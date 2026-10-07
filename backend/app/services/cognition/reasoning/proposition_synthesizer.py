@@ -22,6 +22,10 @@ from app.services.cognition.reasoning.semantic_proposition_generator import (
 from app.services.cognition.reasoning.semantic_generation_provider import (
     SemanticGenerationFailure,
 )
+from app.services.cognition.reasoning.statement_admissibility_validator import (
+    StatementAdmissibilityResult,
+    VerbatimPremiseStatementValidator,
+)
 
 
 class PropositionSynthesisOutcome(BaseModel):
@@ -32,6 +36,7 @@ class PropositionSynthesisOutcome(BaseModel):
     propositions: list[SynthesizedProposition] = Field(default_factory=list)
     rejection_reasons: tuple[str, ...] = ()
     validation: PropositionGroundingValidationResult | None = None
+    statement_validation: StatementAdmissibilityResult | None = None
 
 
 class PropositionSynthesizer:
@@ -41,9 +46,11 @@ class PropositionSynthesizer:
         self,
         *,
         semantic_generator: SemanticPropositionGenerator,
+        statement_validator: VerbatimPremiseStatementValidator | None = None,
     ):
         self.semantic_generator = semantic_generator
         self.grounding_validator = PropositionGroundingValidator()
+        self.statement_validator = statement_validator
 
     def synthesize(
         self,
@@ -111,6 +118,23 @@ class PropositionSynthesizer:
                 validation=validation,
             )
 
+        statement_validation = None
+        if self.statement_validator is not None:
+            try:
+                statement_validation = self.statement_validator.validate(
+                    candidate=candidate, premises=participating, relationships=eligible
+                )
+            except Exception:
+                return PropositionSynthesisOutcome(
+                    rejection_reasons=("statement_validator_failure",), validation=validation
+                )
+            if not statement_validation.admissible:
+                return PropositionSynthesisOutcome(
+                    rejection_reasons=statement_validation.rejection_reasons,
+                    validation=validation,
+                    statement_validation=statement_validation,
+                )
+
         proposition = SynthesizedProposition(
             proposition_id=f"proposition-{uuid4()}",
             statement=candidate.statement.strip(),
@@ -124,6 +148,9 @@ class PropositionSynthesizer:
                 ],
             },
         )
+        if statement_validation is not None:
+            proposition.metadata["statement_admissibility"] = statement_validation.validation_scope
         return PropositionSynthesisOutcome(
-            propositions=[proposition], validation=validation
+            propositions=[proposition], validation=validation,
+            statement_validation=statement_validation,
         )

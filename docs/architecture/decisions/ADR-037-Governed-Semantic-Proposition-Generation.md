@@ -89,3 +89,11 @@ valid. These artifacts remain explicitly semantically unverified. This is an
 open acceptance requirement, not evidence that statement-level validation is
 implemented. See the [evaluation matrix](../../sprints/Sprint-20.3-Adversarial-Evaluation.md).
 This ADR remains Proposed pending that gate and implementation review.
+
+The follow-up `VerbatimPremiseStatementValidator` provides an opt-in bounded
+gate for exact Sentinel-rendered reports of trusted premises and relationships.
+It rejects all other statement forms and unvalidated qualifications without
+claiming general natural-language entailment. Its accepted scope is recorded
+separately from `semantic_grounding_verified`, which remains false. Existing
+structural-only mode is unchanged. This does not resolve the general semantic
+acceptance requirement above or open the Proposition → Inference boundary.
