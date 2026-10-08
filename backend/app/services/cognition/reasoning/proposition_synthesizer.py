@@ -1,6 +1,7 @@
 """Governed promotion of untrusted candidate propositions."""
 
 from uuid import uuid4
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic import ValidationError
@@ -22,6 +23,11 @@ from app.services.cognition.reasoning.semantic_proposition_generator import (
 from app.services.cognition.reasoning.semantic_generation_provider import (
     SemanticGenerationFailure,
 )
+from app.services.cognition.reasoning.statement_admissibility_validator import (
+    StatementAdmissibilityResult,
+    StatementAdmissibilityValidator,
+    FreeFormStatementAdmissibilityValidator,
+)
 
 
 class PropositionSynthesisOutcome(BaseModel):
@@ -32,6 +38,8 @@ class PropositionSynthesisOutcome(BaseModel):
     propositions: list[SynthesizedProposition] = Field(default_factory=list)
     rejection_reasons: tuple[str, ...] = ()
     validation: PropositionGroundingValidationResult | None = None
+    statement_validation: StatementAdmissibilityResult | None = None
+    acceptance_mode: Literal["rejected", "structural_only_compatibility", "statement_validated"] = "rejected"
 
 
 class PropositionSynthesizer:
@@ -41,9 +49,22 @@ class PropositionSynthesizer:
         self,
         *,
         semantic_generator: SemanticPropositionGenerator,
+        statement_validator: StatementAdmissibilityValidator | None = None,
+        structural_only_compatibility: bool = False,
     ):
         self.semantic_generator = semantic_generator
         self.grounding_validator = PropositionGroundingValidator()
+        self.statement_validator = statement_validator
+        self.structural_only_compatibility = structural_only_compatibility
+        if statement_validator is not None and structural_only_compatibility:
+            raise ValueError("Compatibility mode cannot also claim statement validation.")
+        if isinstance(statement_validator, FreeFormStatementAdmissibilityValidator):
+            generation_provider = getattr(semantic_generator, "provider", semantic_generator)
+            if statement_validator.provider is generation_provider:
+                raise ValueError("Generation cannot assess its own candidate.")
+            generation_client = getattr(generation_provider, "client", None)
+            if generation_client is not None and generation_client is getattr(statement_validator.provider, "client", None):
+                raise ValueError("Generation and assessment must use separate clients.")
 
     def synthesize(
         self,
@@ -61,6 +82,8 @@ class PropositionSynthesizer:
         premises: list[Premise],
         relationships: list[PremiseRelationship],
     ) -> PropositionSynthesisOutcome:
+        if self.statement_validator is None and not self.structural_only_compatibility:
+            return PropositionSynthesisOutcome(rejection_reasons=("statement_validator_required",))
         if len(premises) < 2:
             return PropositionSynthesisOutcome(rejection_reasons=("insufficient_premises",))
 
@@ -86,7 +109,8 @@ class PropositionSynthesizer:
 
         try:
             candidate = self.semantic_generator.generate(
-                premises=participating, relationships=eligible
+                premises=[p.model_copy(deep=True) for p in participating],
+                relationships=[r.model_copy(deep=True) for r in eligible],
             )
         except SemanticGenerationFailure as error:
             return PropositionSynthesisOutcome(
@@ -102,14 +126,47 @@ class PropositionSynthesizer:
         if not isinstance(candidate, CandidateProposition):
             return PropositionSynthesisOutcome(rejection_reasons=("invalid_candidate",))
 
-        validation = self.grounding_validator.validate(
-            candidate=candidate, premises=participating, relationships=relationships
-        )
+        try:
+            validation = self.grounding_validator.validate(
+                candidate=candidate.model_copy(deep=True),
+                premises=[p.model_copy(deep=True) for p in participating],
+                relationships=[r.model_copy(deep=True) for r in relationships],
+            )
+            if not isinstance(validation, PropositionGroundingValidationResult):
+                raise ValueError("Invalid structural validation result.")
+        except Exception:
+            return PropositionSynthesisOutcome(rejection_reasons=("grounding_validator_failure",))
         if not validation.structurally_valid:
             return PropositionSynthesisOutcome(
                 rejection_reasons=validation.rejection_reasons,
                 validation=validation,
             )
+
+        statement_validation = None
+        if self.statement_validator is not None:
+            try:
+                statement_validation = self.statement_validator.validate(
+                    candidate=candidate.model_copy(deep=True),
+                    premises=[p.model_copy(deep=True) for p in participating],
+                    relationships=[r.model_copy(deep=True) for r in eligible],
+                )
+                if not isinstance(statement_validation, StatementAdmissibilityResult):
+                    raise ValueError("Invalid statement validation result.")
+                statement_validation = StatementAdmissibilityResult.model_validate(
+                    statement_validation.model_dump(), strict=True
+                )
+                if statement_validation.admissible == bool(statement_validation.rejection_reasons):
+                    raise ValueError("Inconsistent statement validation result.")
+            except Exception:
+                return PropositionSynthesisOutcome(
+                    rejection_reasons=("statement_validator_failure",), validation=validation
+                )
+            if not statement_validation.admissible:
+                return PropositionSynthesisOutcome(
+                    rejection_reasons=statement_validation.rejection_reasons,
+                    validation=validation,
+                    statement_validation=statement_validation,
+                )
 
         proposition = SynthesizedProposition(
             proposition_id=f"proposition-{uuid4()}",
@@ -124,6 +181,10 @@ class PropositionSynthesizer:
                 ],
             },
         )
+        if statement_validation is not None:
+            proposition.metadata["statement_admissibility"] = statement_validation.validation_scope
         return PropositionSynthesisOutcome(
-            propositions=[proposition], validation=validation
+            propositions=[proposition], validation=validation,
+            statement_validation=statement_validation,
+            acceptance_mode="statement_validated" if statement_validation is not None else "structural_only_compatibility",
         )

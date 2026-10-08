@@ -78,3 +78,73 @@ The additional validation stage may reject plausible but unprovable semantic
 synthesis. That is the intended safe outcome. A production generator must be
 evaluated with adversarial cases; successful generation alone is not evidence
 of grounded acceptance.
+
+## Sprint 20.3-G evaluation finding
+
+The deterministic adversarial suite confirms structural rejection and
+evidence-inference isolation, but also demonstrates that unsupported facts,
+certainty inflation, causal overreach, negation reversal, fabricated precision,
+and statement-level conflict suppression can pass when their references are
+valid. These artifacts remain explicitly semantically unverified. This is an
+open acceptance requirement, not evidence that statement-level validation is
+implemented. See the [evaluation matrix](../../sprints/Sprint-20.3-Adversarial-Evaluation.md).
+This ADR remains Proposed pending that gate and implementation review.
+
+The follow-up `VerbatimPremiseStatementValidator` provides an opt-in bounded
+gate for exact Sentinel-rendered reports of trusted premises and relationships.
+It rejects all other statement forms and unvalidated qualifications without
+claiming general natural-language entailment. Its accepted scope is recorded
+separately from `semantic_grounding_verified`, which remains false. Existing
+structural-only mode is unchanged. This does not resolve the general semantic
+acceptance requirement above or open the Proposition → Inference boundary.
+
+## Independent free-form gate implementation review
+
+`FreeFormStatementAdmissibilityValidator` now assesses free-form candidates via
+a distinct `SemanticAdmissibilityProvider`, independent from generation and
+structural provenance reconstruction. The request contains source statements,
+assessed directional relationship kinds/bases, the candidate statement and its
+qualifications; generator/provider metadata and evidence lineage are excluded.
+The separately injected SDK adapter lives outside cognition. No credentials or
+model are automatically selected. Reusing the generation provider object or its
+client for assessment is rejected; deployment owners must additionally ensure
+the assessor is independently configured rather than a wrapper around the
+generator's own approval. Object separation cannot prove model independence.
+
+The untrusted judge response must satisfy a strict bounded schema, explicitly
+assessing unsupported facts, certainty inflation, causality, negation, precision,
+conflict, qualifications and insufficient support. Missing/malformed or
+contradictory verdicts, provider failures and validator exceptions reject without
+fallback. Only a consistent admissible verdict can pass. Prompts instruct the
+judge to preserve SUPPORTS/COMPLEMENTS/CONFLICTS semantics and reject uncertainty;
+those instructions alone are not empirical evidence of semantic accuracy.
+
+Synthesis now requires statement validation by default. The old structural-only
+path requires `structural_only_compatibility=True`, cannot be combined with a
+statement validator, and is labeled in inspectable outcomes and engine metadata.
+The exact-report validator remains a distinct specialized fidelity gate.
+
+The free-form scope is `independent_model_semantic_admissibility`, not proof of
+entailment or source truth. `semantic_grounding_verified` remains false: a
+governed probabilistic judgment with unmeasured semantic accuracy does not
+justify general entailment certification. Proposition → Inference stays closed.
+Future inference work MUST NOT treat these artifacts as semantically grounded
+without a separate accepted architecture establishing that capability.
+
+This implementation review leaves the ADR **Proposed**. Scripted independent
+judge responses verify six attack rejections, faithful-control acceptance and
+fail-closed integration, but do not evaluate an actual judge's decisions on those
+texts. G's semantic acceptance requirement remains open until an independently
+configured assessor is evaluated against reviewed attack/control fixtures. That
+evaluation can use recorded independent assessments or an offline assessor;
+regression tests need not call a live API. No further inference architecture is
+required to perform it, and this finding does not weaken the decision above.
+
+### Empirical evaluation preparation checkpoint
+
+A [pre-registered benchmark and runner](../../../backend/evaluation/semantic_judge/README.md)
+are prepared. The 36 labels remain assistant proposals pending independent human
+review. Actual execution is blocked by missing review approval and dedicated
+judge credential/model configuration. No actual judgment or accuracy measurement
+has occurred. This preparation leaves this ADR Proposed and its semantic
+acceptance requirement open; it does not change any architectural decision.

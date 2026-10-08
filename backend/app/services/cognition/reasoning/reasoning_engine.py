@@ -70,11 +70,15 @@ class ReasoningEngine:
     cognitive task to dedicated reasoning services.
     """
 
-    def __init__(self):
+    def __init__(
+        self,
+        *,
+        proposition_synthesizer: PropositionSynthesizer | None = None,
+    ):
         self.evidence = EvidenceAnalyzer()
         self.premises = PremiseExtractor()
         self.relationships = PremiseRelationshipAssessor()
-        self.propositions = None
+        self.propositions = proposition_synthesizer
         self.inference = InferenceEngine()
         self.confidence = ConfidenceEngine()
 
@@ -186,18 +190,34 @@ class ReasoningEngine:
         )
 
         synthesized_propositions = []
+        result_metadata = {}
 
         if self.propositions is not None:
-            synthesized_propositions = (
-                self.propositions.synthesize(
+            synthesis = (
+                self.propositions.synthesize_with_validation(
                     premises=premises,
                     relationships=premise_relationships,
                 )
             )
-
-            trace.append(
-                "Synthesized propositions."
-            )
+            synthesized_propositions = synthesis.propositions
+            result_metadata["proposition_synthesis"] = {
+                "status": "accepted" if synthesized_propositions else "rejected",
+                "rejection_reasons": list(synthesis.rejection_reasons),
+                "semantic_grounding_verified": False,
+                "acceptance_mode": synthesis.acceptance_mode,
+            }
+            if synthesis.statement_validation is not None:
+                result_metadata["proposition_synthesis"]["statement_validation"] = {
+                    "admissible": synthesis.statement_validation.admissible,
+                    "scope": synthesis.statement_validation.validation_scope,
+                }
+            if synthesized_propositions:
+                trace.append(
+                    "Synthesized structurally validated propositions; "
+                    "semantic grounding remains unverified."
+                )
+            else:
+                trace.append("Proposition synthesis produced no admissible candidate.")
 
         candidate_inferences = (
             self.inference.infer(
@@ -224,6 +244,7 @@ class ReasoningEngine:
                 conclusion=None,
                 reasoning_trace=trace,
                 status="insufficient_evidence",
+                metadata=result_metadata,
             )
 
         strongest = candidate_inferences[0]
@@ -277,4 +298,5 @@ class ReasoningEngine:
             conclusion=conclusion,
             reasoning_trace=trace,
             status="complete",
+            metadata=result_metadata,
         )
