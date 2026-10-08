@@ -11,7 +11,7 @@ The governed proposition pipeline distinguishes untrusted candidates from accept
 ## Release changes
 
 - Package the browser, API, database, vector store and cached CPU embedding model with Docker Compose.
-- Keep published ports on loopback; protect the browser and proxied API with one administrator password. The diagnostic API port is available to local processes and is not a public authentication boundary.
+- Publish only the password-protected browser/API proxy on loopback. The API, PostgreSQL and Qdrant have no host ports in the complete local installation.
 - Generate private local credentials without committing them. Caddy uses a password hash; see its [official hashing documentation](https://caddyserver.com/docs/command-line#caddy-hash-password).
 - Persist PostgreSQL, Qdrant, original uploads and cognitive history in volumes. Seed constitutional memory only when its collection is empty.
 - Share process configuration across the API and Alembic while preserving explicitly supplied migration-test URLs.

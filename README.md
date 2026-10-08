@@ -24,10 +24,10 @@ Troubleshooting:
 ```sh
 docker compose --env-file .env.local -f docker-compose.local.yml ps
 docker compose --env-file .env.local -f docker-compose.local.yml logs --tail=100 api
-curl http://127.0.0.1:8011/ready
+curl -u admin http://127.0.0.1:8080/api/ready
 ```
 
-Port 8011 is the loopback API for local diagnostics. This installation is for one administrator on one computer. Public hosting requires TLS, network isolation, authentication at every reachable API boundary, provider credentials, backups and a separately verified production rollout.
+Only the authenticated browser proxy is published; the API and storage services are private to the Compose network. This installation is for one administrator on one computer. Public hosting requires TLS, network isolation, authentication at every reachable API boundary, provider credentials, backups and a separately verified production rollout.
 
 ## Development and verification
 
