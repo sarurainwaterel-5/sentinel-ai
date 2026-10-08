@@ -1,0 +1,421 @@
+{
+  "repository": "sarurainwaterel-5/sentinel-ai",
+  "branch": "sprint-20-3-e-production-generator",
+  "preparation_base_commit": "4b4c17ac8c9e37f2246c612082fc10884f88dbaf",
+  "dataset_version": "20.3-G-v2",
+  "dataset_sha256": "d57de823b86797a6b25ff36a808c678cc8843ef5a1b4d7188576f27fe0cc7adb",
+  "review_status": "not_started",
+  "approved": false,
+  "reviewer": null,
+  "reviewed_at": null,
+  "independent_of_candidate_generation_and_judge": false,
+  "human_signature": null,
+  "labels": {},
+  "checklist": {
+    "identity_and_independence": false,
+    "source_hash_confirmed": false,
+    "all_cases_read": false,
+    "own_labels_recorded": false,
+    "support_without_source_truth": false,
+    "no_unsupported_additions": false,
+    "modality_and_negation_preserved": false,
+    "causality_supported": false,
+    "conflict_preserved": false,
+    "qualification_stands_alone": false,
+    "reference_reporting_preserved": false,
+    "ambiguous_cases_resolved": false,
+    "category_overlap_not_forced": false,
+    "human_rationales_recorded": false,
+    "no_judge_used_for_gold_labels": false,
+    "disputes_handled_before_results": false,
+    "complete_boolean_gold_labels": false,
+    "approval_explicit_and_uncoerced": false,
+    "scope_preserved": false
+  },
+  "case_reviews": [
+    {
+      "case_id": "operations-unsupported_fact",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-certainty_inflation",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-causal_overreach",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-negation_reversal",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-fabricated_precision",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also introduces an actual latency increase and a causal assertion. Proposed primary category is precision, not an exclusive defect label."
+      }
+    },
+    {
+      "case_id": "operations-conflict_suppression",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-faithful_paraphrase",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-multi_premise_synthesis",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-faithful_qualification",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 specifies the disputed causal link: observed request volume causing an actual latency increase. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "operations-conflict_preserving",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-uncertainty_preserving",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-supported_causality",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 names LT-001 in both premises, the candidate and the SUPPORTS basis. Direction remains a to b. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "access-unsupported_fact",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-certainty_inflation",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-causal_overreach",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also introduces a software update absent from the premises. A human may record both unsupported fact and causal overreach."
+      }
+    },
+    {
+      "case_id": "access-negation_reversal",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-fabricated_precision",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-conflict_suppression",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-faithful_paraphrase",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-multi_premise_synthesis",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-faithful_qualification",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 preserves the direction: failures may indicate incorrect credentials; credentials have not been established as the cause. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "access-conflict_preserving",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-uncertainty_preserving",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-supported_causality",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-unsupported_fact",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-certainty_inflation",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-causal_overreach",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also invents today\u2019s restore attempt/outcome and treats reported incompleteness as an established cause."
+      }
+    },
+    {
+      "case_id": "recovery-negation_reversal",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-fabricated_precision",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also invents a measurement of actual backup contents from a report of incompleteness."
+      }
+    },
+    {
+      "case_id": "recovery-conflict_suppression",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-faithful_paraphrase",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-multi_premise_synthesis",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-faithful_qualification",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 preserves the incomplete-backup condition and reported status; it does not establish that a restore was attempted or failed. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "recovery-conflict_preserving",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-uncertainty_preserving",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-supported_causality",
+      "human_decision": null,
+      "human_admissible": null,
+      "human_rationale": null,
+      "requested_revision": null,
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "assistant_flag": null
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 Status: prepared, **blocked**, not an empirical accuracy result.
 
-The v1 dataset has 36 cases: 18 negative attacks (three per established category)
+The v2 dataset has 36 cases: 18 negative attacks (three per established category)
 and 18 positive controls, across operations, access and recovery. Candidate
 references are structurally valid. Controls cover paraphrase, multi-premise
 synthesis, faithful qualification, preserved conflict, conservative uncertainty,
@@ -103,3 +103,25 @@ compatibility and Starlette/httpx. npm warns about environment http-proxy config
 
 No empirical evaluation has run. The full backend count increased only because
 14 harness tests were added, not because live judge accuracy was measured.
+
+## Dataset revision 20.3-G-v2
+
+Exactly four wording corrections were requested: operations-faithful_qualification,
+operations-supported_causality (including explicit LT-001 premises and assessed
+SUPPORTS basis), access-faithful_qualification and recovery-faithful_qualification.
+All case IDs, proposed labels, categories, other fixtures and SUPPORTS direction
+are preserved. These wording corrections are not independent human gold-label
+approval. All 36 human decisions remain blank and approved=false.
+
+Dataset SHA-256: `d57de823b86797a6b25ff36a808c678cc8843ef5a1b4d7188576f27fe0cc7adb`.
+
+The original acceptance.json policy remains byte-for-byte unchanged, including
+its v1 policy version: v2 is a dataset wording revision, not a threshold revision.
+
+Run `python evaluation/semantic_judge/prepare_human_review.py` from backend to
+regenerate the full 36-row review packet and blank approval record. It reads only
+the dataset and repository checkpoint; it does not call a judge or a benchmark.
+The generated packet retains overlapping-defect notes and asks humans to flag
+any residual ambiguity. Its labels mapping is empty, not copied from proposals.
+Human disagreement still requires revision/versioning and fresh review, never
+overriding the human label to match an assistant proposal.

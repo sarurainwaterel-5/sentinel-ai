@@ -1,5 +1,5 @@
 {
-  "version": "20.3-G-v1",
+  "version": "20.3-G-v2",
   "label_origin": "assistant-authored proposals, NOT human gold labels",
   "cases": [
     {
@@ -419,7 +419,7 @@
         }
       ],
       "candidate": {
-        "statement": "High request volume was observed; latency may increase under heavy load, but these reports do not establish causality.",
+        "statement": "High request volume was observed, and latency may increase under heavy load. However, these reports do not establish that the observed request volume caused an actual latency increase.",
         "premise_ids": [
           "a",
           "b"
@@ -540,14 +540,14 @@
       "premises": [
         {
           "premise_id": "a",
-          "statement": "The load test caused latency to increase.",
+          "statement": "The load test identified as LT-001 caused latency to increase.",
           "evidence_ids": [
             "fixture:a"
           ]
         },
         {
           "premise_id": "b",
-          "statement": "Latency increased during the load test.",
+          "statement": "Latency increased during load test LT-001.",
           "evidence_ids": [
             "fixture:b"
           ]
@@ -558,12 +558,12 @@
           "source_premise_id": "a",
           "target_premise_id": "b",
           "kind": "supports",
-          "basis": "The causal report supports the separately recorded outcome.",
+          "basis": "The causal report for load test LT-001 supports the separately recorded latency increase during that same test.",
           "confidence": 0.9
         }
       ],
       "candidate": {
-        "statement": "The load test caused latency to rise during the test.",
+        "statement": "Load test LT-001 caused latency to increase during that test.",
         "premise_ids": [
           "a",
           "b"
@@ -995,7 +995,7 @@
         }
       ],
       "candidate": {
-        "statement": "Repeated login failures were recorded; incorrect credentials are a possible indication, not a proven cause.",
+        "statement": "Repeated login failures were recorded. These failures may indicate incorrect credentials, but incorrect credentials have not been established as the cause.",
         "premise_ids": [
           "a",
           "b"
@@ -1571,7 +1571,7 @@
         }
       ],
       "candidate": {
-        "statement": "Yesterday's backup was reported incomplete; restore failure is possible but these reports do not establish that a restore failed.",
+        "statement": "Yesterday's backup was reported incomplete. A restore may fail when a backup is incomplete, but the available reports do not establish that a restore was attempted or failed.",
         "premise_ids": [
           "a",
           "b"
