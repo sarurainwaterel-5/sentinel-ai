@@ -5,7 +5,7 @@ from app.services.reasoning_service import ReasoningService
 
 
 router = APIRouter()
-reasoning = ReasoningService()
+
 
 
 class RecallRequest(BaseModel):
@@ -23,7 +23,7 @@ class RecallRequest(BaseModel):
 
 @router.post("/ask")
 def ask_question(request: RecallRequest):
-    return reasoning.answer_question(
+    return ReasoningService().answer_question(
         question=request.question,
         limit=request.limit,
         score_threshold=request.score_threshold,

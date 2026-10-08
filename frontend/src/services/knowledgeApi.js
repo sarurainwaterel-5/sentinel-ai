@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+import { API_BASE_URL } from "./apiConfig";
 
 export async function getKnowledgeDashboard() {
   const response = await fetch(
@@ -66,7 +66,7 @@ export async function uploadKnowledge({
     );
   }
 
-  let result = null;
+  let result;
 
   try {
     result = await response.json();

@@ -19,6 +19,11 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from app.database import Base
+from app.settings import DATABASE_URL
+
+# ConfigParser requires literal percent signs in credentials to be escaped.
+if not config.get_main_option("sqlalchemy.url"):
+    config.set_main_option("sqlalchemy.url", DATABASE_URL.replace("%", "%%"))
 from app.models.document import Document
 from app.models.reflection_history import (
     ReflectionHistoryRecordModel,

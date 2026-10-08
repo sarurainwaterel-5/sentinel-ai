@@ -1,4 +1,7 @@
+import os
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+from app.settings import CORS_ORIGINS
 from app.routes.upload import router as upload_router
 from app.routes.search import router as search_router
 from app.routes.ask import router as ask_router
@@ -44,16 +47,18 @@ app.include_router(verification_router)
 app.include_router(reflection_router)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:5175",
-        "http://127.0.0.1:5175",
-    ],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def model_configuration_guard(request, call_next):
+    if request.url.path in {"/ask", "/cognition/reason", "/cognition/plan", "/verification"} and request.method == "POST" and not os.getenv("OPENAI_API_KEY"):
+        return JSONResponse(status_code=503, content={"detail": "Configure OPENAI_API_KEY in backend/.env and restart Sentinel to enable this feature."})
+    return await call_next(request)
 
 @app.get("/health")
 def health_check():
@@ -69,3 +74,28 @@ def initialize_vector_db():
         "status": "initialized",
         **result
     }
+
+@app.get("/ready")
+def readiness_check():
+    from sqlalchemy import text, inspect
+    from app.database import engine
+    from app.services.qdrant_service import client
+    services = {}
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+            tables = set(inspect(connection).get_table_names())
+        services["postgres"] = "ready" if {"documents", "reflection_history"} <= tables else "migration_required"
+    except Exception:
+        services["postgres"] = "unavailable"
+    try:
+        client.get_collections()
+        services["qdrant"] = "ready"
+    except Exception:
+        services["qdrant"] = "unavailable"
+    ready = all(value == "ready" for value in services.values())
+    return JSONResponse(status_code=200 if ready else 503, content={
+        "status": "ready" if ready else "unavailable",
+        "services": services,
+        "model_features_configured": bool(os.getenv("OPENAI_API_KEY")),
+    })

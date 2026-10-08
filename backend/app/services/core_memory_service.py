@@ -45,7 +45,7 @@ def ingest_core_memory():
         project_root / "docs" / "architecture" / "decisions",
     ]
 
-    points = []
+    records = []
 
     for memory_path in memory_paths:
         if not memory_path.exists():
@@ -56,19 +56,19 @@ def ingest_core_memory():
             chunks = chunk_text(text)
 
             for index, chunk in enumerate(chunks):
-                points.append(
-                    PointStruct(
-                        id=str(uuid4()),
-                        vector=embedding_service.generate_embedding(chunk),
-                        payload={
-                            "memory_type": "core",
-                            "source_file": str(file_path.relative_to(project_root)),
-                            "chunk_index": index,
-                            "text": chunk,
-                            "priority": "constitutional"
-                        }
-                    )
-                )
+                records.append((chunk, {
+                    "memory_type": "core",
+                    "source_file": str(file_path.relative_to(project_root)),
+                    "chunk_index": index,
+                    "text": chunk,
+                    "priority": "constitutional",
+                }))
+
+    vectors = embedding_service.generate_embeddings([chunk for chunk, _ in records])
+    points = [
+        PointStruct(id=str(uuid4()), vector=vector, payload=payload)
+        for (_, payload), vector in zip(records, vectors, strict=True)
+    ]
 
     if points:
         client.upsert(

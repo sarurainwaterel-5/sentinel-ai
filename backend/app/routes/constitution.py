@@ -29,7 +29,7 @@ def rebuild_constitution():
 
 @router.get("/build-info")
 def constitution_build_info():
-    project_root = Path(__file__).resolve().parents[2]
+    project_root = Path(__file__).resolve().parents[3]
     manifest_path = project_root / "docs" / "architecture" / "constitution-build-manifest.json"
 
     if not manifest_path.exists():

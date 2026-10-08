@@ -64,6 +64,7 @@ class RetrievalService:
 
         query_filter = Filter(
             must=must_conditions,
+            must_not=[FieldCondition(key="status", match=MatchValue(value="archived"))],
         )
 
         results = client.query_points(

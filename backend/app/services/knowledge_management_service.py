@@ -22,6 +22,12 @@ class KnowledgeManagementService:
                 "status": "not_found"
             }
 
+        client.set_payload(
+            collection_name=COLLECTION_NAME,
+            payload={"status": "archived"},
+            points=Filter(must=[FieldCondition(key="document_id", match=MatchValue(value=document_id))]),
+            wait=True,
+        )
         document.status = "archived"
 
         self.db.commit()
@@ -41,6 +47,12 @@ class KnowledgeManagementService:
                 "status": "not_found"
             }
 
+        client.set_payload(
+            collection_name=COLLECTION_NAME,
+            payload={"status": "indexed"},
+            points=Filter(must=[FieldCondition(key="document_id", match=MatchValue(value=document_id))]),
+            wait=True,
+        )
         restored = self.repository.restore_document(document)
 
         return {
