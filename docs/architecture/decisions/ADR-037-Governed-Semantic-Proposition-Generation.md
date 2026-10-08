@@ -139,3 +139,12 @@ configured assessor is evaluated against reviewed attack/control fixtures. That
 evaluation can use recorded independent assessments or an offline assessor;
 regression tests need not call a live API. No further inference architecture is
 required to perform it, and this finding does not weaken the decision above.
+
+### Empirical evaluation preparation checkpoint
+
+A [pre-registered benchmark and runner](../../../backend/evaluation/semantic_judge/README.md)
+are prepared. The 36 labels remain assistant proposals pending independent human
+review. Actual execution is blocked by missing review approval and dedicated
+judge credential/model configuration. No actual judgment or accuracy measurement
+has occurred. This preparation leaves this ADR Proposed and its semantic
+acceptance requirement open; it does not change any architectural decision.

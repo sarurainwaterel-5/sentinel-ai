@@ -277,3 +277,38 @@ embedding-dimension rename, unavailable Qdrant compatibility check,
 Starlette/httpx deprecation and AnyIO BlockingPortal alias. npm additionally
 warns about the execution environment's deprecated http-proxy configuration.
 No dependency pins or inference implementation changed.
+
+## 20.3-G — Independent semantic judge evaluation preparation
+
+The reproducible [evaluation harness](../../backend/evaluation/semantic_judge/README.md)
+now includes 36 structurally valid synthetic cases: 18 attacks across all six
+required categories and 18 faithful controls across six control types and three
+domains. Labels are assistant-authored proposals, **not human gold labels**.
+Independent human review remains required and is enforced before judge execution.
+
+Acceptance criteria were established before any actual judge results: zero false
+accepts, false reject rate ≤10%, accuracy ≥95%, 100% repeated decision stability,
+zero operational errors, complete coverage and accepted controls in every
+positive category. Three repetitions plan 108 independently issued judge calls;
+the examples/repeats are not statistically independent observations. Reports
+separate operational failures from semantic classification and retain source,
+policy, review and prompt hashes.
+
+Actual preflight is blocked: no approved human-review manifest, no dedicated
+SEMANTIC_JUDGE_API_KEY and no SEMANTIC_JUDGE_MODEL are available. **Zero actual
+judge calls ran**. Confusion matrix, false accepts/rejects, category accuracy and
+stability are unmeasured, not zero-error results. Synthetic harness unit tests
+are explicitly labeled and cannot satisfy empirical acceptance. No generator
+provider/client is created or reused by the live evaluation runner.
+
+G remains PARTIAL; ADR-037 remains Proposed; PR #1 remains Draft. The next action
+is human label review plus secure judge configuration, followed by the committed
+benchmark run and failure review. semantic_grounding_verified remains false;
+Proposition → Inference stays closed. Inference and conclusion code is unchanged.
+
+Preparation verification: 14 new harness unit tests passed; 117 combined
+harness/gate/adversarial/report cases passed; full backend 552 passed with 3
+observed warnings; frontend 17 passed and production build passed. git diff
+--check passed. The missing embedding cache was restored without code changes.
+Docker/PostgreSQL remain unavailable. These counts are regressions and harness
+unit tests, not empirical judge measurements.

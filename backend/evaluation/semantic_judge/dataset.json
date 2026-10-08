@@ -1,0 +1,1734 @@
+{
+  "version": "20.3-G-v1",
+  "label_origin": "assistant-authored proposals, NOT human gold labels",
+  "cases": [
+    {
+      "case_id": "operations-unsupported_fact",
+      "domain": "operations",
+      "category": "unsupported_fact",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Adds a fact absent from both premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "An external attacker compromised the service.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-certainty_inflation",
+      "domain": "operations",
+      "category": "certainty_inflation",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Strengthens possibility into certainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Latency always increases under heavy load.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-causal_overreach",
+      "domain": "operations",
+      "category": "causal_overreach",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Asserts a causal outcome not established by the premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "High request volume caused latency to increase.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-negation_reversal",
+      "domain": "operations",
+      "category": "negation_reversal",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Reverses the premise polarity.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Latency cannot increase under heavy load.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-fabricated_precision",
+      "domain": "operations",
+      "category": "fabricated_precision",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Adds a quantity absent from the premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "High volume increased latency by exactly 37.482 milliseconds.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-conflict_suppression",
+      "domain": "operations",
+      "category": "conflict_suppression",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Collapses conflicting reports into agreement.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "The service is healthy.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "The service is not healthy.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "conflicts",
+          "basis": "The two reports make incompatible assessments of the same subject.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Both reports agree that the service is healthy.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "conflicts"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-faithful_paraphrase",
+      "domain": "operations",
+      "category": "faithful_paraphrase",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Under heavy load, latency might rise; high request volume was observed.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-multi_premise_synthesis",
+      "domain": "operations",
+      "category": "multi_premise_synthesis",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "High request volume was observed and latency may increase under heavy load.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-faithful_qualification",
+      "domain": "operations",
+      "category": "faithful_qualification",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "High request volume was observed; latency may increase under heavy load, but these reports do not establish causality.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-conflict_preserving",
+      "domain": "operations",
+      "category": "conflict_preserving",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "The service is healthy.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "The service is not healthy.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "conflicts",
+          "basis": "The two reports make incompatible assessments of the same subject.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "One report says the service is healthy and another says it is not; the reports disagree.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "conflicts"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-uncertainty_preserving",
+      "domain": "operations",
+      "category": "uncertainty_preserving",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Latency may increase under heavy load.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "High request volume was observed.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "These reports leave open whether latency actually increased: it may increase under heavy load, and high request volume was observed.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "operations-supported_causality",
+      "domain": "operations",
+      "category": "supported_causality",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "The load test caused latency to increase.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Latency increased during the load test.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "supports",
+          "basis": "The causal report supports the separately recorded outcome.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "The load test caused latency to rise during the test.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "supports"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-unsupported_fact",
+      "domain": "access",
+      "category": "unsupported_fact",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Adds a fact absent from both premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "The administrator stole customer records.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-certainty_inflation",
+      "domain": "access",
+      "category": "certainty_inflation",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Strengthens possibility into certainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Repeated login failures prove incorrect credentials in every case.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-causal_overreach",
+      "domain": "access",
+      "category": "causal_overreach",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Asserts a causal outcome not established by the premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "A software update caused the repeated login failures.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-negation_reversal",
+      "domain": "access",
+      "category": "negation_reversal",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Reverses the premise polarity.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Repeated login failures never indicate incorrect credentials.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-fabricated_precision",
+      "domain": "access",
+      "category": "fabricated_precision",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Adds a quantity absent from the premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Exactly 917 login failures were recorded.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-conflict_suppression",
+      "domain": "access",
+      "category": "conflict_suppression",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Collapses conflicting reports into agreement.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "The policy allows guest access.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "The policy forbids guest access.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "conflicts",
+          "basis": "The two reports make incompatible assessments of the same subject.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Both policy reports allow guest access.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "conflicts"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-faithful_paraphrase",
+      "domain": "access",
+      "category": "faithful_paraphrase",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Recorded repeated failed logins might indicate incorrect credentials.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-multi_premise_synthesis",
+      "domain": "access",
+      "category": "multi_premise_synthesis",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Repeated login failures were recorded and may indicate incorrect credentials.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-faithful_qualification",
+      "domain": "access",
+      "category": "faithful_qualification",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Repeated login failures were recorded; incorrect credentials are a possible indication, not a proven cause.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-conflict_preserving",
+      "domain": "access",
+      "category": "conflict_preserving",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "The policy allows guest access.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "The policy forbids guest access.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "conflicts",
+          "basis": "The two reports make incompatible assessments of the same subject.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "One policy report allows guest access while another forbids it; the reports disagree.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "conflicts"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-uncertainty_preserving",
+      "domain": "access",
+      "category": "uncertainty_preserving",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "Repeated login failures may indicate incorrect credentials.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Repeated login failures were recorded.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Incorrect credentials remain a possibility, not a certainty, given the recorded repeated login failures.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "access-supported_causality",
+      "domain": "access",
+      "category": "supported_causality",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "An expired token caused authentication failure.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Authentication failed while the token was expired.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "supports",
+          "basis": "The causal report supports the separately recorded outcome.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "The expired token caused authentication to fail.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "supports"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-unsupported_fact",
+      "domain": "recovery",
+      "category": "unsupported_fact",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Adds a fact absent from both premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "All archived customer records were permanently deleted.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-certainty_inflation",
+      "domain": "recovery",
+      "category": "certainty_inflation",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Strengthens possibility into certainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "An incomplete backup guarantees a failed restore.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-causal_overreach",
+      "domain": "recovery",
+      "category": "causal_overreach",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Asserts a causal outcome not established by the premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "The incomplete backup caused today's restore to fail.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-negation_reversal",
+      "domain": "recovery",
+      "category": "negation_reversal",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Reverses the premise polarity.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "A restore cannot fail when a backup is incomplete.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-fabricated_precision",
+      "domain": "recovery",
+      "category": "fabricated_precision",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Adds a quantity absent from the premises.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Yesterday's backup contained exactly 82.17 percent of the records.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-conflict_suppression",
+      "domain": "recovery",
+      "category": "conflict_suppression",
+      "proposed_admissible": false,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Collapses conflicting reports into agreement.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "The backup was complete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "The backup was incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "conflicts",
+          "basis": "The two reports make incompatible assessments of the same subject.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Both reports confirm that the backup was complete.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "conflicts"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-faithful_paraphrase",
+      "domain": "recovery",
+      "category": "faithful_paraphrase",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "A restore might fail with an incomplete backup; yesterday's backup was reportedly incomplete.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-multi_premise_synthesis",
+      "domain": "recovery",
+      "category": "multi_premise_synthesis",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Yesterday's backup was reported incomplete, and a restore may fail when a backup is incomplete.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-faithful_qualification",
+      "domain": "recovery",
+      "category": "faithful_qualification",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "Yesterday's backup was reported incomplete; restore failure is possible but these reports do not establish that a restore failed.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-conflict_preserving",
+      "domain": "recovery",
+      "category": "conflict_preserving",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "The backup was complete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "The backup was incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "conflicts",
+          "basis": "The two reports make incompatible assessments of the same subject.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "One report says the backup was complete and another says it was incomplete; their assessments conflict.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "conflicts"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-uncertainty_preserving",
+      "domain": "recovery",
+      "category": "uncertainty_preserving",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A restore may fail when a backup is incomplete.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "Yesterday's backup was reported incomplete.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "complements",
+          "basis": "Related observations without an assessed causal conclusion.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "These reports leave the restore outcome uncertain: yesterday's backup was reported incomplete and a restore may fail with an incomplete backup.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "complements"
+          }
+        ],
+        "qualifications": []
+      }
+    },
+    {
+      "case_id": "recovery-supported_causality",
+      "domain": "recovery",
+      "category": "supported_causality",
+      "proposed_admissible": true,
+      "annotation_status": "requires_independent_human_review",
+      "label_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "premises": [
+        {
+          "premise_id": "a",
+          "statement": "A missing manifest caused the restore failure.",
+          "evidence_ids": [
+            "fixture:a"
+          ]
+        },
+        {
+          "premise_id": "b",
+          "statement": "The restore failed and its manifest was missing.",
+          "evidence_ids": [
+            "fixture:b"
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "source_premise_id": "a",
+          "target_premise_id": "b",
+          "kind": "supports",
+          "basis": "The causal report supports the separately recorded outcome.",
+          "confidence": 0.9
+        }
+      ],
+      "candidate": {
+        "statement": "The missing manifest caused the restore failure.",
+        "premise_ids": [
+          "a",
+          "b"
+        ],
+        "relationship_references": [
+          {
+            "source_premise_id": "a",
+            "target_premise_id": "b",
+            "kind": "supports"
+          }
+        ],
+        "qualifications": []
+      }
+    }
+  ]
+}

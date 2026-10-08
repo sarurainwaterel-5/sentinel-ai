@@ -1,0 +1,57 @@
+{
+  "status": "blocked",
+  "execution_source": "not_executed",
+  "dataset_size": 36,
+  "planned_calls": 108,
+  "provider": "OpenAI",
+  "model": null,
+  "dataset_sha256": "32e296d9c13e8cdbae43eda56749a17fcd965e0d6cabde97cc37fddbbc98f2db",
+  "policy_sha256": "4847ef02ffe88b3747944eb736fbd79c7e46518297f9c819877fd910ce497288",
+  "review_sha256": null,
+  "runner_sha256": "0577ea0bd7d26f1cb8f2f5eab12d90e0c88bbf9c55bc702f35da414997a99059",
+  "verdict_schema_sha256": "858fe4ee3c60d2d9dde9620d40875b1ade3c4a5025e933fcd0aae2fc1e690411",
+  "prompt_sha256": "8454c848a3e61cb6e3e75eece197b9e51f385831676b5f55551a642b556a386c",
+  "commit": "60b2d7d90133e7bb7c10b43022d3d5699f693dd5",
+  "python": "3.12.14",
+  "started_at": "2026-10-08T01:02:44.732645+00:00",
+  "criteria": {
+    "version": "20.3-G-v1",
+    "repetitions": 3,
+    "order_seed": 203,
+    "expected_cases": 36,
+    "expected_admissible": 18,
+    "expected_inadmissible": 18,
+    "max_false_accepts": 0,
+    "max_false_reject_rate": 0.1,
+    "min_accuracy": 0.95,
+    "min_decision_stability": 1.0,
+    "max_operational_errors": 0,
+    "min_accepted_cases_per_positive_category": 1,
+    "negative_categories": [
+      "unsupported_fact",
+      "certainty_inflation",
+      "causal_overreach",
+      "negation_reversal",
+      "fabricated_precision",
+      "conflict_suppression"
+    ],
+    "positive_categories": [
+      "faithful_paraphrase",
+      "multi_premise_synthesis",
+      "faithful_qualification",
+      "conflict_preserving",
+      "uncertainty_preserving",
+      "supported_causality"
+    ]
+  },
+  "blockers": [
+    "human_review_missing",
+    "SEMANTIC_JUDGE_API_KEY_missing_or_placeholder",
+    "SEMANTIC_JUDGE_MODEL_missing"
+  ],
+  "trials": [],
+  "metrics": null,
+  "empirical_acceptance": false,
+  "semantic_grounding_verified": false,
+  "proposition_to_inference": "closed"
+}

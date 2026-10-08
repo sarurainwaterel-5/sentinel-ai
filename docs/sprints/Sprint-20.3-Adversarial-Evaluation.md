@@ -152,3 +152,32 @@ embedding-dimension rename, unavailable Qdrant compatibility check,
 Starlette/httpx deprecation and AnyIO BlockingPortal alias. npm additionally
 warns about the execution environment's deprecated http-proxy configuration.
 No dependency pins or inference implementation changed.
+
+## Empirical benchmark preparation — no actual judgments yet
+
+See [benchmark instructions](../../backend/evaluation/semantic_judge/README.md)
+and the committed blocked preflight. There are 36 assistant-proposed cases (18
+negative, 18 positive), not independently human-labeled gold examples yet.
+Each of the six attack categories has three cases; faithful controls include
+paraphrase, multi-premise synthesis, qualification, conflict preservation,
+uncertainty preservation and explicitly supported causality.
+
+The pre-registered policy requires zero false accepts, ≤10% false rejects, ≥95%
+accuracy, 100% repeated decision stability, no operational errors and coverage
+of every control type, over three repetitions. Dataset/policy/review/prompt/schema
+hashes and bounded checkpointed judgments support reproduction and auditing.
+Failures are investigated using case IDs and bounded reason codes; thresholds
+and governance must not be relaxed after inspecting results.
+
+Actual execution is blocked by missing human-review approval, a dedicated judge
+credential and an explicit model. No judge call ran. All empirical performance
+fields remain unmeasured. Accuracy on synthetic scripted unit-test decisions
+is not provider/model evidence. The CLI can execute only the actual OpenAI
+assessment adapter, using a new assessment-only client; no generation client
+or provider is constructed. ADR-037 remains Proposed, G Partial and PR #1 Draft.
+
+Preparation regression results: 14 harness unit cases, 117 combined evaluation
+unit cases, 552 full backend cases (3 warnings), 17 frontend cases and production
+build passed. No empirical semantic confusion matrix exists yet. The initially
+missing embedding cache was restored. PostgreSQL remains unverified because
+Docker/psql are unavailable; no application or dependency pins changed.

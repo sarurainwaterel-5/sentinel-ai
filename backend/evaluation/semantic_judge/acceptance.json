@@ -1,0 +1,30 @@
+{
+  "version": "20.3-G-v1",
+  "repetitions": 3,
+  "order_seed": 203,
+  "expected_cases": 36,
+  "expected_admissible": 18,
+  "expected_inadmissible": 18,
+  "max_false_accepts": 0,
+  "max_false_reject_rate": 0.1,
+  "min_accuracy": 0.95,
+  "min_decision_stability": 1.0,
+  "max_operational_errors": 0,
+  "min_accepted_cases_per_positive_category": 1,
+  "negative_categories": [
+    "unsupported_fact",
+    "certainty_inflation",
+    "causal_overreach",
+    "negation_reversal",
+    "fabricated_precision",
+    "conflict_suppression"
+  ],
+  "positive_categories": [
+    "faithful_paraphrase",
+    "multi_premise_synthesis",
+    "faithful_qualification",
+    "conflict_preserving",
+    "uncertainty_preserving",
+    "supported_causality"
+  ]
+}
