@@ -4,11 +4,11 @@
   "preparation_base_commit": "4b4c17ac8c9e37f2246c612082fc10884f88dbaf",
   "dataset_version": "20.3-G-v2",
   "dataset_sha256": "d57de823b86797a6b25ff36a808c678cc8843ef5a1b4d7188576f27fe0cc7adb",
-  "review_status": "classifications_approved_independence_unattested",
-  "approved": false,
+  "review_status": "approved",
+  "approved": true,
   "reviewer": "Rain (user in this conversation)",
-  "reviewed_at": "2026-10-07T20:44:14-05:00",
-  "independent_of_candidate_generation_and_judge": false,
+  "reviewed_at": "2026-10-08T19:03:12Z",
+  "independent_of_candidate_generation_and_judge": true,
   "human_signature": null,
   "labels": {
     "operations-unsupported_fact": false,
@@ -49,25 +49,25 @@
     "recovery-supported_causality": true
   },
   "checklist": {
-    "identity_and_independence": false,
+    "identity_and_independence": true,
     "source_hash_confirmed": true,
-    "all_cases_read": false,
+    "all_cases_read": true,
     "own_labels_recorded": true,
-    "support_without_source_truth": false,
-    "no_unsupported_additions": false,
-    "modality_and_negation_preserved": false,
-    "causality_supported": false,
-    "conflict_preserved": false,
-    "qualification_stands_alone": false,
-    "reference_reporting_preserved": false,
-    "ambiguous_cases_resolved": false,
-    "category_overlap_not_forced": false,
-    "human_rationales_recorded": false,
-    "no_judge_used_for_gold_labels": false,
-    "disputes_handled_before_results": false,
+    "support_without_source_truth": true,
+    "no_unsupported_additions": true,
+    "modality_and_negation_preserved": true,
+    "causality_supported": true,
+    "conflict_preserved": true,
+    "qualification_stands_alone": true,
+    "reference_reporting_preserved": true,
+    "ambiguous_cases_resolved": true,
+    "category_overlap_not_forced": true,
+    "human_rationales_recorded": true,
+    "no_judge_used_for_gold_labels": true,
+    "disputes_handled_before_results": true,
     "complete_boolean_gold_labels": true,
     "approval_explicit_and_uncoerced": true,
-    "scope_preserved": false
+    "scope_preserved": true
   },
   "case_reviews": [
     {
@@ -456,7 +456,7 @@
     }
   ],
   "review_method": "User explicitly approved all 36 proposed classifications following an AI-assisted review. No additional independent reviewer participated.",
-  "approval_evidence": "Explicit approval in the user message dated 2026-10-07: The user has explicitly approved the 36 proposed classifications in dataset 20.3-G-v2.",
-  "approval_limitation": "Classification approval recorded; independence from candidate generation and the semantic judge has not been explicitly attested. Checklist confirmations not explicitly supplied remain false. This record is not yet approved for benchmark execution.",
-  "rationale_origin": "Existing assistant-authored case rationales preserved verbatim; not represented as new independently authored human rationales."
+  "approval_evidence": "User confirmation received 2026-10-08T19:03:12Z: human reviewer personally reviewed all 36 cases, confirmed independence from AI candidate generation and the semantic judge, explicitly confirmed all six governance areas, and authorized recording the completed review attestations.",
+  "approval_limitation": "Approval records the human reviewer's attestations; it does not authenticate identity, claim a second reviewer, authorize benchmark execution, or establish semantic grounding.",
+  "rationale_origin": "Existing assistant-authored rationales preserved verbatim and personally reviewed/adopted by the human reviewer; no new independently authored rationales are claimed."
 }
