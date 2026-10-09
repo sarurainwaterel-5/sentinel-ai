@@ -19,7 +19,7 @@ function App() {
     bridge: <Bridge />,
     teach: <TeachSentinel />,
     identity: <Identity />,
-    domains: <Domains />,
+    domains: <Domains onNavigate={setActivePage} />,
     recall: <Recall />,
     reason: <Reason />,
     intelligence: <Intelligence onTeach={() => setActivePage("teach")} />,

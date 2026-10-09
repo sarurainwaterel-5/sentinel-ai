@@ -1,21 +1,20 @@
-import { API_BASE_URL as API } from "./apiConfig";
+import { workspaceRequest } from "./workspaceApi";
 
 export async function getDomainModel() {
-  const response = await fetch(`${API}/domains`);
-
-  if (!response.ok) {
-    throw new Error("Failed to load Domain Model.");
+  const model = await workspaceRequest("/domains");
+  if (
+    !Array.isArray(model.system_domains) ||
+    !Array.isArray(model.user_domains) ||
+    !model.summary ||
+    !Array.isArray(model.validation?.checks)
+  ) {
+    throw new Error(
+      "Sentinel returned an incomplete domain registry. Retry after checking Systems.",
+    );
   }
-
-  return response.json();
+  return model;
 }
 
 export async function getDomain(domainId) {
-  const response = await fetch(`${API}/domains/${domainId}`);
-
-  if (!response.ok) {
-    throw new Error(`Failed to load domain '${domainId}'.`);
-  }
-
-  return response.json();
+  return workspaceRequest(`/domains/${encodeURIComponent(domainId)}`);
 }

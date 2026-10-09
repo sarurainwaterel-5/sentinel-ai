@@ -38,6 +38,11 @@ const pageTitles = {
     title: "Governance",
     subtitle: "Protect SentinelAI's Principles and Memory",
   },
+  domains: {
+    eyebrow: "Domains",
+    title: "Domains",
+    subtitle: "Choose the knowledge context for your work",
+  },
   systems: {
     eyebrow: "Systems",
     title: "Systems",
@@ -49,8 +54,8 @@ export default function TopBar({ activePage, setActivePage }) {
   const status = useWorkspaceData("/systems/status");
   const page = pageTitles[activePage] || {
     eyebrow: "Workspace",
-    title: "Coming Soon",
-    subtitle: "This workspace is not active yet",
+    title: "Workspace",
+    subtitle: "Select a workspace from navigation",
   };
 
   const { activeDomain, availableDomains, selectDomain } = useDomain();

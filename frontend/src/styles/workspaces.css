@@ -420,5 +420,84 @@ summary:focus-visible {
   opacity: 0.72;
 }
 @media (max-width: 900px) {
-  .nav-group { display: none; }
+  .nav-group {
+    display: none;
+  }
+}
+.domains-workspace .domain-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.domain-scope,
+.domain-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.domain-current {
+  border: 1px solid var(--accent-cyan);
+}
+.domain-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.domain-card-header .status-badge {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.domain-card .status-planned,
+.domain-card .status-developing,
+.domain-card .status-limited {
+  color: #fbbf24;
+  border-color: #fbbf2455;
+  background: #fbbf2410;
+}
+.domain-card .status-unavailable {
+  color: #fca5a5;
+  border-color: #fca5a555;
+  background: #fca5a510;
+}
+.domain-memory {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.domain-memory dt {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+.domain-memory dd {
+  margin: 4px 0 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.domain-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: auto 0 12px;
+  padding-top: 16px;
+}
+.domain-reference {
+  padding: 12px 0;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 1100px) {
+  .domains-workspace .domain-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .domain-scope,
+  .domain-card-header {
+    flex-direction: column;
+  }
+  .domain-memory {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
