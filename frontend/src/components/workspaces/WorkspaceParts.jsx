@@ -1,10 +1,12 @@
 export function WorkspaceHeader({ title, description, onRefresh, loading }) {
   return (
-    <section className="panel workspace-heading">
+    <section className="workspace-heading">
       <div>
-        <p className="eyebrow">Mission</p>
-        <h2>{title}</h2>
-        <p className="muted">{description}</p>
+        <details className="workspace-purpose">
+          <summary>Workspace purpose</summary>
+          <h2>{title}</h2>
+          <p className="muted">{description}</p>
+        </details>
       </div>
       {onRefresh && (
         <button
@@ -85,6 +87,51 @@ export function Judgment({ confidence, coherence, faculty }) {
           still required.
         </p>
       </section>
+    </div>
+  );
+}
+
+export function WorkspaceTabs({ tabs, active, onChange }) {
+  return (
+    <div className="workspace-tabs" role="tablist" aria-label="Workspace tools">
+      {tabs.map((tab, index) => (
+        <button
+          key={tab}
+          id={`tab-${tab}`}
+          role="tab"
+          aria-selected={active === tab}
+          aria-controls={`panel-${tab}`}
+          tabIndex={active === tab ? 0 : -1}
+          onClick={() => onChange(tab)}
+          onKeyDown={(event) => {
+            let next;
+            if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+            if (event.key === "ArrowLeft")
+              next = (index + tabs.length - 1) % tabs.length;
+            if (event.key === "Home") next = 0;
+            if (event.key === "End") next = tabs.length - 1;
+            if (next !== undefined) {
+              event.preventDefault();
+              onChange(tabs[next]);
+              document.getElementById(`tab-${tabs[next]}`)?.focus();
+            }
+          }}
+        >
+          {tab}
+        </button>
+      ))}
+    </div>
+  );
+}
+export function ToolPanel({ name, active, children }) {
+  return (
+    <div
+      role="tabpanel"
+      id={`panel-${name}`}
+      aria-labelledby={`tab-${name}`}
+      hidden={active !== name}
+    >
+      {children}
     </div>
   );
 }

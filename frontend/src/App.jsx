@@ -22,8 +22,8 @@ function App() {
     domains: <Domains />,
     recall: <Recall />,
     reason: <Reason />,
-    intelligence: <Intelligence />,
-    governance: <Governance />,
+    intelligence: <Intelligence onTeach={() => setActivePage("teach")} />,
+    governance: <Governance onTeach={() => setActivePage("teach")} />,
     systems: <Systems />,
   };
 

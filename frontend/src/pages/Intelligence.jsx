@@ -4,6 +4,8 @@ import { useWorkspaceData } from "../components/workspaces/useWorkspaceData";
 import {
   ResourceState,
   WorkspaceHeader,
+  WorkspaceTabs,
+  ToolPanel,
 } from "../components/workspaces/WorkspaceParts";
 import CognitiveOperation from "../components/workspaces/CognitiveOperation";
 import { workspaceRequest } from "../services/workspaceApi";
@@ -11,6 +13,8 @@ import { workspaceRequest } from "../services/workspaceApi";
 function Connections() {
   const resource = useWorkspaceData("/intelligence/connections");
   const [query, setQuery] = useState("");
+  const [relationship, setRelationship] = useState("all");
+  const [view, setView] = useState("List");
   const [selected, setSelected] = useState(null);
   const nodes = useMemo(
     () => new Map((resource.data?.nodes ?? []).map((node) => [node.id, node])),
@@ -22,7 +26,9 @@ function Connections() {
       `${node.title} ${node.path}`.toLowerCase().includes(query.toLowerCase()),
   );
   const edges = (resource.data?.edges ?? []).filter(
-    (edge) => edge.source === selected || edge.target === selected,
+    (edge) =>
+      (edge.source === selected || edge.target === selected) &&
+      (relationship === "all" || relationship === edge.relationship),
   );
   const unresolved = (resource.data?.unresolved_references ?? []).filter(
     (reference) => reference.source === selected,
@@ -39,7 +45,10 @@ function Connections() {
           {resource.data?.nodes.filter((node) => node.path).length} principle
           documents · {resource.data?.edges.length} documented connections
         </p>
-        <p className="workspace-notice">{resource.data?.limitation}</p>
+        <details>
+          <summary>How connections are established</summary>
+          <p>{resource.data?.limitation}</p>
+        </details>
         <label className="workspace-search">
           Find a principle document
           <input
@@ -48,6 +57,38 @@ function Connections() {
             onChange={(event) => setQuery(event.target.value)}
           />
         </label>
+        <div className="workspace-toolbar">
+          <label>
+            Relationship
+            <select
+              aria-label="Relationship"
+              value={relationship}
+              onChange={(event) => setRelationship(event.target.value)}
+            >
+              <option value="all">All relationships</option>
+              {[
+                ...new Set(
+                  (resource.data?.edges ?? []).map((edge) => edge.relationship),
+                ),
+              ].map((type) => (
+                <option key={type} value={type}>
+                  {type.replaceAll("_", " ")}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            View
+            <select
+              aria-label="View"
+              value={view}
+              onChange={(event) => setView(event.target.value)}
+            >
+              <option>List</option>
+              <option>Map</option>
+            </select>
+          </label>
+        </div>
         <div className="connection-explorer">
           <div
             className="connection-documents"
@@ -72,26 +113,63 @@ function Connections() {
                 <h3>{nodes.get(selected)?.title}</h3>
                 <p className="muted">{nodes.get(selected)?.path}</p>
                 <h4>Observed connections</h4>
-                {edges.map((edge, index) => (
-                  <div className="connection-edge" key={index}>
-                    <strong>{nodes.get(edge.source)?.title}</strong>
-                    <span>{edge.relationship.replaceAll("_", " ")}</span>
-                    <strong>{nodes.get(edge.target)?.title}</strong>
-                    <small>Basis: {edge.basis}</small>
+                {view === "Map" && (
+                  <div
+                    className="connection-map"
+                    aria-label="Local relationship map"
+                  >
+                    <strong>{nodes.get(selected)?.title}</strong>
+                    {edges.map((edge, index) => {
+                      const other =
+                        edge.source === selected ? edge.target : edge.source;
+                      return (
+                        <div key={index}>
+                          <span>
+                            {edge.source === selected ? "→" : "←"}{" "}
+                            {edge.relationship.replaceAll("_", " ")}
+                          </span>
+                          <button
+                            className="secondary-action"
+                            onClick={() => setSelected(other)}
+                          >
+                            {nodes.get(other)?.title}
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
-                <h4>Unresolved references</h4>
+                )}
+                {!edges.length && (
+                  <p className="muted">
+                    No connections match this relationship filter.
+                  </p>
+                )}
+                {view === "List" &&
+                  edges.map((edge, index) => (
+                    <div className="connection-edge" key={index}>
+                      <button
+                        className="connection-link"
+                        onClick={() => setSelected(edge.source)}
+                      >
+                        {nodes.get(edge.source)?.title}
+                      </button>
+                      <span>{edge.relationship.replaceAll("_", " ")}</span>
+                      <button
+                        className="connection-link"
+                        onClick={() => setSelected(edge.target)}
+                      >
+                        {nodes.get(edge.target)?.title}
+                      </button>
+                      <small>Basis: {edge.basis}</small>
+                    </div>
+                  ))}
+                {unresolved.length > 0 && <h4>Unresolved references</h4>}
                 {unresolved.map((reference, index) => (
                   <p key={index}>
                     {reference.reference} ·{" "}
                     {reference.reason.replaceAll("_", " ")}
                   </p>
                 ))}
-                {!unresolved.length && (
-                  <p className="muted">
-                    No unresolved references recorded for this document.
-                  </p>
-                )}
               </>
             ) : (
               <p className="muted">
@@ -106,7 +184,7 @@ function Connections() {
   );
 }
 
-function Reflection() {
+function Reflection({ onTeach }) {
   const { activeDomain } = useDomain();
   const events = useWorkspaceData("/intelligence/learning-events");
   const history = useWorkspaceData("/reflection/history");
@@ -188,6 +266,15 @@ function Reflection() {
               document before reflecting.
             </p>
           )}
+          {!visible.length && (
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={onTeach}
+            >
+              Teach Sentinel a document
+            </button>
+          )}
           <button
             className="primary-action"
             disabled={!ids.length || !title.trim() || operation.pending}
@@ -253,16 +340,28 @@ function Reflection() {
   );
 }
 
-export default function Intelligence() {
+export default function Intelligence({ onTeach }) {
+  const [active, setActive] = useState("Connections");
   return (
     <div className="page workspace-page">
       <WorkspaceHeader
         title="Connect knowledge, then consider what follows"
         description="Observe relationships, reflect on recorded learning, and propose evidence-aware plans."
       />
-      <Connections />
-      <Reflection />
-      <CognitiveOperation kind="plan" />
+      <WorkspaceTabs
+        tabs={["Connections", "Reflection", "Planning"]}
+        active={active}
+        onChange={setActive}
+      />
+      <ToolPanel name="Connections" active={active}>
+        <Connections />
+      </ToolPanel>
+      <ToolPanel name="Reflection" active={active}>
+        <Reflection onTeach={onTeach} />
+      </ToolPanel>
+      <ToolPanel name="Planning" active={active}>
+        <CognitiveOperation kind="plan" />
+      </ToolPanel>
     </div>
   );
 }

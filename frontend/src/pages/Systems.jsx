@@ -44,12 +44,17 @@ export default function Systems() {
               ? "Credentials configured; provider availability is checked when requested."
               : "Model credentials required."}
           </p>
-          <p>Constitutional semantic evaluation: not independently verified</p>
-          <p>Semantic proposition grounding: not independently verified</p>
-          <p className="workspace-notice">
-            Available storage and configured credentials do not establish the
-            correctness of a cognitive result.
-          </p>
+          <details>
+            <summary>Evaluation boundaries</summary>
+            <p>
+              Constitutional semantic evaluation: not independently verified
+            </p>
+            <p>Semantic proposition grounding: not independently verified</p>
+            <p className="workspace-notice">
+              Available storage and configured credentials do not establish the
+              correctness of a cognitive result.
+            </p>
+          </details>
           <h3>Observations requiring attention</h3>
           <TextList items={status.data?.warnings} />
         </ResourceState>

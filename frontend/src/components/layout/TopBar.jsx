@@ -89,18 +89,59 @@ export default function TopBar({ activePage, setActivePage }) {
           <span>Teach Sentinel</span>
         </button>
 
-        <div className="system-status">
-          <span className="status-dot"></span>
-          <span>
-            {status.loading
-              ? "Checking readiness"
-              : status.error
-                ? "Status unavailable"
-                : status.data?.status === "ready"
-                  ? "Storage ready"
-                  : "Attention required"}
-          </span>
-        </div>
+        <details className="readiness-menu">
+          <summary className="system-status">
+            <span
+              className={`status-dot ${status.loading || status.error || status.data?.status !== "ready" ? "status-attention" : ""}`}
+            ></span>
+            <span>
+              {status.loading
+                ? "Checking readiness"
+                : status.error
+                  ? "Status unavailable"
+                  : status.data?.status === "ready"
+                    ? "Storage ready"
+                    : "Attention required"}
+            </span>
+          </summary>
+          <div className="readiness-details">
+            <h2>System observations</h2>
+            {status.error && <p role="alert">{status.error}</p>}
+            {(status.data?.services ?? []).map((service) => (
+              <p key={service.name}>
+                <strong>
+                  {service.name}: {service.status.replaceAll("_", " ")}
+                </strong>
+                <br />
+                {service.detail}
+              </p>
+            ))}
+            {status.data && (
+              <>
+                <p>
+                  Provider credentials:{" "}
+                  {status.data.model_features_configured
+                    ? "Configured; availability checked per request"
+                    : "Required"}
+                </p>
+                <p>Constitutional evaluation: not independently verified</p>
+              </>
+            )}
+            <button
+              className="secondary-action"
+              onClick={status.refresh}
+              disabled={status.loading}
+            >
+              Refresh status
+            </button>
+            <button
+              className="secondary-action"
+              onClick={() => setActivePage("systems")}
+            >
+              Open Systems
+            </button>
+          </div>
+        </details>
       </div>
     </header>
   );

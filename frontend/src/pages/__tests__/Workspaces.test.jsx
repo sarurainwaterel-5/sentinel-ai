@@ -86,6 +86,7 @@ test("Intelligence inspects references and unresolved provenance", async () => {
 });
 test("empty learning history cannot initiate fabricated reflection", async () => {
   render(<Intelligence />);
+  fireEvent.click(screen.getByRole("tab", { name: "Reflection" }));
   await screen.findByText(/No Learning Events are recorded/);
   expect(
     screen.getByRole("button", { name: "Reflect on selected history" }),
@@ -116,6 +117,7 @@ test("reflection resolves selected recorded events and shows inadmissible outcom
     return respond(path);
   });
   render(<Intelligence />);
+  fireEvent.click(screen.getByRole("tab", { name: "Reflection" }));
   fireEvent.click(await screen.findByRole("checkbox"));
   fireEvent.click(
     screen.getByRole("button", { name: "Reflect on selected history" }),
@@ -140,6 +142,7 @@ test("planning sends the domain and normalized constraints and preserves provide
     return respond(path);
   });
   render(<Intelligence />);
+  fireEvent.click(screen.getByRole("tab", { name: "Planning" }));
   fireEvent.change(screen.getByLabelText("Objective"), {
     target: { value: "  Reduce incident risk  " },
   });
@@ -176,10 +179,15 @@ test("Governance preserves gates and archives through the lifecycle API", async 
     return respond(path);
   });
   render(<Governance />);
+  fireEvent.click(screen.getByRole("tab", { name: "Principles" }));
   expect(
     await screen.findByText("Proposition → Inference: closed"),
   ).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("tab", { name: "Documents" }));
   fireEvent.click(await screen.findByRole("button", { name: "Archive" }));
+  fireEvent.change(screen.getByLabelText("Status"), {
+    target: { value: "archived" },
+  });
   await screen.findByRole("button", { name: "Restore" });
   expect(workspaceRequest).toHaveBeenCalledWith("/knowledge/doc1/archive", {
     method: "PUT",
@@ -204,6 +212,7 @@ test("verification delegates its objective without granting execution authority"
     return respond(path);
   });
   render(<Governance />);
+  fireEvent.click(screen.getByRole("tab", { name: "Verify" }));
   fireEvent.change(screen.getByLabelText("Objective"), {
     target: { value: "Check an incident response" },
   });
@@ -260,4 +269,83 @@ test("Governance scopes operational memory to the current domain", async () => {
   render(<Governance />);
   await screen.findByText("Evidence.pdf");
   expect(screen.queryByText("Trading.pdf")).not.toBeInTheDocument();
+});
+
+test("tabs support keyboard navigation and preserve planning drafts", () => {
+  render(<Intelligence />);
+  fireEvent.click(screen.getByRole("tab", { name: "Planning" }));
+  fireEvent.change(screen.getByLabelText("Objective"), {
+    target: { value: "Preserve this draft" },
+  });
+  fireEvent.keyDown(screen.getByRole("tab", { name: "Planning" }), {
+    key: "ArrowRight",
+  });
+  expect(screen.getByRole("tab", { name: "Connections" })).toHaveFocus();
+  fireEvent.click(screen.getByRole("tab", { name: "Planning" }));
+  expect(screen.getByLabelText("Objective")).toHaveValue("Preserve this draft");
+});
+test("connections can navigate related documents in the map", async () => {
+  render(<Intelligence />);
+  fireEvent.click(
+    await screen.findByRole("button", { name: /Evidence doctrine/ }),
+  );
+  fireEvent.change(screen.getByLabelText("View"), { target: { value: "Map" } });
+  fireEvent.click(
+    screen.getAllByRole("button", { name: "Human authority" })[0],
+  );
+  expect(
+    screen.getByRole("heading", { name: "Human authority" }),
+  ).toBeInTheDocument();
+  expect(
+    screen.queryByRole("heading", { name: "Unresolved references" }),
+  ).not.toBeInTheDocument();
+});
+test("empty history links to teaching", async () => {
+  const onTeach = vi.fn();
+  render(<Intelligence onTeach={onTeach} />);
+  fireEvent.click(screen.getByRole("tab", { name: "Reflection" }));
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Teach Sentinel a document" }),
+  );
+  expect(onTeach).toHaveBeenCalledOnce();
+});
+test("catalog filters archives, inspects metadata, and undoes archive", async () => {
+  let archived = false;
+  workspaceRequest.mockImplementation(async (path) => {
+    if (path === "/knowledge/doc1/archive") {
+      archived = true;
+      return {};
+    }
+    if (path === "/knowledge/doc1/restore") {
+      archived = false;
+      return {};
+    }
+    if (path === "/documents")
+      return catalog.map((doc) => ({
+        ...doc,
+        status: archived ? "archived" : "indexed",
+        uploaded_at: "2026-10-08T12:00:00Z",
+      }));
+    return respond(path);
+  });
+  render(<Governance />);
+  fireEvent.click(await screen.findByRole("button", { name: "Evidence.pdf" }));
+  expect(
+    screen.getByRole("complementary", { name: "Document inspector" }),
+  ).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: "Archive" }));
+  fireEvent.click(await screen.findByRole("button", { name: "Undo" }));
+  await screen.findByText("Document restored to recall.");
+  expect(workspaceRequest).toHaveBeenCalledWith("/knowledge/doc1/restore", {
+    method: "PUT",
+  });
+});
+
+test("collapsed navigation retains named destinations", async () => {
+  const { default: Sidebar } = await import("../../components/layout/Sidebar");
+  const navigate = vi.fn();
+  render(<Sidebar collapsed activePage="bridge" onToggle={() => {}} setActivePage={navigate} />);
+  fireEvent.click(screen.getByRole("button", { name: "Intelligence", exact: true }));
+  expect(navigate).toHaveBeenCalledWith("intelligence");
+  expect(screen.getByRole("button", { name: "Expand navigation" })).toBeInTheDocument();
 });

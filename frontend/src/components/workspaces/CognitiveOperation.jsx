@@ -216,6 +216,8 @@ export default function CognitiveOperation({ kind }) {
         <label>
           Objective
           <textarea
+            aria-label="Objective"
+            placeholder="Example: Reduce incident response time using the recorded engineering evidence"
             required
             maxLength={10000}
             value={objective}
@@ -226,6 +228,8 @@ export default function CognitiveOperation({ kind }) {
         <label>
           Constraints, one per line
           <textarea
+            aria-label="Constraints, one per line"
+            placeholder="Example: Preserve existing data\nRequire human approval before changes"
             maxLength={10000}
             value={constraints}
             onChange={(event) => setConstraints(event.target.value)}
