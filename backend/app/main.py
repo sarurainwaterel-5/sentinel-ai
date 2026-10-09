@@ -117,3 +117,11 @@ async def provider_error_handler(request, exc):
     else:
         detail = "The model provider could not complete this operation. No action was executed. Retry later."
     return JSONResponse(status_code=503, content={"detail": detail})
+
+
+from qdrant_client.http.exceptions import ResponseHandlingException
+
+
+@app.exception_handler(ResponseHandlingException)
+async def vector_transport_error_handler(request, exc):
+    return JSONResponse(status_code=503, content={"detail": "Sentinel could not search its indexed evidence. The vector service may be busy or unavailable. Check Systems and retry; your taught documents are preserved."})

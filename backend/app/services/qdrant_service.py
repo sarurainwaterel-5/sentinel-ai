@@ -9,7 +9,7 @@ COLLECTION_NAME = "incident_knowledge"
 
 from app.settings import QDRANT_URL, QDRANT_API_KEY
 
-client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
+client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY, timeout=30)
 embedding_service = EmbeddingService()
 
 def create_collection_if_not_exists():

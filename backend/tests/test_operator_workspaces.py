@@ -198,3 +198,20 @@ def test_workspace_reflection_rejects_blank_inputs_before_workflow(payload):
         assert TestClient(app).post("/intelligence/reflection", json=payload).status_code == 422
     finally:
         app.dependency_overrides.pop(get_db, None)
+
+
+def test_recall_vector_transport_failure_is_retryable_and_does_not_claim_missing_evidence(monkeypatch):
+    from app.main import app
+    from app.routes import ask
+    from qdrant_client.http.exceptions import ResponseHandlingException
+    monkeypatch.setenv("OPENAI_API_KEY", "configured")
+    class FailedRecall:
+        def answer_question(self, **kwargs):
+            raise ResponseHandlingException(RuntimeError("sensitive-vector-connection"))
+    monkeypatch.setattr(ask, "ReasoningService", FailedRecall)
+    response = TestClient(app).post("/ask", json={"question": "What is a fair value gap?", "module": "trading"})
+    assert response.status_code == 503
+    assert "retry" in response.json()["detail"]
+    assert "preserved" in response.json()["detail"]
+    assert "sensitive" not in response.text
+    assert "not have enough evidence" not in response.text
