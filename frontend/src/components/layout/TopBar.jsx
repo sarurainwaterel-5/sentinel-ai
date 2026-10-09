@@ -11,7 +11,7 @@ const pageTitles = {
   identity: {
     eyebrow: "Identity",
     title: "SentinelAI Identity",
-    subtitle: "Define the principles that shape SentinelAI.",
+    subtitle: "Inspect Sentinel’s identity and governing principles",
   },
   teach: {
     eyebrow: "Teaching Session",

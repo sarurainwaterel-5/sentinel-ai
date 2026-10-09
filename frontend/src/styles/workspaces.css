@@ -501,3 +501,44 @@ summary:focus-visible {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+.identity-workspace [role="tabpanel"] > * + * {
+  margin-top: 20px;
+}
+.identity-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.identity-metrics dt {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+.identity-metrics dd {
+  margin: 4px 0 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+.identity-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.principle-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 4px;
+}
+.principle-source {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+@media (max-width: 850px) {
+  .identity-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
