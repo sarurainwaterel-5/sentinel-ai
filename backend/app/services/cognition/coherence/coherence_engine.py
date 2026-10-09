@@ -1,25 +1,18 @@
+"""Fail-closed constitutional authority until an evaluated assessor is installed.
+
+Presence of principle text is evidence of context, not evidence of semantic
+admissibility. No unexamined result receives a perfect constitutional score.
+"""
 from app.schemas.cognition.reasoning import CoherenceResult
 
 
 class CoherenceEngine:
-    """
-    Evaluates whether knowledge and reasoning align with SentinelAI's identity.
-
-    This is a skeleton implementation.
-    Future versions will compare constitutional context against knowledge context
-    and return specific conflicts or recommendations.
-    """
-
-    def evaluate(
-        self,
-        question: str,
-        identity_context: str,
-        knowledge_context: str | None = None,
-    ) -> CoherenceResult:
+    def evaluate(self, question: str, identity_context: str, knowledge_context: str | None = None) -> CoherenceResult:
         return CoherenceResult(
-            coherent=True,
-            constitutional_score=1.0,
+            evaluation_status="not_evaluated",
+            coherent=False,
+            constitutional_score=0.0,
             articles_consulted=[],
-            conflicts=[],
-            recommendations=[],
+            conflicts=["Constitutional semantic admissibility has not been assessed by a verified evaluator."],
+            recommendations=["Review the structured result against Sentinel's principles before making a decision. No execution is authorized."],
         )

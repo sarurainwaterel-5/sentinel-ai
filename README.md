@@ -29,6 +29,18 @@ curl -u admin http://127.0.0.1:8080/api/ready
 
 Only the authenticated browser proxy is published; the API and storage services are private to the Compose network. This installation is for one administrator on one computer. Public hosting requires TLS, network isolation, authentication at every reachable API boundary, provider credentials, backups and a separately verified production rollout.
 
+## Operator workspaces
+
+Intelligence explores documented connections, reflects on recorded learning, and
+proposes evidence-aware plans. Governance inspects integrity, archives/restores
+operational memory, and verifies proposed plans. Systems measures storage and
+capability configuration. [Workspace documentation](docs/product/WORKSPACE_COMPLETION.md)
+records the contracts, authority boundaries, and verification evidence.
+
+Constitutional semantic judgment remains explicitly unassessed. Planning,
+verification, and reflection do not authorize execution. ADR-037 and its
+independent semantic acceptance gate remain open for review.
+
 ## Development and verification
 
 ```sh

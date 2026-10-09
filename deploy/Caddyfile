@@ -3,6 +3,7 @@
 }
 
 :8080 {
+    header Cache-Control "no-cache"
     basic_auth {
         {$SENTINEL_ADMIN_USER} {$SENTINEL_ADMIN_PASSWORD_HASH}
     }

@@ -29,13 +29,23 @@ class UploadService:
     ):
         file_path, filename = await save_pdf_upload(file, UPLOAD_DIR, MAX_UPLOAD_BYTES)
         try:
-            return self._index_pdf(
+            result = self._index_pdf(
                 file_path=file_path, filename=filename, module=module, topic=topic,
                 collection=collection, organization_id=organization_id, description=description,
             )
         except BaseException:
             file_path.unlink(missing_ok=True)
             raise
+        if result["status"] == "indexed":
+            from app.services.workspaces.learning_history import IngestionHistoryRecorder
+            try:
+                event = IngestionHistoryRecorder().record(result, organization_id)
+                result["learning_event_id"] = event.learning_event_id
+            except Exception:
+                # The document is already indexed. Preserve it and report the
+                # independent historical recording failure explicitly.
+                result["history_warning"] = "Document indexed, but its Learning Event could not be preserved."
+        return result
 
     def _index_pdf(self, *, file_path, filename, module, topic, collection, organization_id, description):
         file_hash = FingerprintService.calculate_sha256(file_path)

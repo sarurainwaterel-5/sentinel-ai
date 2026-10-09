@@ -15,7 +15,7 @@ export default function Layout({ children, activePage, setActivePage }) {
       />
 
       <main className="main-panel">
-        <TopBar activePage={activePage} />
+        <TopBar activePage={activePage} setActivePage={setActivePage} />
         {children}
       </main>
     </div>

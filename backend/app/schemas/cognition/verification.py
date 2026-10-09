@@ -511,6 +511,8 @@ class VerificationCoherenceResult(BaseModel):
     Coherence remains independent from verification confidence.
     """
 
+    evaluation_status: str = "reported"
+
     coherent: bool
 
     constitutional_score: float = Field(

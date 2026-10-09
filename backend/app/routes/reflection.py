@@ -62,12 +62,9 @@ router = APIRouter(
 )
 
 
-DATABASE_PATH = (
-    Path(__file__).resolve().parents[2]
-    / "data"
-    / "learning-events.sqlite3"
-)
+from app.services.workspaces.learning_history import LEARNING_DATABASE_PATH
 
+DATABASE_PATH = LEARNING_DATABASE_PATH
 
 repository = LearningEventRepository(
     database_path=DATABASE_PATH

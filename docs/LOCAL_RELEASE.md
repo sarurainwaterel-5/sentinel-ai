@@ -31,17 +31,28 @@ No semantic benchmark calls have been made. ADR-037 remains Proposed. PR #1 is u
 
 ## Verified checks
 
-- Backend: **569 tests passed**; one Starlette/httpx deprecation warning.
-- Frontend: **17 tests passed**, lint passed, production build passed.
+- Backend: **584 tests passed**; one Starlette/httpx deprecation warning.
+- Frontend: **30 tests passed**, lint passed, production build passed.
 - Frontend dependency audit: **zero reported vulnerabilities** after compatible lockfile updates.
 - Python dependency consistency: `pip check` passed.
 - PostgreSQL: three migrations applied to a real PostgreSQL 16 instance; Alembic reached `031_document_catalog`.
 - Compose and CI YAML parsed; shell scripts passed syntax checks; `git diff --check` passed.
 
-Packaged HTTP workflow verification passed through the password-protected browser origin: unauthenticated access rejected, administrator access accepted, live database/vector readiness, PDF indexing, duplicate detection, semantic search, archive exclusion, restoration, dashboard, and rejection of unsafe filenames. Bridge, Canon and Domains returned HTTP 200. Missing provider credentials produced the expected explicit 503. The synthetic verification PDF was left archived. Browser automation rejected the localhost URL with `ERR_BLOCKED_BY_CLIENT`; a visual browser check has not been completed.
+Packaged HTTP workflow verification passed through the password-protected browser origin: unauthenticated access rejected, administrator access accepted, live database/vector readiness, PDF indexing, duplicate detection, semantic search, archive exclusion, restoration, dashboard, and rejection of unsafe filenames. Bridge, Canon and Domains returned HTTP 200. Missing provider credentials produced the expected explicit 503. The synthetic verification PDF was left archived. The initial in-app automation rejected localhost. Subsequent headless Chromium checks completed actual browser navigation, connection inspection, planning submission, verification submission, and document restoration/archive with no client errors; desktop and compact layouts were visually inspected.
 
 ## Remaining acceptance work
 
-Configure an application `OPENAI_API_KEY` to exercise Recall, Reason, Plan and Verify against the actual provider. Separate judge credentials, an explicit judge model and benchmark execution authorization are still required for the 108-call semantic evaluation. Never substitute regression results for empirical accuracy, weaken thresholds, or open proposition-driven inference on this release's evidence.
+The existing local application credentials successfully exercised Planning and Verification through both HTTP and browser workflows. Separate judge credentials, an explicit judge model and benchmark execution authorization are still required for the 108-call semantic evaluation. Never substitute regression results for empirical accuracy, weaken thresholds, or open proposition-driven inference on this release's evidence.
 
-The coherence service and Bridge operational-health summary retain their existing placeholder implementations. The new `/ready` endpoint checks actual database/vector connectivity; it does not certify those research features. Public hosting remains a separate rollout with TLS, full API authentication, deployment credentials, backup/restore validation, operational monitoring, and appropriate account isolation.
+Intelligence, Governance, and Systems now have connected operator workflows. Bridge health observes storage instead of returning a fixed success. Constitutional coherence now fails closed as explicitly unassessed instead of returning an unearned perfect score. A verified constitutional assessor and semantic acceptance remain outstanding; storage readiness does not certify them. See [workspace implementation](product/WORKSPACE_COMPLETION.md). Public hosting remains a separate rollout with TLS, full API authentication, deployment credentials, backup/restore validation, operational monitoring, and appropriate account isolation.
+
+
+## Workspace verification
+
+The complete local workflow passed: PDF ingestion → factual Learning Events →
+organization-scoped deterministic Reflection → immutable rejected outcome retained
+in PostgreSQL. Actual model-backed Planning and Verification returned structured
+results with separate unassessed constitutional judgment. Browser forms rendered
+those results, and Governance restored/re-archived a synthetic document. All
+synthetic workspace test documents remain archived; their history is retained in
+a separate verification organization. No existing user document was changed.

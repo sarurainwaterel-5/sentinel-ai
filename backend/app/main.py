@@ -28,7 +28,10 @@ from app.routes.verification import (
 )
 
 
+from app.routes.workspaces import router as workspaces_router
+
 app = FastAPI(title="SentinelAI API")
+app.include_router(workspaces_router)
 
 app.include_router(upload_router)
 app.include_router(search_router)
@@ -99,3 +102,18 @@ def readiness_check():
         "services": services,
         "model_features_configured": bool(os.getenv("OPENAI_API_KEY")),
     })
+
+
+# Provider failures are bounded operational errors, never raw SDK payloads.
+from openai import OpenAIError, AuthenticationError, RateLimitError
+
+
+@app.exception_handler(OpenAIError)
+async def provider_error_handler(request, exc):
+    if isinstance(exc, AuthenticationError):
+        detail = "The model provider rejected Sentinel's credentials. Update backend/.env and restart Sentinel."
+    elif isinstance(exc, RateLimitError):
+        detail = "The model provider's quota or rate limit was reached. Check the provider account before retrying."
+    else:
+        detail = "The model provider could not complete this operation. No action was executed. Retry later."
+    return JSONResponse(status_code=503, content={"detail": detail})

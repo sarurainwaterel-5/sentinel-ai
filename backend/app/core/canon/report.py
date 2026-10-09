@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from app.core.canon.manifest import build_canon_manifest
 
 
@@ -34,6 +36,11 @@ def build_canon_report():
     if manifest["document_count"] == 0:
         warnings.append("No canonical documents discovered.")
 
+    empty_documents = [document["name"] for document in manifest["documents"]
+                       if not Path(document["path"]).read_text(encoding="utf-8").strip()]
+    if empty_documents:
+        warnings.append(f"{len(empty_documents)} principle documents contain no instructions.")
+
     status = "healthy"
 
     if warnings:
@@ -46,4 +53,5 @@ def build_canon_report():
         "layers": manifest["layers"],
         "types": manifest["types"],
         "warnings": warnings,
+        "empty_documents": empty_documents,
     }

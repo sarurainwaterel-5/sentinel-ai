@@ -287,6 +287,8 @@ class CoherenceResult(BaseModel):
     Coherence remains independent from evidentiary confidence.
     """
 
+    evaluation_status: str = "reported"
+
     coherent: bool
 
     constitutional_score: float = Field(
