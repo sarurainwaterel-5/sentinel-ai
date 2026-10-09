@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+import { API_BASE_URL } from "./apiConfig";
 
 export async function getKnowledgeDashboard() {
   const response = await fetch(
@@ -66,7 +66,7 @@ export async function uploadKnowledge({
     );
   }
 
-  let result = null;
+  let result;
 
   try {
     result = await response.json();
@@ -85,4 +85,20 @@ export async function uploadKnowledge({
   }
 
   return result;
+}
+
+export async function submitTeachingMission({ file, domainId, topic = "general", description = "" }) {
+  const form = new FormData();
+  form.append("file", file);
+  form.append("module", domainId);
+  form.append("topic", topic || "general");
+  form.append("description", description);
+  form.append("organization_id", "default");
+  let response;
+  try { response = await fetch(`${API_BASE_URL}/teach/missions`, { method: "POST", body: form }); }
+  catch { throw new Error("Submission could not be confirmed. Refresh mission history before retrying; Sentinel may already have received the PDF."); }
+  const payload = await response.json().catch(() => null);
+  if (!response.ok) throw new Error(typeof payload?.detail === "string" ? payload.detail : `Teaching submission returned HTTP ${response.status}. Check Systems and retry.`);
+  if (!payload?.id) throw new Error("Submission could not be confirmed. Refresh mission history before retrying.");
+  return payload;
 }

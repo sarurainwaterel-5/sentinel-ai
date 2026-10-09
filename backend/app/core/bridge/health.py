@@ -1,17 +1,14 @@
+"""Translate observed platform condition into Bridge operator language."""
+from app.services.workspaces.systems import SystemsObserver
+
+
 def build_operational_health():
-    """
-    Build the operational health model for The Bridge.
-
-    This reports the health of SentinelAI's cognitive
-    subsystems without modifying them.
-    """
-
+    snapshot = SystemsObserver().observe()
     return {
-        "overall": "Healthy",
-        "warnings": 0,
-        "services": {
-            "principles": "Healthy",
-            "connections": "Healthy",
-            "reflection": "Healthy",
-        },
+        "observed_at": snapshot.observed_at,
+        "model_features_configured": snapshot.model_features_configured,
+        "observations": snapshot.warnings,
+        "overall": "Ready" if snapshot.status == "ready" else "Degraded",
+        "warnings": len(snapshot.warnings),
+        "services": {service.name: service.status for service in snapshot.services},
     }

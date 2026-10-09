@@ -1,7 +1,9 @@
-from pathlib import Path
 from uuid import uuid4
 
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
+from app.settings import UPLOAD_DIR, MAX_UPLOAD_BYTES
+from app.services.upload_io import save_pdf_upload
 
 from app.services.pdf_service import extract_text_from_pdf
 from app.services.chunking_service import chunk_text
@@ -9,9 +11,6 @@ from app.services.qdrant_service import store_chunks
 from app.services.fingerprint_service import FingerprintService
 from app.services.embedding_service import EmbeddingService
 from app.repositories.document_repository import DocumentRepository
-
-UPLOAD_DIR = "uploads"
-Path(UPLOAD_DIR).mkdir(exist_ok=True)
 
 class UploadService:
     def __init__(self, db: Session):
@@ -28,16 +27,43 @@ class UploadService:
         organization_id: str = "default",
         description: str | None = None,
     ):
-        file_path = f"{UPLOAD_DIR}/{file.filename}"
+        file_path, filename = await save_pdf_upload(file, UPLOAD_DIR, MAX_UPLOAD_BYTES)
+        return self.process_saved_pdf(
+            file_path=file_path, filename=filename, module=module, topic=topic,
+            collection=collection, organization_id=organization_id, description=description,
+        )
 
-        with open(file_path, "wb") as buffer:
-            buffer.write(await file.read())
+    def process_saved_pdf(self, *, file_path, filename, module, topic, collection,
+                          organization_id, description, progress=None):
+        report = progress or (lambda stage: None)
+        try:
+            result = self._index_pdf(
+                file_path=file_path, filename=filename, module=module, topic=topic,
+                collection=collection, organization_id=organization_id, description=description,
+                progress=report,
+            )
+        except BaseException:
+            file_path.unlink(missing_ok=True)
+            raise
+        if result["status"] == "indexed":
+            report("recording")
+            from app.services.workspaces.learning_history import IngestionHistoryRecorder
+            try:
+                event = IngestionHistoryRecorder().record(result, organization_id)
+                result["learning_event_id"] = event.learning_event_id
+            except Exception:
+                result["history_warning"] = "Document indexed, but its Learning Event could not be preserved."
+        return result
 
+    def _index_pdf(self, *, file_path, filename, module, topic, collection, organization_id, description, progress=None):
+        report = progress or (lambda stage: None)
+        report("fingerprinting")
         file_hash = FingerprintService.calculate_sha256(file_path)
 
         existing_document = self.document_repository.get_by_hash(file_hash)
 
         if existing_document:
+            file_path.unlink(missing_ok=True)
             return {
                 "status": "duplicate",
                 "message": "This exact document has already been uploaded.",
@@ -51,30 +77,33 @@ class UploadService:
                     "chunk_count": existing_document.chunk_count,
                     "uploaded_at": existing_document.uploaded_at.isoformat() if existing_document.uploaded_at else None,
                 },
-                "filename": file.filename,
+                "filename": filename,
                 "file_hash": file_hash,
             }
 
         document_id = str(uuid4())
 
-        text = extract_text_from_pdf(file_path)
+        report("extracting")
+        try:
+            text = extract_text_from_pdf(file_path)
+        except Exception as exc:
+            raise HTTPException(status_code=422, detail="The PDF could not be read.") from exc
+        report("chunking")
         chunks = chunk_text(text)
+        if not chunks:
+            raise HTTPException(status_code=422, detail="The PDF contains no extractable text. OCR is not available.")
 
+        report("indexing")
         stored_vectors = store_chunks(
-    document_id=document_id,
-    filename=file.filename,
-    file_hash=file_hash,
-    chunks=chunks,
-    module=module,
-    topic=topic,
-    collection=collection,
-    organization_id=organization_id,
-    description=description,
-)
+            document_id=document_id, filename=filename, file_hash=file_hash,
+            chunks=chunks, module=module, topic=topic, collection=collection,
+            organization_id=organization_id, description=description,
+        )
 
+        report("cataloging")
         document = self.document_repository.create_document(
             document_id=document_id,
-            filename=file.filename,
+            filename=filename,
             file_hash=file_hash,
             module=module,
             topic=topic,

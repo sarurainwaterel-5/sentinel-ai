@@ -17,6 +17,7 @@ def build_bridge_summary():
 
     return {
     "status": report["status"],
+    "execution_authority": "human",
 
     "canon": {
         "name": manifest["name"],
@@ -37,13 +38,9 @@ def build_bridge_summary():
     },
 
     "reflection": {
-        "status": report["status"],
-        "message": (
-            f"SentinelAI understands itself through "
-            f"{manifest['document_count']} principle documents, "
-            f"{manifest['layer_count']} knowledge layers, and "
-            f"{graph['edge_count']} active connections."
-        ),
+        "status": "not_verified",
+        "message": "Structural observations do not establish self-understanding or constitutional coherence.",
+        "evaluation": "not_verified",
         "warnings": report["warnings"],
     },
 

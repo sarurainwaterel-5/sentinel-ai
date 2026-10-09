@@ -1,219 +1,71 @@
 # SentinelAI
 
-> **The Knowledge Operating System for AI-First Organizations**
+SentinelAI is a knowledge and cognitive operating system built with React, FastAPI, PostgreSQL, Qdrant, and local sentence-transformer embeddings. It ingests PDFs, retrieves evidence, manages document lifecycle, and provides governed reasoning, planning, verification, and persistent reflection.
 
-SentinelAI is a modular AI platform that transforms documents into organizational intelligence.
+## Run on this computer
 
-Rather than functioning as a traditional chatbot or document repository, SentinelAI ingests, organizes, retrieves, reasons over, and continuously improves institutional knowledge through domain-driven AI services.
+The local release uses Docker Compose for the complete application and keeps all published ports on `127.0.0.1`. The browser site has one administrator login.
 
----
+Prerequisites: Docker Engine with Compose and Python 3.12 for repository tests (Python 3 is sufficient for initial credential setup). Docker downloads the application dependencies and embedding model on the first build.
 
-## Vision
+```sh
+python3 scripts/setup_local.py
+./scripts/start_local.sh
+```
 
-Every organization has knowledge. Very few have intelligence.
+Open **http://127.0.0.1:8080** and use the credentials in `.local/login.txt`. Credentials are generated once with private file permissions and excluded from Git. Settings in `.env.local` contain a random database password and a hashed administrator password. Never publish these files.
 
-SentinelAI bridges that gap by providing a Knowledge Operating System for domain-specific AI across engineering, legal, market, business, and operational knowledge.
+To enable Recall and model-assisted Reason, Plan, and Verify, configure `OPENAI_API_KEY` in `backend/.env`, then run `./scripts/start_local.sh` again. Without a key, these endpoints return a clear 503 configuration message; upload, semantic search, document management, and dashboard remain available. No API key is embedded in frontend assets.
 
----
+Stop with `./scripts/stop_local.sh`. Containers restart with Docker. Data persists in Compose volumes for PostgreSQL, Qdrant, uploads, and cognitive history. Do not use `docker compose down -v` unless you intend to erase that data.
 
-## Current Project Status
+Troubleshooting:
 
-**Current Sprint:** Sprint 6.4 — Knowledge Analytics  
-**Current Focus:** Knowledge Dashboard  
-**Architecture Status:** Modular Monolith, Microservice Ready  
-**Development Stage:** Engineering Foundation Complete  
-**Next Milestone:** React Knowledge Dashboard
+```sh
+docker compose --env-file .env.local -f docker-compose.local.yml ps
+docker compose --env-file .env.local -f docker-compose.local.yml logs --tail=100 api
+curl -u admin http://127.0.0.1:8080/api/ready
+```
 
----
+Only the authenticated browser proxy is published; the API and storage services are private to the Compose network. This installation is for one administrator on one computer. Public hosting requires TLS, network isolation, authentication at every reachable API boundary, provider credentials, backups and a separately verified production rollout.
 
-## Platform Architecture
+## Operator workspaces
 
-```text
-                    SentinelAI Platform
+Intelligence explores documented connections, reflects on recorded learning, and
+proposes evidence-aware plans. Governance inspects integrity, archives/restores
+operational memory, and verifies proposed plans. Systems measures storage and
+capability configuration. [Workspace documentation](docs/product/WORKSPACE_COMPLETION.md)
+records the contracts, authority boundaries, and verification evidence.
 
-                      React Frontend
-                             │
-                             ▼
-                     FastAPI Backend
-                             │
-      ┌──────────────────────┼──────────────────────┐
-      ▼                      ▼                      ▼
-Upload Service        Knowledge Management   Reasoning Engine
-      │                      │                      │
-      ▼                      ▼                      ▼
-Fingerprint Service   Knowledge Analytics   Retrieval Service
-      │                      │                      │
-      └──────────────────────┼──────────────────────┘
-                             ▼
-                    PostgreSQL Metadata
-                             │
-                             ▼
-                     Qdrant Vector Store
-                             │
-                             ▼
-                      OpenAI Reasoning
-Core Capabilities
+Constitutional semantic judgment remains explicitly unassessed. Planning,
+verification, and reflection do not authorize execution. ADR-037 and its
+independent semantic acceptance gate remain open for review.
 
-Knowledge Ingestion
+## Development and verification
 
-PDF processing
-SHA-256 fingerprinting
-Duplicate detection
-Metadata catalog
-Semantic chunking
-Embedding generation
+```sh
+python3.12 -m venv backend/venv
+backend/venv/bin/python -m pip install -r backend/requirements-dev.txt
+backend/venv/bin/python scripts/cache_embeddings.py
+cd backend
+OPENAI_API_KEY=unit-test-placeholder DATABASE_URL=sqlite:///:memory: venv/bin/python -m pytest tests -q
+cd ../frontend
+npm ci
+npm run lint
+npm run test:run
+npm run build
+```
 
+The placeholder key is for isolated tests only. Tests use doubles for model calls. The CPU requirements preserve application package pins while avoiding CUDA-only dependencies. Existing GPU requirements are retained separately in `backend/requirements.txt`.
 
-Knowledge Retrieval
+Native development configuration examples live in `backend/.env.example` and `frontend/.env.example`. API and Alembic share `DATABASE_URL`; Qdrant uses `QDRANT_URL` and optional `QDRANT_API_KEY`. All frontend workspaces honor `VITE_API_URL`; the packaged browser build uses `/api` behind the authenticated reverse proxy.
 
-Semantic search
-Grounded RAG
-Source citations
-Context construction
-Confidence-based retrieval
+## Current engineering boundary
 
+Sprint 20.3 A–F and the semantic gate implementation exist. The independent human review is approved in commit `213fb04125b189adc2fc770f157e4e454b559644`. The 108-call independent semantic benchmark has not been completed. ADR-037 remains Proposed and propositions remain excluded from inference. Regression tests and a running local installation do not establish semantic judge accuracy.
 
-Knowledge Management
+See [the semantic evaluation protocol](backend/evaluation/semantic_judge/README.md), [Sprint 20.3](docs/sprints/Sprint-20.3-Governed-Semantic-Proposition-Generation.md), and [the local release report](docs/LOCAL_RELEASE.md).
 
-Knowledge catalog
-Archive
-Restore
-Document metadata
-Lifecycle management
+Model-backed evaluation requires separate `SEMANTIC_JUDGE_API_KEY`, an explicit `SEMANTIC_JUDGE_MODEL`, and execution authorization. The judge runner intentionally does not read application dotenv settings or reuse the generation client.
 
-
-Knowledge Analytics
-
-Dashboard API
-Knowledge domain statistics
-Topic analytics
-Collection analytics
-Recent knowledge activity
-
-
-Technology Stack
-
-Backend
-FastAPI
-SQLAlchemy
-Alembic
-PostgreSQL
-Qdrant
-OpenAI API
-
-
-Frontend
-
-React
-Vite
-
-
-AI
-
-Local sentence-transformer embeddings
-GPT reasoning through OpenAI API
-
-
-Engineering Philosophy
-
-SentinelAI is developed using an architecture-first approach.
-
-Engineering principles include:
-
-Architecture First
-Domain-Driven Design
-Service-Oriented Design
-Repository Pattern
-Thin API Routes
-API Contracts with Pydantic
-Clean Git History
-Architecture Decision Records
-Sprint Documentation
-Microservice-Ready Boundaries
-Engineering Maturity
-
-✅ Layered Architecture
-✅ Repository Pattern
-✅ Service Layer
-✅ API Contracts
-✅ Database Migrations
-✅ Knowledge Catalog
-✅ Duplicate Detection
-✅ Grounded RAG
-✅ Knowledge Analytics
-🚧 React Dashboard
-🚧 AI Classification
-🚧 Knowledge Graph
-🚧 Multi-Tenant Organizations
-
-Development Workflow
-
-Architecture Review
-        ↓
-Implementation
-        ↓
-Testing
-        ↓
-Refactoring
-        ↓
-Clean Git Commit
-        ↓
-Sprint Documentation
-        ↓
-Architecture Decision Record
-        ↓
-Update Architecture
-        ↓
-Next Sprint
-
-
-Roadmap
-
-Completed
-
-Grounded RAG
-Semantic Search
-OpenAI Reasoning
-PostgreSQL Knowledge Catalog
-Document Fingerprinting
-Duplicate Detection
-Knowledge Management
-Knowledge Analytics
-Dashboard API
-
-In Progress
-React Knowledge Dashboard
-
-Planned
-
-AI Classification Engine
-Knowledge Graph
-Knowledge Coverage Analysis
-Versioning
-Organizations
-Authentication
-Multi-Agent Framework
-Engineering Intelligence
-Legal Intelligence
-Market Intelligence
-Business Intelligence
-
-Documentation
-
-docs/
-├── architecture/
-├── architecture/decisions/
-├── sprints/
-├── roadmap/
-└── diagrams/
-
-Long-Term Vision
-
-SentinelAI is being engineered as a modular Knowledge Operating System capable of scaling from a single local deployment to a distributed enterprise platform supporting multiple AI-powered knowledge domains.
-
-The goal is not simply to answer questions.
-
-The goal is to help organizations transform knowledge into operational intelligence.
-
-
--by C.Titus-El aka Saru El
+Created by C. Titus-El (Saru El).

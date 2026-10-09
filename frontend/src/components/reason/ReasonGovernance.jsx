@@ -1,135 +1,105 @@
-export default function ReasonGovernance({
-  coherence,
-}) {
+export default function ReasonGovernance({ coherence }) {
   if (!coherence) {
     return null;
   }
 
-  const score = Math.round(
-    (coherence.constitutional_score ?? 0) * 100
-  );
+  const notEvaluated = ["not_evaluated", "not_verified"].includes(coherence.evaluation_status);
 
-  const conflictCount =
-    coherence.conflicts?.length ?? 0;
+  const score = Math.round((coherence.constitutional_score ?? 0) * 100);
 
-  const articleCount =
-    coherence.articles_consulted?.length ?? 0;
+  const conflictCount = coherence.conflicts?.length ?? 0;
+
+  const articleCount = coherence.articles_consulted?.length ?? 0;
 
   return (
     <article className="panel reason-governance">
-      <p className="eyebrow">
-        Constitutional Coherence
-      </p>
+      <p className="eyebrow">Constitutional Coherence</p>
 
       <div className="reason-instrument-heading">
         <strong className="reason-instrument-value">
-          {score}%
+          {notEvaluated ? "Unassessed" : `${score}%`}
         </strong>
 
         <span className="reason-instrument-state">
-          {coherence.coherent
-            ? "Coherent"
-            : "Review Required"}
+          {notEvaluated ? "Not independently verified" : coherence.coherent ? "Coherent" : "Review Required"}
         </span>
       </div>
 
-      <div
-        className="reason-meter"
-        role="progressbar"
-        aria-label="Constitutional coherence"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow={score}
-      >
-        <span
-          style={{
-            width: `${score}%`,
-          }}
-        />
-      </div>
+      {!notEvaluated && (
+        <div
+          className="reason-meter"
+          role="progressbar"
+          aria-label="Constitutional coherence"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow={score}
+        >
+          <span
+            style={{
+              width: `${notEvaluated ? "Unassessed" : `${score}%`}`,
+            }}
+          />
+        </div>
+      )}
 
       <p className="reason-instrument-basis">
-        {coherence.coherent
-          ? "No constitutional conflict blocks this reasoning."
-          : "Constitutional review identified conflicts requiring attention."}
+        {notEvaluated
+          ? "Constitutional admissibility has not been evaluated. Review the result before making a decision."
+          : coherence.coherent
+            ? "The evaluator reported no constitutional conflict. Human authorization is still required."
+            : "Constitutional review identified conflicts requiring attention."}
       </p>
+
+      <p className="muted">Constitutional judgment is independent of evidence confidence and does not authorize execution.</p>
 
       <div className="reason-instrument-summary">
         <span>
-          {articleCount}{" "}
-          {articleCount === 1
-            ? "article"
-            : "articles"}
+          {articleCount} {articleCount === 1 ? "article" : "articles"}
         </span>
 
         <span>
-          {conflictCount}{" "}
-          {conflictCount === 1
-            ? "conflict"
-            : "conflicts"}
+          {conflictCount} {conflictCount === 1 ? "conflict" : "conflicts"}
         </span>
       </div>
 
-      {(
-        articleCount > 0 ||
+      {(articleCount > 0 ||
         conflictCount > 0 ||
-        coherence.recommendations?.length > 0
-      ) && (
+        coherence.recommendations?.length > 0) && (
         <details className="reason-instrument-details">
-          <summary>
-            Inspect governance basis
-          </summary>
+          <summary>Inspect governance basis</summary>
 
           {articleCount > 0 && (
             <section>
-              <p className="eyebrow">
-                Articles Consulted
-              </p>
+              <p className="eyebrow">Articles Consulted</p>
 
               <ul>
-                {coherence.articles_consulted.map(
-                  (article, index) => (
-                    <li key={index}>
-                      {article}
-                    </li>
-                  )
-                )}
+                {coherence.articles_consulted.map((article, index) => (
+                  <li key={index}>{article}</li>
+                ))}
               </ul>
             </section>
           )}
 
           {conflictCount > 0 && (
             <section>
-              <p className="eyebrow">
-                Conflicts
-              </p>
+              <p className="eyebrow">Conflicts</p>
 
               <ul>
-                {coherence.conflicts.map(
-                  (conflict, index) => (
-                    <li key={index}>
-                      {conflict}
-                    </li>
-                  )
-                )}
+                {coherence.conflicts.map((conflict, index) => (
+                  <li key={index}>{conflict}</li>
+                ))}
               </ul>
             </section>
           )}
 
           {coherence.recommendations?.length > 0 && (
             <section>
-              <p className="eyebrow">
-                Governance Recommendations
-              </p>
+              <p className="eyebrow">Governance Recommendations</p>
 
               <ul>
-                {coherence.recommendations.map(
-                  (recommendation, index) => (
-                    <li key={index}>
-                      {recommendation}
-                    </li>
-                  )
-                )}
+                {coherence.recommendations.map((recommendation, index) => (
+                  <li key={index}>{recommendation}</li>
+                ))}
               </ul>
             </section>
           )}

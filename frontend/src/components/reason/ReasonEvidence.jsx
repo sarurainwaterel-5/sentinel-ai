@@ -37,6 +37,9 @@ export default function ReasonEvidence({
         </div>
       </div>
 
+      <p className="muted">Retrieval similarity is relevance, not evidentiary confidence. Inspect the source text and provenance before relying on a judgment.</p>
+      {!evidence.sources?.length && <p>No source passages were returned for this mission.</p>}
+
       {evidence.sources?.map(
         (source, index) => (
           <ReasonEvidenceSource

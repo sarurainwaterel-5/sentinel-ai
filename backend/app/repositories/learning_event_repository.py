@@ -289,3 +289,14 @@ class LearningEventRepository:
             )
             for event_id in unique_ids
         ]
+
+    def recent_for_organization(self, organization_id: str, limit: int = 50) -> list[LearningEvent]:
+        """Read bounded authoritative history without rewriting any event."""
+        with self._connect() as connection:
+            rows = connection.execute(
+                """SELECT payload FROM learning_events
+                   WHERE COALESCE(json_extract(payload, '$.metadata.organization_id'), 'default') = ?
+                   ORDER BY json_extract(payload, '$.learned_at') DESC, learning_event_id DESC LIMIT ?""",
+                (organization_id, limit),
+            ).fetchall()
+        return [self._deserialize(row["payload"]) for row in rows]

@@ -9,7 +9,7 @@ import {
   Brain,
   Layers3,
   PanelLeftClose,
-  PanelLeftOpen
+  PanelLeftOpen,
 } from "lucide-react";
 
 const navItems = [
@@ -24,44 +24,67 @@ const navItems = [
   { key: "systems", label: "Systems", icon: Settings },
 ];
 
-export default function Sidebar({ collapsed, onToggle, activePage, setActivePage }) {
+export default function Sidebar({
+  collapsed,
+  onToggle,
+  activePage,
+  setActivePage,
+}) {
   const ToggleIcon = collapsed ? PanelLeftOpen : PanelLeftClose;
 
   return (
     <aside className="sidebar">
-      <div className="brand">
-        <Brain size={26} />
-
-        {!collapsed && (
-          <div>
-            <h2>SentinelAI</h2>
-            <small>Intelligence OS</small>
-          </div>
-        )}
-      </div>
+      <button
+        type="button"
+        className="brand"
+        aria-label="SentinelAI — return to Bridge"
+        onClick={() => setActivePage("bridge")}
+      >
+        <svg className="brand-lockup" viewBox="100 135 1960 435" aria-hidden="true">
+          <image href="/brand/sentinel-ai-logo-navy.png" width="2172" height="724" />
+        </svg>
+        <svg className="brand-mark" viewBox="100 135 510 435" aria-hidden="true">
+          <image href="/brand/sentinel-ai-logo-navy.png" width="2172" height="724" />
+        </svg>
+        {!collapsed && <small>Intelligence OS</small>}
+      </button>
 
       <button
         type="button"
         className="collapse-button"
         onClick={onToggle}
-        aria-label="Toggle Bridge"
+        aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
+        aria-expanded={!collapsed}
       >
         <ToggleIcon size={18} />
-        {!collapsed && <span>Collapse Bridge</span>}
+        {!collapsed && <span>Collapse navigation</span>}
       </button>
 
       <nav className="nav">
         {navItems.map(({ key, label, icon: Icon }) => (
-          <button
-            type="button"
-            className={`nav-item ${activePage === key ? "active" : ""}`}
-            key={key}
-            title={collapsed ? label : ""}
-            onClick={() => setActivePage(key)}
-          >
-            <Icon size={18} />
-            {!collapsed && <span>{label}</span>}
-          </button>
+          <div key={key}>
+            {!collapsed && ["bridge", "teach", "governance"].includes(key) && (
+              <p className="nav-group">
+                {key === "bridge"
+                  ? "Workspace"
+                  : key === "teach"
+                    ? "Knowledge & intelligence"
+                    : "Oversight"}
+              </p>
+            )}
+            <button
+              aria-label={label}
+              aria-current={activePage === key ? "page" : undefined}
+              type="button"
+              className={`nav-item ${activePage === key ? "active" : ""}`}
+              key={key}
+              title={collapsed ? label : ""}
+              onClick={() => setActivePage(key)}
+            >
+              <Icon size={18} />
+              {!collapsed && <span>{label}</span>}
+            </button>
+          </div>
         ))}
       </nav>
     </aside>

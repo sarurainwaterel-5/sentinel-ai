@@ -7,29 +7,25 @@ import "./App.css";
 import Domains from "./pages/Domains";
 import Recall from "./pages/Recall";
 import Reason from "./pages/Reason";
-
-const Placeholder = ({ title }) => (
-  <div className="panel">
-    <p className="eyebrow">Workspace</p>
-    <h2>{title}</h2>
-    <p className="muted">This workspace is currently under construction.</p>
-  </div>
-);
+import Intelligence from "./pages/Intelligence";
+import Governance from "./pages/Governance";
+import Systems from "./pages/Systems";
+import "./styles/workspaces.css";
 
 function App() {
   const [activePage, setActivePage] = useState("bridge");
 
   const pages = {
-  bridge: <Bridge />,
-  teach: <TeachSentinel />,
-  identity: <Identity />,
- domains: <Domains />,
-  recall: <Recall />,
-  reason: <Reason />,
-  intelligence: <Placeholder title="Intelligence" />,
-  governance: <Placeholder title="Governance" />,
-  systems: <Placeholder title="Systems" />,
-};
+    bridge: <Bridge onNavigate={setActivePage} />,
+    teach: <TeachSentinel onNavigate={setActivePage} />,
+    identity: <Identity onNavigate={setActivePage} />,
+    domains: <Domains onNavigate={setActivePage} />,
+    recall: <Recall />,
+    reason: <Reason onNavigate={setActivePage} />,
+    intelligence: <Intelligence onTeach={() => setActivePage("teach")} />,
+    governance: <Governance onTeach={() => setActivePage("teach")} />,
+    systems: <Systems />,
+  };
 
   return (
     <Layout activePage={activePage} setActivePage={setActivePage}>

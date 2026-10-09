@@ -24,7 +24,7 @@ router = APIRouter(
     tags=["Verification"],
 )
 
-orchestrator = VerificationOrchestrator()
+
 
 
 @router.post(
@@ -38,6 +38,6 @@ def verify(
     Execute one complete SentinelAI verification operation.
     """
 
-    return orchestrator.verify(
+    return VerificationOrchestrator().verify(
         request
     )

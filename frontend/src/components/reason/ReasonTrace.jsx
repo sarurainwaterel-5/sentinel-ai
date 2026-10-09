@@ -22,8 +22,8 @@ export default function ReasonTrace({ trace = [] }) {
       </ol>
 
       <p className="muted">
-        High-level reasoning stages exposed for
-        inspection.
+        Recorded operational stages exposed for inspection;
+        these are not hidden model chain-of-thought.
       </p>
     </article>
   );

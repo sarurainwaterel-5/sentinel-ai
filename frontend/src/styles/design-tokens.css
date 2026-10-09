@@ -1,10 +1,9 @@
 :root {
-
   /* Backgrounds */
 
-  --bg-primary: #0F172A;
+  --bg-primary: #0f172a;
   --bg-secondary: #162033;
-  --bg-surface: #1E293B;
+  --bg-surface: #1e293b;
 
   /* Borders */
 
@@ -12,20 +11,20 @@
 
   /* Text */
 
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #acbcd0;
 
   /* Accent */
 
-  --accent-blue: #3B82F6;
-  --accent-cyan: #22D3EE;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #22d3ee;
 
   /* Status */
 
-  --success: #22C55E;
-  --warning: #FBBF24;
-  --danger: #EF4444;
+  --success: #22c55e;
+  --warning: #fbbf24;
+  --danger: #ef4444;
 
   /* Radius */
 
@@ -33,7 +32,5 @@
 
   /* Shadows */
 
-  --shadow:
-      0 6px 30px rgba(0,0,0,.35);
-
+  --shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
 }

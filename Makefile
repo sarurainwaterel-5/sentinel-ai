@@ -70,7 +70,7 @@ health:
 test: test-backend test-frontend
 
 test-backend:
-	cd $(BACKEND_DIR) && venv/bin/pytest -q
+	cd $(BACKEND_DIR) && OPENAI_API_KEY=unit-test-placeholder DATABASE_URL=sqlite:///:memory: venv/bin/python -m pytest tests -q
 
 test-frontend:
 	cd $(FRONTEND_DIR) && npm run test:run
@@ -106,3 +106,11 @@ status:
 
 stop:
 	docker compose down
+
+.PHONY: local-setup local-start
+local-setup:
+	python3 scripts/setup_local.py
+	$(PYTHON) scripts/cache_embeddings.py
+
+local-start:
+	./scripts/start_local.sh

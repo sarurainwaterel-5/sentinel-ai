@@ -279,6 +279,14 @@ class PersistentReflectionHistoryRepository:
             for model in models
         ]
 
+    def recent_for_organization(self, organization_id: str, limit: int = 25) -> list[ReflectionRecord]:
+        """Bounded, scoped history; rejected outcomes remain visible."""
+        models = (self.db.query(ReflectionHistoryRecordModel)
+                  .filter(ReflectionHistoryRecordModel.organization_id == organization_id)
+                  .order_by(ReflectionHistoryRecordModel.reflected_at.desc(), ReflectionHistoryRecordModel.reflection_id.desc())
+                  .limit(limit).all())
+        return [self._to_record(model) for model in models]
+
     @property
     def count(self) -> int:
         return (

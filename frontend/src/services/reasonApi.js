@@ -1,6 +1,4 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL ??
-  "http://127.0.0.1:8000";
+import { API_BASE_URL } from "./apiConfig";
 
 
 export async function reasonAbout({
@@ -13,11 +11,14 @@ export async function reasonAbout({
   scoreThreshold = 0.45,
   missionId = null,
   sessionId = null,
+  signal,
 }) {
-  const response = await fetch(
+  let response;
+  try { response = await fetch(
     `${API_BASE_URL}/cognition/reason`,
     {
       method: "POST",
+      signal,
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,7 +34,10 @@ export async function reasonAbout({
         session_id: sessionId,
       }),
     }
-  );
+  ); } catch (error) {
+    if (error.name === "AbortError") throw error;
+    throw new Error("Sentinel could not reach the reasoning service. Check Systems and retry.", { cause: error });
+  }
 
   if (!response.ok) {
     let detail = null;
@@ -52,5 +56,9 @@ export async function reasonAbout({
     );
   }
 
-  return response.json();
+  const result = await response.json().catch(() => null);
+  if (!result?.reasoning || !result.reasoning.evidence || !result.reasoning.confidence || !result.coherence) {
+    throw new Error("The reasoning service returned an incomplete report. Check Systems and retry.");
+  }
+  return result;
 }

@@ -7,7 +7,9 @@ from app.services.embedding_service import EmbeddingService
 
 COLLECTION_NAME = "incident_knowledge"
 
-client = QdrantClient(host="localhost", port=6333)
+from app.settings import QDRANT_URL, QDRANT_API_KEY
+
+client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY, timeout=30)
 embedding_service = EmbeddingService()
 
 def create_collection_if_not_exists():
@@ -94,6 +96,7 @@ def store_chunks(
                 vector=vector,
                 payload={
                     "document_id": document_id,
+                    "status": "indexed",
                     "filename": filename,
                     "file_hash": file_hash,
                     "chunk_index": index,

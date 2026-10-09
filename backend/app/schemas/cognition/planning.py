@@ -416,6 +416,8 @@ class PlanningCoherenceResult(BaseModel):
     Coherence remains independent from planning confidence.
     """
 
+    evaluation_status: str = "reported"
+
     coherent: bool
 
     constitutional_score: float = Field(
