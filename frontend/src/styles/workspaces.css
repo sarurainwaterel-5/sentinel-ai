@@ -550,3 +550,9 @@ summary:focus-visible {
 .mission-complete { border-color: rgba(34, 211, 238, 0.4); }
 .source-fingerprint { overflow-wrap: anywhere; }
 @media (max-width: 650px) { .mission-steps { grid-template-columns: 1fr; } }
+
+.reason-next-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.reason-report-context h2 { overflow-wrap: anywhere; }
+.reason-question-actions { flex-wrap: wrap; gap: 12px; }
+
+@media (prefers-reduced-motion: reduce) { .reason-spinner { animation: none; } }

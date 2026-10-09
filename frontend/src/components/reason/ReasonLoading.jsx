@@ -3,7 +3,7 @@ import { LoaderCircle } from "lucide-react";
 
 export default function ReasonLoading() {
   return (
-    <article className="panel reason-loading">
+    <article className="panel reason-loading" role="status">
       <LoaderCircle
         className="reason-spinner"
         size={22}
@@ -19,9 +19,8 @@ export default function ReasonLoading() {
         </h3>
 
         <p className="muted">
-          Sentinel is retrieving knowledge,
-          evaluating support, and constructing
-          an evidence-grounded conclusion.
+          Waiting for the reasoning service to return an inspectable report.
+          Processing stages will appear only when reported by the backend.
         </p>
       </div>
     </article>

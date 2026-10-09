@@ -3,7 +3,7 @@ export default function ReasonGovernance({ coherence }) {
     return null;
   }
 
-  const notEvaluated = coherence.evaluation_status === "not_evaluated";
+  const notEvaluated = ["not_evaluated", "not_verified"].includes(coherence.evaluation_status);
 
   const score = Math.round((coherence.constitutional_score ?? 0) * 100);
 
@@ -21,7 +21,7 @@ export default function ReasonGovernance({ coherence }) {
         </strong>
 
         <span className="reason-instrument-state">
-          {coherence.coherent ? "Coherent" : "Review Required"}
+          {notEvaluated ? "Not independently verified" : coherence.coherent ? "Coherent" : "Review Required"}
         </span>
       </div>
 
@@ -46,9 +46,11 @@ export default function ReasonGovernance({ coherence }) {
         {notEvaluated
           ? "Constitutional admissibility has not been evaluated. Review the result before making a decision."
           : coherence.coherent
-            ? "No constitutional conflict blocks this reasoning."
+            ? "The evaluator reported no constitutional conflict. Human authorization is still required."
             : "Constitutional review identified conflicts requiring attention."}
       </p>
+
+      <p className="muted">Constitutional judgment is independent of evidence confidence and does not authorize execution.</p>
 
       <div className="reason-instrument-summary">
         <span>

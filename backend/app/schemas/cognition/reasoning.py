@@ -31,12 +31,14 @@ class ReasoningRequest(BaseModel):
 
     question: str = Field(
         min_length=1,
+        max_length=10000,
         description="The question Sentinel should investigate.",
     )
 
     workspace: str = Field(
         default="bridge",
         min_length=1,
+        max_length=100,
         description=(
             "The cognitive workspace initiating the reasoning operation."
         ),
@@ -44,6 +46,7 @@ class ReasoningRequest(BaseModel):
 
     module: str | None = Field(
         default=None,
+        max_length=200,
         description=(
             "Optional knowledge-module filter, such as engineering, "
             "trading, sre, or incident_response."
@@ -52,12 +55,14 @@ class ReasoningRequest(BaseModel):
 
     topic: str | None = Field(
         default=None,
+        max_length=200,
         description="Optional topic filter within the selected module.",
     )
 
     organization_id: str = Field(
         default="default",
         min_length=1,
+        max_length=200,
         description="Organization boundary used during retrieval.",
     )
 
@@ -79,11 +84,13 @@ class ReasoningRequest(BaseModel):
 
     mission_id: str | None = Field(
         default=None,
+        max_length=200,
         description="Optional teaching or operational mission identifier.",
     )
 
     session_id: str | None = Field(
         default=None,
+        max_length=200,
         description="Optional conversation or reasoning-session identifier.",
     )
 

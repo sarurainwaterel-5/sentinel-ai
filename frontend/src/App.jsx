@@ -21,7 +21,7 @@ function App() {
     identity: <Identity onNavigate={setActivePage} />,
     domains: <Domains onNavigate={setActivePage} />,
     recall: <Recall />,
-    reason: <Reason />,
+    reason: <Reason onNavigate={setActivePage} />,
     intelligence: <Intelligence onTeach={() => setActivePage("teach")} />,
     governance: <Governance onTeach={() => setActivePage("teach")} />,
     systems: <Systems />,

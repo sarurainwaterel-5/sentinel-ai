@@ -100,7 +100,9 @@ export default function ReasonConfidence({
                 {confidence.factors.map(
                   (factor, index) => (
                     <li key={index}>
-                      {labelFactor(factor)}
+                      <strong>{labelFactor(factor)}</strong>
+                      {factor.explanation && <p>{factor.explanation}</p>}
+                      {typeof factor.contribution === "number" && <p className="muted">Contribution: {factor.contribution}</p>}
                     </li>
                   )
                 )}
