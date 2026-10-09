@@ -29,6 +29,8 @@ from app.models.reflection_history import (
     ReflectionHistoryRecordModel,
 )
 
+from app.models.teaching_mission import TeachingMission
+
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

@@ -1274,3 +1274,7 @@
   .brand-lockup, .brand small { display: none; }
   .brand .brand-mark { display: block; }
 }
+
+.brand-lockup { width: 168px; max-width: 100%; }
+.brand .brand-mark { width: 28px; height: 26px; }
+.brand small { font-size: 11px; }

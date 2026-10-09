@@ -28,26 +28,36 @@ class UploadService:
         description: str | None = None,
     ):
         file_path, filename = await save_pdf_upload(file, UPLOAD_DIR, MAX_UPLOAD_BYTES)
+        return self.process_saved_pdf(
+            file_path=file_path, filename=filename, module=module, topic=topic,
+            collection=collection, organization_id=organization_id, description=description,
+        )
+
+    def process_saved_pdf(self, *, file_path, filename, module, topic, collection,
+                          organization_id, description, progress=None):
+        report = progress or (lambda stage: None)
         try:
             result = self._index_pdf(
                 file_path=file_path, filename=filename, module=module, topic=topic,
                 collection=collection, organization_id=organization_id, description=description,
+                progress=report,
             )
         except BaseException:
             file_path.unlink(missing_ok=True)
             raise
         if result["status"] == "indexed":
+            report("recording")
             from app.services.workspaces.learning_history import IngestionHistoryRecorder
             try:
                 event = IngestionHistoryRecorder().record(result, organization_id)
                 result["learning_event_id"] = event.learning_event_id
             except Exception:
-                # The document is already indexed. Preserve it and report the
-                # independent historical recording failure explicitly.
                 result["history_warning"] = "Document indexed, but its Learning Event could not be preserved."
         return result
 
-    def _index_pdf(self, *, file_path, filename, module, topic, collection, organization_id, description):
+    def _index_pdf(self, *, file_path, filename, module, topic, collection, organization_id, description, progress=None):
+        report = progress or (lambda stage: None)
+        report("fingerprinting")
         file_hash = FingerprintService.calculate_sha256(file_path)
 
         existing_document = self.document_repository.get_by_hash(file_hash)
@@ -73,20 +83,24 @@ class UploadService:
 
         document_id = str(uuid4())
 
+        report("extracting")
         try:
             text = extract_text_from_pdf(file_path)
         except Exception as exc:
             raise HTTPException(status_code=422, detail="The PDF could not be read.") from exc
+        report("chunking")
         chunks = chunk_text(text)
         if not chunks:
             raise HTTPException(status_code=422, detail="The PDF contains no extractable text. OCR is not available.")
 
+        report("indexing")
         stored_vectors = store_chunks(
             document_id=document_id, filename=filename, file_hash=file_hash,
             chunks=chunks, module=module, topic=topic, collection=collection,
             organization_id=organization_id, description=description,
         )
 
+        report("cataloging")
         document = self.document_repository.create_document(
             document_id=document_id,
             filename=filename,

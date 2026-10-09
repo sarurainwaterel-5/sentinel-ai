@@ -30,7 +30,19 @@ from app.routes.verification import (
 
 from app.routes.workspaces import router as workspaces_router
 
-app = FastAPI(title="SentinelAI API")
+from contextlib import asynccontextmanager
+from app.routes.teaching import router as teaching_router
+from app.services.workspaces.teaching import recover_interrupted
+
+
+@asynccontextmanager
+async def lifespan(app):
+    recover_interrupted()
+    yield
+
+
+app = FastAPI(title="SentinelAI API", lifespan=lifespan)
+app.include_router(teaching_router)
 app.include_router(workspaces_router)
 
 app.include_router(upload_router)

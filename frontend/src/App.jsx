@@ -17,7 +17,7 @@ function App() {
 
   const pages = {
     bridge: <Bridge onNavigate={setActivePage} />,
-    teach: <TeachSentinel />,
+    teach: <TeachSentinel onNavigate={setActivePage} />,
     identity: <Identity onNavigate={setActivePage} />,
     domains: <Domains onNavigate={setActivePage} />,
     recall: <Recall />,
