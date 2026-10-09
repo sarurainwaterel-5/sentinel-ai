@@ -1248,3 +1248,29 @@
   color: var(--text-secondary);
   font-size: 0.82rem;
 }
+
+/* The approved master is framed directly, preserving its original artwork. */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  gap: 8px;
+}
+.brand-lockup { display: block; width: 100%; height: auto; }
+.brand .brand-mark { display: none; width: 40px; height: 36px; }
+.brand small { font-size: 12px; }
+.brand:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 6px; border-radius: 4px; }
+.app-shell.collapsed .brand { align-items: center; }
+.app-shell.collapsed .brand-lockup { display: none; }
+.app-shell.collapsed .brand .brand-mark { display: block; }
+@media (max-width: 900px) {
+  .brand { align-items: center; }
+  .brand-lockup, .brand small { display: none; }
+  .brand .brand-mark { display: block; }
+}

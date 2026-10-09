@@ -34,16 +34,20 @@ export default function Sidebar({
 
   return (
     <aside className="sidebar">
-      <div className="brand">
-        <Brain size={26} />
-
-        {!collapsed && (
-          <div>
-            <h2>SentinelAI</h2>
-            <small>Intelligence OS</small>
-          </div>
-        )}
-      </div>
+      <button
+        type="button"
+        className="brand"
+        aria-label="SentinelAI — return to Bridge"
+        onClick={() => setActivePage("bridge")}
+      >
+        <svg className="brand-lockup" viewBox="100 135 1960 435" aria-hidden="true">
+          <image href="/brand/sentinel-ai-logo-navy.png" width="2172" height="724" />
+        </svg>
+        <svg className="brand-mark" viewBox="100 135 510 435" aria-hidden="true">
+          <image href="/brand/sentinel-ai-logo-navy.png" width="2172" height="724" />
+        </svg>
+        {!collapsed && <small>Intelligence OS</small>}
+      </button>
 
       <button
         type="button"
