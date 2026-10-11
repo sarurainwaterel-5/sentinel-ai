@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";
 import Reason from "../Reason";
 import { reasonAbout } from "../../services/reasonApi";
+vi.mock("../../components/answers/AnswerAvailabilityNotice", () => ({ default: () => <aside>Governed answering disabled</aside> }));
 const context = vi.hoisted(() => ({ activeDomain: { id: "trading", name: "Trading" } }));
 vi.mock("../../context/useDomain", () => ({ useDomain: () => context }));
 vi.mock("../../services/reasonApi", () => ({ reasonAbout: vi.fn() }));

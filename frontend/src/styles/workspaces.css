@@ -556,3 +556,7 @@ summary:focus-visible {
 .reason-question-actions { flex-wrap: wrap; gap: 12px; }
 
 @media (prefers-reduced-motion: reduce) { .reason-spinner { animation: none; } }
+
+.governed-answer-fixture a { color: var(--accent-cyan, #22d3ee); text-underline-offset: 3px; }
+.governed-answer-fixture a:focus-visible { outline: 2px solid var(--accent-cyan, #22d3ee); outline-offset: 3px; }
+.governed-answer-fixture p, .governed-answer-fixture blockquote { overflow-wrap: anywhere; }

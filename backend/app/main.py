@@ -11,6 +11,7 @@ from app.routes.knowledge_dashboard import router as knowledge_dashboard_router
 from app.routes.core_memory import router as core_memory_router
 from app.routes.constitution import router as constitution_router
 from app.routes.cognition import router as cognition_router
+from app.routes.governed_answers import router as governed_answers_router
 from app.routes.canon import router as canon_router
 from app.routes.bridge import router as bridge_router
 from app.services.qdrant_service import create_collection_if_not_exists
@@ -54,6 +55,7 @@ app.include_router(knowledge_dashboard_router)
 app.include_router(core_memory_router)
 app.include_router(constitution_router)
 app.include_router(cognition_router)
+app.include_router(governed_answers_router)
 app.include_router(canon_router)
 app.include_router(bridge_router)
 app.include_router(domains_router)

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import AnswerAvailabilityNotice from "../components/answers/AnswerAvailabilityNotice";
 import ReasonLoading from "../components/reason/ReasonLoading";
 import ReasonQuestion from "../components/reason/ReasonQuestion";
 import ReasonResult from "../components/reason/ReasonResult";
@@ -61,6 +62,7 @@ export default function Reason({ onNavigate }) {
   const cancel = () => controllerRef.current?.abort();
   const differentScope = report && (report.request.module ?? "all") !== (activeDomain?.id ?? "all");
   return <section className="reason-workspace workspace-page">
+    <AnswerAvailabilityNotice />
     <ReasonQuestion question={question} setQuestion={setQuestion} isReasoning={isReasoning} onSubmit={handleReason} error={error}
       topic={topic} setTopic={setTopic} limit={limit} setLimit={setLimit} scoreThreshold={scoreThreshold} setScoreThreshold={setScoreThreshold}
       domainName={activeDomain?.name ?? "All Domains"} onCancel={cancel} onNavigate={onNavigate} />
