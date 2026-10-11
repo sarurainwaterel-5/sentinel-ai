@@ -1,0 +1,129 @@
+{
+  "version": "21-E-review-v1",
+  "approved": false,
+  "reviewer": null,
+  "reviewed_at": null,
+  "independence_attestation": null,
+  "dataset_sha256": "d5a4391d5108e14894fec3158261d9a91600e5b7b28695138388e29218891ba9",
+  "case_reviews": [
+    {
+      "case_id": "faithful-paraphrase",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "multi-premise",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "qualification",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "conflict",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "uncertainty",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "causality",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "unsupported",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "certainty",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "causal-overreach",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "negation",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "precision",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "suppressed-conflict",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "irrelevant",
+      "statement_admissible": null,
+      "answers_question": null,
+      "preserves_conflicts_and_uncertainty": null,
+      "citations_complete": null,
+      "human_rationale": null,
+      "requested_revision": null
+    }
+  ],
+  "release_approval": false,
+  "note": "Milestone approval is not case-label approval, empirical acceptance or production authorization."
+}

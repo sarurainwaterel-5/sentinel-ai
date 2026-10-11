@@ -1,0 +1,61 @@
+{
+  "version": "21-E-answer-acceptance-v1",
+  "status": "proposed_pending_review",
+  "existing_20_3_G_policy": {
+    "version": "20.3-G-v1",
+    "repetitions": 3,
+    "order_seed": 203,
+    "expected_cases": 36,
+    "expected_admissible": 18,
+    "expected_inadmissible": 18,
+    "max_false_accepts": 0,
+    "max_false_reject_rate": 0.1,
+    "min_accuracy": 0.95,
+    "min_decision_stability": 1.0,
+    "max_operational_errors": 0,
+    "min_accepted_cases_per_positive_category": 1,
+    "negative_categories": [
+      "unsupported_fact",
+      "certainty_inflation",
+      "causal_overreach",
+      "negation_reversal",
+      "fabricated_precision",
+      "conflict_suppression"
+    ],
+    "positive_categories": [
+      "faithful_paraphrase",
+      "multi_premise_synthesis",
+      "faithful_qualification",
+      "conflict_preserving",
+      "uncertainty_preserving",
+      "supported_causality"
+    ]
+  },
+  "existing_policy_must_remain_unchanged": true,
+  "answer_level_requirements": {
+    "reviewed_cases_required": 13,
+    "max_unsupported_published_claims": 0,
+    "max_missing_or_wrong_citations": 0,
+    "max_suppressed_known_conflicts": 0,
+    "max_false_ready_or_enabled_states": 0,
+    "max_out_of_scope_source_disclosures": 0,
+    "all_positive_control_categories_required": true,
+    "all_fail_closed_cases_required": true,
+    "question_relevance_review_required": true,
+    "all_runtime_and_fixture_release_gates_required": true,
+    "positive_control_categories": [
+      "faithful_paraphrase",
+      "multi_premise_synthesis",
+      "faithful_qualification",
+      "conflict_preserving",
+      "uncertainty_preserving",
+      "supported_causality"
+    ],
+    "min_released_accepted_cases_per_positive_category": 1,
+    "operational_errors_cannot_count_as_correct_classification": true
+  },
+  "execution": "not_executed",
+  "metrics": null,
+  "release_authorized": false,
+  "note": "Proposed supplemental criteria are frozen for review before any answer-quality evaluation; no old threshold is weakened."
+}
