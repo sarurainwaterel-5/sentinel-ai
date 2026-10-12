@@ -18,11 +18,13 @@ SentinelAI bridges that gap by providing a Knowledge Operating System for domain
 
 ## Current Project Status
 
-**Current Sprint:** Sprint 6.4 — Knowledge Analytics  
-**Current Focus:** Knowledge Dashboard  
-**Architecture Status:** Modular Monolith, Microservice Ready  
-**Development Stage:** Engineering Foundation Complete  
-**Next Milestone:** React Knowledge Dashboard
+**Current Sprint:** Sprint 20.3-G — Independent Semantic Judge Evaluation  
+**Current Focus:** Human review complete; empirical judge evaluation pending  
+**Sprint Status:** PARTIAL — zero actual judge calls have run  
+**Architecture Status:** Governed semantic synthesis; Proposition → Inference remains closed  
+**Decision Status:** Semantic grounding unverified; ADR-037 remains Proposed  
+**Development Stage:** Draft PR; not merge-ready  
+**Next Milestone:** Explicitly authorize and securely configure the 108-call independent judge benchmark
 
 ---
 

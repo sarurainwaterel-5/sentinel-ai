@@ -1,0 +1,8 @@
+{
+  "dataset_sha256": "d57de823b86797a6b25ff36a808c678cc8843ef5a1b4d7188576f27fe0cc7adb",
+  "approved": false,
+  "reviewer": null,
+  "reviewed_at": null,
+  "independent_of_candidate_generation_and_judge": false,
+  "labels": {}
+}

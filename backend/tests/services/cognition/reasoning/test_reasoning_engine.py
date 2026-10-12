@@ -9,6 +9,9 @@ from app.services.cognition.reasoning.models import (
 from app.services.cognition.reasoning.reasoning_engine import (
     ReasoningEngine,
 )
+from app.services.cognition.reasoning.proposition_synthesizer import (
+    PropositionSynthesisOutcome,
+)
 
 
 class FakeEvidenceAnalyzer:
@@ -70,7 +73,7 @@ class FakePropositionSynthesizer:
         self.propositions = propositions
         self.calls = []
 
-    def synthesize(
+    def synthesize_with_validation(
         self,
         *,
         premises,
@@ -83,7 +86,7 @@ class FakePropositionSynthesizer:
             }
         )
 
-        return self.propositions
+        return PropositionSynthesisOutcome(propositions=self.propositions)
 
 
 class FakeInferenceEngine:

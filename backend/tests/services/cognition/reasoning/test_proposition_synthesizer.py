@@ -93,6 +93,7 @@ def test_synthesizer_derives_proposition_from_related_premises():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -157,6 +158,7 @@ def test_synthesizer_requires_multiple_premises():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -199,6 +201,7 @@ def test_synthesizer_ignores_independent_relationships():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -239,6 +242,7 @@ def test_synthesizer_ignores_unresolved_relationships():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -279,6 +283,7 @@ def test_synthesizer_ignores_relationships_with_unknown_premise_ids():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -336,6 +341,7 @@ def test_synthesizer_deduplicates_evidence_and_domain_ids():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -391,6 +397,7 @@ def test_synthesizer_rejects_empty_generated_statement():
     generator = FakePropositionGenerator("   ")
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -442,6 +449,7 @@ def test_synthesizer_preserves_conflicting_relationship_context():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -513,6 +521,7 @@ def test_synthesizer_preserves_conflicting_relationship_context():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 
@@ -593,6 +602,7 @@ def test_synthesizer_handles_multiple_relationships_across_three_premises():
     )
 
     synthesizer = PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=generator,
     )
 

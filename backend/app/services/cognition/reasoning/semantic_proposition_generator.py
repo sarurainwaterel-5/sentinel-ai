@@ -9,6 +9,12 @@ and they do not construct trusted SynthesizedProposition artifacts.
 
 from typing import Protocol
 
+from app.services.cognition.reasoning.semantic_generation_provider import (
+    SemanticGenerationFailure,
+    SemanticGenerationProvider,
+    SemanticGenerationResponse,
+)
+
 from app.services.cognition.reasoning.models import (
     CandidateProposition,
     Premise,
@@ -31,3 +37,41 @@ class SemanticPropositionGenerator(Protocol):
         relationships: list[PremiseRelationship],
     ) -> CandidateProposition | None:
         ...
+
+
+class ProviderSemanticPropositionGenerator:
+    """Translate raw provider JSON into an untrusted candidate.
+
+    Providers must return one CandidateProposition JSON object. No prose,
+    markdown extraction, repair, or fallback is attempted. Schema errors
+    propagate to the synthesizer's malformed_generation outcome; bounded
+    provider failures remain distinct. Parsing never certifies grounding.
+    """
+
+    def __init__(self, *, provider: SemanticGenerationProvider):
+        self.provider = provider
+
+    def generate(
+        self,
+        *,
+        premises: list[Premise],
+        relationships: list[PremiseRelationship],
+    ) -> CandidateProposition:
+        # A provider must not mutate the trusted artifacts later used by
+        # Sentinel to reconstruct provenance.
+        response = self.provider.generate(
+            premises=[premise.model_copy(deep=True) for premise in premises],
+            relationships=[relation.model_copy(deep=True) for relation in relationships],
+        )
+        if not isinstance(response, SemanticGenerationResponse):
+            raise SemanticGenerationFailure("malformed_response")
+
+        candidate = CandidateProposition.model_validate_json(
+            response.content, strict=True
+        )
+        # Observational metadata stays in the untrusted candidate namespace.
+        # Neither this metadata nor the candidate's references are authoritative.
+        candidate.generator_metadata["provider_metadata"] = dict(
+            response.provider_metadata
+        )
+        return candidate

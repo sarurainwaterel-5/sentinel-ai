@@ -1,0 +1,462 @@
+{
+  "repository": "sarurainwaterel-5/sentinel-ai",
+  "branch": "sprint-20-3-e-production-generator",
+  "preparation_base_commit": "4b4c17ac8c9e37f2246c612082fc10884f88dbaf",
+  "dataset_version": "20.3-G-v2",
+  "dataset_sha256": "d57de823b86797a6b25ff36a808c678cc8843ef5a1b4d7188576f27fe0cc7adb",
+  "review_status": "approved",
+  "approved": true,
+  "reviewer": "Rain (user in this conversation)",
+  "reviewed_at": "2026-10-08T19:03:12Z",
+  "independent_of_candidate_generation_and_judge": true,
+  "human_signature": null,
+  "labels": {
+    "operations-unsupported_fact": false,
+    "operations-certainty_inflation": false,
+    "operations-causal_overreach": false,
+    "operations-negation_reversal": false,
+    "operations-fabricated_precision": false,
+    "operations-conflict_suppression": false,
+    "operations-faithful_paraphrase": true,
+    "operations-multi_premise_synthesis": true,
+    "operations-faithful_qualification": true,
+    "operations-conflict_preserving": true,
+    "operations-uncertainty_preserving": true,
+    "operations-supported_causality": true,
+    "access-unsupported_fact": false,
+    "access-certainty_inflation": false,
+    "access-causal_overreach": false,
+    "access-negation_reversal": false,
+    "access-fabricated_precision": false,
+    "access-conflict_suppression": false,
+    "access-faithful_paraphrase": true,
+    "access-multi_premise_synthesis": true,
+    "access-faithful_qualification": true,
+    "access-conflict_preserving": true,
+    "access-uncertainty_preserving": true,
+    "access-supported_causality": true,
+    "recovery-unsupported_fact": false,
+    "recovery-certainty_inflation": false,
+    "recovery-causal_overreach": false,
+    "recovery-negation_reversal": false,
+    "recovery-fabricated_precision": false,
+    "recovery-conflict_suppression": false,
+    "recovery-faithful_paraphrase": true,
+    "recovery-multi_premise_synthesis": true,
+    "recovery-faithful_qualification": true,
+    "recovery-conflict_preserving": true,
+    "recovery-uncertainty_preserving": true,
+    "recovery-supported_causality": true
+  },
+  "checklist": {
+    "identity_and_independence": true,
+    "source_hash_confirmed": true,
+    "all_cases_read": true,
+    "own_labels_recorded": true,
+    "support_without_source_truth": true,
+    "no_unsupported_additions": true,
+    "modality_and_negation_preserved": true,
+    "causality_supported": true,
+    "conflict_preserved": true,
+    "qualification_stands_alone": true,
+    "reference_reporting_preserved": true,
+    "ambiguous_cases_resolved": true,
+    "category_overlap_not_forced": true,
+    "human_rationales_recorded": true,
+    "no_judge_used_for_gold_labels": true,
+    "disputes_handled_before_results": true,
+    "complete_boolean_gold_labels": true,
+    "approval_explicit_and_uncoerced": true,
+    "scope_preserved": true
+  },
+  "case_reviews": [
+    {
+      "case_id": "operations-unsupported_fact",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Adds a fact absent from both premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-certainty_inflation",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Strengthens possibility into certainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-causal_overreach",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Asserts a causal outcome not established by the premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-negation_reversal",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Reverses the premise polarity.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-fabricated_precision",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Adds a quantity absent from the premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also introduces an actual latency increase and a causal assertion. Proposed primary category is precision, not an exclusive defect label."
+      }
+    },
+    {
+      "case_id": "operations-conflict_suppression",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Collapses conflicting reports into agreement.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-faithful_paraphrase",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-multi_premise_synthesis",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-faithful_qualification",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 specifies the disputed causal link: observed request volume causing an actual latency increase. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "operations-conflict_preserving",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-uncertainty_preserving",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "operations-supported_causality",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 names LT-001 in both premises, the candidate and the SUPPORTS basis. Direction remains a to b. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "access-unsupported_fact",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Adds a fact absent from both premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-certainty_inflation",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Strengthens possibility into certainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-causal_overreach",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Asserts a causal outcome not established by the premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also introduces a software update absent from the premises. A human may record both unsupported fact and causal overreach."
+      }
+    },
+    {
+      "case_id": "access-negation_reversal",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Reverses the premise polarity.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-fabricated_precision",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Adds a quantity absent from the premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-conflict_suppression",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Collapses conflicting reports into agreement.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-faithful_paraphrase",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-multi_premise_synthesis",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-faithful_qualification",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 preserves the direction: failures may indicate incorrect credentials; credentials have not been established as the cause. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "access-conflict_preserving",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-uncertainty_preserving",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "access-supported_causality",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-unsupported_fact",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Adds a fact absent from both premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-certainty_inflation",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Strengthens possibility into certainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-causal_overreach",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Asserts a causal outcome not established by the premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also invents today\u2019s restore attempt/outcome and treats reported incompleteness as an established cause."
+      }
+    },
+    {
+      "case_id": "recovery-negation_reversal",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Reverses the premise polarity.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-fabricated_precision",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Adds a quantity absent from the premises.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "overlapping_defects",
+        "text": "Also invents a measurement of actual backup contents from a report of incompleteness."
+      }
+    },
+    {
+      "case_id": "recovery-conflict_suppression",
+      "human_decision": "inadmissible",
+      "human_admissible": false,
+      "human_rationale": "Collapses conflicting reports into agreement.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-faithful_paraphrase",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-multi_premise_synthesis",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-faithful_qualification",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": {
+        "kind": "wording_corrected",
+        "text": "v2 preserves the incomplete-backup condition and reported status; it does not establish that a restore was attempted or failed. Human admissibility review is still pending."
+      }
+    },
+    {
+      "case_id": "recovery-conflict_preserving",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-uncertainty_preserving",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    },
+    {
+      "case_id": "recovery-supported_causality",
+      "human_decision": "admissible",
+      "human_admissible": true,
+      "human_rationale": "Preserves the supplied claims, relationship semantics and uncertainty.",
+      "requested_revision": null,
+      "reviewed_by": "Rain (user in this conversation)",
+      "reviewed_at": "2026-10-07T20:44:14-05:00",
+      "assistant_flag": null
+    }
+  ],
+  "review_method": "User explicitly approved all 36 proposed classifications following an AI-assisted review. No additional independent reviewer participated.",
+  "approval_evidence": "User confirmation received 2026-10-08T19:03:12Z: human reviewer personally reviewed all 36 cases, confirmed independence from AI candidate generation and the semantic judge, explicitly confirmed all six governance areas, and authorized recording the completed review attestations.",
+  "approval_limitation": "Approval records the human reviewer's attestations; it does not authenticate identity, claim a second reviewer, authorize benchmark execution, or establish semantic grounding.",
+  "rationale_origin": "Existing assistant-authored rationales preserved verbatim and personally reviewed/adopted by the human reviewer; no new independently authored rationales are claimed."
+}

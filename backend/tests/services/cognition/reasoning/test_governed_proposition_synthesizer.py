@@ -52,6 +52,7 @@ class Generator:
 def outcome(value, *, premises=None, relationships=None):
     default_premises, default_relationships = inputs()
     return PropositionSynthesizer(
+        structural_only_compatibility=True,
         semantic_generator=Generator(value),
     ).synthesize_with_validation(
         premises=premises if premises is not None else default_premises,

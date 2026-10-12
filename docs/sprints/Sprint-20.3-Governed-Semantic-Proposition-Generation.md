@@ -2,7 +2,14 @@
 
 ## Status
 
-Planned. ADR-037 remains Proposed until implementation review.
+A–F implemented and regression verified. G's adversarial suite is implemented;
+the independent statement-level gate is implemented, but semantic assessor
+accuracy remains unverified and acceptance remains open. ADR-037 remains
+Proposed. Sprint semantic acceptance is not complete.
+
+A bounded opt-in statement gate now accepts only exact Sentinel-rendered
+verbatim premise reports. This closes rejection for unsupported statement forms
+in that mode; arbitrary natural-language semantic grounding remains open.
 
 ## Sprint Intent
 
@@ -69,17 +76,98 @@ model configuration is selected by this milestone.
 Implement a production adapter that returns only untrusted candidates. Its
 prompt or model configuration is not a substitute for grounding validation.
 
+`ProviderSemanticPropositionGenerator` accepts an injected
+`SemanticGenerationProvider` and parses one strict `CandidateProposition` JSON
+object. It performs no response repair, markdown extraction, fallback, or
+grounding decision. Providers receive deep copies of the trusted artifacts so
+provider mutation cannot replace the lineage later validated by Sentinel.
+Schema/JSON errors remain `malformed_generation`; provider failures retain
+their bounded reasons, and an invalid provider response type yields
+`provider_malformed_response`. Provider metadata is copied into the candidate's
+untrusted `generator_metadata.provider_metadata` namespace. No vendor adapter,
+model, credentials, or engine wiring is selected here.
+
+Verification: 22 new generator cases and 71 targeted generator/provider/
+governance cases passed. The initial embedding-dependency collection gap was
+resolved by installing sentence-transformers and caching the existing
+all-MiniLM-L6-v2 model in the execution environment. All 420 backend tests
+passed before F implementation. No repository dependency pins were changed.
+
 ### 20.3-F — ReasoningEngine dependency injection
 
 Inject governed synthesis without direct provider construction. Preserve the
 existing evidence-based inference path and expose safe high-level trace and
 result information without private chain-of-thought.
 
+`ReasoningEngine(proposition_synthesizer=...)` now accepts governed synthesis
+as an optional constructor dependency. The default remains disabled and does
+not construct a model or provider. The engine consumes the inspectable synthesis
+outcome, records bounded rejection reasons in result metadata, and reports
+structural acceptance separately from semantic grounding in high-level traces.
+Outcome metadata is retained for both complete and insufficient-evidence
+results. Inference still receives only the original EvidenceBundle.
+
+Verification: 15 new injection cases cover accepted candidates, malformed
+generation, invalid references, bounded provider failures, unexpected errors,
+private-payload exclusion, and default operation without credentials. Both
+complete and insufficient-evidence paths preserve baseline inference and
+conclusion behavior. All 435 backend tests passed after F; all 17 frontend
+tests and the production build passed. Checks ran on Python 3.12 with SQLite
+for database imports and a placeholder API key for existing constructors;
+no live model generation was tested and PostgreSQL was not validated.
+Semantic grounding remains false. Statement-level semantic acceptance and
+ADR-037 implementation review remain outstanding.
+
 ### 20.3-G — Adversarial/evaluation suite
 
 Test unsupported facts, certainty inflation, causal overreach, negation
 reversal, conflict suppression, fabricated precision, invalid premise and
 relationship references, provenance laundering, and provider failure.
+
+The 22-case suite in `test_semantic_proposition_adversarial_evaluation.py`
+exercises all listed categories through the production parser and governed
+synthesis pipeline, including evidence-inference isolation on both engine
+result paths. Structural attacks fail closed. Semantic attacks with valid
+references currently pass the structural gate but remain explicitly unverified;
+the suite records that limitation rather than claiming semantic rejection.
+See [the evaluation matrix](Sprint-20.3-Adversarial-Evaluation.md).
+
+The exact remaining acceptance work is a separate statement-level admissibility
+gate with actual rejection of unsupported facts, certainty inflation, causal
+overreach, negation reversal, fabricated precision, and statement-level conflict
+suppression. Faithful controls must also be evaluated. ADR-037 remains Proposed
+and propositions remain excluded from inference until those gates are satisfied.
+
+### Bounded statement admissibility follow-up
+
+`VerbatimPremiseStatementValidator` renders a JSON-quoted report of all supplied
+participating premises and eligible assessed relationships. An exact statement
+match, complete premise coverage, and no unvalidated qualifications are required.
+Unsupported facts, inflated certainty, causal additions, negation reversal,
+fabricated precision, and conflict suppression are rejected by the allowed-form
+rule rather than an inferred understanding of arbitrary prose. Faithful exact
+reports, including conflict reports, are positive controls. Paraphrases are
+rejected even when they might be faithful.
+
+Enable this gate explicitly through
+`PropositionSynthesizer(semantic_generator=..., statement_validator=VerbatimPremiseStatementValidator())`.
+Structural-only compatibility mode now requires the explicit
+`structural_only_compatibility=True` option; omitting a validator otherwise
+rejects with `statement_validator_required`. Gate rejection
+or validator failure produces no fallback proposition. Accepted report metadata
+records the bounded scope `statement_admissibility=verbatim_premise_report`;
+`semantic_grounding_verified` remains false. Engine result metadata exposes the
+scope and admissibility result without private validation payloads. Inference
+continues to consume evidence only. This verifies reporting fidelity, not the
+truth of sources or general semantic entailment; ADR-037 remains Proposed.
+
+Verification: 20 new bounded-gate cases passed; 57 combined gate, evaluation,
+and injection cases passed; full backend 477 passed with 4 warnings. Frontend
+17 passed and production build passed. The restored Python 3.12 test environment
+uses a CPU PyTorch build after the CUDA build crashed during collection; no
+repository dependency pins changed. PostgreSQL and live generation remain
+unverified. Warnings cover the embedding dimension rename, unavailable Qdrant,
+Starlette/httpx deprecation, and the AnyIO portal alias.
 
 ## Definition of done
 
@@ -109,3 +197,118 @@ CoherenceEngine redesign; autonomous agents; tool execution.
 Run targeted tests after each milestone, full backend regression at meaningful
 checkpoints, and frontend tests/build for final review. Commit coherent green
 milestones without weakening existing tests.
+
+## Independent free-form statement gate follow-up
+
+The provider-neutral `SemanticAdmissibilityProvider` accepts only semantic text
+and assessed relationship data, never generator/provider metadata or provenance.
+`FreeFormStatementAdmissibilityValidator` parses its untrusted strict JSON verdict
+and reconciles an explicit admissible decision with all eight required checks
+and bounded reason codes. Any defect, uncertain support, inconsistent verdict,
+malformed response or provider error rejects. Structural and statement validator
+exceptions now produce bounded rejection outcomes. Validators receive defensive
+copies, so mutation cannot rewrite the candidate or trusted provenance.
+
+Use `PropositionSynthesizer(semantic_generator=...,
+statement_validator=FreeFormStatementAdmissibilityValidator(provider=...))`.
+The SDK adapter `OpenAISemanticAdmissibilityProvider(client=..., model=...)`
+lives outside cognition and requires separate explicit configuration. Reusing
+generation's provider/client is rejected; wrappers and shared model behavior
+still require independent deployment review. No live model call is needed for
+regression tests, and no model/credentials are selected by ReasoningEngine.
+
+Free-form scope is `independent_model_semantic_admissibility`. Exact reports
+retain `verbatim_premise_report` scope. Structural-only compatibility is explicit
+and labeled `structural_only_compatibility`; it has no statement decision. None
+of these scopes changes `semantic_grounding_verified=false`. Inference still
+receives EvidenceBundle only, and the Proposition → Inference boundary is closed.
+
+### Final acceptance matrix for this follow-up
+
+| Milestone | Status | Evidence / remaining requirement |
+| --- | --- | --- |
+| A | PASS | Untrusted candidate and distinct accepted artifact contracts |
+| B | PASS | Deterministic membership and trusted provenance reconstruction |
+| C | PASS | Mandatory default statement gate; explicit compatibility; fail-closed coordination |
+| D | PASS | Provider-neutral generation contract |
+| E | PASS | Strict production parser; no repair/fallback |
+| F | PASS | Optional injection; evidence inference and conclusions unchanged |
+| G | PARTIAL | Enforcement tests pass; actual independent assessor accuracy not evaluated |
+
+| Definition of Done | Status | Evidence / remaining requirement |
+| --- | --- | --- |
+| 1. Generator contract | PASS | SemanticPropositionGenerator |
+| 2. Distinct candidate | PASS | CandidateProposition / SynthesizedProposition |
+| 3. Inspectable validation | PASS | Structural outcome plus bounded statement decision and scope |
+| 4. Invalid candidates fail closed | PARTIAL | Schema/structural/judge/validator failures reject; actual semantic classification quality remains unverified |
+| 5. Trusted provenance | PASS | Reconstructed exclusively from trusted inputs |
+| 6. Provider isolation | PASS (Sprint scope) | New adapters outside cognition; pre-existing relationship evaluator/formatter SDK coupling unchanged |
+| 7. Governed synthesis | PASS | Default requires both gates; compatibility explicitly identified |
+| 8. Dependency injection | PASS | Engine constructs no generation/judge provider |
+| 9. Inference compatibility | PASS | EvidenceBundle input and baseline conclusions preserved |
+| 10. Safe observability | PARTIAL | Bounded judge reasons, no judge payload/chain-of-thought; free-form content safety depends on unverified semantic judgment |
+| 11. Adversarial laundering | PARTIAL | Metadata cannot self-certify; scripted verdict enforcement passes, actual assessor decisions not benchmarked |
+| 12. Full backend | PASS | Follow-up verification recorded below |
+| 13. Frontend/build | PASS | Follow-up verification recorded below |
+| 14. ADR accepted after review | OPEN | ADR-037 remains Proposed pending semantic evaluation |
+
+The smallest remaining acceptance step is evaluation of the configured independent
+assessor on all six attacks and the five faithful controls, with retained bounded
+verdicts and reviewed expected labels. The current scripted fixtures test
+governance, not natural-language classification. Do not mark G PASS or the PR
+ready solely because those fixtures pass. No inference work is authorized.
+
+## Follow-up verification (independent gate)
+
+- New free-form gate tests: 61 passed.
+- Gate + original adversarial + exact-report evaluation: 103 passed.
+- Existing candidate/synthesizer/grounding/provider/generator/injection tests: 95 passed.
+- Complete reasoning suite: 220 passed, 1 warning.
+- Complete cognition suite: 538 passed, 3 warnings.
+- Full backend: 538 passed, 4 warnings.
+- Frontend: 17 passed; production build passed.
+- `git diff --check`: passed.
+
+Python 3.12, CPU PyTorch, cached existing embedding model, SQLite database imports
+and a placeholder API key for existing constructors were used. No live
+generation or judge call was made. Docker and psql executables are unavailable,
+so PostgreSQL integration was not validated. Backend warnings remain the
+embedding-dimension rename, unavailable Qdrant compatibility check,
+Starlette/httpx deprecation and AnyIO BlockingPortal alias. npm additionally
+warns about the execution environment's deprecated http-proxy configuration.
+No dependency pins or inference implementation changed.
+
+## 20.3-G — Independent semantic judge evaluation preparation
+
+The reproducible [evaluation harness](../../backend/evaluation/semantic_judge/README.md)
+now includes 36 structurally valid synthetic cases: 18 attacks across all six
+required categories and 18 faithful controls across six control types and three
+domains. Labels are assistant-authored proposals, **not human gold labels**.
+Independent human review remains required and is enforced before judge execution.
+
+Acceptance criteria were established before any actual judge results: zero false
+accepts, false reject rate ≤10%, accuracy ≥95%, 100% repeated decision stability,
+zero operational errors, complete coverage and accepted controls in every
+positive category. Three repetitions plan 108 independently issued judge calls;
+the examples/repeats are not statistically independent observations. Reports
+separate operational failures from semantic classification and retain source,
+policy, review and prompt hashes.
+
+Actual preflight is blocked: no approved human-review manifest, no dedicated
+SEMANTIC_JUDGE_API_KEY and no SEMANTIC_JUDGE_MODEL are available. **Zero actual
+judge calls ran**. Confusion matrix, false accepts/rejects, category accuracy and
+stability are unmeasured, not zero-error results. Synthetic harness unit tests
+are explicitly labeled and cannot satisfy empirical acceptance. No generator
+provider/client is created or reused by the live evaluation runner.
+
+G remains PARTIAL; ADR-037 remains Proposed; PR #1 remains Draft. The next action
+is human label review plus secure judge configuration, followed by the committed
+benchmark run and failure review. semantic_grounding_verified remains false;
+Proposition → Inference stays closed. Inference and conclusion code is unchanged.
+
+Preparation verification: 14 new harness unit tests passed; 117 combined
+harness/gate/adversarial/report cases passed; full backend 552 passed with 3
+observed warnings; frontend 17 passed and production build passed. git diff
+--check passed. The missing embedding cache was restored without code changes.
+Docker/PostgreSQL remain unavailable. These counts are regressions and harness
+unit tests, not empirical judge measurements.
