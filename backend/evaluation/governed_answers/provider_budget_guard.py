@@ -371,6 +371,12 @@ class OfflineProviderBudget:
                 raise ValueError("Relevance receipt not bound to allowed preview.")
         except Exception:
             return result(reason="presentation_budget_unbound_or_rejected")
+        # Validation/rendering must not promote receipts that expire meanwhile.
+        try:
+            if self._now() - self._started >= self._limits.request_timeout_seconds:
+                return result(reason="request_deadline_exceeded")
+        except Exception:
+            return result(reason="invalid_clock")
         self._sealed = True
         return result(report=report)
 
