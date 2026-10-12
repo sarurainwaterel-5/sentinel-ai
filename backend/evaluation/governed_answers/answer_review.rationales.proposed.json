@@ -1,0 +1,75 @@
+{
+  "status": "assistant_proposals_explicitly_verified_and_adopted_by_human",
+  "acceptance_packet_commit": "81e2a712ce2788054a8c5e218af1d52f098e6811",
+  "dataset_sha256": "d5a4391d5108e14894fec3158261d9a91600e5b7b28695138388e29218891ba9",
+  "case_rationales": [
+    {
+      "case_id": "faithful-paraphrase",
+      "proposed_rationale": "Preserves both explicit requirements without granting execution authority.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "multi-premise",
+      "proposed_rationale": "Combines the two explicit record requirements.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "qualification",
+      "proposed_rationale": "Retains the condition and absence of a guarantee.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "conflict",
+      "proposed_rationale": "Reports both attributions without choosing one as source truth.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "uncertainty",
+      "proposed_rationale": "Preserves possibility and unestablished cause.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "causality",
+      "proposed_rationale": "Causality, quantity and shared test identity are supplied explicitly.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "unsupported",
+      "proposed_rationale": "Adds an absent manager-signature requirement.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "certainty",
+      "proposed_rationale": "Converts conditional possibility into certainty.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "causal-overreach",
+      "proposed_rationale": "Observation does not establish causation.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "precision",
+      "proposed_rationale": "No approval duration is supplied.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    },
+    {
+      "case_id": "suppressed-conflict",
+      "proposed_rationale": "Suppresses the opposing report and fabricates agreement.",
+      "origin": "assistant_authored_in_frozen_answer_cases.proposed.json",
+      "human_verified": true
+    }
+  ],
+  "note": "All 11 assistant-drafted rationales were explicitly adopted; origin remains assistant-authored. They are now recorded in human_rationale with adoption provenance.",
+  "verification_evidence": "On 2026-10-12 (America/Chicago), user replied \"yes\" to the displayed question asking whether they personally verify and adopt all 11 proposed rationales. This is rationale adoption only, not final record approval."
+}
