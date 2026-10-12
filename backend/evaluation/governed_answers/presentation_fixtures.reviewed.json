@@ -1,0 +1,2913 @@
+{
+  "status": "guarded_packet_prepared_pending_human_presentation_review",
+  "approved": false,
+  "release_approval": false,
+  "production_enabled": false,
+  "execution_source": "scripted_display_fixture",
+  "empirical_acceptance": false,
+  "acceptance_packet_commit": "81e2a712ce2788054a8c5e218af1d52f098e6811",
+  "source_bindings": {
+    "backend/evaluation/governed_answers/answer_cases.proposed.json": "d5a4391d5108e14894fec3158261d9a91600e5b7b28695138388e29218891ba9",
+    "backend/evaluation/governed_answers/answer_review.human.approved.json": "3394b69158b48e0b28db4b25017c64add583f1df8a0ffc6af99edd0ee7337e23",
+    "backend/app/services/cognition/reasoning/answer_renderer.py": "cc6f0b9bfbdb605ff3816d377753a75c517cd9f2c4eeb934df2a13ffab60f776",
+    "backend/app/services/cognition/reasoning/answer_orchestrator.py": "2a2a6334b68a2cbb16f2092cdf80327ea791300542c7b079ff5656a8eadf4c2d",
+    "backend/app/services/cognition/reasoning/answer_models.py": "cb36c55a2c0ae0890a885b2093018d4d652b23a9bc5a2a2ff4c5295def9d2e14",
+    "frontend/src/components/answers/GovernedAnswerPanel.jsx": "80bf8db603fc70e764f5217a6bc6d7fa9a56e8b39f7b9b932a0beb5805eeb72c",
+    "frontend/src/styles/workspaces.css": "a9061fb74f37849c343107d46d823dcf34027849eac6787077db642bfc4352b6",
+    "backend/evaluation/governed_answers/presentation_guard.py": "136e996c2b5ccd19733a1affbb867989acf31336519172449f98f750a5a7fce0"
+  },
+  "cases": [
+    {
+      "case_id": "faithful-paraphrase",
+      "human_classification": "accept",
+      "human_rationale": "Preserves both explicit requirements without granting execution authority.",
+      "expected_preview_available": true,
+      "observed_preview_available": true,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": {
+          "claim_id": "fixture-claim-1",
+          "evidence_ids": [
+            "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "kind": "attributed_synthesis",
+          "premise_ids": [
+            "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "qualifications": [],
+          "relationship_references": [
+            {
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "statement": "The fictional Cedar policy requires human approval before action and preservation of the source record.",
+          "validation": {
+            "candidate_sha256": "671c71a34cdf40635c53a06616b6df4528edebad79406f12798d64a4ae442268",
+            "inputs_sha256": "8dbd8b340cc3f30a9088f279c9ddb2c8dbe4ea8b0ae6836c628d31cf42127e0c",
+            "policy_version": "21-C-offline-existing-gates",
+            "semantic_grounding_verified": false,
+            "statement_result": {
+              "admissible": true,
+              "rejection_reasons": [],
+              "validation_scope": "independent_model_semantic_admissibility"
+            },
+            "statement_status": "admissible",
+            "structural_status": "passed"
+          }
+        },
+        "fixture_text": "Attributed synthesis (offline fixture; not released):\nThe fictional Cedar policy requires human approval before action and preservation of the source record. [1] [2]",
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": true,
+            "reason": "Scripted relevance for this synthetic display sample; not an actual model assessment.",
+            "request_sha256": "165ccec00e6cb09b5c5358ca3ca9beed18a9a5ff9321931b32c753c45dd418bd",
+            "uncertain": false
+          },
+          "request_sha256": "165ccec00e6cb09b5c5358ca3ca9beed18a9a5ff9321931b32c753c45dd418bd",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "allowed_offline_fixture"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "disabled",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "What does Cedar require?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Preserves both explicit requirements without granting execution authority.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-faithful-paraphrase",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": true,
+      "guard_rejection_reasons": []
+    },
+    {
+      "case_id": "multi-premise",
+      "human_classification": "accept",
+      "human_rationale": "Combines the two explicit record requirements.",
+      "expected_preview_available": true,
+      "observed_preview_available": true,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": {
+          "claim_id": "fixture-claim-1",
+          "evidence_ids": [
+            "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "kind": "attributed_synthesis",
+          "premise_ids": [
+            "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "qualifications": [],
+          "relationship_references": [
+            {
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "statement": "Cedar retains the source document and the approval record.",
+          "validation": {
+            "candidate_sha256": "c5d1c075e417e2fea490658fab99b11ecaebde77b1ed4cbea31f68e15d1d2721",
+            "inputs_sha256": "79a3d85ebdb22b5b9f66983a9ead0e940825565d58f9a724c1c8dccb172bf8f2",
+            "policy_version": "21-C-offline-existing-gates",
+            "semantic_grounding_verified": false,
+            "statement_result": {
+              "admissible": true,
+              "rejection_reasons": [],
+              "validation_scope": "independent_model_semantic_admissibility"
+            },
+            "statement_status": "admissible",
+            "structural_status": "passed"
+          }
+        },
+        "fixture_text": "Attributed synthesis (offline fixture; not released):\nCedar retains the source document and the approval record. [1] [2]",
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": true,
+            "reason": "Scripted relevance for this synthetic display sample; not an actual model assessment.",
+            "request_sha256": "bfd122111300fa9ed6cf70f5fbb26766799e9fc4dd0b6e4b8856a54eb85c7366",
+            "uncertain": false
+          },
+          "request_sha256": "bfd122111300fa9ed6cf70f5fbb26766799e9fc4dd0b6e4b8856a54eb85c7366",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "allowed_offline_fixture"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-multi-premise",
+              "status": "indexed",
+              "text": "Cedar retains the source document.",
+              "text_sha256": "eaf5b93d4500336419e3c14b4f55cd235ab2f2534c8157958f302ffb97ce9b59",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-multi-premise",
+              "status": "indexed",
+              "text": "Cedar retains the approval record.",
+              "text_sha256": "3a99fd396c019c14cadaea24c90caf8683e512c5335ac4da3f3f71ebbe8c9734",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "disabled",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "Cedar retains the source document."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "Cedar retains the approval record."
+            }
+          ],
+          "question": "Which Cedar records are required?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Combines the two explicit record requirements.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-multi-premise",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": true,
+      "guard_rejection_reasons": []
+    },
+    {
+      "case_id": "qualification",
+      "human_classification": "accept",
+      "human_rationale": "Retains the condition and absence of a guarantee.",
+      "expected_preview_available": true,
+      "observed_preview_available": true,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": {
+          "claim_id": "fixture-claim-1",
+          "evidence_ids": [
+            "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "kind": "attributed_synthesis",
+          "premise_ids": [
+            "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "qualifications": [],
+          "relationship_references": [
+            {
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "statement": "Cedar may recover if a valid backup exists, but recovery is not guaranteed.",
+          "validation": {
+            "candidate_sha256": "e1c5c35bd42645bedc5b5d8652d121ddde638e5c4d6996f1521bae74ae451a81",
+            "inputs_sha256": "f135ca5166f5b6749094415d590dd973cf9c272817fa78058350a497a46a13ce",
+            "policy_version": "21-C-offline-existing-gates",
+            "semantic_grounding_verified": false,
+            "statement_result": {
+              "admissible": true,
+              "rejection_reasons": [],
+              "validation_scope": "independent_model_semantic_admissibility"
+            },
+            "statement_status": "admissible",
+            "structural_status": "passed"
+          }
+        },
+        "fixture_text": "Attributed synthesis (offline fixture; not released):\nCedar may recover if a valid backup exists, but recovery is not guaranteed. [1] [2]",
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": true,
+            "reason": "Scripted relevance for this synthetic display sample; not an actual model assessment.",
+            "request_sha256": "04fd13b13581bd4ff6e3e2fc6655eeaca5aeaafe5775cb79912cbc94051ced6d",
+            "uncertain": false
+          },
+          "request_sha256": "04fd13b13581bd4ff6e3e2fc6655eeaca5aeaafe5775cb79912cbc94051ced6d",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "allowed_offline_fixture"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-qualification",
+              "status": "indexed",
+              "text": "Cedar may recover if a valid backup exists.",
+              "text_sha256": "ceedc78125fca2e917fb448843d3e040a2a322096f48e05a4a0356c3ff3be269",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-qualification",
+              "status": "indexed",
+              "text": "No recovery guarantee is reported for Cedar.",
+              "text_sha256": "80f9b87ff9e8e2b8a975d1a73fb66e74f60963e149da6c70d4bf88fe673f919b",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "disabled",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "Cedar may recover if a valid backup exists."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "No recovery guarantee is reported for Cedar."
+            }
+          ],
+          "question": "Does Cedar guarantee recovery?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Retains the condition and absence of a guarantee.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-qualification",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": true,
+      "guard_rejection_reasons": []
+    },
+    {
+      "case_id": "conflict",
+      "human_classification": "accept",
+      "human_rationale": "Reports both attributions without choosing one as source truth.",
+      "expected_preview_available": true,
+      "observed_preview_available": true,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": {
+          "claim_id": "fixture-claim-1",
+          "evidence_ids": [
+            "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "kind": "attributed_synthesis",
+          "premise_ids": [
+            "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "qualifications": [],
+          "relationship_references": [
+            {
+              "kind": "conflicts",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "statement": "Report A says approval is required, while Report B says it is not; the supplied reports disagree.",
+          "validation": {
+            "candidate_sha256": "25f3e83596b76de2b205525afade827414d3d38b4183e5e8e4648bd559a3ab57",
+            "inputs_sha256": "7fb3f47ab240d4d87d06304fe09a8ec370e488a4db97a7e181f5aa881403d8a2",
+            "policy_version": "21-C-offline-existing-gates",
+            "semantic_grounding_verified": false,
+            "statement_result": {
+              "admissible": true,
+              "rejection_reasons": [],
+              "validation_scope": "independent_model_semantic_admissibility"
+            },
+            "statement_status": "admissible",
+            "structural_status": "passed"
+          }
+        },
+        "fixture_text": "Attributed synthesis (offline fixture; not released):\nReport A says approval is required, while Report B says it is not; the supplied reports disagree. [1] [2]",
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": true,
+            "reason": "Scripted relevance for this synthetic display sample; not an actual model assessment.",
+            "request_sha256": "72a362b71ab6bebedf34addecb63e093a2811e8519c4ef491e8ad3e4f64d4b57",
+            "uncertain": false
+          },
+          "request_sha256": "72a362b71ab6bebedf34addecb63e093a2811e8519c4ef491e8ad3e4f64d4b57",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "allowed_offline_fixture"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [
+            "Reports both attributions without choosing one as source truth."
+          ],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-conflict",
+              "status": "indexed",
+              "text": "Report A says Cedar requires approval.",
+              "text_sha256": "fa32934fe5113068c5a7786b6dedae78ea89a2069f72e75ec3f1c61579b44c28",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-conflict",
+              "status": "indexed",
+              "text": "Report B says Cedar does not require approval.",
+              "text_sha256": "ec6008a9739c5758d1a16528154c05da68ab46fa6a372e34f3c82047b5913026",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "disabled",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "Report A says Cedar requires approval."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "Report B says Cedar does not require approval."
+            }
+          ],
+          "question": "Do Cedar reports agree about approval?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Reports both attributions without choosing one as source truth.",
+              "confidence": 0.8,
+              "kind": "conflicts",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-conflict",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": true,
+      "guard_rejection_reasons": []
+    },
+    {
+      "case_id": "uncertainty",
+      "human_classification": "accept",
+      "human_rationale": "Preserves possibility and unestablished cause.",
+      "expected_preview_available": true,
+      "observed_preview_available": true,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": {
+          "claim_id": "fixture-claim-1",
+          "evidence_ids": [
+            "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "kind": "attributed_synthesis",
+          "premise_ids": [
+            "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "qualifications": [],
+          "relationship_references": [
+            {
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "statement": "The Cedar failure may indicate incorrect credentials, but its cause has not been established.",
+          "validation": {
+            "candidate_sha256": "cfd63113927918b939f2ee157aae900afeb8aadcd435c03a91f03a28a0932b82",
+            "inputs_sha256": "c9ce1d2766a791019542a67cfb87dfa9336398fb35290763a410e4955bf5f4bb",
+            "policy_version": "21-C-offline-existing-gates",
+            "semantic_grounding_verified": false,
+            "statement_result": {
+              "admissible": true,
+              "rejection_reasons": [],
+              "validation_scope": "independent_model_semantic_admissibility"
+            },
+            "statement_status": "admissible",
+            "structural_status": "passed"
+          }
+        },
+        "fixture_text": "Attributed synthesis (offline fixture; not released):\nThe Cedar failure may indicate incorrect credentials, but its cause has not been established. [1] [2]",
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": true,
+            "reason": "Scripted relevance for this synthetic display sample; not an actual model assessment.",
+            "request_sha256": "75d5d428e53055ab36831d9eb1a796b7840d7efa3dbbc746244dbe3f8c0ecd02",
+            "uncertain": false
+          },
+          "request_sha256": "75d5d428e53055ab36831d9eb1a796b7840d7efa3dbbc746244dbe3f8c0ecd02",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "allowed_offline_fixture"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-uncertainty",
+              "status": "indexed",
+              "text": "A Cedar failure may indicate incorrect credentials.",
+              "text_sha256": "f68afe086d39b3025a955ecd398f8cbc3940c54d40eace1aa31cffebfb6e0b12",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-uncertainty",
+              "status": "indexed",
+              "text": "The cause of the Cedar failure has not been established.",
+              "text_sha256": "976233ec21c989de757c64f630d0c43005646272fa6265003c40052344765763",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "disabled",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "A Cedar failure may indicate incorrect credentials."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The cause of the Cedar failure has not been established."
+            }
+          ],
+          "question": "Is the Cedar failure cause established?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Preserves possibility and unestablished cause.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-uncertainty",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": true,
+      "guard_rejection_reasons": []
+    },
+    {
+      "case_id": "causality",
+      "human_classification": "accept",
+      "human_rationale": "Causality, quantity and shared test identity are supplied explicitly.",
+      "expected_preview_available": true,
+      "observed_preview_available": true,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": {
+          "claim_id": "fixture-claim-1",
+          "evidence_ids": [
+            "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "kind": "attributed_synthesis",
+          "premise_ids": [
+            "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+            "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+          ],
+          "qualifications": [],
+          "relationship_references": [
+            {
+              "kind": "supports",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "statement": "Test C1 reports that an injected two-second wait caused a Cedar delay.",
+          "validation": {
+            "candidate_sha256": "c2bd934a5d1a8f5fa1ff2b64f046b5454c97c7b51573a5f8b2dac0d30577b1cf",
+            "inputs_sha256": "c36411c6d9b1be54f35ac7adb6d0acaff8d2b290a22df38ed275f8e47fbc88fe",
+            "policy_version": "21-C-offline-existing-gates",
+            "semantic_grounding_verified": false,
+            "statement_result": {
+              "admissible": true,
+              "rejection_reasons": [],
+              "validation_scope": "independent_model_semantic_admissibility"
+            },
+            "statement_status": "admissible",
+            "structural_status": "passed"
+          }
+        },
+        "fixture_text": "Attributed synthesis (offline fixture; not released):\nTest C1 reports that an injected two-second wait caused a Cedar delay. [1] [2]",
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": true,
+            "reason": "Scripted relevance for this synthetic display sample; not an actual model assessment.",
+            "request_sha256": "4c1fa4b2337059d308ddf4cd415624da769db149f208a0dba214325c212761d3",
+            "uncertain": false
+          },
+          "request_sha256": "4c1fa4b2337059d308ddf4cd415624da769db149f208a0dba214325c212761d3",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "allowed_offline_fixture"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-causality",
+              "status": "indexed",
+              "text": "Test C1 reports that an injected wait caused a Cedar delay.",
+              "text_sha256": "0b3b501c5027a0466919b49fa5a0f3c32a1c644459a746a0504b39dbfbaf9a76",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-causality",
+              "status": "indexed",
+              "text": "Test C1 records that the injected wait lasted two seconds.",
+              "text_sha256": "754dec50faa09276e5f4dfa4c721c1cabc0fe291aedb88544494247f1a2f0bb5",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "disabled",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "Test C1 reports that an injected wait caused a Cedar delay."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "Test C1 records that the injected wait lasted two seconds."
+            }
+          ],
+          "question": "What caused the fictional Cedar delay in test C1?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Causality, quantity and shared test identity are supplied explicitly.",
+              "confidence": 0.8,
+              "kind": "supports",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-causality",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": true,
+      "guard_rejection_reasons": []
+    },
+    {
+      "case_id": "unsupported",
+      "human_classification": "reject",
+      "human_rationale": "Adds an absent manager-signature requirement.",
+      "expected_preview_available": false,
+      "observed_preview_available": false,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "no_admissible_fixture_claim"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": null,
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-unsupported",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-unsupported",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate."
+          ],
+          "outcome": "rejected",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "What does Cedar require?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Adds an absent manager-signature requirement.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-unsupported",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "not_run",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "unsupported_fact"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": false,
+      "guard_rejection_reasons": [
+        "no_admissible_fixture_claim"
+      ]
+    },
+    {
+      "case_id": "certainty",
+      "human_classification": "reject",
+      "human_rationale": "Converts conditional possibility into certainty.",
+      "expected_preview_available": false,
+      "observed_preview_available": false,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "no_admissible_fixture_claim"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": null,
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-certainty",
+              "status": "indexed",
+              "text": "Cedar may recover with a valid backup.",
+              "text_sha256": "9cb5282b431bc44b6857140559fcf534f97c4012c2d5f3a93721748ababc863b",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-certainty",
+              "status": "indexed",
+              "text": "The Cedar backup has not been validated.",
+              "text_sha256": "95bc362e4320c22a9997150b3d009ceece91aaa5e58955c9a8afb0cc6791ef12",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate."
+          ],
+          "outcome": "rejected",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "Cedar may recover with a valid backup."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The Cedar backup has not been validated."
+            }
+          ],
+          "question": "Is Cedar recovery certain?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Converts conditional possibility into certainty.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-certainty",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "not_run",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "certainty_inflation"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": false,
+      "guard_rejection_reasons": [
+        "no_admissible_fixture_claim"
+      ]
+    },
+    {
+      "case_id": "causal-overreach",
+      "human_classification": "reject",
+      "human_rationale": "Observation does not establish causation.",
+      "expected_preview_available": false,
+      "observed_preview_available": false,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "no_admissible_fixture_claim"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": null,
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-causal-overreach",
+              "status": "indexed",
+              "text": "Cedar request volume increased.",
+              "text_sha256": "d2ead770395aa51625db1600b46adc27294a47ebf48033524f808c4a63483db7",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-causal-overreach",
+              "status": "indexed",
+              "text": "A Cedar delay was reported.",
+              "text_sha256": "aa795012fd55abc9e937af87650fdfcf5a811f00c8ba277ff610cc4ab8572266",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate."
+          ],
+          "outcome": "rejected",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "Cedar request volume increased."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "A Cedar delay was reported."
+            }
+          ],
+          "question": "What caused the Cedar delay?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Observation does not establish causation.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-causal-overreach",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "not_run",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "causal_overreach"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": false,
+      "guard_rejection_reasons": [
+        "no_admissible_fixture_claim"
+      ]
+    },
+    {
+      "case_id": "negation",
+      "human_classification": "reject",
+      "human_rationale": "I confirm reject for the negation case because it contradicts the source.",
+      "expected_preview_available": false,
+      "observed_preview_available": false,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "no_admissible_fixture_claim"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": null,
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-negation",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-negation",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate."
+          ],
+          "outcome": "rejected",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "Does Cedar permit unapproved actions?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Reverses the explicit approval requirement.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-negation",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "not_run",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "negation_reversal"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": false,
+      "guard_rejection_reasons": [
+        "no_admissible_fixture_claim"
+      ]
+    },
+    {
+      "case_id": "precision",
+      "human_classification": "reject",
+      "human_rationale": "No approval duration is supplied.",
+      "expected_preview_available": false,
+      "observed_preview_available": false,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "no_admissible_fixture_claim"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": null,
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-precision",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-precision",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate."
+          ],
+          "outcome": "rejected",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "How long does Cedar approval take?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "No approval duration is supplied.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-precision",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "not_run",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "fabricated_precision"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": false,
+      "guard_rejection_reasons": [
+        "no_admissible_fixture_claim"
+      ]
+    },
+    {
+      "case_id": "suppressed-conflict",
+      "human_classification": "reject",
+      "human_rationale": "Suppresses the opposing report and fabricates agreement.",
+      "expected_preview_available": false,
+      "observed_preview_available": false,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "no_admissible_fixture_claim"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": null,
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [
+            "Suppresses the opposing report and fabricates agreement."
+          ],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-suppressed-conflict",
+              "status": "indexed",
+              "text": "Report A says Cedar requires approval.",
+              "text_sha256": "fa32934fe5113068c5a7786b6dedae78ea89a2069f72e75ec3f1c61579b44c28",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-suppressed-conflict",
+              "status": "indexed",
+              "text": "Report B says Cedar does not require approval.",
+              "text_sha256": "ec6008a9739c5758d1a16528154c05da68ab46fa6a372e34f3c82047b5913026",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate."
+          ],
+          "outcome": "rejected",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "Report A says Cedar requires approval."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "Report B says Cedar does not require approval."
+            }
+          ],
+          "question": "Do Cedar reports agree about approval?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Suppresses the opposing report and fabricates agreement.",
+              "confidence": 0.8,
+              "kind": "conflicts",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-suppressed-conflict",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "not_run",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "conflict_suppression"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": false,
+      "guard_rejection_reasons": [
+        "no_admissible_fixture_claim"
+      ]
+    },
+    {
+      "case_id": "irrelevant",
+      "human_classification": "withhold",
+      "human_rationale": "The statement is supported but does not answer the backup retention question.",
+      "expected_preview_available": false,
+      "observed_preview_available": false,
+      "presentation_gap": null,
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "fixture_question_not_answered"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": false,
+            "reason": "Scripted relevance for this synthetic display sample; not an actual model assessment.",
+            "request_sha256": "096253989a9b2bd4a148c409335c98f1d50b0502139f0c958321270622232105",
+            "uncertain": false
+          },
+          "request_sha256": "096253989a9b2bd4a148c409335c98f1d50b0502139f0c958321270622232105",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-irrelevant",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-irrelevant",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "blocked_validation",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "What is the Cedar backup retention period?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "May be admissible to supplied premises but does not answer the retention-period question; the current judge cannot validate question relevance.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-irrelevant",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "fixture_question_not_answered"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "raw_coordinator_preview_available": true,
+      "guard_rejection_reasons": [
+        "fixture_question_not_answered"
+      ]
+    }
+  ],
+  "limitation": "Additive guard over original scripted coordinator samples; 6 positive relevance verdicts and negative irrelevant verdict are scripted display enforcement only. No actual provider accuracy, benchmark execution, production readiness or human presentation approval.",
+  "additional_guard_samples": [
+    {
+      "case_id": "missing-relevance",
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "relevance_assessment_missing"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": "165ccec00e6cb09b5c5358ca3ca9beed18a9a5ff9321931b32c753c45dd418bd",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "blocked_validation",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "What does Cedar require?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Preserves both explicit requirements without granting execution authority.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-faithful-paraphrase",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "relevance_assessment_missing"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "preview_available": false
+    },
+    {
+      "case_id": "unavailable-relevance",
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "relevance_assessment_unavailable"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": "165ccec00e6cb09b5c5358ca3ca9beed18a9a5ff9321931b32c753c45dd418bd",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "blocked_validation",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "What does Cedar require?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Preserves both explicit requirements without granting execution authority.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-faithful-paraphrase",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "relevance_assessment_unavailable"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "preview_available": false
+    },
+    {
+      "case_id": "uncertain-relevance",
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "relevance_assessment_uncertain"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": {
+            "answers_question": true,
+            "reason": "Scripted uncertainty; withhold.",
+            "request_sha256": "165ccec00e6cb09b5c5358ca3ca9beed18a9a5ff9321931b32c753c45dd418bd",
+            "uncertain": true
+          },
+          "request_sha256": "165ccec00e6cb09b5c5358ca3ca9beed18a9a5ff9321931b32c753c45dd418bd",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "blocked_validation",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "What does Cedar require?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Preserves both explicit requirements without granting execution authority.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-faithful-paraphrase",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "relevance_assessment_uncertain"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "preview_available": false
+    },
+    {
+      "case_id": "unbound-relevance",
+      "report": {
+        "empirical_acceptance": false,
+        "execution_source": "unit_test",
+        "fixture_claim": null,
+        "fixture_text": null,
+        "presentation_guard": {
+          "production_enabled": false,
+          "proposition_to_inference": "closed",
+          "rejection_reasons": [
+            "relevance_assessment_unbound"
+          ],
+          "release_authorized": false,
+          "relevance_verdict": null,
+          "request_sha256": "165ccec00e6cb09b5c5358ca3ca9beed18a9a5ff9321931b32c753c45dd418bd",
+          "schema_version": "21-E-offline-presentation-v1",
+          "semantic_grounding_verified": false,
+          "status": "withheld"
+        },
+        "public_response": {
+          "answer_id": null,
+          "answer_text": null,
+          "claims": [],
+          "confidence": null,
+          "conflicts": [],
+          "constitutional_status": "not_evaluated",
+          "evidence": [
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-a",
+              "evidence_id": "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "file_hash": null,
+              "filename": "synthetic-a (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires human approval before action.",
+              "text_sha256": "eeecccd6e35a90e051de5de3978fdef388a2941a8386a4273e7fd3d8c00d4a9f",
+              "topic": "cedar"
+            },
+            {
+              "chunk_index": 0,
+              "collection": "synthetic-review-only",
+              "document_id": "synthetic-b",
+              "evidence_id": "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "file_hash": null,
+              "filename": "synthetic-b (synthetic source)",
+              "module": "synthetic",
+              "organization_id": "synthetic-review",
+              "snapshot_id": "presentation-fixture-faithful-paraphrase",
+              "status": "indexed",
+              "text": "The fictional Cedar policy requires preserving the source record.",
+              "text_sha256": "ee16710b58ddd38f132096e88f80712ee494dcdd2bcbdc08ba18e7b6585f27a1",
+              "topic": "cedar"
+            }
+          ],
+          "limitations": [],
+          "missing_information": [],
+          "operational_trace": [
+            "Validated fixture source snapshot.",
+            "Extracted complete fixture premises without classifying source truth.",
+            "Checked all fixture premise pairs and preserved assessed conflicts.",
+            "Applied existing structural and independent statement gates to fixture candidate.",
+            "Rendered exact assessed fixture content and citations; production release remains disabled."
+          ],
+          "outcome": "blocked_validation",
+          "premises": [
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-a"
+                ]
+              },
+              "premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "statement": "The fictional Cedar policy requires human approval before action."
+            },
+            {
+              "domain_ids": [
+                "synthetic"
+              ],
+              "evidence_ids": [
+                "evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+              ],
+              "metadata": {
+                "evidence_dispositions": [
+                  "contextual"
+                ],
+                "source_chunk_indexes": [
+                  0
+                ],
+                "source_document_ids": [
+                  "synthetic-b"
+                ]
+              },
+              "premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0",
+              "statement": "The fictional Cedar policy requires preserving the source record."
+            }
+          ],
+          "question": "What does Cedar require?",
+          "recommended_next_step": null,
+          "relationships": [
+            {
+              "basis": "Preserves both explicit requirements without granting execution authority.",
+              "confidence": 0.8,
+              "kind": "complements",
+              "source_premise_id": "premise:1:evidence-fe49d0218f7f4024656f82c73b1a4972ed4a4715d3364793f989d9c83a78a39b",
+              "target_premise_id": "premise:2:evidence-3303e4ff8973801eb863267477d1c997acc3f5f66acf6d5784b412d57e64f3c0"
+            }
+          ],
+          "request_id": null,
+          "schema_version": "21.v1",
+          "scope": {
+            "limit": 5,
+            "module": "synthetic",
+            "organization_id": "synthetic-review",
+            "score_threshold": 0.45,
+            "topic": "cedar"
+          },
+          "snapshot_id": "presentation-fixture-faithful-paraphrase",
+          "uncertainty": [
+            "Offline fixture verdicts do not establish semantic accuracy or source truth."
+          ],
+          "unresolved_relationships": [],
+          "validation": {
+            "citation_status": "passed",
+            "coverage_status": "passed",
+            "rejection_reasons": [
+              "relevance_assessment_unbound"
+            ],
+            "release_status": "disabled",
+            "semantic_grounding_verified": false
+          }
+        }
+      },
+      "preview_available": false
+    }
+  ],
+  "raw_packet_sha256": "a0f84f98b8748c2741ed4f912524920e08a7d89392e4926c4de7f1740fcc4033",
+  "display_guard_observations": [
+    {
+      "case_id": "missing-citation",
+      "observed": "Unrecognized fixture or unresolved citation. No answer was accepted.",
+      "preview_available": false
+    },
+    {
+      "case_id": "wrong-scope",
+      "observed": "Unrecognized fixture or unresolved citation. No answer was accepted.",
+      "preview_available": false
+    },
+    {
+      "case_id": "empirical-claim",
+      "observed": "Unrecognized fixture or unresolved citation. No answer was accepted.",
+      "preview_available": false
+    }
+  ]
+}

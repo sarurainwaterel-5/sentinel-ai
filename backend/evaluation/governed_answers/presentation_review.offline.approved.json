@@ -1,0 +1,231 @@
+{
+  "version": "21-E-guarded-presentation-review-v1",
+  "status": "offline_fixture_presentation_review_approved_not_production_accepted",
+  "approved": true,
+  "reviewer": "Rain",
+  "reviewed_at": "2026-10-12T16:46:19Z",
+  "release_approval": false,
+  "fixture_packet_sha256": "bc58d64c32a8cd3cf44d62d4b4cbbe184140213670f9d264cba8e55bad666cdc",
+  "html_sha256": "04a7c92570493316230088cf5435ec0a2b44734b2df6de9e705f2b5c3d1c642a",
+  "case_reviews": [
+    {
+      "case_id": "faithful-paraphrase",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "multi-premise",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "qualification",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "conflict",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "uncertainty",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "causality",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "unsupported",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "certainty",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "causal-overreach",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "negation",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "precision",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "suppressed-conflict",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    },
+    {
+      "case_id": "irrelevant",
+      "exact_text_preserved": null,
+      "citation_targets_correct": null,
+      "source_quotes_complete": null,
+      "qualifications_conflicts_uncertainty_visible": null,
+      "withholding_correct": null,
+      "disabled_boundaries_clear": null,
+      "human_rationale": null,
+      "requested_revision": null
+    }
+  ],
+  "automated_observations": {
+    "accepted_previews": 6,
+    "rejected_and_irrelevant_withheld": 7,
+    "relevance_failure_samples_withheld": 4,
+    "malformed_display_samples_withheld": 3,
+    "unique_html_ids": true,
+    "all_anchor_targets_exist": true,
+    "exact_source_quotes_present": true,
+    "source_snapshot_sections": 34,
+    "script_elements": 0,
+    "browser_visual_inspection_completed": false
+  },
+  "note": "Rain explicitly approved the packet-level offline fixture presentation-review record. Individual case worksheet ratings/rationales remain unprovided, as disclosed in the complete record review. Automated observations remain separately attributed. Generation artifacts retain their original prepared/unapproved metadata; this distinct record is the fixture-review approval evidence.",
+  "packet_assessments": {
+    "accepted_preview_text": {
+      "confirmed": true,
+      "scope": "Six accepted previews retain the exact statements."
+    },
+    "citation_targets_and_quotes": {
+      "confirmed": true,
+      "scope": "Citation links lead to complete, correctly attributed source quotes."
+    },
+    "qualifications_conflicts_uncertainty": {
+      "confirmed": true,
+      "scope": "Conditions, opposing reports, and uncertainty remain visible."
+    },
+    "rejected_and_irrelevant_withheld": {
+      "confirmed": true,
+      "scope": "Six rejected cases and the irrelevant case show no synthesis preview."
+    },
+    "failed_and_malformed_withheld": {
+      "confirmed": true,
+      "scope": "Failed relevance assessments and malformed samples remain withheld."
+    },
+    "offline_disabled_scope_clear": {
+      "confirmed": true,
+      "scope": "Offline status, production-disabled labeling, and limits are clear."
+    }
+  },
+  "confirmation_evidence": {
+    "reviewer": "Rain",
+    "human_response": "yes confirm",
+    "context": "Rain was asked to inspect the linked guarded packet and confirm six explicitly displayed presentation checks or request changes. This records those six checks, not final record approval or production acceptance."
+  },
+  "approval_evidence": {
+    "reviewer": "Rain",
+    "human_response": "yes",
+    "context": "Explicit approval requested for the complete offline fixture presentation-review record after six checks were confirmed and the complete version-bound summary was linked.",
+    "recorded_at": "2026-10-12T16:46:19Z",
+    "timestamp_basis": "Time explicit approval was recorded using the UTC clock; human message delivery time is not independently available."
+  },
+  "source_bindings": {
+    "backend/evaluation/governed_answers/answer_cases.proposed.json": "d5a4391d5108e14894fec3158261d9a91600e5b7b28695138388e29218891ba9",
+    "backend/evaluation/governed_answers/answer_review.human.approved.json": "3394b69158b48e0b28db4b25017c64add583f1df8a0ffc6af99edd0ee7337e23",
+    "backend/app/services/cognition/reasoning/answer_renderer.py": "cc6f0b9bfbdb605ff3816d377753a75c517cd9f2c4eeb934df2a13ffab60f776",
+    "backend/app/services/cognition/reasoning/answer_orchestrator.py": "2a2a6334b68a2cbb16f2092cdf80327ea791300542c7b079ff5656a8eadf4c2d",
+    "backend/app/services/cognition/reasoning/answer_models.py": "cb36c55a2c0ae0890a885b2093018d4d652b23a9bc5a2a2ff4c5295def9d2e14",
+    "frontend/src/components/answers/GovernedAnswerPanel.jsx": "80bf8db603fc70e764f5217a6bc6d7fa9a56e8b39f7b9b932a0beb5805eeb72c",
+    "frontend/src/styles/workspaces.css": "a9061fb74f37849c343107d46d823dcf34027849eac6787077db642bfc4352b6",
+    "backend/evaluation/governed_answers/presentation_guard.py": "136e996c2b5ccd19733a1affbb867989acf31336519172449f98f750a5a7fce0"
+  },
+  "guard_implementation_commit": "2c4a853b2f88a43b4d1e705ff4d3297bcd78d8bc",
+  "assessment_scope": "Packet-level confirmation of the six displayed presentation checks. Individual case ratings/rationales were not separately requested or supplied and remain null; their presence as draft worksheet slots is not a formal schema requirement.",
+  "browser_visual_inspection": {
+    "assistant_completed": false,
+    "reason": "Browser URL policy rejected local-file navigation.",
+    "human_confirmation": "Rain confirmed the six checks after receiving the linked packet and explicit request to inspect it; no browser telemetry or screenshot independently verifies that inspection."
+  },
+  "reviewed_artifact_paths": {
+    "fixtures": "backend/evaluation/governed_answers/presentation_fixtures.reviewed.json",
+    "html": "docs/sprints/Sprint-21-E-Guarded-Presentation.reviewed.html"
+  },
+  "production_presentation_accepted": false,
+  "production_enabled": false,
+  "empirical_acceptance": false,
+  "approval_limitation": "Offline scripted fixture presentation record only. No actual provider accuracy, production answer-presentation acceptance, benchmark execution, deployment, ADR-037 modification, PR #1 merge or production release authorization."
+}
