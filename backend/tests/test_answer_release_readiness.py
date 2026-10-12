@@ -9,12 +9,13 @@ from evaluation.governed_answers.evaluate_readiness import (
     DATASET, GOLD, MANIFEST, POLICY, PREFLIGHT, ROOT, evaluate_readiness, main,
 )
 from evaluation.governed_answers.inspect_review import BINDINGS, PROVENANCE, REVIEW
+from evaluation.governed_answers.inspect_presentation import ARTIFACT_BINDINGS, SOURCE_BINDINGS, RECORD as PRESENTATION_RECORD
 
 
 @pytest.fixture
 def packet_root(tmp_path):
     manifest = json.loads((ROOT / MANIFEST).read_text())
-    for name in set(BINDINGS) | set(manifest["sha256_bindings"]) | {REVIEW, PROVENANCE}:
+    for name in set(BINDINGS) | set(manifest["sha256_bindings"]) | set(ARTIFACT_BINDINGS) | set(SOURCE_BINDINGS) | {REVIEW, PROVENANCE, PRESENTATION_RECORD}:
         path = tmp_path / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes((ROOT / name).read_bytes())
@@ -42,6 +43,9 @@ def test_approved_labels_and_criteria_do_not_satisfy_release():
     assert gates["packet_integrity"]["status"] == "verified"
     assert gates["answer_fixture_human_review"]["status"] == "accepted"
     assert gates["supplemental_criteria"]["status"] == "accepted"
+    assert gates["offline_fixture_presentation_review"]["status"] == "accepted"
+    assert report["offline_fixture_presentation_approved"] is True
+    assert report["production_presentation_accepted"] is False
     assert gates["20_3_gold_human_review"]["status"] == "accepted"
     assert gates["20_3_empirical_acceptance"]["status"] == "missing"
     assert gates["rendered_answer_and_citation_acceptance"]["status"] == "missing"
@@ -177,4 +181,18 @@ def test_evaluator_imports_no_network_environment_or_runtime_capability():
             imports.update(alias.name for alias in node.names)
         elif isinstance(node, ast.ImportFrom):
             imports.add(node.module)
-    assert imports == {"hashlib", "json", "pathlib", "inspect_packet", "inspect_review"}
+    assert imports == {"hashlib", "json", "pathlib", "inspect_packet", "inspect_review", "inspect_presentation"}
+
+
+@pytest.mark.parametrize("field", ["production_presentation_accepted", "release_approval"])
+def test_offline_presentation_approval_cannot_unlock_production(packet_root, field):
+    path = packet_root / PRESENTATION_RECORD
+    record = json.loads(path.read_text())
+    record[field] = True
+    path.write_text(json.dumps(record))
+    report = evaluate_readiness(packet_root)
+    assert report["offline_fixture_presentation_approved"] is False
+    assert report["production_presentation_accepted"] is False
+    assert by_id(report)["offline_fixture_presentation_review"]["status"] == "invalid"
+    assert by_id(report)["rendered_answer_and_citation_acceptance"]["status"] == "missing"
+    assert_closed(report)

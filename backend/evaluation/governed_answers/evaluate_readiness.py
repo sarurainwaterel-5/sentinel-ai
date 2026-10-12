@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 
 from .inspect_packet import inspect_packet
+from .inspect_presentation import ARTIFACT_BINDINGS, SOURCE_BINDINGS, RECORD as PRESENTATION_RECORD, inspect_presentation
 from .inspect_review import BINDINGS, COMMIT, FOLDER, PROVENANCE, REVIEW, _load, _text, _utc, inspect_review
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -47,7 +48,9 @@ No arbitrary gate receipt or path is accepted. Future empirical/integration
 artifacts require a new governed checkpoint and evaluator, not a metadata toggle.
 """
     review = inspect_review(root)
+    presentation = inspect_presentation(root)
     errors = list(review["errors"])
+    errors.extend("presentation:" + error for error in presentation["errors"])
     manifest = _load(root, MANIFEST, errors, BINDINGS[MANIFEST])
     packet_valid = False
     if manifest is not None:
@@ -94,6 +97,10 @@ artifacts require a new governed checkpoint and evaluator, not a metadata toggle
     gate("supplemental_criteria", "accepted" if review["human_review_approved"] else "not_validated",
          "Bound supplemental requirements accepted by Rain; no passing measurements claimed.",
          (REVIEW, FOLDER + "answer_acceptance.proposed.json"))
+    gate("offline_fixture_presentation_review",
+         "accepted" if presentation["offline_fixture_presentation_approved"] else "invalid",
+         "Rain approved the exact guarded static fixture packet; this is separate from production presentation acceptance.",
+         (PRESENTATION_RECORD, *ARTIFACT_BINDINGS))
     gate("20_3_gold_human_review", "accepted" if gold_valid else "not_validated",
          "Existing 36-case, 18/18 human-label record; separate from empirical judge acceptance.",
          (GOLD, DATASET))
@@ -114,7 +121,7 @@ artifacts require a new governed checkpoint and evaluator, not a metadata toggle
          "The original manifest and companion diagnostics are not consumed by runtime answering.",
          (MANIFEST,))
     gate("rendered_answer_and_citation_acceptance", "missing",
-         "Fixture source-support confirmation is not rendered citation or answer-presentation acceptance.",
+         "Approved offline rendered fixtures are separate from missing production answer/citation presentation acceptance.",
          (REVIEW, MANIFEST))
     gate("explicit_production_authorization", "not_authorized",
          "The human record has release_approval=false; no production authorization exists.", (REVIEW,))
@@ -136,7 +143,7 @@ artifacts require a new governed checkpoint and evaluator, not a metadata toggle
                 hashes[name] = hashlib.sha256(path.read_bytes()).hexdigest()
             except OSError:
                 pass
-    for name in (REVIEW, PROVENANCE):
+    for name in (REVIEW, PROVENANCE, PRESENTATION_RECORD, *ARTIFACT_BINDINGS, *SOURCE_BINDINGS):
         path = root / name
         if path.resolve().is_relative_to(root.resolve()):
             try:
@@ -148,10 +155,12 @@ artifacts require a new governed checkpoint and evaluator, not a metadata toggle
         historical.append("The frozen manifest's answer-case/criteria review-pending blocker is historical; the bound approved companion record completes fixture review only.")
     if gold_valid:
         historical.append("The saved preflight's human_review_missing blocker predates the approved 36-case record. It is not a current label-review blocker; no live configuration was inspected.")
-    return {"schema_version": "21-E-offline-readiness-v1", "checkpoint_commit": COMMIT,
+    return {"schema_version": "21-E-offline-readiness-v2", "checkpoint_commit": COMMIT,
         "evidence_integrity": "invalid" if errors else "valid",
         "readiness_status": "invalid_evidence" if errors else "blocked",
         "human_review_approved": review["human_review_approved"],
+        "offline_fixture_presentation_approved": presentation["offline_fixture_presentation_approved"],
+        "production_presentation_accepted": False,
         "gates": gates, "blockers": blockers, "errors": sorted(set(errors)),
         "inspected_sha256": hashes, "historical_evidence_notes": historical,
         "historical_preflight": {"verified_not_executed": historical_preflight_valid,
