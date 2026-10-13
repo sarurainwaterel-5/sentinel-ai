@@ -22,6 +22,29 @@ spec.loader.exec_module(helpers)
 setup = helpers.setup
 
 
+@pytest.mark.anyio
+@pytest.mark.parametrize("stage", [0, 1, 2])
+@pytest.mark.parametrize("mode", ["missing", "synchronous"])
+async def test_all_async_capabilities_validated_before_any_dispatch(composition, stage, mode):
+    inputs, providers, events, _ = composition
+    providers[stage].call = None if mode == "missing" else lambda **kwargs: "{}"
+    result = await engine(providers).evaluate_fixture(**inputs)
+    closed(result)
+    assert not result.preview_allowed and events == []
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("uncertain,reason", [(False, "fixture_question_not_answered"), (True, "relevance_assessment_uncertain")])
+async def test_preserve_bounded_relevance_withholding_reason(composition, uncertain, reason):
+    inputs, providers, _, _ = composition
+    providers[2].answer = False
+    providers[2].uncertain = uncertain
+    result = await engine(providers).evaluate_fixture(**inputs)
+    report = closed(result)
+    assert not result.preview_allowed and result.rejection_reasons == (reason,)
+    assert report["async_coordinator"]["rejection_reasons"] == [reason]
+
+
 @pytest.fixture
 def anyio_backend():
     return "asyncio"

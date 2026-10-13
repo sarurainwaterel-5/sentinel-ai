@@ -6,6 +6,7 @@ statement and rendering checks remain authoritative. No runtime/client wiring.
 import asyncio
 import copy
 import hashlib
+import inspect
 import time
 
 from app.services.cognition.reasoning.answer_orchestrator import OfflineAnswerCoordinator
@@ -81,7 +82,8 @@ def _identities(providers):
     """Explicit scripted objects and exposed clients, never inferred metadata."""
     identities = []
     for provider in providers:
-        if provider is None or getattr(provider, "execution_source", None) != "unit_test":
+        if (provider is None or getattr(provider, "execution_source", None) != "unit_test"
+                or not inspect.iscoroutinefunction(getattr(provider, "call", None))):
             raise ValueError("All roles require explicitly scripted providers.")
         client = getattr(provider, "client", None)
         identities.append((provider,) if client is None else (provider, client))
@@ -201,6 +203,9 @@ class OfflineAsyncAnswerCoordinator:
                 catalog_reader=catalog_reader, coordinator=engine,
                 relevance_assessor=_RelevanceReplay(relevance_request.context_json, relevance.response_json))
             unchanged()
+            if not presentation.preview_allowed:
+                return finish(reason=presentation.rejection_reasons[0]
+                    if presentation.rejection_reasons else "async_presentation_withheld")
             return finish(presentation)
         except asyncio.CancelledError:
             raise  # budget owns cancellation/quarantine; never return partial output
