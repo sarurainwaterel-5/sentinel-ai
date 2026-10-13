@@ -1,0 +1,21 @@
+# Sprint 21-H — Offline authority/catalog and async coordinator integration
+
+Baseline: `e9abbc4532905d0d1452edba706475099fa85a61`, branch `codex/sprint-21-b-contracts`.
+
+`OfflineScopedAsyncCoordinator` composes the Sprint 21-G contracts with Sprint 21-F asynchronous fixture answering. A new request-local eligibility guard captures a validated scripted identity, exact grants, catalog/document epochs, chunk hashes, question/request identity and evidence. Only captured eligible evidence is translated into the existing fixture source contracts. It derives a narrowly scoped fixture authority and catalog rather than accepting caller-supplied fixture approval metadata.
+
+Bridge readers return captured snapshots only after rechecking the original injected contract readers. Checked provider adapters recheck before and after every awaited provider callback. The outer coordinator also rechecks immediately before returning. Revocation, lifecycle/catalog/content/index changes, store failures, changed provider identities or relationship fixtures withhold the complete answer. Denied answers contain no partial public response, claim or fixture text; available inner budget receipts are retained for offline diagnosis.
+
+Original providers are checked for independent roles and exposed clients before wrapping, preventing wrappers from concealing shared-client identity. The existing coordinator still enforces sequential dispatch, shared counts/byte limits/deadlines, exact candidate/statement/relevance request matching, strict response validation and authoritative synchronous grounding/rendering. Wrapped providers perform no retries or fallback. Source filename/description/score are not supplied by the new chunk contract; the bridge uses deterministic default fixture presentation, never fabricated retrieval scores. The existing coordinator's default source limit remains an additional conservative bound.
+
+One outer deadline begins before scope/catalog capture. The inner provider budget receives only the remaining duration, not a fresh full allowance. Rechecks detect elapsed synchronous reader/validation work; readers cannot be forcibly interrupted. Caller cancellation propagates and closes the outer eligibility session. The existing budget cancels/quarantines work and late responses cannot return an answer.
+
+The success report includes the request-bound context digest and all prior provider/presentation/scope receipts. Every release/production/grounding/authenticated-scope flag stays false and proposition-to-inference remains closed. Success preserves the exact existing deterministic fixture text and citations. Typed scripted identity is not real HTTP authentication. Bridge readers reject actual API/store execution sources through the contracts; this module cannot be used to relabel production identity as verified.
+
+Rechecks are optimistic observations, not a distributed transaction or publish-time lock. There is no publication API, persistence, real retrieval, lifecycle mutation, migrations, vector/embedding/provider calls, credentials, benchmark, deployment or public route enablement. Frozen governance records, ADR-037 and benchmark thresholds are unchanged; PR #1 is not merged.
+
+Tests exercise successful exact fixture composition, zero-call preflight denial, permission/catalog changes around every stage, archive/restore and delete/recreate epochs, stale index versions, rejected/irrelevant/uncertain/unbound assessments, cancellation-resistant late callbacks, deadline consumption during capture and providers, final-return revocation/expiry, provider identity mutation and a shared call budget.
+
+Next: separately review the real principal transport/session boundary and durable catalog/lifecycle/outbox schema/backfill plan before implementing storage changes. Real authenticated retrieval, publication consistency guarantees, independent async real providers, operational cost/resource controls, empirical/final acceptance, runtime gate consumption and explicit production authorization remain release blockers.
+
+Validated 2026-10-13: 562 relevant offline tests passed, including 44 new integration tests and 518 existing regressions. Packet, review, presentation and readiness evidence integrity remained valid with no errors; readiness stayed blocked and production disabled.
