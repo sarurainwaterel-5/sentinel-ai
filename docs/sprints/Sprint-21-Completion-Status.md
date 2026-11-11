@@ -1,4 +1,4 @@
-# Sprint 21 current completion status — 2026-11-10
+# Sprint 21 current completion status — updated 2026-11-11
 
 **Sprint remains open.** Implementation authorization is not a measurement,
 independent semantic acceptance, migration approval on an exact final target,
@@ -52,8 +52,9 @@ Local evidence is saved outside this Git checkout under the parent workspace's
   digest, proposal SQL digest, public row counts/hashes and preservation checks.
 - `catalog-inventory-summary.json`: 76 records, 9 scopes, canonical inventory hash;
   source bytes/ordered manifests remain unverified and governed eligible count is 0.
-- `provider-preflight.json`: reviewed labels accepted; zero API calls executed,
-  null metrics, dedicated judge key/model configuration missing.
+- `provider-preflight.json`: historical preflight with zero API calls and null
+  metrics before the dedicated judge credential was supplied. The subsequent
+  actual Astra result is documented below and preserved in the repository.
 
 The `private/` subdirectory is mode 0700; the real database backup and catalog
 metadata artifacts are mode 0600. They contain application data, stay outside Git,
@@ -76,9 +77,9 @@ Alembic and not applied to the application. See the
 1. Models are now explicitly selected: `gpt-6.1-sol` generation, `gpt-6-astra`
    semantic judging, and `gpt-6.1-terra` relevance, with reasoning low/low/none.
    See `../governance/sprint21-model-configuration.md` for the versioned Astra
-   adapter/runner and configuration bindings. Dedicated role credentials remain
-   required: the process lacks the judge key and no secure configuration path
-   has been supplied. The general application key is not silently reused.
+   adapter/runner and configuration bindings. The owner supplied a dedicated
+   judge key on 2026-11-11; it was loaded privately and is distinct from the
+   general key. No general-key fallback was used.
 2. Exact source-byte and ordered index-manifest reconciliation for the 76 legacy
    documents, supported lifecycle-writer coverage, final scope/principal mapping,
    and reviewed application migration bindings. No historical epochs or grants
@@ -86,8 +87,11 @@ Alembic and not applied to the application. See the
 3. Actual application PostgreSQL/catalog/index/retrieval/provider composition and
    deployed gate consumption, followed by real integration/race acceptance.
    Isolated SQLite inspection and PostgreSQL schema rehearsals do not satisfy it.
-4. Execute the pre-registered independent 108-call benchmark using the existing
-   approved 36-label record. Preserve failing measurements; do not weaken policy.
+4. The actual Astra benchmark completed all 108 calls on 2026-11-11 and met the
+   frozen thresholds: 100% accuracy/decision stability, 54 correct accepts,
+   54 correct rejects and zero classification/operational errors. Final human
+   empirical acceptance remains pending. See
+   `Sprint-21-Astra-Empirical-Result-2026-11-11.md` and its hash-bound report.
 5. Governed runtime answer/question/full-context and citation results, human
    inspection of the exact rendered outputs, final empirical acceptance and
    explicit bound production authorization after review. Agents cannot sign these
@@ -115,7 +119,8 @@ The PostgreSQL command requires an explicitly supplied
 PostgreSQL 16; it must never target application storage. Without it the actual
 server test skips, which is not acceptance. The 975-test regression selection
 is the 21-N selection plus its 64 principal-composition tests. No frontend files
-were changed. No live model calls occurred. Initial SDK test platform discovery
+were changed. No live model calls occurred in that 2026-11-10 integration
+checkpoint; the 2026-11-11 Astra run is recorded separately above. Initial SDK test platform discovery
 was slow in the sandbox; the local mock test supplies a test-only SDK platform
 value and final serialization/parsing checks pass. Shell startup intermittently
 emitted its existing stream-fd warning; test summaries reported no warnings.

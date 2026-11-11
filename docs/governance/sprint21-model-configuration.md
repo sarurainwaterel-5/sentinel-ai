@@ -58,12 +58,14 @@ human review; it does not authenticate execution provenance or authorize release
 
 ## Current state
 
-Models and configuration are selected and checked in. The dedicated judge key
-is absent from the execution environment; the owner has been asked for a secure
-configuration path without pasting a key into chat. No live model call or semantic
-measurement occurred during configuration. Live provider composition, index and
-retrieval integration, final empirical/presentation review and bound production
-authorization remain tracked in `../sprints/Sprint-21-Completion-Status.md`.
+Models and configuration are selected and checked in. On 2026-11-11 the owner
+supplied a dedicated judge key, loaded privately for the approved evaluation.
+All 108 Astra assessments completed and met the frozen thresholds; independent
+metric/binding audit passed. Final human empirical acceptance is pending. See
+`../sprints/Sprint-21-Astra-Empirical-Result-2026-11-11.md` for the exact report,
+hash and limitations. Live generation/relevance composition, index/retrieval
+integration, final presentation review and bound production authorization remain
+tracked in `../sprints/Sprint-21-Completion-Status.md`.
 
 Validation: **132 focused and related regression tests passed in 23.89s**, covering
 all three selected role dispatches, credential isolation, client cleanup,

@@ -1,0 +1,31 @@
+{
+  "version": "astra-empirical-review-pending-v1",
+  "status": "pending_human_review",
+  "report_path": "backend/evaluation/semantic_judge/results/astra-20261111-run1.json",
+  "report_sha256": "922844683321ebf816cc56d40c701dd0f002e3b902a7aa25f5ed8446fc860d32",
+  "run_commit": "93724732d722f652c0811c62482d91e7838f6fa5",
+  "selected_model": "gpt-6-astra",
+  "provider_config": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "low",
+    "max_completion_tokens": 4096,
+    "timeout": 30.0,
+    "max_retries": 0
+  },
+  "automated_thresholds_met": true,
+  "reviewer": null,
+  "reviewed_at": null,
+  "empirical_review_approved": false,
+  "independent_deployment_review_approved": false,
+  "pending_checks": [
+    "Review the exact report and source/input/configuration bindings.",
+    "Review execution provenance and independence of judge deployment from generation.",
+    "Accept or reject the limited 36-case synthetic benchmark evidence and stated limitations."
+  ],
+  "production_release_approved": false,
+  "release_authorized": false,
+  "production_enabled": false,
+  "semantic_grounding_verified": false,
+  "proposition_to_inference": "closed",
+  "limitation": "Prepared review record only; no human approval is asserted. This result does not measure Sol generation, Terra relevance or production retrieval."
+}

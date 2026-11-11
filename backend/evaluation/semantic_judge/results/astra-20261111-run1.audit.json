@@ -1,0 +1,181 @@
+{
+  "schema_version": "astra-report-consistency-v1",
+  "status": "disabled",
+  "enabled": false,
+  "production_enabled": false,
+  "release_authorized": false,
+  "semantic_grounding_verified": false,
+  "proposition_to_inference": "closed",
+  "empirical_report_eligible_for_human_review": true,
+  "recomputed_empirical_metrics": {
+    "confusion_matrix": {
+      "true_accepts": 54,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "true_rejects": 54
+    },
+    "fail_closed_decision_matrix": {
+      "true_accepts": 54,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "true_rejects": 54
+    },
+    "accuracy": 1.0,
+    "false_accept_rate": 0.0,
+    "false_reject_rate": 0.0,
+    "operational_errors": 0,
+    "classification_coverage": 1.0,
+    "stable_cases": 36,
+    "decision_stability": 1.0,
+    "complete": true,
+    "reason_stable_cases": 35,
+    "reason_stability": 0.9722222222222222,
+    "category_results": {
+      "causal_overreach": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "certainty_inflation": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "conflict_preserving": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "conflict_suppression": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "fabricated_precision": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "faithful_paraphrase": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "faithful_qualification": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "multi_premise_synthesis": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "negation_reversal": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "supported_causality": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "uncertainty_preserving": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "unsupported_fact": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      }
+    },
+    "criteria_passed": true,
+    "false_accept_cases": [],
+    "false_reject_cases": []
+  },
+  "errors": [],
+  "blockers": [
+    "empirical_execution_provenance_and_final_human_review_required",
+    "explicit_production_release_authorization_required",
+    "independent_provider_deployment_review_required"
+  ],
+  "limitation": "Report consistency does not authenticate API execution, model independence or human acceptance.",
+  "report_sha256": "922844683321ebf816cc56d40c701dd0f002e3b902a7aa25f5ed8446fc860d32",
+  "report_path": "backend/evaluation/semantic_judge/results/astra-20261111-run1.json",
+  "run_commit": "93724732d722f652c0811c62482d91e7838f6fa5"
+}

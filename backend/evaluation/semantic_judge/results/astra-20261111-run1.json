@@ -1,0 +1,1456 @@
+{
+  "version": "astra-benchmark-v1",
+  "status": "passed",
+  "execution_source": "actual_api",
+  "dataset_size": 36,
+  "planned_calls": 108,
+  "executed_calls": 108,
+  "provider": "OpenAI",
+  "model": "gpt-6-astra",
+  "provider_config": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "low",
+    "max_completion_tokens": 4096,
+    "timeout": 30.0,
+    "max_retries": 0
+  },
+  "selected_roles": {
+    "generation": "gpt-6.1-sol",
+    "semantic_judge": "gpt-6-astra",
+    "relevance": "gpt-6.1-terra"
+  },
+  "model_selection_sha256": "f6cb3f602c020281c576ccffaa052a1782f4acd7b6e969bb97980a2ebc470839",
+  "dataset_sha256": "d57de823b86797a6b25ff36a808c678cc8843ef5a1b4d7188576f27fe0cc7adb",
+  "policy_sha256": "4847ef02ffe88b3747944eb736fbd79c7e46518297f9c819877fd910ce497288",
+  "review_sha256": "e4fe2bcf4f202e18fc12fd41801b36872629b43462e7dc266841900f48cf1917",
+  "runner_sha256": "c7e7b04c2fadc1c1b2b2e399ccf30807762783fefac7127938fb558c2e0277ac",
+  "adapter_sha256": "74d62918074b942e432b0f1130d1e3700724b94631734a6096aab425df97780d",
+  "legacy_runner_sha256": "0577ea0bd7d26f1cb8f2f5eab12d90e0c88bbf9c55bc702f35da414997a99059",
+  "legacy_adapter_sha256": "7d646aad6314cab9d4d1c7b795d844683b6ba5ebffabb29b80119b43794610c0",
+  "verdict_schema_sha256": "858fe4ee3c60d2d9dde9620d40875b1ade3c4a5025e933fcd0aae2fc1e690411",
+  "prompt_sha256": "8454c848a3e61cb6e3e75eece197b9e51f385831676b5f55551a642b556a386c",
+  "commit": "93724732d722f652c0811c62482d91e7838f6fa5",
+  "python": "3.14.4",
+  "started_at": "2026-11-11T17:12:51.195314+00:00",
+  "criteria": {
+    "version": "20.3-G-v1",
+    "repetitions": 3,
+    "order_seed": 203,
+    "expected_cases": 36,
+    "expected_admissible": 18,
+    "expected_inadmissible": 18,
+    "max_false_accepts": 0,
+    "max_false_reject_rate": 0.1,
+    "min_accuracy": 0.95,
+    "min_decision_stability": 1.0,
+    "max_operational_errors": 0,
+    "min_accepted_cases_per_positive_category": 1,
+    "negative_categories": [
+      "unsupported_fact",
+      "certainty_inflation",
+      "causal_overreach",
+      "negation_reversal",
+      "fabricated_precision",
+      "conflict_suppression"
+    ],
+    "positive_categories": [
+      "faithful_paraphrase",
+      "multi_premise_synthesis",
+      "faithful_qualification",
+      "conflict_preserving",
+      "uncertainty_preserving",
+      "supported_causality"
+    ]
+  },
+  "blockers": [],
+  "trials": [
+    {
+      "case_id": "access-negation_reversal",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 8.164
+    },
+    {
+      "case_id": "recovery-supported_causality",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.007
+    },
+    {
+      "case_id": "recovery-negation_reversal",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.434
+    },
+    {
+      "case_id": "recovery-faithful_qualification",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.664
+    },
+    {
+      "case_id": "access-unsupported_fact",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.836
+    },
+    {
+      "case_id": "recovery-faithful_paraphrase",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.503
+    },
+    {
+      "case_id": "recovery-uncertainty_preserving",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.46
+    },
+    {
+      "case_id": "recovery-conflict_preserving",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.529
+    },
+    {
+      "case_id": "operations-uncertainty_preserving",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.93
+    },
+    {
+      "case_id": "access-fabricated_precision",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.633
+    },
+    {
+      "case_id": "access-uncertainty_preserving",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.709
+    },
+    {
+      "case_id": "operations-faithful_paraphrase",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.653
+    },
+    {
+      "case_id": "access-causal_overreach",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.202
+    },
+    {
+      "case_id": "access-faithful_paraphrase",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.218
+    },
+    {
+      "case_id": "operations-conflict_preserving",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.322
+    },
+    {
+      "case_id": "access-conflict_preserving",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.202
+    },
+    {
+      "case_id": "access-conflict_suppression",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.977
+    },
+    {
+      "case_id": "recovery-fabricated_precision",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.006
+    },
+    {
+      "case_id": "operations-fabricated_precision",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.688
+    },
+    {
+      "case_id": "operations-negation_reversal",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.76
+    },
+    {
+      "case_id": "access-faithful_qualification",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.419
+    },
+    {
+      "case_id": "operations-supported_causality",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.96
+    },
+    {
+      "case_id": "recovery-certainty_inflation",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 6.003
+    },
+    {
+      "case_id": "operations-unsupported_fact",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.195
+    },
+    {
+      "case_id": "access-supported_causality",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.13
+    },
+    {
+      "case_id": "operations-multi_premise_synthesis",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.235
+    },
+    {
+      "case_id": "recovery-conflict_suppression",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.568
+    },
+    {
+      "case_id": "operations-faithful_qualification",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.393
+    },
+    {
+      "case_id": "recovery-causal_overreach",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.558
+    },
+    {
+      "case_id": "access-multi_premise_synthesis",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.252
+    },
+    {
+      "case_id": "recovery-unsupported_fact",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.707
+    },
+    {
+      "case_id": "operations-certainty_inflation",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "certainty_inflation"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.989
+    },
+    {
+      "case_id": "access-certainty_inflation",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.958
+    },
+    {
+      "case_id": "recovery-multi_premise_synthesis",
+      "repetition": 0,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.606
+    },
+    {
+      "case_id": "operations-causal_overreach",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.332
+    },
+    {
+      "case_id": "operations-conflict_suppression",
+      "repetition": 0,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.451
+    },
+    {
+      "case_id": "operations-faithful_paraphrase",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.395
+    },
+    {
+      "case_id": "recovery-unsupported_fact",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.479
+    },
+    {
+      "case_id": "operations-unsupported_fact",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.415
+    },
+    {
+      "case_id": "recovery-faithful_qualification",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.185
+    },
+    {
+      "case_id": "operations-conflict_preserving",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.822
+    },
+    {
+      "case_id": "operations-certainty_inflation",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "certainty_inflation"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.23
+    },
+    {
+      "case_id": "access-supported_causality",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.562
+    },
+    {
+      "case_id": "operations-multi_premise_synthesis",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.405
+    },
+    {
+      "case_id": "access-unsupported_fact",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.776
+    },
+    {
+      "case_id": "access-multi_premise_synthesis",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.094
+    },
+    {
+      "case_id": "access-conflict_suppression",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.102
+    },
+    {
+      "case_id": "recovery-multi_premise_synthesis",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.459
+    },
+    {
+      "case_id": "recovery-faithful_paraphrase",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.204
+    },
+    {
+      "case_id": "recovery-supported_causality",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.666
+    },
+    {
+      "case_id": "recovery-conflict_suppression",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.634
+    },
+    {
+      "case_id": "operations-fabricated_precision",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.366
+    },
+    {
+      "case_id": "operations-supported_causality",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.466
+    },
+    {
+      "case_id": "access-fabricated_precision",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.871
+    },
+    {
+      "case_id": "access-faithful_qualification",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.476
+    },
+    {
+      "case_id": "access-conflict_preserving",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.269
+    },
+    {
+      "case_id": "access-causal_overreach",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.474
+    },
+    {
+      "case_id": "operations-causal_overreach",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.513
+    },
+    {
+      "case_id": "recovery-conflict_preserving",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.157
+    },
+    {
+      "case_id": "recovery-fabricated_precision",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.386
+    },
+    {
+      "case_id": "recovery-uncertainty_preserving",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.585
+    },
+    {
+      "case_id": "access-faithful_paraphrase",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.803
+    },
+    {
+      "case_id": "access-uncertainty_preserving",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.209
+    },
+    {
+      "case_id": "operations-negation_reversal",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.692
+    },
+    {
+      "case_id": "operations-uncertainty_preserving",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.382
+    },
+    {
+      "case_id": "recovery-negation_reversal",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.507
+    },
+    {
+      "case_id": "access-negation_reversal",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.451
+    },
+    {
+      "case_id": "recovery-causal_overreach",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.568
+    },
+    {
+      "case_id": "operations-faithful_qualification",
+      "repetition": 1,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.33
+    },
+    {
+      "case_id": "access-certainty_inflation",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 5.236
+    },
+    {
+      "case_id": "operations-conflict_suppression",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.694
+    },
+    {
+      "case_id": "recovery-certainty_inflation",
+      "repetition": 1,
+      "admissible": false,
+      "rejection_reasons": [
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 4.373
+    },
+    {
+      "case_id": "access-multi_premise_synthesis",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.434
+    },
+    {
+      "case_id": "recovery-supported_causality",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.198
+    },
+    {
+      "case_id": "recovery-uncertainty_preserving",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 4.35
+    },
+    {
+      "case_id": "access-certainty_inflation",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.393
+    },
+    {
+      "case_id": "recovery-faithful_qualification",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.526
+    },
+    {
+      "case_id": "operations-causal_overreach",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.635
+    },
+    {
+      "case_id": "operations-supported_causality",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.327
+    },
+    {
+      "case_id": "operations-faithful_qualification",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.448
+    },
+    {
+      "case_id": "access-negation_reversal",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.648
+    },
+    {
+      "case_id": "operations-certainty_inflation",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "certainty_inflation"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.374
+    },
+    {
+      "case_id": "access-causal_overreach",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.685
+    },
+    {
+      "case_id": "access-conflict_preserving",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.225
+    },
+    {
+      "case_id": "access-unsupported_fact",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.047
+    },
+    {
+      "case_id": "access-conflict_suppression",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.835
+    },
+    {
+      "case_id": "recovery-certainty_inflation",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.112
+    },
+    {
+      "case_id": "operations-conflict_preserving",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.416
+    },
+    {
+      "case_id": "operations-unsupported_fact",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.35
+    },
+    {
+      "case_id": "operations-uncertainty_preserving",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.451
+    },
+    {
+      "case_id": "access-faithful_paraphrase",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.54
+    },
+    {
+      "case_id": "access-supported_causality",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.693
+    },
+    {
+      "case_id": "access-faithful_qualification",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.351
+    },
+    {
+      "case_id": "operations-fabricated_precision",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.537
+    },
+    {
+      "case_id": "recovery-fabricated_precision",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.296
+    },
+    {
+      "case_id": "recovery-conflict_preserving",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 3.371
+    },
+    {
+      "case_id": "operations-negation_reversal",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.728
+    },
+    {
+      "case_id": "operations-conflict_suppression",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.254
+    },
+    {
+      "case_id": "access-fabricated_precision",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "fabricated_precision",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.56
+    },
+    {
+      "case_id": "recovery-unsupported_fact",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.294
+    },
+    {
+      "case_id": "operations-multi_premise_synthesis",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.219
+    },
+    {
+      "case_id": "access-uncertainty_preserving",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.369
+    },
+    {
+      "case_id": "recovery-causal_overreach",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "causal_overreach",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.408
+    },
+    {
+      "case_id": "recovery-conflict_suppression",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "conflict_suppression",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.326
+    },
+    {
+      "case_id": "recovery-multi_premise_synthesis",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.486
+    },
+    {
+      "case_id": "operations-faithful_paraphrase",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.348
+    },
+    {
+      "case_id": "recovery-faithful_paraphrase",
+      "repetition": 2,
+      "admissible": true,
+      "rejection_reasons": [],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.537
+    },
+    {
+      "case_id": "recovery-negation_reversal",
+      "repetition": 2,
+      "admissible": false,
+      "rejection_reasons": [
+        "unsupported_fact",
+        "certainty_inflation",
+        "negation_reversal",
+        "insufficient_support"
+      ],
+      "scope": "independent_model_semantic_admissibility",
+      "operational_error": false,
+      "elapsed_seconds": 2.185
+    }
+  ],
+  "metrics": {
+    "confusion_matrix": {
+      "true_accepts": 54,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "true_rejects": 54
+    },
+    "fail_closed_decision_matrix": {
+      "true_accepts": 54,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "true_rejects": 54
+    },
+    "accuracy": 1.0,
+    "false_accept_rate": 0.0,
+    "false_reject_rate": 0.0,
+    "operational_errors": 0,
+    "classification_coverage": 1.0,
+    "stable_cases": 36,
+    "decision_stability": 1.0,
+    "complete": true,
+    "reason_stable_cases": 35,
+    "reason_stability": 0.9722222222222222,
+    "category_results": {
+      "causal_overreach": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "certainty_inflation": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "conflict_preserving": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "conflict_suppression": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "fabricated_precision": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "faithful_paraphrase": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "faithful_qualification": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "multi_premise_synthesis": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "negation_reversal": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      },
+      "supported_causality": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "uncertainty_preserving": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 9,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 0
+        }
+      },
+      "unsupported_fact": {
+        "cases": 3,
+        "trials": 9,
+        "operational_errors": 0,
+        "confusion_matrix": {
+          "true_accepts": 0,
+          "false_accepts": 0,
+          "false_rejects": 0,
+          "true_rejects": 9
+        }
+      }
+    },
+    "criteria_passed": true,
+    "false_accept_cases": [],
+    "false_reject_cases": []
+  },
+  "empirical_acceptance": true,
+  "semantic_grounding_verified": false,
+  "proposition_to_inference": "closed",
+  "openai_sdk_version": "2.44.0",
+  "finished_at": "2026-11-11T17:17:48.991083+00:00"
+}
