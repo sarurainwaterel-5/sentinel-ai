@@ -73,10 +73,12 @@ Alembic and not applied to the application. See the
 
 ## Still required before sprint acceptance
 
-1. Dedicated explicit generation, judge and relevance/context deployments and
-   secure credentials. The process currently lacks dedicated judge key/model;
-   the general application key is not silently reused. The owner was asked for
-   model choices and a secure configuration path; none has been supplied yet.
+1. Models are now explicitly selected: `gpt-6.1-sol` generation, `gpt-6-astra`
+   semantic judging, and `gpt-6.1-terra` relevance, with reasoning low/low/none.
+   See `../governance/sprint21-model-configuration.md` for the versioned Astra
+   adapter/runner and configuration bindings. Dedicated role credentials remain
+   required: the process lacks the judge key and no secure configuration path
+   has been supplied. The general application key is not silently reused.
 2. Exact source-byte and ordered index-manifest reconciliation for the 76 legacy
    documents, supported lifecycle-writer coverage, final scope/principal mapping,
    and reviewed application migration bindings. No historical epochs or grants

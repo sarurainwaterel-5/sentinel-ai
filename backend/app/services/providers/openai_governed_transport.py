@@ -40,6 +40,7 @@ class GovernedTransportFailure(Exception):
 class RoleConfiguration:
     client: object
     model: str
+    reasoning_effort: str | None = None
 
 
 _SCHEMAS = {"generation": GenerationPayload, "statement": SemanticJudgeVerdict, "relevance": RelevanceVerdict}
@@ -94,6 +95,9 @@ class OpenAIGovernedTransport:
                     or not config.model.strip() or len(config.model) > 200
                     or getattr(config.client, "max_retries", None) != 0
                     or type(getattr(config.client, "max_retries", None)) is not int
+                    or (config.reasoning_effort is not None and
+                        (type(config.reasoning_effort) is not str or config.reasoning_effort not in {"none", "low", "medium", "high", "xhigh", "max"}))
+                    or (config.model in {"gpt-6-astra", "gpt-6.1-sol"} and config.reasoning_effort == "none")
                     or not inspect.iscoroutinefunction(getattr(getattr(config.client, "responses", None), "parse", None))):
                 raise ValueError("Explicit async clients with zero retries and model names required.")
         if len({id(c.client) for c in configs}) != 3 or len({c.model for c in configs}) != 3:
@@ -138,11 +142,12 @@ class OpenAIGovernedTransport:
             # Recheck mutable SDK configuration immediately before dispatch.
             if type(config.client.max_retries) is not int or config.client.max_retries != 0:
                 raise GovernedTransportFailure("unavailable")
+            reasoning = {} if config.reasoning_effort is None else {"reasoning": {"effort": config.reasoning_effort}}
             response = await asyncio.wait_for(config.client.responses.parse(
                 model=config.model, input=[{"role": "system", "content": _PROMPTS[role]},
                     {"role": "user", "content": wire_json}],
                 text_format=_SCHEMAS[role], store=False, truncation="disabled",
-                max_output_tokens=self.max_output_tokens, timeout=self.timeout), timeout=self.timeout)
+                max_output_tokens=self.max_output_tokens, timeout=self.timeout, **reasoning), timeout=self.timeout)
             if response.status != "completed":
                 raise GovernedTransportFailure("incomplete")
             if getattr(response, "error", None) or getattr(response, "incomplete_details", None):

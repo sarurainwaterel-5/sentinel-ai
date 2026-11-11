@@ -1,0 +1,53 @@
+{
+  "version": "sprint21-model-selection-v1",
+  "selected_at": "2026-11-10",
+  "model_selection_confirmed": true,
+  "selection_evidence": "User accepted the proposed generation, semantic judge and relevance model choices in this chat.",
+  "roles": {
+    "generation": "gpt-6.1-sol",
+    "semantic_judge": "gpt-6-astra",
+    "relevance": "gpt-6.1-terra"
+  },
+  "reasoning_efforts": {
+    "generation": "low",
+    "semantic_judge": "low",
+    "relevance": "none"
+  },
+  "credential_environment": {
+    "generation": "SEMANTIC_GENERATION_API_KEY",
+    "semantic_judge": "SEMANTIC_JUDGE_API_KEY",
+    "relevance": "SEMANTIC_RELEVANCE_API_KEY"
+  },
+  "benchmark": {
+    "version": "astra-semantic-benchmark-v1",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "low",
+    "max_completion_tokens": 4096,
+    "timeout_seconds": 30.0,
+    "max_retries": 0,
+    "sampling_parameters": "omitted",
+    "expected_cases": 36,
+    "repetitions": 3,
+    "planned_calls": 108,
+    "order_seed": 203,
+    "frozen_input_sha256": {
+      "dataset.json": "d57de823b86797a6b25ff36a808c678cc8843ef5a1b4d7188576f27fe0cc7adb",
+      "acceptance.json": "4847ef02ffe88b3747944eb736fbd79c7e46518297f9c819877fd910ce497288",
+      "SentinelAI_Sprint_20_3_G_Human_Approval_Record.json": "e4fe2bcf4f202e18fc12fd41801b36872629b43462e7dc266841900f48cf1917"
+    }
+  },
+  "independence_verified": false,
+  "empirical_acceptance": false,
+  "release_authorized": false,
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "limitations": [
+    "Different client and model identities do not demonstrate independence or semantic accuracy.",
+    "Selection is not permission to claim a passing benchmark or approve unseen runtime outputs."
+  ],
+  "documentation": [
+    "https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra",
+    "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "https://developers.openai.com/api/docs/models/gpt-6.1-terra"
+  ]
+}
