@@ -50,3 +50,28 @@ Preserve mismatches as quarantined evidence; do not repair, delete, or reindex
 legacy data automatically. After reconciliation, implement the reviewed isolated
 migration/index/retrieval integration. Human empirical acceptance and the remaining
 provider, answer, presentation, and release gates still apply.
+
+## Approved larger-source capture
+
+The user confirmed that the seven oversized PDFs are necessary and authorized a
+larger audit limit. `legacy_source_capture.MAX_SOURCE_BYTES` is now 1 GiB per
+source, shared with the strict auditor. `hash_pdf_source` hashes in 1 MiB blocks,
+refuses symlinks/nonregular files and oversized sources, and checks descriptor
+metadata before and after hashing. This is an audit capture change; the deployed
+new-upload request limit is unchanged.
+
+A fresh read-only capture at 2026-11-11T19:54:14.952758+00:00 included **all 78 PDFs**,
+including all seven previously skipped files. Catalog and Qdrant comparisons
+remained stable across this capture (76 catalog rows, 47,429 points). All
+76 catalog records have a matching captured source hash. There were 6
+completed source extractions; full extraction remains incomplete, and the invalid
+catalog chunk count still blocks strict per-document reconciliation. No record
+is established migration-ready by these observations.
+
+The new private inventory and scripts are under
+`outputs/sprint21-reconciliation-1gib/private/`; its sanitized report is
+`outputs/sprint21-reconciliation-1gib/report.json`. The earlier capture is retained.
+Validation: 70 tests passed across streaming capture, strict reconciliation,
+and disposable SQLite catalog coverage. Source PDFs, catalog rows and vectors
+were not changed. Next, resume bounded extraction and inspect the invalid
+chunk-count record; size alone no longer excludes these reference documents.

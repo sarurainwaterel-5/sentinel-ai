@@ -8,6 +8,8 @@ import json
 import re
 from collections import Counter
 
+from .legacy_source_capture import MAX_SOURCE_BYTES
+
 MAX_ROWS = 100000
 MAX_DOCUMENTS = 1000
 SCOPE = ('module', 'topic', 'collection', 'organization_id')
@@ -69,7 +71,7 @@ def reconcile_inventory(catalog, sources, points, capture):
     for row in sources:
         hashes = row['extraction_chunk_hashes']
         if (not _sha(row['sha256']) or type(row['readable']) is not bool
-                or type(row['byte_length']) is not int or not 0 <= row['byte_length'] <= 1073741824
+                or type(row['byte_length']) is not int or not 0 <= row['byte_length'] <= MAX_SOURCE_BYTES
                 or (hashes is not None and (type(hashes) is not list or not 1 <= len(hashes) <= MAX_ROWS or not all(_sha(h) for h in hashes)))):
             return blocked('invalid_source_row')
     if sum(len(row['extraction_chunk_hashes'] or []) for row in sources) > MAX_ROWS:
