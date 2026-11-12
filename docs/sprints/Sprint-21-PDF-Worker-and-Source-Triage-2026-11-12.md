@@ -94,3 +94,9 @@ was regenerated after the workers stopped.
 The private source-remediation record is a proposal only. The Cook-versus-Smith
 book preference remains pending; no database correction or source replacement
 was authorized by that proposal or performed by this pass.
+
+## Atomic persistence continuation
+
+`Sprint-21-Atomic-Checkpoint-Progress-2026-11-12.md` records the subsequent atomic
+store adoption, 62 completed source matches, weighted chunk coverage and 222
+passing tests. Earlier counts above describe their own bounded pass.
