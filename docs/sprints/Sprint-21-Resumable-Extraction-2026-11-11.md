@@ -78,3 +78,9 @@ or release approval. Full extraction across all sources, the zero-text/OCR case,
 duplicate/unreferenced-source review, current revalidation, isolated migration and
 retrieval integration, and human acceptance remain open. ADR-037 remains Proposed
 and the Proposition → Inference boundary remains closed.
+
+## Following pass
+
+`Sprint-21-PDF-Worker-and-Source-Triage-2026-11-12.md` records the reusable guarded
+worker, 36 ordered snapshot matches, actual PNG/no-text rejection behavior, and
+the visual source-title mismatch diagnosis. Historical results above are retained.
