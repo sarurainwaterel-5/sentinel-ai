@@ -75,3 +75,10 @@ Validation: 70 tests passed across streaming capture, strict reconciliation,
 and disposable SQLite catalog coverage. Source PDFs, catalog rows and vectors
 were not changed. Next, resume bounded extraction and inspect the invalid
 chunk-count record; size alone no longer excludes these reference documents.
+
+## Resumable extraction continuation
+
+See `Sprint-21-Resumable-Extraction-2026-11-11.md` for the subsequent nine exact
+ordered source/index matches, actual page-level resume across Law of Suretyship,
+the zero-text PDF diagnosis, and duplicate/unreferenced-source review findings.
+These observations do not replace the earlier incomplete capture or enable release.
