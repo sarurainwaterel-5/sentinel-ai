@@ -1,4 +1,4 @@
-# Sprint 21 current completion status — updated 2026-11-12
+# Sprint 21 current completion status — updated 2026-11-13
 
 **Sprint remains open.** Implementation authorization is not a measurement,
 independent semantic acceptance, migration approval on an exact final target,
@@ -6,6 +6,10 @@ or acceptance of unseen runtime answers. Production answering remains disabled;
 ADR-037 stays Proposed and proposition-to-inference stays closed.
 
 ## Latest engineering checkpoint
+
+The [November 13 team checkpoint](Sprint-21-Team-Checkpoint-2026-11-13.md)
+records the latest manifest, SDK inspection, PostgreSQL authority and evidence
+review work, validation and exact remaining integration gaps.
 
 The [November 12 integration checkpoint](Sprint-21-Integration-Checkpoint-2026-11-12.md)
 records the new media/speech work, source remediation, storage v2 proposal, actual

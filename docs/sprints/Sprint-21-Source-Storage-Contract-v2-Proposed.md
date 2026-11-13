@@ -49,7 +49,8 @@ that an object is unreferenced.
 
 The separately versioned SQL representation should reference source objects;
 it should not inline the entire source blob or manifest into a v1-size JSON row.
-The following shape is a contract proposal, not executable DDL:
+The following shape is the proposed application contract. The isolated SQLite
+reference repository described below implements a rehearsal of this shape:
 
 ```text
 source_object
@@ -78,7 +79,8 @@ chunk_locator
 
 The source CAS primitive does not implement SQL records. The separate isolated
 `content_addressed_chunks.py` now supplies chunk-object publication and verified
-reads as described below; versioned SQL references and a manifest publication
+reads as described below. Isolated versioned SQL references and paged
+verification are now implemented; the application migration and index publication
 barrier remain open.
 Human filenames and folder-relative metadata are descriptive fields, never
 filesystem locations or authority. Shared source-byte hashes do not imply shared
@@ -132,10 +134,58 @@ checks regular-file identity, owner and mode 0600, bounds the read, verifies exa
 length/hash/UTF-8 and descriptor stability, then reopens the canonical name to
 check replacement before returning bytes. The trusted owner/filesystem assumption
 still applies; returned bytes convey no scope, lifecycle, permission or authority.
-Separate source/chunk roots are a caller configuration requirement. No application
-writer, SQL reference, paginated manifest or production reader is registered.
+Separate source/chunk roots are a caller configuration requirement. The isolated
+SQL reference and paginated verifier below are separate from application writers
+and production readers; none are registered with live ingestion.
 
 Validation: 48 focused chunk/source tests passed. Cases include maximum size,
 invalid UTF-8, oversized/empty objects, exact byte preservation, deduplication,
 post-validation source replacement, and read rejection after byte/permission/
 symlink/truncation tampering. Source publication durability tests remain included.
+
+## Isolated versioned references and manifest verification — 2026-11-13
+
+`versioned_manifests.py` now implements a dedicated SQLite reference repository
+with separately named v2 tables. Source references bind SHA-256, length and
+`source-cas-v2`; document versions bind immutable identity, scope, source,
+extraction policy, declared count, three epochs and lifecycle state. Canonical
+chunk references use `chunk-cas-v2:<sha256>`. Inserts are atomic and never
+replace an existing version; source hash/length collisions fail. This repository
+is an isolated executable contract, not the application's SQL schema migration.
+
+The verifier consumes 256-locator keyset pages and returns a `VerifiedManifest`
+only after every page binding, exact contiguous locator, complete count and
+actual CAS chunk read passes. A manifest digest includes the full version binding
+and ordered locator metadata. The SQL reader holds one read transaction across
+all pages, checks total extent, validates source references, and rejects an
+already active caller transaction rather than committing or rolling it back.
+The full 100,000-locator bound requires 391 pages. Duplicate chunk hashes at
+different positions are valid; the unique locator identity is version plus index.
+
+Metadata insertion itself does not establish byte verification: callers can
+construct Python values, so every consumer must run the complete verifier before
+using the reference set. Source originals need their separate CAS validation.
+No partial result escapes a failed or interrupted verifier. Bounded page reads
+retain at most one page of chunk bytes, while the completed result retains up to
+100,000 locator metadata records; it does not claim constant-memory metadata.
+
+A consistent SQL snapshot may describe a version concurrently archived after
+that snapshot began. It proves a coherent historical binding, not current access
+or lifecycle authority. Rechecking authoritative lifecycle, principal permission,
+index/publication epochs and immutable bytes around external awaits remains the
+application integration gate. The module does not implement index publication,
+mutable lifecycle transitions, garbage collection, migration or release approval.
+
+Validation: 79 focused source/chunk/manifest tests passed, including 31 manifest
+tests for page boundaries and full capacity, interruptions, malformed cursors and
+bindings, SQL/byte tampering, transaction rollback, and concurrent snapshot reads.
+
+The verifier requires an independently pinned `expected_manifest_sha256`; a
+freshly calculated hash of database rows alone cannot detect substitution with
+another valid CAS object. Inserts recompute and validate the supplied manifest
+digest and retain it in SQL, but verification compares both that value and the
+reconstructed ordered manifest with the caller's external pin. The pin must come
+from a trusted reviewed ingestion plan/checkpoint, never be rediscovered from the
+same database being verified. Scope is an immutable ordered four-string tuple
+(organization, collection, module, topic), validated with `EvidenceScope`; this
+validates explicit scope shape, not a principal's grant to that scope.

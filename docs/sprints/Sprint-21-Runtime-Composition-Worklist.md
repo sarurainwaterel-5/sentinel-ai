@@ -128,3 +128,10 @@ address the large-original-file design gap without changing the v1 rehearsal
 schema. The isolated chunk-object store now supports bounded strict UTF-8 publication
 and verified reads (48 focused source/chunk tests passed). Versioned SQL references,
 paginated manifests, application writers and the publication barrier remain work.
+
+## November 13 team follow-up
+
+See [the team checkpoint](Sprint-21-Team-Checkpoint-2026-11-13.md) for isolated
+versioned SQL manifests, SDK inspection composition, PostgreSQL grant observations,
+writer inventory and exact remaining application integration. These additions do
+not replace the application lifecycle/outbox/publication work or owner acceptance.
