@@ -46,3 +46,6 @@ retrieval correctness, full-context certification or production authorization.
 Validation: 36 scripted tests passed before live execution, including durable
 checkpoint failures/cancellation, unchanged frozen inputs, context mutation,
 strict verdict/digest checks, budgets and escaped presentation.
+
+Actual execution: [November 12 result](Sprint-21-Provider-Result-2026-11-12.md).
+All 44 calls completed; human review and release acceptance remain pending.

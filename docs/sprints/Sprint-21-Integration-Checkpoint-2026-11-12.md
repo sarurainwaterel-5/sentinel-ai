@@ -24,7 +24,9 @@ semantic acceptance or governed production answering. ADR-037 remains Proposed.
 - The separate selected-provider review harness is implemented with frozen input
   pins, explicit role credentials, at most 44 calls, strict budgets, no retries,
   durable private checkpoints and escaped exact-context review rendering.
-  Its 36 scripted tests passed. **No actual calls from this harness have occurred.**
+  Its 36 scripted tests passed. The subsequent actual 44-call run completed with
+  zero operational failures, one control relevance disagreement and two withheld
+  generated candidates; see [the preserved result](Sprint-21-Provider-Result-2026-11-12.md).
 - The additive read-only `/governance/release-inspection` workspace route consumes
   the current denial diagnostic and recomputes the saved Astra report's evidence.
   It keeps every approval, production and inference-opening flag false. Frozen
@@ -49,13 +51,12 @@ quarantined even though Smith's ordered bytes match the retained index.
 2. Review the concrete source-remediation proposal: retain Smith, add the separately
    verified Stearns/Cook book, and review page-bound OCR/image candidates before
    explicit catalog repair or reindexing.
-3. Assign explicit Sol generation and Terra relevance credentials. The installation
-   has an application key and dedicated Astra judge key, but no explicit values for
-   the generation/relevance role names. A user configuration choice is pending;
-   the harness does not silently inherit the application key.
-4. Execute and preserve the selected-role Responses review plan, then inspect exact
-   candidate text and full supplied context. The earlier 108-call Astra benchmark
-   measured a different Chat Completions path and still needs its final human review.
+3. The owner approved using the application key for Sol and Terra while retaining
+   the separate Astra judge key. Explicit process-local assignments were used for
+   the preserved evaluation; production configuration was not changed.
+4. Review the completed selected-role Responses report, exact candidate text, full
+   context and retained disagreements. The earlier 108-call Astra benchmark measured
+   a different Chat Completions path and still needs its final human review.
 5. Implement and review the actual application storage/lifecycle/outbox/authority/
    retrieval/publication composition against the final migration target. The new
    isolated checks are evidence for their bounded contracts, not a substitute.
