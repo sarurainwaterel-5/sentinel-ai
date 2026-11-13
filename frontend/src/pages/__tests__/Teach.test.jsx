@@ -118,3 +118,18 @@ test("dropped directories direct users to the bounded folder picker", async () =
   fireEvent.drop(screen.getByText("Teach Sentinel").closest("section"), { dataTransfer: { files: [], items: [{ webkitGetAsEntry: () => ({ isDirectory: true }) }] } });
   expect(screen.getByText(/For folders, use Choose folder/)).toBeInTheDocument();
 });
+
+test("reports local speech availability and observed transcription progress", async () => {
+  workspaceRequest.mockImplementation(async (path) => path === "/teach/config" ? { max_upload_bytes: 1024**3, supported_formats: ["mp4"], audio_transcription_available: true } : [{ ...mission, filename: "lesson.mp4", status: "running", stage: "transcribing", events: [{ stage: "transcribing", at: "2026-11-12T00:00:00Z" }], result: null }]);
+  render(<TeachSentinel />);
+  await screen.findByText(/Video speech is transcribed locally with timestamps/);
+  expect(screen.getByText("Transcribe video speech")).toBeInTheDocument();
+  expect(screen.getByText(/In progress/)).toBeInTheDocument();
+});
+
+test("shows incomplete audio processing without claiming a transcript", async () => {
+  workspaceRequest.mockImplementation(async (path) => path === "/teach/config" ? respond(path) : [{ ...mission, filename: "lesson.mp4", result: { ...mission.result, warnings: ["audio_not_transcribed", "local_speech_transcription_failed"] } }]);
+  render(<TeachSentinel />);
+  await screen.findByText("audio not transcribed");
+  expect(screen.getByText("local speech transcription failed")).toBeInTheDocument();
+});

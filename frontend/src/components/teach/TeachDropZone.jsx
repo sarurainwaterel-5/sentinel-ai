@@ -76,7 +76,7 @@ export default function TeachDropZone({ onAccepted }) {
     <UploadCloud size={32} aria-hidden="true" /><h2>Teach Sentinel</h2>
     <p>Choose trusted files or a folder. Each file creates its own mission in the selected domain.</p>
     <ResourceState resource={config} label="upload limits"><p className="muted">{extensions.join(", ").toUpperCase()} · Up to {Math.round((limit ?? 0) / 1024 / 1024)} MB per file · At most {batchLimit} files.</p></ResourceState>
-    <p className="muted">{config.data?.image_ocr_available ? "PNG and JPEG images use local text recognition (OCR)." : "Image OCR is currently unavailable on the server; images can still be stored."} Videos provide sampled visual text; audio is not transcribed. A stored source may not be indexed or available in Recall.</p>
+    <p className="muted">{config.data?.image_ocr_available ? "PNG and JPEG images use local text recognition (OCR)." : "Image OCR is currently unavailable on the server; images can still be stored."} {config.data?.audio_transcription_available ? "Video speech is transcribed locally with timestamps, alongside sampled visual text." : "Videos provide sampled visual text. Local speech transcription is currently unavailable."} A stored source may not be indexed or available in Recall.</p>
     {!specificDomain && <p className="workspace-notice">Choose a specific domain in the header before beginning a mission.</p>}
     <form className="workspace-form teach-form" onSubmit={submit}>
       <label>Files<input type="file" multiple accept={config.data?.allow_other_files ? undefined : extensions.map((ext) => `.${ext}`).join(",")} disabled={submitting || !limit} onChange={(event) => selectFiles(event.target.files)} /></label>

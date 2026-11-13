@@ -82,7 +82,7 @@ def test_video_samples_visual_text_with_explicit_limits(tmp_path, monkeypatch):
     progress = []
     result = media.extract_source_text(source, 'movie.mp4', progress.append)
     assert result['metadata']['sampled_frames'] == 3
-    assert 'audio_not_transcribed' in result['warnings']
+    assert 'video_has_no_audio_track' in result['warnings']
     assert 'embedded_subtitles_not_extracted' in result['warnings']
     assert '[Video frame at 30.000 seconds]' in result['text']
     assert len(progress) == 3

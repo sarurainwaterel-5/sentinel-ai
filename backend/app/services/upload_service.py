@@ -96,7 +96,7 @@ class UploadService:
                          "extraction_method": "stored_only", "warnings": ["This file type is stored but not searchable."], "metadata": {}}
         else:
             try:
-                extracted = extract_source_text(file_path, filename, progress=lambda detail: report("extracting"))
+                extracted = extract_source_text(file_path, filename, progress=lambda detail: report("transcribing" if isinstance(detail, dict) and detail.get("phase") == "audio_transcription" else "extracting"))
             except HTTPException as exc:
                 if exc.status_code != 503:
                     raise

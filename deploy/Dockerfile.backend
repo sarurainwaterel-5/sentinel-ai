@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir torch==2.12.1 --index-url https://download.pytorc
 ENV HF_HOME=/opt/sentinel-models
 COPY scripts/cache_embeddings.py /app/scripts/cache_embeddings.py
 RUN python scripts/cache_embeddings.py
+COPY scripts/cache_transcription.py /app/scripts/cache_transcription.py
+RUN python scripts/cache_transcription.py
 COPY backend/ /app/backend/
 COPY docs/ /app/docs/
 COPY scripts/initialize_storage.py /app/scripts/initialize_storage.py

@@ -2,6 +2,7 @@ const stages = [
   ["received", "Receive source"],
   ["fingerprinting", "Check duplicate knowledge"],
   ["extracting", "Extract document text"],
+  ["transcribing", "Transcribe video speech"],
   ["chunking", "Prepare memory chunks"],
   ["indexing", "Embed and store memory"],
   ["cataloging", "Save document catalog"],
