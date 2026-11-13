@@ -12,6 +12,6 @@ CORS_ORIGINS = [origin.strip() for origin in os.getenv(
     "CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5175,http://127.0.0.1:5175"
 ).split(",") if origin.strip()]
 UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR", "uploads"))
-MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", str(20 * 1024 * 1024)))
+MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", str(1024 * 1024 * 1024)))
 if MAX_UPLOAD_BYTES <= 0:
     raise ValueError("MAX_UPLOAD_BYTES must be positive")

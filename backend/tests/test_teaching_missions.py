@@ -107,3 +107,32 @@ def test_queue_is_bounded_and_rejected_input_releases_capacity(setup, monkeypatc
     for _ in range(8): routes.slots.release()
     assert client.post("/teach/missions", data={"module": "trading"}, files={"file": ("bad.pdf", b"not-pdf")}).status_code == 415
     assert submit(client).status_code == 202
+
+
+def test_folder_metadata_survives_stored_only_completion(setup, monkeypatch):
+    client, _, _ = setup
+    def stored(self, **kwargs):
+        return {'status': 'stored', 'chunks': 0, 'warnings': ['File stored without searchable text.']}
+    monkeypatch.setattr(service.UploadService, 'process_saved_pdf', stored)
+    response = client.post('/teach/missions', data={'module':'trading', 'relative_path':'reports/source.zip'}, files={'file':('source.zip', b'PKopaque', 'application/zip')})
+    assert response.status_code == 202
+    mission = client.get('/teach/missions/' + response.json()['id']).json()
+    assert mission['status'] == 'stored'
+    assert mission['result']['relative_path'] == 'reports/source.zip'
+    assert 'learning_event_id' not in mission['result']
+
+
+def test_invalid_folder_path_is_rejected_before_mission_creation(setup):
+    client, _, _ = setup
+    assert submit(client, relative_path='../source.pdf').status_code == 422
+    assert client.get('/teach/missions').json() == []
+
+
+def test_media_config_exposes_limits_and_processing_capabilities(setup):
+    client, _, _ = setup
+    config = client.get('/teach/config').json()
+    assert {'png','mp4','mov','webm','txt'}.issubset(config['supported_formats'])
+    assert config['max_batch_files'] == 100
+    assert config['allow_other_files'] is True
+    assert config['audio_transcription_available'] is False
+    assert config['format_limits']['png'] <= config['max_upload_bytes']

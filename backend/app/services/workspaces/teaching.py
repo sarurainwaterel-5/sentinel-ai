@@ -43,15 +43,15 @@ def run_mission(mission_id):
                     organization_id=mission.organization_id, description=mission.description,
                     progress=lambda stage: advance(db, mission, stage),
                 )
-                mission.result = result
-                advance(db, mission, "finished", status="duplicate" if result["status"] == "duplicate" else "completed",
+                relative_path = (mission.result or {}).get("relative_path")
+                mission.result = {**result, **({"relative_path": relative_path} if relative_path else {})}
+                advance(db, mission, "finished", status=result["status"] if result["status"] in ("duplicate", "stored") else "completed",
                         detail=result.get("history_warning"))
             except Exception as exc:
                 db.rollback()
                 # Input errors are already bounded by the ingestion service.
-                mission.error = exc.detail if isinstance(exc, HTTPException) and exc.status_code == 422 else "Teaching could not finish. Check Systems before resubmitting this PDF."
-                if mission.stage != "recording":
-                    Path(mission.file_path).unlink(missing_ok=True)
+                mission.error = exc.detail if isinstance(exc, HTTPException) and exc.status_code == 422 else "Teaching could not finish. Check Systems before resubmitting this source."
+                # Preserve accepted originals even when extraction/indexing fails.
                 advance(db, mission, "failed", status="failed", detail=mission.error)
     finally:
         slots.release()

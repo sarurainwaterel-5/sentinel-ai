@@ -6,7 +6,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.database import get_db
 from app.settings import UPLOAD_DIR, MAX_UPLOAD_BYTES
 from app.models.teaching_mission import TeachingMission
-from app.services.upload_io import save_pdf_upload
+from app.services.source_upload_io import save_source_upload, validate_relative_path, source_limit, READABLE_FORMATS
+from app.services.media_extraction import capabilities
 from app.services.workspaces.teaching import now, run_mission, slots
 from app.core.domains.builder import build_domain_registry
 
@@ -15,7 +16,10 @@ router = APIRouter(prefix="/teach", tags=["Teaching Missions"])
 
 @router.get("/config")
 def config():
-    return {"max_upload_bytes": MAX_UPLOAD_BYTES, "supported_formats": ["pdf"], "ocr_available": False}
+    return {"max_upload_bytes": MAX_UPLOAD_BYTES, "supported_formats": list(READABLE_FORMATS),
+            "allow_other_files": True, "max_batch_files": 100,
+            "format_limits": {ext: source_limit("source." + ext, MAX_UPLOAD_BYTES) for ext in READABLE_FORMATS},
+            **capabilities()}
 
 
 @router.post("/missions", status_code=202)
@@ -24,19 +28,22 @@ async def submit_mission(background: BackgroundTasks, file: UploadFile = File(..
                          topic: str = Form("general", max_length=200),
                          description: str = Form("", max_length=2000),
                          organization_id: str = Form("default", min_length=1, max_length=200),
+                         relative_path: str | None = Form(None, max_length=1024),
                          db: Session = Depends(get_db)):
     if not organization_id.strip() or module == "all" or build_domain_registry().get(module) is None:
         raise HTTPException(422, "Select a registered specific domain and organization before teaching.")
+    relative_path = validate_relative_path(relative_path, file.filename or "")
     if not slots.acquire(blocking=False):
         raise HTTPException(429, "The local teaching queue is full. Wait for a mission to finish, then retry.")
     path = None
     try:
-        path, filename = await save_pdf_upload(file, UPLOAD_DIR, MAX_UPLOAD_BYTES)
+        path, filename = await save_source_upload(file, UPLOAD_DIR, MAX_UPLOAD_BYTES)
         timestamp = now()
         mission = TeachingMission(id=str(uuid4()), filename=filename, file_path=str(path),
             organization_id=organization_id, domain_id=module, topic=topic.strip() or "general",
             description=description.strip(), status="queued", stage="received", created_at=timestamp,
-            updated_at=timestamp, events=[{"stage": "received", "at": timestamp, "detail": "PDF received and validated."}])
+            updated_at=timestamp, events=[{"stage": "received", "at": timestamp, "detail": "Source received and validated."}])
+        mission.result = {"relative_path": relative_path} if relative_path else None
         db.add(mission)
         db.commit()
         payload = mission.public()

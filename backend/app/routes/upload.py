@@ -18,7 +18,7 @@ async def upload_document(
 ):
     upload_service = UploadService(db)
 
-    return await upload_service.process_pdf_upload(
+    return await upload_service.process_source_upload(
         file=file,
         module=module,
         topic=topic,

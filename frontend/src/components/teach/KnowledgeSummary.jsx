@@ -1,7 +1,7 @@
 export default function KnowledgeSummary({ mission, onNavigate }) {
   const result = mission?.result;
   return <section className="panel"><h2>Knowledge Summary</h2>
-    {mission?.status === "completed" ? <>
+    {mission?.status === "stored" ? <p>Source preserved only. No indexed memory or Learning Event is implied.</p> : mission?.status === "completed" && result ? <>
       <div className="metric-list"><div className="metric-row"><span>Extracted characters</span><strong>{result.characters}</strong></div><div className="metric-row"><span>Memory chunks</span><strong>{result.chunks}</strong></div><div className="metric-row"><span>Domain</span><strong>{result.module}</strong></div></div>
       <p>{result.learning_event_id ? "Acquisition recorded as a Learning Event." : "Acquisition history requires attention."}</p>
       <p className="muted">Memory was indexed at mission completion. Recall uses currently active catalog entries; Governance manages archive status.</p>

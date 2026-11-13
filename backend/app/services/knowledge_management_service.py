@@ -22,22 +22,16 @@ class KnowledgeManagementService:
                 "status": "not_found"
             }
 
-        client.set_payload(
-            collection_name=COLLECTION_NAME,
-            payload={"status": "archived"},
-            points=Filter(must=[FieldCondition(key="document_id", match=MatchValue(value=document_id))]),
-            wait=True,
-        )
+        if (document.chunk_count or 0) > 0 and document.embedding_model != "not_indexed":
+            self._set_index_status(document_id, "archived")
         document.status = "archived"
-
         self.db.commit()
+        return {"status": "archived", "document_id": document.id, "filename": document.filename}
 
-        return {
-            "status": "archived",
-            "document_id": document.id,
-            "filename": document.filename
-        }
-
+    @staticmethod
+    def _set_index_status(document_id, status):
+        client.set_payload(collection_name=COLLECTION_NAME, payload={"status": status},
+            points=Filter(must=[FieldCondition(key="document_id", match=MatchValue(value=document_id))]), wait=True)
 
     def restore_document(self, document_id: str):
         document = self.repository.get_by_id(document_id)
@@ -47,13 +41,12 @@ class KnowledgeManagementService:
                 "status": "not_found"
             }
 
-        client.set_payload(
-            collection_name=COLLECTION_NAME,
-            payload={"status": "indexed"},
-            points=Filter(must=[FieldCondition(key="document_id", match=MatchValue(value=document_id))]),
-            wait=True,
-        )
-        restored = self.repository.restore_document(document)
+        indexed = (document.chunk_count or 0) > 0 and document.embedding_model != "not_indexed"
+        if indexed:
+            self._set_index_status(document_id, "indexed")
+        document.status = "indexed" if indexed else "stored"
+        self.db.commit()
+        restored = document
 
         return {
             "status": "restored",

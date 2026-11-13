@@ -87,18 +87,23 @@ export async function uploadKnowledge({
   return result;
 }
 
-export async function submitTeachingMission({ file, domainId, topic = "general", description = "" }) {
+export async function submitTeachingMission({ file, domainId, topic = "general", description = "", relativePath = "" }) {
   const form = new FormData();
   form.append("file", file);
   form.append("module", domainId);
   form.append("topic", topic || "general");
   form.append("description", description);
   form.append("organization_id", "default");
+  if (relativePath) form.append("relative_path", relativePath);
   let response;
   try { response = await fetch(`${API_BASE_URL}/teach/missions`, { method: "POST", body: form }); }
-  catch { throw new Error("Submission could not be confirmed. Refresh mission history before retrying; Sentinel may already have received the PDF."); }
+  catch { const error = new Error("Submission could not be confirmed. Refresh mission history before retrying; Sentinel may already have received the file."); error.submissionUnconfirmed = true; throw error; }
   const payload = await response.json().catch(() => null);
-  if (!response.ok) throw new Error(typeof payload?.detail === "string" ? payload.detail : `Teaching submission returned HTTP ${response.status}. Check Systems and retry.`);
-  if (!payload?.id) throw new Error("Submission could not be confirmed. Refresh mission history before retrying.");
+  if (!response.ok) {
+    const error = new Error(typeof payload?.detail === "string" ? payload.detail : `Teaching submission returned HTTP ${response.status}. Check Systems and retry.`);
+    if (response.status >= 500) error.submissionUnconfirmed = true;
+    throw error;
+  }
+  if (!payload?.id) { const error = new Error("Submission could not be confirmed. Refresh mission history before retrying."); error.submissionUnconfirmed = true; throw error; }
   return payload;
 }

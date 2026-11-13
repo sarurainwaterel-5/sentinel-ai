@@ -10,7 +10,7 @@ export default function TeachSentinel({ onNavigate }) {
   const { activeDomain } = useDomain();
   const missions = useTeachingMissions(activeDomain?.id ?? "all");
   return <div className="page workspace-page">
-    <WorkspaceHeader title="Preserve trusted evidence in memory" description="Teach through text-based PDFs. Observe actual ingestion progress and inspect recorded source provenance; acquisition does not establish understanding." onRefresh={missions.refresh} loading={missions.loading} />
+    <WorkspaceHeader title="Preserve trusted evidence in memory" description="Teach through supported files, images, videos, and folders. Observe actual ingestion progress and inspect recorded source provenance; acquisition does not establish understanding." onRefresh={missions.refresh} loading={missions.loading} />
     <TeachDropZone onAccepted={missions.select} />
     <ResourceState resource={missions} label="teaching missions">
       <MissionTimeline mission={missions.data?.mission} />
