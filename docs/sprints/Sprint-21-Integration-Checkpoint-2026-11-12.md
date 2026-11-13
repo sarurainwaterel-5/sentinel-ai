@@ -46,8 +46,10 @@ quarantined even though Smith's ordered bytes match the retained index.
 
 ## Remaining work and decisions
 
-1. Finish the remaining large dictionary extraction and record the image-only
-   PDF as a distinct OCR-review disposition. Nonempty OCR is not reviewed accuracy.
+1. The dictionary extraction finished: 75 documents and all 47,429 retained
+   indexed chunks match re-extraction, with zero completed mismatches. The remaining
+   image-only PDF has no indexed chunks and needs separate OCR review. This compares
+   a retained snapshot; it does not attest current distributed index authority.
 2. Review the concrete source-remediation proposal: retain Smith, add the separately
    verified Stearns/Cook book, and review page-bound OCR/image candidates before
    explicit catalog repair or reindexing.
@@ -65,3 +67,12 @@ quarantined even though Smith's ordered bytes match the retained index.
 
 The current checkpoint can be reviewed and preserved. It does not establish that
 only an approval remains, and it does not declare the entire sprint complete.
+
+## November 13 engineering follow-up
+
+The isolated chunk-object store adds exact bounded UTF-8 publication and verified
+reads. All 48 focused source/chunk tests pass. It is not registered with intake or
+retrieval. Versioned SQL references, paginated manifests and application publication
+controls remain outstanding. The completed corpus comparison is saved privately in
+`outputs/sprint21-extraction/corpus-weighted-audit.json`; source-title quarantine
+and OCR review remain separate from exact byte matching.

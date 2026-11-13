@@ -37,3 +37,14 @@ were changed by this audit. The comparison uses a retained index snapshot, not
 a current distributed snapshot. Checkpoint integrity does not authenticate the
 extractor, establish authority or semantic accuracy, or authorize migration or
 production answering. Sprint acceptance remains open.
+
+## Completed dictionary follow-up
+
+The final bounded worker completed Black's dictionary. The saved audit at
+2026-11-13 05:37:11 UTC (November 12 in Chicago) records **75/76 completed
+sources**, **75 exact ordered matches**, **0 mismatches**, and **47,429/47,429
+retained indexed chunks (100%)**. No partial checkpoints remain. The remaining
+source is the image-only PDF with zero indexed chunks; its OCR candidate still
+requires review. Smith's title remains quarantined despite exact byte agreement.
+This comparison uses the retained read-only snapshot, not an atomic observation
+of current distributed state, and does not grant production eligibility.

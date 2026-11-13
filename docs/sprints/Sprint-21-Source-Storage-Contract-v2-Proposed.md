@@ -76,8 +76,10 @@ chunk_locator
   primary key(document_version_id, chunk_index)
 ```
 
-The source CAS primitive does **not** implement chunk-object storage or these SQL
-records. Those implementations and a manifest publication barrier remain open.
+The source CAS primitive does not implement SQL records. The separate isolated
+`content_addressed_chunks.py` now supplies chunk-object publication and verified
+reads as described below; versioned SQL references and a manifest publication
+barrier remain open.
 Human filenames and folder-relative metadata are descriptive fields, never
 filesystem locations or authority. Shared source-byte hashes do not imply shared
 scope, lifecycle, permission, or document identity.
@@ -116,3 +118,24 @@ No existing upload, application database, index, source catalog or release flag
 is changed by this proposal or primitive. Actual migration still requires its
 final concrete review and authorization. Sprint completion, human acceptance,
 semantic accuracy and production enablement are separate gates.
+
+## Isolated chunk-object implementation — 2026-11-13
+
+`ContentAddressedChunkStore` uses a separately configured private root and flat
+SHA-256 names. `put` accepts a regular source file plus expected digest and length,
+validates nonempty strict UTF-8 up to 65,536 bytes, then uses the streamed source
+publisher to independently recheck and durably publish those exact bytes. No text
+normalization or replacement occurs. Zero-chunk documents remain a catalog concern.
+
+`read` requires the expected digest and length, opens without following symlinks,
+checks regular-file identity, owner and mode 0600, bounds the read, verifies exact
+length/hash/UTF-8 and descriptor stability, then reopens the canonical name to
+check replacement before returning bytes. The trusted owner/filesystem assumption
+still applies; returned bytes convey no scope, lifecycle, permission or authority.
+Separate source/chunk roots are a caller configuration requirement. No application
+writer, SQL reference, paginated manifest or production reader is registered.
+
+Validation: 48 focused chunk/source tests passed. Cases include maximum size,
+invalid UTF-8, oversized/empty objects, exact byte preservation, deduplication,
+post-validation source replacement, and read rejection after byte/permission/
+symlink/truncation tampering. Source publication durability tests remain included.

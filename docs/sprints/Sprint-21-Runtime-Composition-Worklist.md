@@ -113,9 +113,9 @@ vectors. It does not authenticate an application principal or migrate the corpus
 review harness with frozen input/review pins, structural checks, complete context,
 truthful transport provenance, and durable private checkpoints before clients and
 each dispatch. Its escaped HTML helper presents exact candidate wording and all
-supplied sources/premises/relationships. Scripted tests pass; no real calls from
-this new harness have occurred. Explicit generation/relevance credential-role
-assignment remains pending; the general application key is not silently inherited.
+supplied sources/premises/relationships. The actual 44-call run completed after explicit owner-approved role assignment;
+see [the preserved result](Sprint-21-Provider-Result-2026-11-12.md). One control
+relevance disagreement and two withheld generated candidates await review.
 
 `GET /governance/release-inspection` is an additive read-only workspace route. It
 consumes the current denial diagnostic and independently validates the saved Astra
@@ -125,5 +125,6 @@ This diagnostic does not implement an answer publication path.
 
 The source storage v2 proposal and isolated content-addressed source primitive
 address the large-original-file design gap without changing the v1 rehearsal
-schema. Chunk-object storage, versioned SQL references, paginated manifests,
-application writers and the publication barrier remain implementation work.
+schema. The isolated chunk-object store now supports bounded strict UTF-8 publication
+and verified reads (48 focused source/chunk tests passed). Versioned SQL references,
+paginated manifests, application writers and the publication barrier remain work.
