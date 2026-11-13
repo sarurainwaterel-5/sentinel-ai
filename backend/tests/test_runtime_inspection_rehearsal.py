@@ -10,9 +10,15 @@ from app.services.providers.openai_governed_transport import OpenAIGovernedTrans
 from evaluation.governed_answers.live_provider_rehearsal import canonical, load_inputs
 from evaluation.governed_answers.runtime_inspection_rehearsal import inspect_runtime
 
-async def exercise(mutation=None, failure=None, timeout=2, cancel=False):
+async def exercise(mutation=None, failure=None, timeout=2, cancel=False, invoke=None, binding_override=None, catalog_context=False):
     cases, labels, _ = load_inputs()
     case = copy.deepcopy(next(c for c in cases if labels[c['case_id']]['statement_admissible'] and labels[c['case_id']]['answers_question']))
+    if catalog_context:
+        for index, source in enumerate(case['sources']):
+            source['document_id'] = 'document'
+            source['chunk_index'] = 256 if catalog_context == 'large' and index == 1 else index
+    if failure == 'fabricated_premise':
+        case['premises'][0]['statement'] = 'Fabricated unsupported premise for boundary regression.'
     if failure == 'empty_sources':
         case['sources'] = []
         for premise in case['premises']:
@@ -20,7 +26,9 @@ async def exercise(mutation=None, failure=None, timeout=2, cancel=False):
     if failure == 'unsupported_premise':
         case['premises'][0]['evidence_ids'] = []
     context = {k:case[k] for k in ('question','sources','premises','relationships')}
-    binding = dict(question=case['question'],context_sha256=hashlib.sha256(canonical(context).encode()).hexdigest(),principal_id='synthetic',permission_epoch=1,catalog_epoch=1,gate_sha256='a'*64,eligible=True,scope=dict(organization_id='synthetic',collection='review',module='synthetic',topic='review'))
+    binding = dict(question=case['question'],context_sha256=hashlib.sha256(canonical(context).encode()).hexdigest(),principal_id='synthetic',permission_epoch=1,credential_epoch=1,catalog_epoch=1,gate_sha256='a'*64,eligible=True,scope=dict(organization_id='synthetic',collection='review',module='synthetic',topic='review'))
+    if binding_override:
+        binding.update(binding_override)
     if mutation and mutation[0] == 'initial':
         binding[mutation[1]] = mutation[2]
     calls, clients = [], []
@@ -69,7 +77,7 @@ async def exercise(mutation=None, failure=None, timeout=2, cancel=False):
             binding[mutation[1]] = mutation[2]
         return case
     try:
-        task = asyncio.create_task(inspect_runtime(transport=transport,retrieve=retrieve,current_binding=lambda:binding,timeout_seconds=timeout))
+        task = asyncio.create_task((invoke or inspect_runtime)(transport=transport,retrieve=retrieve,current_binding=lambda:binding,timeout_seconds=timeout))
         if cancel:
             await entered.wait()
             task.cancel()

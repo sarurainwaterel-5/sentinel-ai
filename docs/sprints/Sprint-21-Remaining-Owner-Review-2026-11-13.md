@@ -128,8 +128,9 @@ The normalized-image digests were not independently recomputed because those
 normalized images are not separately retained beside the manifest.
 
 A visual spot check of page 2 against `ocr-bounded/zero-text-page-02.txt` found
-concrete OCR errors: the scan prints **PSYCHE**, but the candidate says
-**PYSCHE**; the final **RECALL.** is rendered as **RECALL,**. Thus the current
+a concrete OCR discrepancy: the final **RECALL.** is rendered as **RECALL,**.
+Correction to the initial spot-check: the scan itself prints **PYSCHE**, and
+that source spelling must be preserved rather than normalized to PSYCHE. Thus the current
 candidate cannot be accepted wholesale on the basis of hash verification or
 nonempty text. All pages still require transcription review. Preserve the
 original candidate, record corrections as a new derivative with new hashes,

@@ -1,0 +1,39 @@
+{
+  "version": "sentinel-governed-v2-rollout-candidate-v1",
+  "target": {
+    "compose_service": "sentinel-local-postgres-1",
+    "database": "sentinel_ai",
+    "new_schema": "sentinel_governed_v2",
+    "new_volume": "sentinel-local_governed_v2_data",
+    "volume_mount": "/app/governed-v2",
+    "separate_collection_prefix": "governed_v2_",
+    "operator_mapping": null,
+    "embedding_artifact_policy_sha256": null,
+    "fresh_inventory_sha256": null,
+    "verified_backup_sha256": null
+  },
+  "implementation_sha256": {
+    "backend/app/services/governance_sql/001_catalog_v2.sql": "2c2c03b0c9a8bb0fe19b497b54b9c5beb66f0e4a011e37ac1c425de403769d18",
+    "backend/app/services/governed_catalog.py": "add0b354b55cd9c38ab6f8605564145b120cff26b347849f416e06d96e0e42e2",
+    "backend/app/services/governed_authentication.py": "d293d7058da9d90ef137651f3ecf15708594b01e1c895cfe9608a1fc837be80d",
+    "backend/app/services/governed_ingestion.py": "ba209685c073050de0f0429d06f5201c8040032e5a9987d406de2e8a7c226f39",
+    "backend/app/services/governed_embeddings.py": "9ace58f8e4c9711a2a07d11f6cdbaa8d8927fefbd5cbebdcf9d6296e1c58a7ce",
+    "backend/app/services/governed_qdrant_index.py": "f3406900a16cf3d64e5fee973d3dfec87e302f37d92fcac12c735e104cfca82c",
+    "backend/app/routes/governed_workspace_v2.py": "366230a5a99af97ee540ec2bb9ced2b2173c446814235ccc373744a9eb7962a1",
+    "backend/evaluation/governed_answers/catalog_index_reconciler.py": "b357f5f46edb07656fb0718af00f1a515b4ddd5f0dba33ee77b0cfe4787d4aa9",
+    "backend/evaluation/governed_answers/transactional_inspection_publication.py": "e7aa3b663c9b3df5f020b0ea6803a0c808d692640b50b219891cbcba6602df21",
+    "backend/evaluation/governed_answers/runtime_inspection_rehearsal.py": "f2f5f015ed98b5ba54f58e79f54f28015a2e25b4f82ddf6b6fa15b4337003d95",
+    "backend/evaluation/governed_answers/content_addressed_sources.py": "684ca0dce2b0b5e40e1607a34391059e7b51e775a4ad5b2996c6b6cb8e2b6fb2",
+    "backend/evaluation/governed_answers/content_addressed_chunks.py": "c617c2a4f13ea8367dc4a4dd6a359f137a2a4ed5a3be51258a7a706622ded611",
+    "backend/evaluation/governed_answers/versioned_manifests.py": "b49d62035e497afa9e115875db633e1859a4b26e1af217f571b0529273b1fa99"
+  },
+  "owner_packet_sha256": "5d764d4d2f2e95a0994a1c467909f3c6256df184ddbc0edaced57bd8b35c931f",
+  "installed": false,
+  "owner_reviewed": false,
+  "migration_authorized": false,
+  "empirical_acceptance": false,
+  "release_authorized": false,
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "limitation": "Code-bound proposed destination only; unset operator/model/inventory/backup values deny installation readiness. No credentials or source contents."
+}

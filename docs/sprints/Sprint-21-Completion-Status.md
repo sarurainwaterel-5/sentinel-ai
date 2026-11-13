@@ -7,6 +7,11 @@ ADR-037 stays Proposed and proposition-to-inference stays closed.
 
 ## Latest engineering checkpoint
 
+The [implementation and owner-review handoff](Sprint-21-Implementation-and-Review-Handoff-2026-11-13.md)
+records the subsequent authenticated application intake/lifecycle/outbox, durable
+publication, paginated index and concrete owner packet. Installation and acceptance
+remain pending; earlier implementation-gap lists retain their original scope.
+
 The [November 13 team checkpoint](Sprint-21-Team-Checkpoint-2026-11-13.md)
 records the latest manifest, SDK inspection, PostgreSQL authority and evidence
 review work, validation and exact remaining integration gaps.

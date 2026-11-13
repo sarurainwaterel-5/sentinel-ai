@@ -59,10 +59,11 @@ async def inspect_runtime(*, transport, retrieve, current_binding, timeout_secon
         value = current_binding()
         if type(value) is not dict or set(value) != {
                 'question', 'context_sha256', 'principal_id', 'permission_epoch',
-                'catalog_epoch', 'gate_sha256', 'eligible', 'scope'}:
+                'catalog_epoch', 'gate_sha256', 'eligible', 'scope', 'credential_epoch'}:
             raise InspectionDenied('invalid_binding')
         if (value['eligible'] is not True or type(value['permission_epoch']) is not int
-                or value['permission_epoch'] < 0 or type(value['catalog_epoch']) is not int
+                or value['permission_epoch'] < 0 or type(value['credential_epoch']) is not int
+                or value['credential_epoch'] < 1 or type(value['catalog_epoch']) is not int
                 or value['catalog_epoch'] < 0):
             raise InspectionDenied('ineligible_binding')
         for key in ('question', 'principal_id'):

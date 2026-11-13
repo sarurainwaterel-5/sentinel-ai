@@ -1,5 +1,9 @@
 # Sprint 21 team checkpoint — 2026-11-13
 
+Subsequent implementation and current remaining decisions are recorded in
+[the lifecycle/publication/review handoff](Sprint-21-Implementation-and-Review-Handoff-2026-11-13.md).
+The engineering gap list below describes this earlier checkpoint.
+
 Three implementation/review agents and root completed the following additive
 work. Sprint 21 remains open; production answering is disabled, ADR-037 is
 Proposed and proposition-to-inference remains closed.
