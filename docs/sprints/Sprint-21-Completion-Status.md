@@ -1,9 +1,17 @@
-# Sprint 21 current completion status — updated 2026-11-11
+# Sprint 21 current completion status — updated 2026-11-12
 
 **Sprint remains open.** Implementation authorization is not a measurement,
 independent semantic acceptance, migration approval on an exact final target,
 or acceptance of unseen runtime answers. Production answering remains disabled;
 ADR-037 stays Proposed and proposition-to-inference stays closed.
+
+## Latest engineering checkpoint
+
+The [November 12 integration checkpoint](Sprint-21-Integration-Checkpoint-2026-11-12.md)
+records the new media/speech work, source remediation, storage v2 proposal, actual
+PostgreSQL/Qdrant composition, durable provider-review harness and current read-only
+release diagnostic. It also lists the remaining implementation and owner-review
+work. The original integration evidence below retains its historical scope.
 
 Baseline: `95523a4158e7d0dc012fa890c1472d1e2aae913f` (21-N), published and fetched
 before this integration work. Three agents implemented storage, authority and

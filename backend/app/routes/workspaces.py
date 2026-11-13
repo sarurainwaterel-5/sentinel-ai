@@ -18,6 +18,10 @@ from app.services.workspaces.reflection import WorkspaceReflectionService, Gover
 
 router = APIRouter(tags=["Operator Workspaces"])
 
+# Additive read-only diagnostics; the frozen governed-answer route is unchanged.
+from app.routes.release_inspection import router as release_inspection_router
+router.include_router(release_inspection_router)
+
 
 @router.get("/systems/status", response_model=SystemsSnapshot)
 def systems_status():

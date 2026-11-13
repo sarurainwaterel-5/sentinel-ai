@@ -239,3 +239,21 @@ def test_pdf_actual_child_text_and_output_bound(tmp_path):
         media._run([sys.executable, '-I', '-c', media._PDF_EXTRACT_SCRIPT,
                     str(source), '1'], output_limit=1)
     assert error.value.status_code == 422
+
+
+def test_media_processes_do_not_inherit_credentials_and_ocr_threads_are_bounded(monkeypatch):
+    monkeypatch.setenv('OPENAI_API_KEY', 'private-test-sentinel')
+    monkeypatch.setenv('DATABASE_URL', 'private-test-database')
+    monkeypatch.setattr(media.shutil, 'which', lambda tool: '/usr/bin/'+tool)
+    observed = []
+    def run(command, **options):
+        observed.append(options['env'])
+        options['stdout'].write(b'bounded result')
+    monkeypatch.setattr(media.subprocess, 'run', run)
+    media._run(['tesseract', 'image.png', 'stdout'])
+    media._run(['ffmpeg', '-version'])
+    assert observed[0]['OMP_THREAD_LIMIT'] == '1'
+    assert 'OMP_THREAD_LIMIT' not in observed[1]
+    for environment in observed:
+        assert 'OPENAI_API_KEY' not in environment and 'DATABASE_URL' not in environment
+        assert environment['HF_HUB_OFFLINE'] == '1'

@@ -1,0 +1,66 @@
+# Sprint 21 integration checkpoint — 2026-11-12
+
+Sprint 21 remains open. Media intake and local video speech transcription are
+implemented and deployed. This checkpoint adds tested storage, index-composition,
+provider-review and current release-inspection work; it does not approve migration,
+semantic acceptance or governed production answering. ADR-037 remains Proposed.
+
+## Completed engineering and observations
+
+- The full backend regression run passed **2,125 tests**, with three optional
+  tests skipped. The final storage/provider/readiness/media selection passed
+  **99 tests**, with one optional host image-decoder skip. The separate actual
+  PostgreSQL/Qdrant rehearsal passed eight tests without skipping its real service
+  check. The media frontend's preceding complete run passed 92 tests.
+- The new bounded PostgreSQL 16 → Qdrant 1.18 → authoritative SQL-byte inspection
+  rehearsal passed 14 rollback/readback/tampering/revocation/stale-completion
+  observations. It uses two synthetic chunks and fixed vectors, not production
+  credentials, corpus migration, embeddings or semantic accuracy evidence.
+- The proposed content-addressed source store streams up to 1 GiB, verifies exact
+  bytes and source stability, publishes exclusively, and fsyncs both newly created
+  and adopted objects. It is isolated from live uploads. The v2 storage contract
+  proposes paginated manifests suitable for the 64 MiB PDF text ceiling; its SQL
+  references, chunk store and application publication barrier are not implemented.
+- The separate selected-provider review harness is implemented with frozen input
+  pins, explicit role credentials, at most 44 calls, strict budgets, no retries,
+  durable private checkpoints and escaped exact-context review rendering.
+  Its 36 scripted tests passed. **No actual calls from this harness have occurred.**
+- The additive read-only `/governance/release-inspection` workspace route consumes
+  the current denial diagnostic and recomputes the saved Astra report's evidence.
+  It keeps every approval, production and inference-opening flag false. Frozen
+  governed-answer routes, main-module bytes and historical packet bindings remain
+  unchanged. Real network-disabled image checks passed speech, silence, local
+  embeddings/isolated indexing and the current release diagnostic.
+- A fresh sequential observation of all **76 catalog rows, 78 source files and
+  47,429 point digests** matched the retained audit inventory on two reads. These
+  observations ran at 2026-11-13 00:55–00:56 UTC (November 12 in Chicago). They are
+  not a distributed snapshot, authority attestation or release authorization.
+
+Private evidence remains outside Git under the workspace's `outputs/` directory.
+The actual corpus checkpoint and source-remediation proposal record their own
+counts and limitations. No original source, existing catalog row or live vector
+was changed by these audits. The Smith/Cook source-identity issue remains
+quarantined even though Smith's ordered bytes match the retained index.
+
+## Remaining work and decisions
+
+1. Finish the remaining large dictionary extraction and record the image-only
+   PDF as a distinct OCR-review disposition. Nonempty OCR is not reviewed accuracy.
+2. Review the concrete source-remediation proposal: retain Smith, add the separately
+   verified Stearns/Cook book, and review page-bound OCR/image candidates before
+   explicit catalog repair or reindexing.
+3. Assign explicit Sol generation and Terra relevance credentials. The installation
+   has an application key and dedicated Astra judge key, but no explicit values for
+   the generation/relevance role names. A user configuration choice is pending;
+   the harness does not silently inherit the application key.
+4. Execute and preserve the selected-role Responses review plan, then inspect exact
+   candidate text and full supplied context. The earlier 108-call Astra benchmark
+   measured a different Chat Completions path and still needs its final human review.
+5. Implement and review the actual application storage/lifecycle/outbox/authority/
+   retrieval/publication composition against the final migration target. The new
+   isolated checks are evidence for their bounded contracts, not a substitute.
+6. Obtain exact empirical, independence, rendered-runtime and production-release
+   acceptance. Agents cannot supply these attestations for the owner.
+
+The current checkpoint can be reviewed and preserved. It does not establish that
+only an approval remains, and it does not declare the entire sprint complete.

@@ -2,6 +2,7 @@
 import importlib.util
 import json
 import math
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -69,11 +70,17 @@ def _run(arguments, *, timeout=60, output_limit=MAX_TEXT_BYTES, cpu_seconds=60, 
     _require(arguments[0])
     command = ['prlimit', f'--cpu={cpu_seconds}', f'--as={memory_bytes}',
                f'--fsize={output_limit}', '--', *arguments]
+    environment = {'PATH': os.environ.get('PATH', os.defpath), 'LANG': 'C.UTF-8',
+                   'LC_ALL': 'C.UTF-8', 'OMP_NUM_THREADS': '2',
+                   'OPENBLAS_NUM_THREADS': '2', 'MKL_NUM_THREADS': '2',
+                   'HF_HUB_OFFLINE': '1', 'HF_HUB_DISABLE_TELEMETRY': '1'}
+    if Path(arguments[0]).name == 'tesseract':
+        environment['OMP_THREAD_LIMIT'] = '1'
     with tempfile.TemporaryFile() as output:
         try:
             subprocess.run(command, stdin=subprocess.DEVNULL, stdout=output,
                            stderr=subprocess.DEVNULL, timeout=timeout, check=True,
-                           start_new_session=True)
+                           start_new_session=True, env=environment)
             output.seek(0)
             data = output.read(output_limit + 1)
             if len(data) > output_limit:
