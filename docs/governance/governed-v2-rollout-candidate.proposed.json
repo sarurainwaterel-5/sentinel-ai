@@ -14,11 +14,17 @@
       "mapping_sha256": "14188282fe8a5bea9dd2c0ad01521bf05789112197a79d46c219e0cf05b82cb3",
       "scope_count": 9,
       "document_count": 76,
-      "wildcard_grants": false
+      "wildcard_grants": false,
+      "credentials_provisioned": true,
+      "grants_applied": true,
+      "provisioning_receipt": "docs/governance/rain-operator.provisioned-20261113.json"
     },
     "embedding_artifact_policy_sha256": null,
     "fresh_inventory_sha256": null,
-    "verified_backup_sha256": null
+    "verified_backup_sha256": null,
+    "schema_installed": true,
+    "verified_postgres_backup_sha256": "884248c7045fcf5556a05005870ad8980b079814ba50e547321b5937189cd3bc",
+    "postgres_backup_restore_verified": true
   },
   "implementation_sha256": {
     "backend/app/services/governance_sql/001_catalog_v2.sql": "2c2c03b0c9a8bb0fe19b497b54b9c5beb66f0e4a011e37ac1c425de403769d18",
@@ -43,5 +49,5 @@
   "release_authorized": false,
   "production_enabled": false,
   "proposition_to_inference": "closed",
-  "limitation": "Code-bound proposed destination only; unset operator/model/inventory/backup values deny installation readiness. No credentials or source contents."
+  "limitation": "Code-bound rollout candidate. New schema and Rain account/grants installed with restore-verified PostgreSQL backup. Full workspace installed=false; fresh corpus/model/volume backup bindings and route/worker activation remain pending. No production authorization."
 }

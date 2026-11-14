@@ -7,6 +7,11 @@ ADR-037 stays Proposed and proposition-to-inference stays closed.
 
 ## Latest engineering checkpoint
 
+[Rain is now provisioned with all nine authorized grants](Sprint-21-Rain-Account-Provisioned-2026-11-13.md)
+in the additive installed schema after a restore-verified PostgreSQL backup.
+Original tables are unchanged. Route activation and document migration remain
+pending, and production answering stays disabled.
+
 The owner has [accepted the six packet groups within their stated limits](Sprint-21-Owner-Acceptance-2026-11-13.md).
 Separate hash-bound records preserve that decision. Installed-target mapping,
 backup/model bindings, rollout verification and production authorization remain
