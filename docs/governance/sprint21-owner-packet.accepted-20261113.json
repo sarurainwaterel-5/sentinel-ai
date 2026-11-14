@@ -1,0 +1,61 @@
+{
+  "version": "sprint21-owner-packet-acceptance-v1",
+  "status": "accepted_with_packet_limitations",
+  "reviewer": "workspace_owner",
+  "reviewer_identity_source": "explicit approval in current chat; no legal-name or independent identity attestation",
+  "approval_text": "accepted",
+  "approval_context": "Response to request to review the exact owner packet and give accept/reject/defer for its six groups.",
+  "approval_recorded_at_utc": "2026-11-14T00:18:48Z",
+  "approval_recorded_date_chicago": "2026-11-13",
+  "artifact_sha256": {
+    "owner-review.html": "5d764d4d2f2e95a0994a1c467909f3c6256df184ddbc0edaced57bd8b35c931f",
+    "packet-bindings.json": "2af2e987f66ac95430d41808a197d1e62635242059a5ecf2985ed1cadaf04cac",
+    "source-correction-plan.proposed.json": "29b29036b7c662eef0e3e5dd4fab2235c782050509106060e23c07108807576e",
+    "ocr-derivative.unreviewed.json": "f5ab4abfc75794da222b3ca7c8eedf9909915f81ba9a2a34b39f43c99797d044"
+  },
+  "decisions": [
+    {
+      "group": "smith_identity",
+      "disposition": "accepted",
+      "scope": "Displayed bibliographic correction described in packet; preserve original bytes and filename locator. Apply only after exact current-state revalidation and audited metadata design."
+    },
+    {
+      "group": "separate_stearns_cook_intake",
+      "disposition": "accepted",
+      "scope": "Separate new-document intake of the hash-bound candidate; never replace Smith or reuse its vectors."
+    },
+    {
+      "group": "partial_ocr_corrections",
+      "disposition": "accepted",
+      "scope": "Only listed corrections in hash-bound partial derivative. Uncorrected passages, unresolved pages and transcription completeness are not accepted.",
+      "complete_transcription_approved": false
+    },
+    {
+      "group": "chart_png_intake",
+      "disposition": "accepted",
+      "scope": "PNG intake with label-only OCR limitations; no chart geometry, numerical series or market-claim verification."
+    },
+    {
+      "group": "selected_provider_outputs",
+      "disposition": "accepted",
+      "scope": "Exact saved outputs, observed assessments and documented limitations accepted as bounded review evidence. Preserve existing withheld candidates and control labels; no new per-span rejection rationale or replacement gold labels were supplied.",
+      "control_labels_changed": false,
+      "withheld_candidates_promoted": false
+    },
+    {
+      "group": "astra_benchmark",
+      "disposition": "accepted",
+      "scope": "Limited hash-bound synthetic benchmark and documented deployment-separation evidence/limitations. No extension to production retrieval, model-training independence or general semantic accuracy."
+    }
+  ],
+  "owner_packet_review_accepted": true,
+  "source_changes_applied": false,
+  "migration_authorized": false,
+  "installed": false,
+  "production_release_approved": false,
+  "release_authorized": false,
+  "production_enabled": false,
+  "semantic_grounding_verified": false,
+  "proposition_to_inference": "closed",
+  "limitation": "Records the explicit owner decision at its packet scope. No new factual adjudication beyond the approval wording, credential provisioning, migration, source mutation, gate opening or production acceptance."
+}

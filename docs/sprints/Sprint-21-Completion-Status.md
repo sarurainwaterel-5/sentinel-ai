@@ -7,6 +7,11 @@ ADR-037 stays Proposed and proposition-to-inference stays closed.
 
 ## Latest engineering checkpoint
 
+The owner has [accepted the six packet groups within their stated limits](Sprint-21-Owner-Acceptance-2026-11-13.md).
+Separate hash-bound records preserve that decision. Installed-target mapping,
+backup/model bindings, rollout verification and production authorization remain
+pending; historical review-pending statements below retain their original scope.
+
 The [implementation and owner-review handoff](Sprint-21-Implementation-and-Review-Handoff-2026-11-13.md)
 records the subsequent authenticated application intake/lifecycle/outbox, durable
 publication, paginated index and concrete owner packet. Installation and acceptance

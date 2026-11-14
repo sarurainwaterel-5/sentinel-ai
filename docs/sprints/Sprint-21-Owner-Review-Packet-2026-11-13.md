@@ -1,5 +1,9 @@
 # Sprint 21 owner review packet — 2026-11-13
 
+Subsequent owner decision: [accepted at the packet scope with its limits](Sprint-21-Owner-Acceptance-2026-11-13.md).
+This preparation document and the original private packet remain unchanged in
+substance; separate records preserve the acceptance.
+
 A private, self-contained HTML packet is prepared at workspace
 `outputs/sprint21-owner-review-20261113/owner-review.html`. It embeds the 18
 unmodified scan renders, both book title pages and all 19 exact saved
