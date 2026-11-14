@@ -1,0 +1,21 @@
+{
+  "version": "sentinel-operator-mapping-receipt-v1",
+  "username": "Rain",
+  "principal_id": "Rain",
+  "authorized_scope_selection": "all_existing_catalog_scopes",
+  "exact_scope_count": 9,
+  "covered_catalog_documents": 76,
+  "mapping_sha256": "14188282fe8a5bea9dd2c0ad01521bf05789112197a79d46c219e0cf05b82cb3",
+  "scope_inventory_sha256": "a8efcbfbbb416b5b1cb17894e492f35074f6fe7692b09025afbf1be8a5116d0e",
+  "private_mapping_path": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/outputs/sprint21-operator-mapping/private/rain-operator-mapping.json",
+  "recorded_at_utc": "2026-11-14T00:53:52.894643+00:00",
+  "authorization_messages": [
+    "oh lol my user name is Rain",
+    "yes access to all"
+  ],
+  "credentials_provisioned": false,
+  "grants_applied": false,
+  "production_enabled": false,
+  "release_authorized": false,
+  "limitation": "Explicit nine-scope mapping from current catalog; no wildcard, inferred grants, account password, schema installation or production activation. Revalidate exact inventory before provisioning."
+}

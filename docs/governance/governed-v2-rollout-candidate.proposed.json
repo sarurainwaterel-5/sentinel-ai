@@ -7,7 +7,15 @@
     "new_volume": "sentinel-local_governed_v2_data",
     "volume_mount": "/app/governed-v2",
     "separate_collection_prefix": "governed_v2_",
-    "operator_mapping": null,
+    "operator_mapping": {
+      "username": "Rain",
+      "principal_id": "Rain",
+      "receipt_path": "docs/governance/rain-operator-mapping.authorized.json",
+      "mapping_sha256": "14188282fe8a5bea9dd2c0ad01521bf05789112197a79d46c219e0cf05b82cb3",
+      "scope_count": 9,
+      "document_count": 76,
+      "wildcard_grants": false
+    },
     "embedding_artifact_policy_sha256": null,
     "fresh_inventory_sha256": null,
     "verified_backup_sha256": null

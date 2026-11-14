@@ -49,3 +49,23 @@ production release occurred merely from saving this acceptance.
 
 ADR-037 stays Proposed and proposition-to-inference stays closed pending the
 remaining bound runtime/release requirements. Sprint 21 is not marked complete.
+
+## Operator mapping authorized
+
+The owner specified username **Rain** (capital R) and explicitly authorized access
+to all existing Sentinel documents. A fresh read-only catalog observation found
+76 documents across nine exact organization/collection/module/topic scopes and
+no queued/running teaching jobs. All nine scopes validated against the strict
+scope contract and their document counts total 76. The new governed schema does
+not yet exist in the installed database.
+
+The private mode-0600 mapping preserves exact scope values outside Git. The
+tracked `docs/governance/rain-operator-mapping.authorized.json` receipt binds its
+hash and inventory, and the rollout candidate now references this explicit
+operator mapping. No wildcard was introduced. Access within those exact scopes
+covers future documents in those scopes; a new scope requires an explicit grant
+update. Archive/tombstone and source-eligibility controls continue to apply.
+
+This prepares the authorized account configuration. No password, account, grants,
+schema or route has been installed yet. Fresh full inventory/verified backups,
+model-artifact binding and credential provisioning remain rollout steps.
