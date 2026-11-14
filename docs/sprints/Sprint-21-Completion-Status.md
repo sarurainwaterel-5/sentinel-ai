@@ -7,6 +7,8 @@ ADR-037 stays Proposed and proposition-to-inference stays closed.
 
 ## Latest engineering checkpoint
 
+[The governed source-inspection rollout is now verified complete](Sprint-21-Governed-Workspace-Completed-2026-11-13.md): 69 active documents, five archived, two quarantined, and all 46,299 migrated chunks retained. Final full-corpus and 42-check HTTP verification passed. Production answering remains disabled.
+
 [The governed source-inspection workspace is now activated](Sprint-21-Governed-Workspace-Activation-2026-11-13.md).
 All 74 eligible documents and 46,299 chunks have been copied; five archived
 intents and two quarantines are preserved. CPU index reconciliation and full

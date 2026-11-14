@@ -1,5 +1,7 @@
 # Governed workspace activation — 2026-11-13
 
+Subsequent status: [rollout verification completed](Sprint-21-Governed-Workspace-Completed-2026-11-13.md). The activation-time account below is historical.
+
 The local source-inspection workspace is activated through the standard local
 startup script. Rain retains nine exact authorized scopes. The existing Caddy
 administrator login and the governed principal require separate credentials.

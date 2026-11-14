@@ -1,0 +1,77 @@
+{
+  "active_documents": 69,
+  "adr_037_status": "Proposed",
+  "all_active_full_manifest_inspections_verified": true,
+  "all_archived_inspections_denied": true,
+  "archived_documents": 5,
+  "backend_regression": {
+    "failed": 0,
+    "passed": 2386,
+    "skipped": 8
+  },
+  "backup_files": {
+    "cognitive-before-rollout.tar": {
+      "byte_length": 30720,
+      "sha256": "c70d5deaa899ce2b358828ebf3c01f87b0ec4892d3e985414554ba69ce7aead9"
+    },
+    "postgres-before-rollout.dump": {
+      "byte_length": 39384,
+      "sha256": "1c8163bb91d12c3495a15232c3a66a454e50689ba41c328bb70ea649cf5e2432"
+    },
+    "qdrant-before-rollout.tar": {
+      "byte_length": 515102720,
+      "sha256": "f0d4554efad89a597472c6a6d6267c633df88dedebb8187ae3d6060059c0f93c"
+    },
+    "uploads-before-rollout.tar": {
+      "byte_length": 1087836160,
+      "sha256": "12244d8aa1e6b7548717a77ac56122a06a4783be3b1e0142945af4e7e8cecfc9"
+    }
+  },
+  "chunks_preserved": 46299,
+  "collection": "governed_v2_workspace",
+  "collection_identity": {
+    "embedding_policy_sha256": "1765ee9738916c220350f5f9b8cbfae6e8b7f2e06f2657db9d9992b4d8f1ed50",
+    "schema": "governed-v2",
+    "sentinel_workspace_identity": "3ddb3cfaa016489b912f52c269415074"
+  },
+  "embedding_dimension": 384,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "extraction_policy_sha256": "b4f6691b48407fc22cf3f266f81dd95deb58006223ccbbc3439cc09de5342c74",
+  "granted_scopes": 9,
+  "http_lifecycle_checks": 42,
+  "implementation_sha256": {
+    "backend/app/governed_workspace_application.py": "1f916d149e8464a2cdec95ea6594ac145868d69ee56c8d8f949847ef5e5a71a0",
+    "backend/app/governed_workspace_worker.py": "06e8bd1c7d14daff19ab5ad35ce547bc078ba248191a8ca56e21e3f26c6e3287",
+    "backend/app/routes/governed_workspace_v2.py": "751bbafe6798e9f904f6534315e9a5ebda88b25e84b57dab161d8d7c59ac9284",
+    "backend/app/services/governed_legacy_migration.py": "40733149b27d18dfcaafad78e59d86753ff237d2dacbd4f86136f43b9633d943",
+    "backend/scripts/verify_governed_workspace.py": "5d2145076136f88da36deca5ff25d7865f649e43eb6b526259e1dfc6cb8593db",
+    "deploy/Caddyfile.governed": "25a5834e827ceb7d856ff0f83163fa02bb521e78ab337a3f57bd9a46ed96398a",
+    "deploy/Dockerfile.governed": "1a2e311af0b1322b32b72775b7857c2da54480f76485b8e917d3423d3c93d323"
+  },
+  "index_points": 46282,
+  "legacy_public_tables_unchanged": true,
+  "limitation": "Operational source-inspection workspace only. Does not certify semantic accuracy, complete OCR transcription, statistical model independence or production answer acceptance.",
+  "migrated_documents": 74,
+  "model_manifest_sha256": "1765ee9738916c220350f5f9b8cbfae6e8b7f2e06f2657db9d9992b4d8f1ed50",
+  "operator": "Rain",
+  "plan_sha256": "7b35b190db95b994e2260c3377cf9716b2aacbef1de9a67d59855122b8f008a5",
+  "postgres_restore_verified": true,
+  "private_evidence_sha256": {
+    "backup-v3/backup-verified.json": "316f0cffad9420074b0ae282efb16bbc0c8b5de6f112828abeb167f36567e7ed",
+    "corpus-live-verification.json": "f0551b4df2967f5c0c69b5d559757d8f52600ca9e24fe9b046805b756a72fbea",
+    "live-lifecycle-verification.final.json": "f72fcb0d1efa77e15eb5ee2280ac8d9048b3ecb81ab5eead551fdeaab1439aa5",
+    "migration-plan.json": "18e6478eb1fb40eb9ccc5a48ff92f47e5c16ebeafcdca2ad6be15982778985a2",
+    "runtime-config.final.json": "583866988199cdd82bfa572f3e6fda37c411430e86285648cc5cc0cabc4ec367"
+  },
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "provider_calls": 0,
+  "quarantined_documents": 2,
+  "recorded_local_date": "2026-11-13",
+  "release_authorized": false,
+  "routes_activated": true,
+  "schema": "sentinel_governed_v2",
+  "verified_chunk_objects": 46290,
+  "verified_original_objects": 74,
+  "version": "sentinel-governed-workspace-installed-v1"
+}
