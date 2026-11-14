@@ -1,0 +1,21 @@
+{
+  admin off
+}
+:8080 {
+  header Cache-Control "no-cache"
+  basic_auth {
+    {$SENTINEL_ADMIN_USER} {$SENTINEL_ADMIN_PASSWORD_HASH}
+  }
+  handle /api/governance/v2/* {
+    uri strip_prefix /api
+    reverse_proxy governed-workspace:8000
+  }
+  handle_path /api/* {
+    reverse_proxy api:8000
+  }
+  handle {
+    root * /srv
+    try_files {path} /index.html
+    file_server
+  }
+}

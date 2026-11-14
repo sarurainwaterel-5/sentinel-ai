@@ -7,6 +7,15 @@ ADR-037 stays Proposed and proposition-to-inference stays closed.
 
 ## Latest engineering checkpoint
 
+[The governed source-inspection workspace is now activated](Sprint-21-Governed-Workspace-Activation-2026-11-13.md).
+All 74 eligible documents and 46,299 chunks have been copied; five archived
+intents and two quarantines are preserved. CPU index reconciliation and full
+corpus verification are still running. Initial live authentication/lifecycle
+verification passed 42 checks, and backend regression passed 2,386 tests with
+eight optional skips. Production answering remains disabled.
+
+Earlier checkpoints below retain their historical scope:
+
 [Rain is now provisioned with all nine authorized grants](Sprint-21-Rain-Account-Provisioned-2026-11-13.md)
 in the additive installed schema after a restore-verified PostgreSQL backup.
 Original tables are unchanged. Route activation and document migration remain

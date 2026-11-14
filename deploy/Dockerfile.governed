@@ -1,0 +1,7 @@
+# Explicit local rollout overlay; the reviewed base supplies pinned dependencies.
+ARG SENTINEL_GOVERNED_BASE_IMAGE
+FROM ${SENTINEL_GOVERNED_BASE_IMAGE}
+COPY backend/ /app/backend/
+COPY docs/ /app/docs/
+ENV HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false
+CMD ["uvicorn", "app.governed_workspace_application:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]

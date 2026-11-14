@@ -1,0 +1,64 @@
+{
+  "adr_037_status": "Proposed",
+  "all_documents_index_verified": false,
+  "archived_intents_preserved": 5,
+  "backend_regression": {
+    "failed": 0,
+    "passed": 2386,
+    "skipped": 8
+  },
+  "backups": {
+    "cognitive-before-rollout.tar": {
+      "byte_length": 30720,
+      "sha256": "c70d5deaa899ce2b358828ebf3c01f87b0ec4892d3e985414554ba69ce7aead9"
+    },
+    "postgres-before-rollout.dump": {
+      "byte_length": 39384,
+      "sha256": "1c8163bb91d12c3495a15232c3a66a454e50689ba41c328bb70ea649cf5e2432"
+    },
+    "qdrant-before-rollout.tar": {
+      "byte_length": 515102720,
+      "sha256": "f0d4554efad89a597472c6a6d6267c633df88dedebb8187ae3d6060059c0f93c"
+    },
+    "uploads-before-rollout.tar": {
+      "byte_length": 1087836160,
+      "sha256": "12244d8aa1e6b7548717a77ac56122a06a4783be3b1e0142945af4e7e8cecfc9"
+    }
+  },
+  "collection": "governed_v2_workspace",
+  "collection_identity": {
+    "embedding_policy_sha256": "1765ee9738916c220350f5f9b8cbfae6e8b7f2e06f2657db9d9992b4d8f1ed50",
+    "schema": "governed-v2",
+    "sentinel_workspace_identity": "3ddb3cfaa016489b912f52c269415074"
+  },
+  "exact_scope_grants": 9,
+  "initial_http_checks_passed": 42,
+  "limitation": "Source copies are complete; only individually reconciled current acknowledged documents can be inspected. Full corpus verification and final lifecycle rerun are pending local CPU indexing. No production answer acceptance is inferred.",
+  "migration_copied_chunks": 46299,
+  "migration_copied_documents": 74,
+  "model_dimension": 384,
+  "model_manifest_sha256": "1765ee9738916c220350f5f9b8cbfae6e8b7f2e06f2657db9d9992b4d8f1ed50",
+  "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+  "operator": "Rain",
+  "phase": "index_reconciliation_in_progress",
+  "postgres_restore_verified": true,
+  "private_evidence_sha256": {
+    "backup-v3/backup-verified.json": "316f0cffad9420074b0ae282efb16bbc0c8b5de6f112828abeb167f36567e7ed",
+    "live-lifecycle-verification.json": "deb03ebd61737b3cd9d9a7b0576a263d81468fbf5c542f55a10633aa47907dff",
+    "migration-execution.log": "7dd966eaedb93f68504dcee633c29cd07e05c4bb774a74a2fa032c6695cb3395",
+    "migration-plan.json": "18e6478eb1fb40eb9ccc5a48ff92f47e5c16ebeafcdca2ad6be15982778985a2",
+    "runtime-config.final.json": "583866988199cdd82bfa572f3e6fda37c411430e86285648cc5cc0cabc4ec367"
+  },
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "provider_calls": 0,
+  "quarantined_documents": 2,
+  "recorded_local_date": "2026-11-13",
+  "release_authorized": false,
+  "routes_activated": true,
+  "schema": "sentinel_governed_v2",
+  "server_extraction_policy_sha256": "b4f6691b48407fc22cf3f266f81dd95deb58006223ccbbc3439cc09de5342c74",
+  "version": "sentinel-governed-workspace-activation-v1",
+  "worker_max_operations_per_run": 1,
+  "worker_max_seconds": 3600
+}

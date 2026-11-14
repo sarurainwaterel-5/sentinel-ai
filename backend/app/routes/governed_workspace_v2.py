@@ -29,7 +29,8 @@ class LifecycleRequest(BaseModel):
 
 def create_governed_workspace_router(*, catalog, source_store, chunk_store,
                                       accepted_source_root, extraction_policy_sha256, extractor,
-                                      max_request_bytes=1024**3+2*1024**2, max_concurrent_requests=2):
+                                      max_request_bytes=1024**3+2*1024**2, max_concurrent_requests=2,
+                                      authorization_header='authorization'):
     """All dependencies are explicit server capabilities, not request parameters.
 
     extractor(path, original_name) returns text under the pinned server policy.
@@ -38,6 +39,8 @@ def create_governed_workspace_router(*, catalog, source_store, chunk_store,
     Accepted source files are retained even on later errors. This factory is not
     mounted in the current frozen main app and does not change release state.
     """
+    if authorization_header not in ('authorization','x-sentinel-governed-authorization'):
+        raise ValueError('explicit_authorization_header_required')
     root = Path(accepted_source_root)
     if not root.is_absolute() or root.is_symlink() or not root.is_dir():
         raise ValueError('explicit_existing_source_root_required')
@@ -62,7 +65,7 @@ def create_governed_workspace_router(*, catalog, source_store, chunk_store,
                     raise HTTPException(429,'Governed workspace is busy.')
                 in_flight += 1
                 try:
-                    values=tuple(request.headers.getlist('authorization'))
+                    values=tuple(request.headers.getlist(authorization_header))
                     def preflight():
                         try:
                             attempt=_parse_basic(values)
@@ -104,7 +107,7 @@ def create_governed_workspace_router(*, catalog, source_store, chunk_store,
     @router.post('/sources',status_code=202)
     async def ingest_source(file: UploadFile=File(...),organization_id: str=Form(...),
                             collection: str=Form(...),module: str=Form(...),topic: str=Form(...),
-                            authorization: list[str] | None=Header(default=None)):
+                            authorization: list[str] | None=Header(default=None,alias=authorization_header)):
         try: scope=EvidenceScope(organization_id=organization_id,collection=collection,module=module,topic=topic)
         except ValueError: raise HTTPException(422,'Explicit exact scope required.') from None
         session,principal=authenticate(authorization,scope)
@@ -133,7 +136,7 @@ def create_governed_workspace_router(*, catalog, source_store, chunk_store,
 
     @router.post('/documents/{document_id}/{operation}',status_code=202)
     def lifecycle(document_id: str,operation: str,request: LifecycleRequest,
-                  authorization: list[str] | None=Header(default=None)):
+                  authorization: list[str] | None=Header(default=None,alias=authorization_header)):
         if operation not in ('archive','restore','tombstone'):
             raise HTTPException(422,'Unsupported governed lifecycle operation.')
         session,principal=authenticate(authorization,request.scope)
