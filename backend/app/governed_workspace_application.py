@@ -33,6 +33,26 @@ from evaluation.governed_answers.scope_catalog_contracts import EvidenceScope
 AUTH_HEADER='x-sentinel-governed-authorization'
 
 
+def _document_page(cursor,key,after,limit):
+    """Scope-filtered canonical identities, preserving original file locators."""
+    cursor.execute("SELECT to_regclass('source_identity_receipts') AS identity_table")
+    if cursor.fetchone()['identity_table'] is None:
+        cursor.execute('SELECT document_id,state,version_id,lifecycle_epoch,content_epoch,index_epoch FROM documents WHERE scope_sha256=%s AND document_id>%s ORDER BY document_id LIMIT %s',(key,after,limit+1))
+    else:
+        cursor.execute('''SELECT d.document_id,d.state,d.version_id,d.lifecycle_epoch,
+            d.content_epoch,d.index_epoch,v.source_sha256,
+            CASE WHEN i.source_sha256 IS NOT NULL THEN jsonb_build_object(
+                'canonical_title',i.receipt->'canonical_title',
+                'author',i.receipt->'author','edition',i.receipt->'edition',
+                'year',i.receipt->'year') ELSE NULL END AS display_identity,
+            i.receipt_sha256 AS identity_receipt_sha256
+            FROM documents d JOIN versions v ON v.version_id=d.version_id
+            LEFT JOIN source_identity_receipts i ON i.source_sha256=v.source_sha256
+            WHERE d.scope_sha256=%s AND d.document_id>%s
+            ORDER BY d.document_id LIMIT %s''',(key,after,limit+1))
+    return [dict(row) for row in cursor.fetchall()]
+
+
 def server_extraction_policy_sha256():
     """Canonical identity of installed extraction code and parser dependencies.
 
@@ -349,8 +369,7 @@ def create_app(config_path=None):
         try:
             with runtime.catalog.transaction() as cursor:
                 key,epoch=lock_authority(cursor,session,principal)
-                cursor.execute('SELECT document_id,state,version_id,lifecycle_epoch,content_epoch,index_epoch FROM documents WHERE scope_sha256=%s AND document_id>%s ORDER BY document_id LIMIT %s',(key,after,limit+1))
-                rows=[dict(row) for row in cursor.fetchall()]
+                rows=_document_page(cursor,key,after,limit)
             return dict(documents=rows[:limit],next_cursor=rows[limit-1]['document_id'] if len(rows)>limit else None,catalog_epoch=epoch,production_enabled=False,release_authorized=False,provider_calls=0)
         except Exception:raise HTTPException(409,'Current catalog inspection denied.') from None
 

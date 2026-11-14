@@ -10,7 +10,11 @@ def test_actual_saved_astra_evidence_is_currently_reviewable_but_never_enables_r
     data=response.json()
     assert data['astra_benchmark']['eligible_for_human_review'] is True
     assert data['denial_diagnostic']['status'] == 'disabled'
-    assert data['empirical_review_approved'] is False
+    assert data['empirical_review_approved'] is True
+    assert data['independent_deployment_review_approved'] is True
+    assert data['astra_benchmark']['status'] == 'owner_accepted_limited_evidence'
+    assert data['source_workspace']['status'] == 'recorded_installed_and_verified'
+    assert data['source_workspace']['live_state_attested'] is False
     assert data['presentation_review_approved'] is False
     assert data['enabled'] is data['production_enabled'] is data['release_authorized'] is False
     assert data['semantic_grounding_verified'] is False
@@ -46,3 +50,30 @@ def test_request_cannot_choose_a_report_file_or_approve_release():
     assert result['astra_benchmark']['eligible_for_human_review'] is True
     assert result['enabled'] is False
     assert client.post('/governance/release-inspection',json={'enabled':True}).status_code == 405
+
+
+def test_missing_or_modified_receipts_fail_closed(tmp_path):
+    from app.services.current_release_evidence import inspect_current_receipts, PINS
+    import shutil
+    from pathlib import Path
+    root=routes.ROOT
+    for relative, _ in PINS.values():
+        target=tmp_path/relative; target.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copyfile(root/relative,target)
+    report=Path('backend/evaluation/semantic_judge/results/astra-20261111-run1.json')
+    shutil.copyfile(root/report,tmp_path/report)
+    assert inspect_current_receipts(tmp_path,benchmark_valid=True)['empirical_review_approved'] is True
+    owner=tmp_path/PINS['owner'][0]
+    owner.write_text(owner.read_text()+' ')
+    result=inspect_current_receipts(tmp_path,benchmark_valid=True)
+    assert result['empirical_review_approved'] is False
+    assert result['source_workspace']['status']=='recorded_installed_and_verified'
+    (tmp_path/PINS['installed'][0]).unlink()
+    assert inspect_current_receipts(tmp_path,benchmark_valid=True)['source_workspace']['status']=='evidence_invalid_or_missing'
+
+
+def test_invalid_benchmark_never_uses_an_accepted_companion():
+    from app.services.current_release_evidence import inspect_current_receipts
+    result=inspect_current_receipts(routes.ROOT,benchmark_valid=False)
+    assert result['empirical_review_approved'] is False
+    assert result['independent_deployment_review_approved'] is False

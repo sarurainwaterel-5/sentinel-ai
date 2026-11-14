@@ -5,6 +5,7 @@ from pathlib import Path
 from fastapi import APIRouter
 from app.services.cognition.reasoning.release_gate import inspect_release_gate
 from evaluation.semantic_judge.astra_report import inspect_astra_report
+from app.services.current_release_evidence import inspect_current_receipts
 
 router = APIRouter(prefix='/governance', tags=['Release inspection'])
 ROOT = Path(__file__).resolve().parents[3]
@@ -29,8 +30,7 @@ def release_inspection():
               'release_authorized': False, 'semantic_grounding_verified': False,
               'proposition_to_inference': 'closed',
               'empirical_review_approved': False, 'presentation_review_approved': False,
-              'blockers': ['application_runtime_composition_incomplete',
-                           'final_empirical_and_independence_review_required',
+              'blockers': ['production_answer_runtime_acceptance_incomplete',
                            'runtime_presentation_review_required',
                            'bound_production_authorization_required'],
               'denial_diagnostic': {'status': 'unavailable'},
@@ -40,7 +40,8 @@ def release_inspection():
         diagnostic = inspect_release_gate(ROOT)
         if not _disabled(diagnostic):
             raise ValueError('invalid_diagnostic_authority')
-        result['denial_diagnostic'] = {'status': 'disabled', 'blockers': diagnostic['blockers']}
+        result['denial_diagnostic'] = {'status': 'disabled', 'blockers': diagnostic['blockers'],
+            'scope': 'Underlying denial-only gate inventory; current limited owner acceptance is reported separately and cannot unlock this gate.'}
     except Exception:
         result['blockers'].append('current_denial_diagnostic_unavailable')
     try:
@@ -55,4 +56,10 @@ def release_inspection():
             'scope': '36 reviewed synthetic cases repeated three times; Chat Completions judge path only. Generation, relevance and production retrieval were not measured.'}
     except Exception:
         result['blockers'].append('astra_benchmark_diagnostic_unavailable')
+    receipts = inspect_current_receipts(ROOT, benchmark_valid=result['astra_benchmark']['eligible_for_human_review'])
+    result.update(receipts)
+    if receipts['empirical_review_approved']:
+        result['astra_benchmark']['status'] = 'owner_accepted_limited_evidence'
+    else:
+        result['blockers'].append('accepted_empirical_evidence_invalid_or_missing')
     return result

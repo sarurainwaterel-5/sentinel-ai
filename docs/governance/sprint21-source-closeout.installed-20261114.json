@@ -1,0 +1,46 @@
+{
+  "active_documents": 71,
+  "adr_037_status": "Proposed",
+  "all_archived_denied": true,
+  "all_current_full_manifests_verified": true,
+  "archived_documents": 5,
+  "canonical_titles_visible": true,
+  "cas": {
+    "active_index_points": 50281,
+    "chunk_objects": 50292,
+    "original_objects": 79
+  },
+  "extraction_policy_sha256": "5d4b8217f1bdcb72d1fcca80ef5b241a39b5a57a251440791a36765b125e15ad",
+  "human_review_pending": [
+    "explicit_external_excerpt_dispatch_permission",
+    "actual_corpus_runtime_output_acceptance",
+    "complete_18_page_ocr_transcription_review"
+  ],
+  "legacy_tables_unchanged": 4,
+  "private_artifact_sha256": {
+    "before-source-closeout-backup.json": "6a27fab7498814320e93804e7ea3b7a38553471eb7a155c05526cbda1bf87fc4",
+    "cook-intake.json": "54c837a2c5c8bd4c64a97d35c8e2929f251dfb22c847f8c9d18abe3ed90778ee",
+    "external-dispatch-review.html": "9ddcc63d5a68e1f54e4bf61197e315de97b9f1e5ac6571b66e34c5e4e90fd5a7",
+    "live-verification.json": "6832e8e3346a056e7ee2d5ab2f32d408f8fd272d9e2810ac7936c644b1effb9e",
+    "ocr-full-review.manifest.json": "e00f46e18f509d3eec195635ab00e1f2b352c2884c8ca6ead014accbfc21643f",
+    "source-ops.json": "178832b35ab375925136575ae3fcabb41c20ec235dfff2e59ad37260ad8d3ba2"
+  },
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "provider_calls": 0,
+  "recorded_local_date": "2026-11-14",
+  "release": {
+    "empirical_review_approved": true,
+    "presentation_review_approved": false,
+    "production_enabled": false,
+    "proposition_to_inference": "closed"
+  },
+  "release_authorized": false,
+  "retained_chunks": 50298,
+  "test_results": {
+    "passed": 2431,
+    "skipped": 8,
+    "warnings": 8
+  },
+  "version": "sprint21-source-closeout-live-verification-v1"
+}
