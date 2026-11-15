@@ -1,0 +1,74 @@
+{
+  "id": "IMAF-CANONICAL-v0.2-RECONCILIATION-SOURCES",
+  "status": "PARTIAL_REVIEW_DRAFT_AWAITING_MISSION_REMAINDER",
+  "baselines": {
+    "sentinel": "70d5bd9",
+    "trading": "a726709"
+  },
+  "mission_last_heading": "5. FORMAL PREDICATE DESIGN",
+  "mission_complete": false,
+  "executable_predicates_approved": false,
+  "execution_authorized": false,
+  "sources": {
+    "M": {
+      "path": "/home/rain/.codex/attachments/5af2b190-fbeb-4abc-8a12-1a7cc29c1136/Pasted text.txt",
+      "sha256": "a340c7945a55143643fd150ceae21cb1bfeeb7ab36b7ef3f6a03a159d41545c3"
+    },
+    "C": {
+      "path": "/home/rain/Downloads/Institutional_Market_Dynamics_Living_Manuscript_Sentinel_Training_Edition_v0.9.pdf",
+      "sha256": "e170611529c68f674b5f4187515a8e6fba7e15624c365f844b750b82ffa06ece"
+    },
+    "trading:research/governance/proposals/imaf-operational-v0.1.json": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/research/governance/proposals/imaf-operational-v0.1.json",
+      "sha256": "44ce12ee508a6382e6c8caae444b360d1a09882eaf2d793d84f255561c3f9d60"
+    },
+    "trading:research/governance/IMAF-OPERATIONAL-QUESTIONS.json": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/research/governance/IMAF-OPERATIONAL-QUESTIONS.json",
+      "sha256": "cc940b00390a6bd9c18aadafc1c6a8f9631e499a3ab2bebb1f8440f100e1439e"
+    },
+    "trading:services/governance/imaf.js": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/services/governance/imaf.js",
+      "sha256": "3008967aa3e170fcc75ab5baf21c576bbe81097af8aa0ba1313e4e43759cf05c"
+    },
+    "trading:services/governance/research-operational.js": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/services/governance/research-operational.js",
+      "sha256": "19d8b50617cf5c59cf2a54d390de081d65ab791af448bca691cf9d095dd024c5"
+    },
+    "trading:services/governance/research-expiry.js": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/services/governance/research-expiry.js",
+      "sha256": "fb5c73173908ec32cf7f8c2ba34f55b818ef9e5fd2aa2e58b0a2a7b8232b035b"
+    },
+    "trading:docs/research/imaf-operational-evaluator.md": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/docs/research/imaf-operational-evaluator.md",
+      "sha256": "938632574e6745e84a3faf11e072596ce9486c84647e2118d31e308ac7f16176"
+    },
+    "trading:docs/architecture/IMAF-GAP-001.md": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/docs/architecture/IMAF-GAP-001.md",
+      "sha256": "66d1c25159578aa5bf9ebbcb64f295a7ae3b8c2f3948991cdd0fdd1f98d0ecfd"
+    },
+    "trading:docs/architecture/ADR-005-imaf-governance.md": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel Trading AI/docs/architecture/ADR-005-imaf-governance.md",
+      "sha256": "70d315d5c512b313b1b5d452dfd5825390b3d6786b19d6f1695f4d4b25ea8ee9"
+    },
+    "sentinel:backend/evaluation/synthetic_oversight/strategy/specification-v1.json": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/sentinel-ai/backend/evaluation/synthetic_oversight/strategy/specification-v1.json",
+      "sha256": "ee4293a4c02ab56c3b4371157429d82d861409b2bf073651ea2eccfa345fa7c6"
+    },
+    "sentinel:backend/evaluation/synthetic_oversight/strategy/evaluator.mjs": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/sentinel-ai/backend/evaluation/synthetic_oversight/strategy/evaluator.mjs",
+      "sha256": "9f8da6b4595348199dd4fc9f115905492355447777d9d3d38da0cff8632f72ab"
+    },
+    "sentinel:docs/integration/phase3/SPECIFICATION_COVERAGE.md": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/sentinel-ai/docs/integration/phase3/SPECIFICATION_COVERAGE.md",
+      "sha256": "7acb9f492527e38affb7aabe6428b0d65cc911ae52fdfd870285ad0c0b76e5a5"
+    },
+    "sentinel:docs/integration/phase3/PROPOSED_DEFINITIONS.md": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/sentinel-ai/docs/integration/phase3/PROPOSED_DEFINITIONS.md",
+      "sha256": "902e566c94be7c127e7bb5c930b10c36e9f3985f368695135fc3bed3a12b48e6"
+    },
+    "sentinel:docs/integration/phase3/READINESS.md": {
+      "path": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/sentinel-ai/docs/integration/phase3/READINESS.md",
+      "sha256": "3e5aedd292c058d84b34b17b82a87b1fc6e60aaa4d8545d26a8877df269c0e14"
+    }
+  }
+}
