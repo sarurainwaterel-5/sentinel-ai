@@ -13,13 +13,22 @@ original successful case 1 and corrected recheck case 2. The new hash-bound
 preserves the original structural rejection and all earlier execution receipts.
 This accepts bounded inspection exports, not production answer authorization.
 
-The remaining human closeout decision is complete 18-page OCR review or explicit
-deferral with the original quarantine preserved. That disposition is pending;
-Sprint 21 is not yet declared closed. Latest recorded source evidence has
-71 active documents, five archived and 50,281 active index points; see the
-[November 14 source receipt](../governance/sprint21-source-closeout.installed-20261114.json).
+The owner has now also completed and approved the exact 18-page OCR review.
+The [complete OCR acceptance record](../governance/sprint21-complete-ocr.accepted-20261115.json)
+binds all page images, raw OCR and linked partial-correction candidates. Both human
+review decisions are complete. Historical preparation manifests remain unchanged.
+
+The technical OCR follow-up remains: materialize a single immutable accepted
+text derivative with an explicit correction recipe, then governed intake/reindex
+and complete manifest readback. The PDF remains quarantined until that succeeds;
+acceptance alone does not make it searchable. Sprint 21 stays open for this
+technical follow-up; no production activation is authorized.
+
+Latest recorded source evidence has 71 active documents, five archived and 50,281
+active index points; see the [November 14 source receipt](../governance/sprint21-source-closeout.installed-20261114.json).
 The November 15 audit also observed deployed transport versus tested-checkout
-drift. No deployment or model call follows from this acceptance.
+drift. No deployment, source indexing or model call occurred while recording these
+acceptances. Production answering remains disabled.
 
 The proposed next development increment is a deterministic, offline, account-scoped
 paper-oversight contract/report. It does not need broker connectivity, new agents,

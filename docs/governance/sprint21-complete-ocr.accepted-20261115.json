@@ -1,0 +1,174 @@
+{
+  "adr_037_status": "Proposed",
+  "approval_context": "Response to explicit request to compare all 18 scans with their transcriptions and approve complete OCR transcription or supply corrections. No new corrections supplied.",
+  "approval_text": "done and apprved",
+  "complete_transcription_approved": true,
+  "complete_transcription_reviewed": true,
+  "followup": "Build one immutable derivative with an explicit page/correction selection recipe; verify bytes/policy, perform governed intake and complete index-manifest readback before reporting searchable. Empty first-page OCR is retained as observed, not repaired or interpreted by this receipt.",
+  "indexed": false,
+  "nonempty_raw_ocr_pages": 17,
+  "page_bindings": [
+    {
+      "characters": 0,
+      "image_sha256": "4c7ab999b2a2fc6b9de1f040bb28e8f524f6882fbfa1c87995b246f5f28d77f6",
+      "page": 1,
+      "partial_candidate_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 755,
+      "image_sha256": "49179d83a8fede465afc70f57eb886c67f5d34ec0028d90792a93593529c1716",
+      "page": 2,
+      "partial_candidate_sha256": "e7be29809d6e410982532bc706acbd8ca2244c2c73249b45533d32c4889d4227",
+      "raw_text_sha256": "ee6d8efe3b480f38034aeb83d5847a7a7cda0cff7ec3dc8982fb3114244d0deb",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 2788,
+      "image_sha256": "ad10a20ca917e4001665fc81cfc32cd47bfc6f2900f24f1b3408947080952948",
+      "page": 3,
+      "partial_candidate_sha256": "49bbea427923c24116f75e90c4510a896899ead30bc74bef767be10f84438e90",
+      "raw_text_sha256": "778c34e6655ddfe120d852f69f3889619c7148a2f5061f5d96f77f163d8109a9",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 5787,
+      "image_sha256": "d3b22651f5cc942a3476935fedba3e1f51c64c4139d2cd5305462f726c74f3b0",
+      "page": 4,
+      "partial_candidate_sha256": "475b0ab38ae33fc8cf164567823f20f4beb71cfb01b0c12fc9d9eac9e0437161",
+      "raw_text_sha256": "475b0ab38ae33fc8cf164567823f20f4beb71cfb01b0c12fc9d9eac9e0437161",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 734,
+      "image_sha256": "2e9c09ced90c6caf1c9336a91ada72095a4bf717d3f8e24a1fe395c6f3d569ee",
+      "page": 5,
+      "partial_candidate_sha256": "88389ac5f8144848f23bd48cf49b8b9b6e9f14a0c20c52731161af056a7a3ee4",
+      "raw_text_sha256": "617ddb8f9a767ee41ab65b71687c4056fcbddc2e92ce2b935f3b179b09b5385c",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 981,
+      "image_sha256": "947b15c98872abbc4628c563cb17544d3bb789bce411a256f4a13b7402671d56",
+      "page": 6,
+      "partial_candidate_sha256": "ba9df48e43f695d09f4dd7e77c68f2c360b1423502977243d73c61608232a95c",
+      "raw_text_sha256": "ba9df48e43f695d09f4dd7e77c68f2c360b1423502977243d73c61608232a95c",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 2048,
+      "image_sha256": "74a3d7b16220f4cb0208b9e94e296edf965150114cf3b2fbc51e50e749cce03c",
+      "page": 7,
+      "partial_candidate_sha256": "f1fb819445de03c03a3a0148d0d4f3b223c86910995644212c98f17df0161ec0",
+      "raw_text_sha256": "f1fb819445de03c03a3a0148d0d4f3b223c86910995644212c98f17df0161ec0",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 4128,
+      "image_sha256": "6646ba6a3ab17208ac532d1e387d9be9c8c0a220f151a90ef16aaf90ac2e932a",
+      "page": 8,
+      "partial_candidate_sha256": "277977760476f3c10db3c3e5562d7fcbe8e6bf62e20d82708155ab2d7f0bdb31",
+      "raw_text_sha256": "406492b4f33f50c98fadb27bb5045ec8d30f3d95c572a2f0a84f1643f2da606a",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 4680,
+      "image_sha256": "210222d419b0bb9ebd13b91072a78b4910533a72b4b283a9a4762fc3b42d3e06",
+      "page": 9,
+      "partial_candidate_sha256": "829b5cb23c6a033f961391bed070932740d57f5bb50f00e7e742e0055bebd5bb",
+      "raw_text_sha256": "cf5268d92cad582c03d9dc6c1befbffceb6de42dae8f351e05bd04b7202bd365",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 4815,
+      "image_sha256": "54e366c52139dc6b23417166f5c0f48b73970b909ebbcdca39fce1c0823edbf2",
+      "page": 10,
+      "partial_candidate_sha256": "c6dd52a1726af254ca0477233b5b02ac26c440dae721e2f781d977f65758f952",
+      "raw_text_sha256": "3e5c703c0f5b871b988130fe9fa2e5465bdf0dec1adecad20b971ead6d5d6617",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 4364,
+      "image_sha256": "25a320b486e6973f975c1f31896a521202a5be191b5797488a672b137e81f71c",
+      "page": 11,
+      "partial_candidate_sha256": "abe476fe4a4c70f9fe6deb488ca4574d3d57e52df757a3056a30d017b03127f2",
+      "raw_text_sha256": "abe476fe4a4c70f9fe6deb488ca4574d3d57e52df757a3056a30d017b03127f2",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 4079,
+      "image_sha256": "eca5684957f9ae7c95be15a555d862dd864e81afd7e8cec0703bde406bc36902",
+      "page": 12,
+      "partial_candidate_sha256": "6fe14654178a06ee16a27045a09706a80c9e5d6f1f1ce83ea48a5d1b51f4bf50",
+      "raw_text_sha256": "6fe14654178a06ee16a27045a09706a80c9e5d6f1f1ce83ea48a5d1b51f4bf50",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 4546,
+      "image_sha256": "75cc00bd4ff43ac56691b6faea1670749592ebee7f04108b6579c742cde55539",
+      "page": 13,
+      "partial_candidate_sha256": "697132559cda0e0fa2683182df4ae3bd0f2f17c18ed2ae95449cc43ee68c0317",
+      "raw_text_sha256": "697132559cda0e0fa2683182df4ae3bd0f2f17c18ed2ae95449cc43ee68c0317",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 1347,
+      "image_sha256": "9c9e369d7c99abe8e4fbcbdc0e3161e160a47064f6a78426939468c42c1394e1",
+      "page": 14,
+      "partial_candidate_sha256": "806b0f710ba128aca6b4897715a2bbda61a60f32675c336112b6a5bec4ab3df8",
+      "raw_text_sha256": "52c848d278e8d8af7d6752011d55f4ce62a1a1595f61234086308f99463e03c8",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 698,
+      "image_sha256": "3e61c58eddf2297c3b0571b8ee4fd8a680eb60496819640979baaba38ccc0079",
+      "page": 15,
+      "partial_candidate_sha256": "3385de61875499885cf3c17d5d2def15053d39463f14c1b9da6a7a4d5fcdb347",
+      "raw_text_sha256": "0d8d21536aaefd4f8ce4205939b1344047104f9822f4518550d76ea9dcd57932",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 677,
+      "image_sha256": "d30d3eecf5c903e3ef50b4ed752ec27d80c3c2dca7ff30d15c69e84c005b33fc",
+      "page": 16,
+      "partial_candidate_sha256": "9aea270a2ffb5d6ba458a93ad61f022a71fcc69067590c3aa57c86c65deff953",
+      "raw_text_sha256": "1cb782bef637cc53dfdf742c5df0917ce787c007fe62b0b137bd28a293acd7a9",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 641,
+      "image_sha256": "73b206331a2e8333ebc9ff4fe41d3f92144937eeae47b25aa901a3d5ceb8544a",
+      "page": 17,
+      "partial_candidate_sha256": "2ce6408bd9bc415d4199eca29b32c06418b637947e4e8bd0e59c3165ec9e6704",
+      "raw_text_sha256": "2ce6408bd9bc415d4199eca29b32c06418b637947e4e8bd0e59c3165ec9e6704",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    },
+    {
+      "characters": 213,
+      "image_sha256": "0f47558a78378f413270c39264c0e7e31da08d2794085bdb8f7d689e02525e5b",
+      "page": 18,
+      "partial_candidate_sha256": "057d441bcb0c172020614cb232c7aa78adee97332d236bc837f2929ee78f83dc",
+      "raw_text_sha256": "72b5e9c65c9b34c542b954495c9e7ab6a916cc67de05d72772bb564d2ad30b99",
+      "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f"
+    }
+  ],
+  "page_count": 18,
+  "partial_correction_artifact_sha256": "f5ab4abfc75794da222b3ca7c8eedf9909915f81ba9a2a34b39f43c99797d044",
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "quarantine_lifted": false,
+  "recorded_at_utc": "2026-11-15T16:26:52Z",
+  "recorded_local_date": "2026-11-15",
+  "release_authorized": false,
+  "review_html_sha256": "9364d15d487b9da05aa3a6eb650cc4ca73c7dd1545e9e71f96980b0faa74eab9",
+  "review_manifest_sha256": "e00f46e18f509d3eec195635ab00e1f2b352c2884c8ca6ead014accbfc21643f",
+  "reviewer": "workspace_owner",
+  "reviewer_identity_source": "Explicit statement in current chat; not independent identity attestation",
+  "scope": "Exact 18-page source-bound review packet, displayed raw text and linked saved partial-correction candidates within existing limitations. Records human acceptance, not independent machine certification of every character.",
+  "searchable_derivative_materialized": false,
+  "semantic_grounding_verified": false,
+  "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f",
+  "status": "accepted_with_review_packet_limitations",
+  "version": "sprint21-complete-ocr-owner-acceptance-v1"
+}
