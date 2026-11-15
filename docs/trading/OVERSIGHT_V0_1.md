@@ -4,6 +4,13 @@ Status: first bounded implementation, November 15, 2026. Human report review and
 actual TradingView export mapping remain pending. This is not a connected trading
 integration or production authorization.
 
+Follow-up status: [Sprint 22 completion record](../sprints/Sprint-22-Completion-Status.md).
+The capture manifest is now v0.2, adding operator-supplied per-file export tab
+labels while keeping coverage UNKNOWN and semantic mapping NOT_IMPLEMENTED.
+The full focused suite now passes 81 tests; the 73-test result below describes the
+original implementation baseline. A separate manual browser inspection obtained
+account observations but no CSV from the empty account view.
+
 ## Delivered surface
 
 `backend/evaluation/trading_oversight/` contains a closed snapshot schema, bounded

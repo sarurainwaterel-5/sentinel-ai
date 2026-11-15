@@ -37,12 +37,19 @@ From `backend`, using the project's Python environment (shown as `python`):
 
 ```sh
 python -m evaluation.trading_oversight.tradingview capture \
-  --input /absolute/private/history.csv \
-  --input /absolute/private/positions.csv \
+  --input /absolute/private/history.csv --tab HISTORY \
+  --input /absolute/private/positions.csv --tab POSITIONS \
   --organization-id default --account-id rain-tv-paper \
   --captured-at 2026-11-15T16:00:00.000Z \
   --output-dir /absolute/private/NEW-paper-evidence
 ```
+
+Evidence manifest v0.2 records a tab label for each input. If `--tab` is supplied,
+provide one label per input in matching order: `POSITIONS`, `ORDERS`, `HISTORY`,
+`ACCOUNT_HISTORY`, `TRADING_JOURNAL` or `UNKNOWN`. Omission records `UNKNOWN`.
+Labels are operator assertions, not inferred or verified from CSV contents.
+Coverage stays UNKNOWN and semantic mapping stays NOT_IMPLEMENTED regardless of
+the label. Earlier v0.1 artifacts remain historical evidence; they are not rewritten.
 
 The timestamp and account alias above are examples to replace with actual capture
 labels. The output parent must exist; the final directory must not exist. Inputs
@@ -105,4 +112,8 @@ rights and a separate threat-model review.
 
 These sources support the manual export workflow. They do not establish a
 Sentinel-specific API, a licensed automated data feed or real-fill conformance.
-No TradingView account has been inspected or changed by this implementation.
+The offline implementation does not inspect or change TradingView accounts.
+A separate authorized manual browser inspection on November 15 observed the selected
+paper account and settings. Its empty account view exposed no CSV export control;
+no actual export or schema mapping was obtained. Private observation artifacts stay
+outside Git. See [Sprint 22 status](../sprints/Sprint-22-Completion-Status.md).

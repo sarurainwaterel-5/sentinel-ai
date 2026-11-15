@@ -18,6 +18,7 @@ from .reader import read_local, open_directory
 MAX_FILES = 8
 MAX_TOTAL_BYTES = 4 * 1024 * 1024
 MAX_ROWS = 10000
+EXPORT_TABS = ('UNKNOWN', 'POSITIONS', 'ORDERS', 'HISTORY', 'ACCOUNT_HISTORY', 'TRADING_JOURNAL')
 
 
 def summarize_csv(raw: bytes) -> dict:
@@ -49,7 +50,7 @@ def summarize_csv(raw: bytes) -> dict:
             'semantic_mapping': 'NOT_IMPLEMENTED', 'source_authenticated': False}
 
 
-def capture(*, inputs, organization_id: str, account_id: str, captured_at: str, output_dir) -> dict:
+def capture(*, inputs, organization_id: str, account_id: str, captured_at: str, output_dir, tabs=None) -> dict:
     """Copy bounded original CSV bytes into a new private directory, exclusively.
 
     Account/time are operator labels, not independently verified platform facts.
@@ -61,6 +62,11 @@ def capture(*, inputs, organization_id: str, account_id: str, captured_at: str, 
             raise ValueError('explicit bounded local account identifiers required')
     if not 1 <= len(inputs) <= MAX_FILES:
         raise ValueError('one to eight CSV exports required')
+    if tabs is None:
+        tabs = ['UNKNOWN'] * len(inputs)
+    if (not isinstance(tabs, (list, tuple)) or len(tabs) != len(inputs)
+            or any(type(tab) is not str or tab not in EXPORT_TABS for tab in tabs)):
+        raise ValueError('one valid export tab label per input required')
     items = []
     for path in inputs:
         path = Path(path)
@@ -73,7 +79,7 @@ def capture(*, inputs, organization_id: str, account_id: str, captured_at: str, 
         items.append((raw, summary))
     if sum(len(raw) for raw, _ in items) > MAX_TOTAL_BYTES:
         raise ValueError('total evidence bytes exceeded')
-    result = {'schema_version': 'sentinel.tradingview.paper.evidence.v0.1',
+    result = {'schema_version': 'sentinel.tradingview.paper.evidence.v0.2',
               'platform': 'TRADINGVIEW_PAPER_TRADING',
               'scope': {'organization_id': organization_id, 'account_id': account_id, 'environment': 'PAPER'},
               'captured_at': captured_at, 'capture_time_source': 'OPERATOR_SUPPLIED',
@@ -83,7 +89,9 @@ def capture(*, inputs, organization_id: str, account_id: str, captured_at: str, 
               'risk_configuration': 'UNVERIFIED', 'human_review': 'PENDING',
               'authority': {'advisory_only': True, 'execution_authorized': False, 'live_authorized': False},
               'limitation': 'CSV structure and bytes verified only. No account ownership, completeness, instrument metadata, clock domain, fills, risk compliance or strategy eligibility certified.',
-              'files': [dict(summary, saved_as=f'evidence-{i:03d}.csv') for i, (_, summary) in enumerate(items, 1)]}
+              'files': [dict(summary, saved_as=f'evidence-{i:03d}.csv',
+                             export_tab=tabs[i-1], export_tab_source='OPERATOR_SUPPLIED',
+                             coverage='UNKNOWN') for i, (_, summary) in enumerate(items, 1)]}
     output = Path(os.path.abspath(os.fspath(output_dir)))
     parent = open_directory(output.parent)
     directory = None
@@ -123,6 +131,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description='Capture manual TradingView paper CSV evidence locally; no trade mapping or execution.')
     parser.add_argument('command', choices=['capture'])
     parser.add_argument('--input', action='append', required=True)
+    parser.add_argument('--tab', action='append', choices=EXPORT_TABS,
+                        help='One label per --input in matching order; omitted labels remain UNKNOWN.')
     parser.add_argument('--organization-id', required=True)
     parser.add_argument('--account-id', required=True)
     parser.add_argument('--captured-at', required=True)
@@ -130,7 +140,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         result = capture(inputs=args.input, organization_id=args.organization_id, account_id=args.account_id,
-                         captured_at=args.captured_at, output_dir=args.output_dir)
+                         captured_at=args.captured_at, output_dir=args.output_dir, tabs=args.tab)
     except (OSError, ValueError, UnicodeError):
         parser.exit(1, 'Evidence capture failed: inspect local input framing, bounds and output permissions. No trading action occurred.\n')
     print(json.dumps({'files_captured': len(result['files']), 'source_authenticated': False, 'normalized_snapshot_created': False, 'execution_authorized': False}))
