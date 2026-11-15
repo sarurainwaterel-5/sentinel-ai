@@ -2,6 +2,14 @@
 
 **DRAFT — NOT APPROVED FOR EXECUTION.**
 
+> Session-policy amendment: [SESSION_GOVERNANCE_V0.2.md](SESSION_GOVERNANCE_V0.2.md)
+> records the later owner-selected CT cutoffs and model-specific discovery/expiry
+> choices. Read [OWNER_DECISION_REGISTER_UPDATED.md](OWNER_DECISION_REGISTER_UPDATED.md)
+> for D13–D16 and current remaining questions. Earlier NY-window/D12 questions below
+> describe the pre-amendment review; they do not override the later selected policy.
+> Null model/canonical predicates remain null and existing runtime behavior unchanged.
+
+
 Version: 0.2.0-draft. Documentation owner: Sentinel integration review. Operational
 definition lineage remains Trading AI's `IMAF-OPERATIONAL-PROPOSAL-001` v0.1; this
 package proposes its next specification, not a parallel approved registry. It is not

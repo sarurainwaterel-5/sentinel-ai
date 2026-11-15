@@ -1,0 +1,26 @@
+{
+  "id": "IMAF-SESSION-GOVERNANCE-v0.2",
+  "version": "0.2.0-session-draft.1",
+  "status": "DRAFT \u2014 NOT APPROVED FOR EXECUTION.",
+  "scope": "ISOLATED_OFFLINE_SYNTHETIC_ONLY",
+  "policy_timezone": "America/Chicago",
+  "market_data_timezone": "America/New_York",
+  "morning_opens_at": null,
+  "morning_discovery_closes": "10:00:00",
+  "morning_entry_closes": "10:15:00",
+  "afternoon_opens": "12:00:00",
+  "mandatory_flatten": "15:00:00",
+  "boundaries": "START_INCLUSIVE_END_EXCLUSIVE",
+  "discovery_selection": "MODEL_SPECIFIC_QUALIFYING_LIQUIDITY_INTERACTION",
+  "expiry_selection": "MODEL_SPECIFIC_FINITE_NONEXTENDING",
+  "model_discovery_predicate": null,
+  "model_expiry_predicate": null,
+  "execution_authorization": "DENIED",
+  "mission_sha256": "c5aad1fe5d2a344da2b50210e481ba1749ef6266b3d8578d92bf0a97987a71ae",
+  "owner_decision_index": {
+    "D13": "MORNING_DISCOVERY_ENTRY_AND_EXISTING_POSITION",
+    "D14": "FRESH_AFTERNOON_DISCOVERY",
+    "D15": "DAILY_FLATTEN_AND_EXCHANGE_DAY_LIMIT",
+    "D16": "MODEL_SPECIFIC_DISCOVERY_AND_EXPIRY"
+  }
+}

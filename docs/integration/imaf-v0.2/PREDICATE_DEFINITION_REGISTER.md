@@ -2,6 +2,14 @@
 
 **DRAFT — NOT APPROVED FOR EXECUTION.**
 
+> Session-policy amendment: [SESSION_GOVERNANCE_V0.2.md](SESSION_GOVERNANCE_V0.2.md)
+> records the later owner-selected CT cutoffs and model-specific discovery/expiry
+> choices. Read [OWNER_DECISION_REGISTER_UPDATED.md](OWNER_DECISION_REGISTER_UPDATED.md)
+> for D13–D16 and current remaining questions. Earlier NY-window/D12 questions below
+> describe the pre-amendment review; they do not override the later selected policy.
+> Null model/canonical predicates remain null and existing runtime behavior unchanged.
+
+
 Version: 0.2.0-draft. All records are **specification proposals**, not a new
 runtime registry. The four existing R approvedDefinition values remain null.
 Each record includes the fifteen requested fields plus a literal executable predicate.

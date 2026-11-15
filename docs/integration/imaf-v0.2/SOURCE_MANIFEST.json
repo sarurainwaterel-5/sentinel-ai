@@ -73,7 +73,18 @@
     "M2": {
       "path": "/home/rain/.codex/attachments/8517abb9-7902-408a-9c6f-febff29c189a/Pasted text.txt",
       "sha256": "df65047dcf3dc507102fc7554591ba5a7119ad14d83893cdeff0b47ff94c317a"
+    },
+    "M3": {
+      "path": "/home/rain/.codex/attachments/ee7dd99f-edc4-42b5-875d-34d5f6f57904/Pasted text.txt",
+      "sha256": "c5aad1fe5d2a344da2b50210e481ba1749ef6266b3d8578d92bf0a97987a71ae"
     }
   },
-  "mission_complete_meaning": "Full mission text received; documentation review complete, executable predicates unapproved"
+  "mission_complete_meaning": "Full mission text received; documentation review complete, executable predicates unapproved",
+  "session_increment": {
+    "version": "0.2.0-session-draft.1",
+    "status": "SPECIFICATION_AND_OFFLINE_FIXTURES",
+    "execution_authorization": "DENIED",
+    "model_discovery_predicate": null,
+    "model_expiry_predicate": null
+  }
 }

@@ -1,45 +1,48 @@
-# Canonical v0.2 review status
+# Canonical v0.2 review and session-increment status
 
 **DRAFT — NOT APPROVED FOR EXECUTION.**
 
-Documentation mission complete; executable canonical specification remains unapproved.
-The full M2 mission supplied the missing sections 5–11. The earlier partial review
-from local commit 4a7fab5 is retained and clearly labeled historical.
+Current session increment: specification plus isolated offline synthetic validation
+complete for supported cases. Canonical model predicates and production readiness
+remain incomplete. Read [SESSION_GOVERNANCE_V0.2.md](SESSION_GOVERNANCE_V0.2.md) and
+[IMPLEMENTATION_READINESS.md](IMPLEMENTATION_READINESS.md) for the current verdict.
 
-Start at [IMAF_CANONICAL_SPEC_V0.2_DRAFT.md](IMAF_CANONICAL_SPEC_V0.2_DRAFT.md) for the
-seven required deliverables. Source manifest preserves every original source entry
-and adds the complete replacement mission hash. All conceptual decisions remain
-separate from approved executable semantics.
+The canonical seven-document review from local commit2ea3809 is preserved and amended
+with explicit current-session pointers. Earlier partial review commit4a7fab5 remains
+historical. Source manifest preserves M/M2 and adds M3 for the session mission.
 
-## Executed documentation verification
+## Executed validation
 
-- Seven required named documents exist with the exact draft/no-execution banner.
-- Twenty-two unique predicate records each contain all fifteen requested fields
-  plus a literal `Executable predicate: null`.
-- Twelve structured owner decisions include source, gap, conflict, exact question
-  and implementation/approval status.
-- Eight conflict classes and six circularity cases are recorded.
-- Sixteen pinned sources match their recorded SHA-256; previous manifest source
-  entries are preserved. The authoritative manuscript identity is unchanged.
-- Four existing governance approvedDefinition values remain null.
-- Local Markdown links resolve. Git diff whitespace check passes.
-- Tracked changes are confined to this documentation directory. Trading's worktree
-  status matches the initial user-edit inventory; no Trading files were written.
+- 78 new offline cases:70 policy/time/position cases,5 replay cases,3 safety cases.
+- 68 existing regression executions:57 Phase3 evaluator,8 durable strategy,3 Trading
+ pinned consumer cases. **146 passed,0 failed,0 skipped** on the final run.
+- Actual independent process restart reproduces the original policy interpretation,
+ supplied synthetic calendar/version and snapshot; changed historical dependencies
+ fail unavailable without fallback. Conflicting/tampered records do not overwrite.
+- All tests use the existing network-denial preloader; socket/fetch denial exercised.
+- Seven required session review documents exist with draft/no-execution labels;
+ relative Markdown links resolve. Git whitespace check passes.
+- All pinned source hashes remain valid; old consumer pins still match. Four existing
+ governance definitions and new model discovery/expiry predicates remain null.
+- Only new isolated offline evaluation files and this documentation directory changed.
+ No pre-existing executable runtime file was changed or imports the new interpreter.
+- All initial unrelated Trading edits are byte-for-byte preserved, verified by hashes.
 
-Raw structural-check summary is retained outside Git at workspace
-`outputs/imaf-canonical-v0.2/review-validation.json`. Checks were executed using a
-one-off local documentation validation script, not added to either runtime.
-No runtime/strategy tests were run for this documentation-only change; historical
-Phase3 test results do not validate future canonical predicates.
+Raw results, scenario snapshots and source/artifact hashes are retained outside Git:
+workspace `outputs/imaf-session-v02/verification-manifest.json`, `scenarios.json`,
+`test-results/`. Existing Phase2/3 databases/replay artifacts are untouched. One early
+fixture assertion failed because its expiry equaled discovery; corrected fixture
+uses a positive interval and then tests the exact expiry. Final results above pass.
 
-## Remaining owner decision
+## Remaining gaps
 
-D12 first: choose the causal discovery event/window-endpoint convention and the
-source/rule for a finite nonextending expiry. OWNER_DECISION_REGISTER.md gives the
-exact question and narrower proposed initial synthetic scope. D1 can follow for
-initial rejection observations; all other substantive choices are recorded, not
-asked as simultaneous approval questions. No implementation begins in this mission.
+Exact first model/version, qualifying liquidity interaction, morning opening/windows,
+finite expiry rule/source, confirmation/invalidation and authentic event identity;
+verified exchange calendar/holiday/early-close coverage and authoritative account
+count/consumption semantics; full independent IMAF/risk and production position/flatten
+integration. All unsupported cases are explicit, not silently passed or test-skipped.
+No real calendar coverage, actual broker fill or operational flatten is established.
 
-Execution DENIED; no strategy/contract/pin/risk/registry changes, new thresholds,
-calendar retrieval, broker/live data, deployments, pushes or merges. Historical
-commits/evaluators/replay artifacts and unrelated user edits are preserved.
+No broker/live feed, deployments, pushes/merges, new secrets, risk-limit changes,
+registry activation or execution authority. No production behavior changed. Execution
+DENIED. Stop after this specification/offline-testing increment and reporting.

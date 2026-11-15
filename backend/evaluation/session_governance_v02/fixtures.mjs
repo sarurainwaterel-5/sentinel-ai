@@ -1,0 +1,9 @@
+import {VERSION} from './evaluator.mjs';
+// UTC inputs for November 16 2026 (CST); all calendar/account/model evidence is synthetic.
+export function fixture({clock='12:05:00',event='ENTRY',origin='AFTERNOON'}={}){
+ const at=new Date('2026-11-16T'+clock+'.000Z');at.setUTCHours(at.getUTCHours()+6);const instant=at.toISOString();
+ const discovered=origin==='MORNING'?'2026-11-16T15:55:00.000Z':'2026-11-16T18:05:00.000Z';
+ return {version:VERSION,case_id:'fixture:session',at:instant,event,calendar:{id:'synthetic-calendar-not-cme',version:'fixture-v1',source:'SYNTHETIC_FIXTURE',available_at:'2026-11-15T00:00:00.000Z',valid_until:'2026-11-18T00:00:00.000Z',holiday_coverage:'TEST_COVERED',early_close_coverage:'TEST_COVERED',rollover_coverage:'TEST_COVERED',days:[{trading_day_id:'fictional-day-A',policy_date:'2026-11-16',opens_at:'2026-11-15T23:00:00.000Z',closes_at:'2026-11-16T23:00:00.000Z',morning_opens_at:'2026-11-16T15:00:00.000Z'}]},account:{source:'SYNTHETIC_FIXTURE',calendar_id:'synthetic-calendar-not-cme',calendar_version:'fixture-v1',trading_day_id:'fictional-day-A',as_of:instant,available_at:instant,valid_until:'2026-11-16T23:00:00.000Z',trades_today:0},setup:{id:'setup:'+origin,event_id:'event:'+origin,model_version:'synthetic-model-unapproved',origin,discovered_at:discovered,event_at:discovered,event_available_at:discovered,expires_at:'2026-11-16T22:00:00.000Z',state:'CONFIRMED',discovery_evidence_ref:'synthetic:qualifying-event',expiry_evidence_ref:'synthetic:finite-bound'},prior_setup:null,position:null};
+}
+export function openPosition(p,opened='2026-11-16T16:12:00.000Z'){p.position={id:'synthetic-position',opened_at:opened,state:'OPEN',exit:null};return p;}
+export function discoveryAt(p,t){Object.assign(p.setup,{event_at:t,event_available_at:t,discovered_at:t,state:'DISCOVERED'});return p;}
