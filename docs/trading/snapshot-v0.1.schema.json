@@ -1,0 +1,737 @@
+{
+  "$defs": {
+    "AccountState": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "frozen": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frozen"
+        },
+        "kill_active": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Kill Active"
+        },
+        "pending_orders": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pending Orders"
+        },
+        "position_quantity": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Position Quantity"
+        },
+        "position_status": {
+          "enum": [
+            "KNOWN",
+            "UNKNOWN"
+          ],
+          "title": "Position Status",
+          "type": "string"
+        },
+        "profile_provenance": {
+          "enum": [
+            "SYNTHETIC",
+            "OPERATOR_SUPPLIED_UNVERIFIED"
+          ],
+          "title": "Profile Provenance",
+          "type": "string"
+        },
+        "protection": {
+          "enum": [
+            "UNVERIFIED",
+            "MISSING",
+            "CLAIMED_PRESENT"
+          ],
+          "title": "Protection",
+          "type": "string"
+        },
+        "realized_pnl_cents": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Realized Pnl Cents"
+        },
+        "reservations": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reservations"
+        },
+        "session_entries": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Entries"
+        }
+      },
+      "required": [
+        "position_status",
+        "position_quantity",
+        "as_of",
+        "pending_orders",
+        "reservations",
+        "session_entries",
+        "realized_pnl_cents",
+        "kill_active",
+        "frozen",
+        "protection",
+        "profile_provenance"
+      ],
+      "title": "AccountState",
+      "type": "object"
+    },
+    "Audit": {
+      "additionalProperties": false,
+      "properties": {
+        "continuity": {
+          "enum": [
+            "GENESIS",
+            "UNANCHORED_CHECKPOINT"
+          ],
+          "title": "Continuity",
+          "type": "string"
+        },
+        "events": {
+          "items": {
+            "$ref": "#/$defs/Event"
+          },
+          "maxItems": 128,
+          "title": "Events",
+          "type": "array"
+        }
+      },
+      "required": [
+        "events",
+        "continuity"
+      ],
+      "title": "Audit",
+      "type": "object"
+    },
+    "Authority": {
+      "additionalProperties": false,
+      "properties": {
+        "advisory_only": {
+          "const": true,
+          "title": "Advisory Only",
+          "type": "boolean"
+        },
+        "execution_authorized": {
+          "const": false,
+          "title": "Execution Authorized",
+          "type": "boolean"
+        },
+        "live_authorized": {
+          "const": false,
+          "title": "Live Authorized",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "advisory_only",
+        "execution_authorized",
+        "live_authorized"
+      ],
+      "title": "Authority",
+      "type": "object"
+    },
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "account_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Account Revision",
+          "type": "integer"
+        },
+        "context_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Context Sha256",
+          "type": "string"
+        },
+        "latest_head": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Latest Head",
+          "type": "string"
+        },
+        "latest_sequence": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Latest Sequence",
+          "type": "integer"
+        },
+        "observation_epoch": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observation Epoch",
+          "type": "integer"
+        },
+        "prior_head": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prior Head",
+          "type": "string"
+        },
+        "prior_sequence": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Prior Sequence",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "account_revision",
+        "observation_epoch",
+        "prior_sequence",
+        "prior_head",
+        "latest_sequence",
+        "latest_head",
+        "context_sha256"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "Clock": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage_end": {
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+          "title": "Coverage End",
+          "type": "string"
+        },
+        "coverage_start": {
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+          "title": "Coverage Start",
+          "type": "string"
+        },
+        "created_at": {
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+          "title": "Created At",
+          "type": "string"
+        },
+        "domain": {
+          "enum": [
+            "WALL",
+            "REPLAY",
+            "SYNTHETIC"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "quote_as_of": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Quote As Of"
+        },
+        "received_at": {
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+          "title": "Received At",
+          "type": "string"
+        },
+        "source_as_of": {
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+          "title": "Source As Of",
+          "type": "string"
+        }
+      },
+      "required": [
+        "created_at",
+        "source_as_of",
+        "received_at",
+        "coverage_start",
+        "coverage_end",
+        "domain",
+        "quote_as_of"
+      ],
+      "title": "Clock",
+      "type": "object"
+    },
+    "Completeness": {
+      "additionalProperties": false,
+      "properties": {
+        "full_source_chain": {
+          "title": "Full Source Chain",
+          "type": "boolean"
+        },
+        "omitted_sections": {
+          "items": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Omitted Sections",
+          "type": "array"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "full_source_chain",
+        "omitted_sections",
+        "truncated"
+      ],
+      "title": "Completeness",
+      "type": "object"
+    },
+    "Event": {
+      "additionalProperties": false,
+      "properties": {
+        "hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Hash",
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        },
+        "previousHash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Previoushash",
+          "type": "string"
+        },
+        "sequence": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "timestamp": {
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sequence",
+        "timestamp",
+        "type",
+        "payload",
+        "previousHash",
+        "hash"
+      ],
+      "title": "Event",
+      "type": "object"
+    },
+    "Policy": {
+      "additionalProperties": false,
+      "properties": {
+        "imaf_definition": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Imaf Definition",
+          "type": "string"
+        },
+        "imaf_policy": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Imaf Policy",
+          "type": "string"
+        },
+        "risk": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Risk",
+          "type": "string"
+        },
+        "strategy": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Strategy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "strategy",
+        "risk",
+        "imaf_definition",
+        "imaf_policy"
+      ],
+      "title": "Policy",
+      "type": "object"
+    },
+    "Proposal": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "candidate_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Candidate Sha256",
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "long",
+            "short"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "entry_ticks": {
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991,
+          "title": "Entry Ticks",
+          "type": "integer"
+        },
+        "evidence_refs": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expected_costs_cents": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Costs Cents",
+          "type": "integer"
+        },
+        "imaf_decision_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Imaf Decision Sha256"
+        },
+        "quantity": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Quantity",
+          "type": "integer"
+        },
+        "stop_ticks": {
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991,
+          "title": "Stop Ticks",
+          "type": "integer"
+        },
+        "target_ticks": {
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991,
+          "title": "Target Ticks",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "candidate_sha256",
+        "direction",
+        "entry_ticks",
+        "stop_ticks",
+        "target_ticks",
+        "quantity",
+        "expected_costs_cents",
+        "imaf_decision_sha256",
+        "evidence_refs"
+      ],
+      "title": "Proposal",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "authenticity": {
+          "const": "OPERATOR_SUPPLIED_UNVERIFIED",
+          "title": "Authenticity",
+          "type": "string"
+        },
+        "capture_origin": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Capture Origin",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "synthetic",
+            "historical-replay",
+            "paper-ledger"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "capture_origin",
+        "authenticity"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "Readiness": {
+      "additionalProperties": false,
+      "properties": {
+        "collection_ready": {
+          "const": false,
+          "title": "Collection Ready",
+          "type": "boolean"
+        },
+        "imaf_status": {
+          "const": "ENTRY_LOCK_PENDING_OPERATIONAL_DEFINITIONS",
+          "title": "Imaf Status",
+          "type": "string"
+        },
+        "open_definition_ids": {
+          "items": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Open Definition Ids",
+          "type": "array"
+        },
+        "reconciliation": {
+          "enum": [
+            "RECONCILED",
+            "REQUIRED",
+            "UNKNOWN"
+          ],
+          "title": "Reconciliation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "imaf_status",
+        "open_definition_ids",
+        "collection_ready",
+        "reconciliation"
+      ],
+      "title": "Readiness",
+      "type": "object"
+    },
+    "Scope": {
+      "additionalProperties": false,
+      "properties": {
+        "account_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Account Id",
+          "type": "string"
+        },
+        "environment": {
+          "enum": [
+            "PAPER",
+            "LOCAL_SIMULATION"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "organization_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Organization Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "organization_id",
+        "account_id",
+        "environment"
+      ],
+      "title": "Scope",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "build_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Build Id",
+          "type": "string"
+        },
+        "dirty": {
+          "title": "Dirty",
+          "type": "boolean"
+        },
+        "export_version": {
+          "const": "0.1",
+          "title": "Export Version",
+          "type": "string"
+        },
+        "producer_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Producer Id",
+          "type": "string"
+        },
+        "repository_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Repository Commit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "producer_id",
+        "repository_commit",
+        "build_id",
+        "export_version",
+        "dirty"
+      ],
+      "title": "Source",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "account_state": {
+      "$ref": "#/$defs/AccountState"
+    },
+    "audit": {
+      "$ref": "#/$defs/Audit"
+    },
+    "authority": {
+      "$ref": "#/$defs/Authority"
+    },
+    "clock": {
+      "$ref": "#/$defs/Clock"
+    },
+    "completeness": {
+      "$ref": "#/$defs/Completeness"
+    },
+    "payload_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Payload Sha256",
+      "type": "string"
+    },
+    "policy_binding": {
+      "$ref": "#/$defs/Policy"
+    },
+    "proposals": {
+      "items": {
+        "$ref": "#/$defs/Proposal"
+      },
+      "maxItems": 128,
+      "title": "Proposals",
+      "type": "array"
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "readiness": {
+      "$ref": "#/$defs/Readiness"
+    },
+    "schema_version": {
+      "const": "sentinel.trading.oversight.snapshot.v0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope": {
+      "$ref": "#/$defs/Scope"
+    },
+    "snapshot_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/Source"
+    },
+    "state_binding": {
+      "$ref": "#/$defs/Binding"
+    }
+  },
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "source",
+    "scope",
+    "provenance",
+    "clock",
+    "state_binding",
+    "policy_binding",
+    "readiness",
+    "account_state",
+    "proposals",
+    "audit",
+    "completeness",
+    "authority",
+    "payload_sha256"
+  ],
+  "title": "Snapshot",
+  "type": "object"
+}

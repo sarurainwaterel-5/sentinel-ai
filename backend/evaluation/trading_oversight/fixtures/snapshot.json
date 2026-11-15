@@ -1,0 +1,99 @@
+{
+  "schema_version": "sentinel.trading.oversight.snapshot.v0.1",
+  "snapshot_id": "synthetic-tradingview-manual-example-001",
+  "source": {
+    "producer_id": "manual-tradingview-paper-example-not-an-export-adapter",
+    "repository_commit": "a3cf8c597dad4d0c8acd2f589ac3f06b616615f5",
+    "build_id": "synthetic-fixture-only",
+    "export_version": "0.1",
+    "dirty": true
+  },
+  "scope": {
+    "organization_id": "synthetic-research",
+    "account_id": "synthetic-tv-paper",
+    "environment": "PAPER"
+  },
+  "provenance": {
+    "kind": "synthetic",
+    "capture_origin": "manually prepared TradingView Paper Trading workflow example; no actual platform data",
+    "authenticity": "OPERATOR_SUPPLIED_UNVERIFIED"
+  },
+  "clock": {
+    "created_at": "2026-11-15T12:00:00.000Z",
+    "source_as_of": "2026-11-15T12:00:00.000Z",
+    "received_at": "2026-11-15T12:00:00.000Z",
+    "coverage_start": "2026-11-15T12:00:00.000Z",
+    "coverage_end": "2026-11-15T12:00:00.000Z",
+    "domain": "SYNTHETIC",
+    "quote_as_of": null
+  },
+  "state_binding": {
+    "account_revision": 1,
+    "observation_epoch": 1,
+    "prior_sequence": 0,
+    "prior_head": "0000000000000000000000000000000000000000000000000000000000000000",
+    "latest_sequence": 1,
+    "latest_head": "cdbf198a7146e32cbb1f5f03145bb0beb9813e39806d840044a972affd0fb2bf",
+    "context_sha256": "144df4ed0bccc0018b60b914a1d1c4df68bd536bd500932403187cc2d2c8a3e1"
+  },
+  "policy_binding": {
+    "strategy": "acfd6250f823846cb00d9e36cd02310a09a6af6c9b6c4bc70dc23be7e40523d2",
+    "risk": "04a26ec731e1440bf3316bbce45057da1fcafefff9d1225e9f8f7f31bfa37e8c",
+    "imaf_definition": "737383c623c7bb46f3c5de3396c7d1c8b5336261a0a935826ecc0a4c59b12f08",
+    "imaf_policy": "3ccdf97544128f6a2151d0529df78d686ab6fc34ed1716299540745b8dcbbdff"
+  },
+  "readiness": {
+    "imaf_status": "ENTRY_LOCK_PENDING_OPERATIONAL_DEFINITIONS",
+    "open_definition_ids": [
+      "LIQUIDITY_ACCEPTANCE_REJECTION_OPERATIONAL_DEFINITION",
+      "ACCEPTED_STRUCTURAL_TRANSITION_OPERATIONAL_DEFINITION",
+      "NARRATIVE_COHERENCE_OPERATIONAL_DEFINITION",
+      "DISCOVERY_WINDOW_AND_SETUP_EXPIRY_POLICY"
+    ],
+    "collection_ready": false,
+    "reconciliation": "RECONCILED"
+  },
+  "account_state": {
+    "position_status": "KNOWN",
+    "position_quantity": 0,
+    "as_of": "2026-11-15T12:00:00.000Z",
+    "pending_orders": 0,
+    "reservations": 0,
+    "session_entries": 0,
+    "realized_pnl_cents": 0,
+    "kill_active": false,
+    "frozen": false,
+    "protection": "UNVERIFIED",
+    "profile_provenance": "SYNTHETIC"
+  },
+  "proposals": [],
+  "audit": {
+    "events": [
+      {
+        "sequence": 1,
+        "timestamp": "2026-11-15T12:00:00.000Z",
+        "type": "SYNTHETIC_PAPER_OBSERVATION",
+        "payload": {
+          "account_id": "synthetic-tv-paper",
+          "organization_id": "synthetic-research",
+          "observation_epoch": 1,
+          "account_revision": 1
+        },
+        "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "hash": "cdbf198a7146e32cbb1f5f03145bb0beb9813e39806d840044a972affd0fb2bf"
+      }
+    ],
+    "continuity": "GENESIS"
+  },
+  "completeness": {
+    "full_source_chain": true,
+    "omitted_sections": [],
+    "truncated": false
+  },
+  "authority": {
+    "advisory_only": true,
+    "execution_authorized": false,
+    "live_authorized": false
+  },
+  "payload_sha256": "ace122e4fc543c74aea4c4a23d9deec75b8c6a45e581cad5b6c413588fafd48e"
+}

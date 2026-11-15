@@ -1,0 +1,16 @@
+{
+  "classification": "READ_ONLY_SOURCE_REFERENCE_NOT_DEPLOYMENT_ATTESTATION",
+  "trading_commit": "a3cf8c597dad4d0c8acd2f589ac3f06b616615f5",
+  "source_hashes": {
+    "packages/audit/index.js": "fc2079e594320aaaa353480ec852d62587664114cec40b69552303f58013817a",
+    "packages/contracts/src/index.ts": "51196ea6ab69a86c8327674be25e1cd87018480e3dc52b2ed52da59d32201176",
+    "services/governance/imaf.js": "3008967aa3e170fcc75ab5baf21c576bbe81097af8aa0ba1313e4e43759cf05c",
+    "services/risk-gateway/evidence.js": "d883879b474153fb4e4f41431cbfafec03933057425d1bc48a64b917c3396adb"
+  },
+  "fixture_sha256": "d3aeb3123c053dfea761a2e45aaf2f2949715796687c02488dbc79c37ecbc241",
+  "policy_hashes_are": "synthetic identifiers, not Trading policy hashes",
+  "source_dirty_state": "not an attested reproducible deployment baseline",
+  "working_tree_status_sha256": "1d340cd752e00d11665a049d378577bdb035366e5d74fb21fb1f1ead2af1eff2",
+  "working_tree_diff_sha256": "d49aea91ce1d04a5e4d2774aaac78cadff4841e19401a5f1035543bd17f1fda6",
+  "baseline_disposition": "Read-only selected source references only; existing dirty Trading work preserved. Synthetic input does not require a deployed producer or imply clean integration baseline."
+}

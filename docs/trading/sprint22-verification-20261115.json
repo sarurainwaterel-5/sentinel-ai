@@ -1,0 +1,39 @@
+{
+  "actual_tradingview_export_schema_validated": false,
+  "adr_037_status": "Proposed",
+  "broker_connections": 0,
+  "checker_source_sha256": {
+    "cli.py": "6731c02816a5fa492a178cf7d0dba12ad271b7048faab993e9e432cf2f5c12c5",
+    "contracts.py": "a5e6e1fcff915264f2b701c3734ce7aecd5e6fbb50bad00a18a651613e612dc9",
+    "evaluator.py": "8eb2a5eb340e0da0134e9ca32f88c3859bd79d76a12747417090ede70a9096d4",
+    "reader.py": "c22039717014f7fc3665328042b36f24f7107c7383de222797320104ac25ad33",
+    "report.py": "d1b68488726119a1cb8d346a6de7809fce5de64bfe64889ddabbca8b7bc19475"
+  },
+  "csv_semantic_mapping_implemented": false,
+  "deployments": 0,
+  "execution_authorized": false,
+  "human_review": "pending",
+  "independent_account_risk_authorization_implemented": false,
+  "live_authorized": false,
+  "model_calls": 0,
+  "next_step": "Human review of synthetic report and manual actual paper CSV capture; versioned real export mapping needs evidence.",
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "recorded_local_date": "2026-11-15",
+  "scope": "Offline synthetic contract/evaluator/report and manual CSV framing capture only.",
+  "strategy_reconstruction_implemented": false,
+  "synthetic_fixture_sha256": "f8d23bfaeaeaaa9d175bc3808774de76628e4631b1d47101d30921b124ffdaca",
+  "synthetic_html_sha256": "aa1a96830de72ff166c9af26df7546cff625d532b2c6df730573bc645da75262",
+  "synthetic_report_sha256": "3cab8e9efe86dbccd97ae2878a82066088a8b2bf79b85f098071e19ef20ba631",
+  "test_log_sha256": "1ba78971d1826044b0a84e494f4185d21dc234287b46d206be5d403d5dc319bb",
+  "tests": {
+    "failed": 0,
+    "full_backend_regression_run": false,
+    "passed": 73,
+    "skipped": 0
+  },
+  "trading_baseline": "Read-only selected source references; existing dirty work retained.",
+  "trading_source_unchanged": true,
+  "tradingview_capture_source_sha256": "d38fb74e64316b6ec79a54b9dc996d85a78c60383e935bf04b781429cb13c4a7",
+  "version": "sprint22-offline-paper-oversight-verification-v0.1"
+}

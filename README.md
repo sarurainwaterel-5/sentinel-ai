@@ -41,6 +41,13 @@ Constitutional semantic judgment remains explicitly unassessed. Planning,
 verification, and reflection do not authorize execution. ADR-037 and its
 independent semantic acceptance gate remain open for review.
 
+## Offline paper-trading oversight
+
+Sprint 22 starts with an offline advisory report and manual TradingView Paper Trading
+CSV evidence capture. It has no order, broker, data-feed or trading-control access.
+See [the implemented boundary](docs/trading/OVERSIGHT_V0_1.md) and
+[the TradingView paper workflow](docs/trading/TRADINGVIEW_PAPER_WORKFLOW.md).
+
 ## Development and verification
 
 ```sh

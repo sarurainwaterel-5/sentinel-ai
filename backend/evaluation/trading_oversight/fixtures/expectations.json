@@ -1,0 +1,14 @@
+{
+  "scope": {
+    "organization_id": "synthetic-research",
+    "account_id": "synthetic-tv-paper",
+    "environment": "PAPER"
+  },
+  "policy_hashes": {
+    "strategy": "acfd6250f823846cb00d9e36cd02310a09a6af6c9b6c4bc70dc23be7e40523d2",
+    "risk": "04a26ec731e1440bf3316bbce45057da1fcafefff9d1225e9f8f7f31bfa37e8c",
+    "imaf_definition": "737383c623c7bb46f3c5de3396c7d1c8b5336261a0a935826ecc0a4c59b12f08",
+    "imaf_policy": "3ccdf97544128f6a2151d0529df78d686ab6fc34ed1716299540745b8dcbbdff"
+  },
+  "now": "2026-11-15T12:00:00.000Z"
+}
