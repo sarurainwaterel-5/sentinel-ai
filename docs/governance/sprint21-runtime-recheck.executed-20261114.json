@@ -1,0 +1,29 @@
+{
+  "additional_call_budget_explicitly_approved": 3,
+  "attempted_calls": 3,
+  "cases": [
+    {
+      "attempted_calls": 3,
+      "case_id": "actual-corpus-2",
+      "document_id": "582216e3-9c29-5de8-b51e-ef00dc28b2e5",
+      "html_sha256": "9f7bc939b76588658c7293c86543f3506fbc3e18da1b70fcba35d89baf9e3300",
+      "json_sha256": "e13e604e83ba458741b146c70b8d9c800766e1e87e9b712ca74dbe78fe166099",
+      "publication_id": "8ac7b51876b55b4293aeb05b85b6cad1153e3931229f3c92",
+      "status": "inspection_only"
+    }
+  ],
+  "gate_sha256": "cf728d6c79084d4568b59b0bfc844e85bd8fd1741abf5c38444e3cb0ddafd5dd",
+  "human_review": "pending",
+  "max_calls": 3,
+  "prior_attempted_calls": 4,
+  "prior_record": "docs/governance/sprint21-runtime-review.executed-20261114.json",
+  "private_review_index_sha256": "4b0492c32932da9738ffe313ad85e910d1a1e7076c39c5513b50e0a3309f0836",
+  "production_enabled": false,
+  "prompt_fix_commit": "ab01b65",
+  "proposition_to_inference": "closed",
+  "recorded_local_date": "2026-11-14",
+  "release_authorized": false,
+  "structural_contract_recheck_passed": true,
+  "total_attempted_calls_across_runs": 7,
+  "version": "sprint21-actual-corpus-runtime-review-v1"
+}

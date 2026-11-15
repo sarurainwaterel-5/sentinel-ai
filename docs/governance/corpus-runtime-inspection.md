@@ -25,7 +25,10 @@ that exact contract, preserving direction and relationship kind and distinguishi
 hypothesis references from assertions of truth. Structural and semantic rejection
 checks are unchanged. The focused transport/inspection suite passed 75 tests.
 
-A corrected live recheck is pending additional call-budget approval: four of the
-original six calls were used, and a complete single-case recheck can require three.
-The original failed record remains intact; local tests do not establish that the
-actual-corpus case now passes. Production remains disabled.
+The owner subsequently approved up to three additional calls. The corrected
+single-case recheck used three calls and passed structural, statement and relevance
+checks, producing a checked inspection-only publication. Seven calls were attempted
+across the original and recheck runs. The original failed record remains intact.
+Both actual-corpus cases now have private inspection exports pending human review;
+this bounded result does not establish general accuracy or production acceptance.
+See `sprint21-runtime-recheck.executed-20261114.json`. Production remains disabled.

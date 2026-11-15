@@ -36,7 +36,7 @@
   },
   "release_authorized": false,
   "retained_chunks": 50298,
-  "runtime_followup": "One of two actual-corpus cases was withheld: structure_rejected; see sprint21-runtime-review.executed-20261114.json. No retry attempted.",
+  "runtime_followup": "Corrected second case passed the separately approved three-call recheck; both cases have inspection-only results pending human review. Original withheld record retained. See sprint21-runtime-recheck.executed-20261114.json.",
   "test_results": {
     "passed": 2431,
     "skipped": 8,
