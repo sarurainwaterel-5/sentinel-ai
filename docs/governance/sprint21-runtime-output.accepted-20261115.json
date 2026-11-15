@@ -1,0 +1,45 @@
+{
+  "accepted_cases": [
+    {
+      "case_id": "actual-corpus-1",
+      "execution_record": "docs/governance/sprint21-runtime-review.executed-20261114.json",
+      "execution_record_sha256": "b701cf847d8f69111c850913521a2c2b790b4dd992b3a34914ae97e127b46208",
+      "html_sha256": "6d2b7e699ddfdaaf08c604d689f1184740256c58a975ab34dd8f70979ea0f4be",
+      "json_sha256": "bf878da80553e356676f0469db8c844eb56c9d81a3c43e589c73d0448bfae368",
+      "publication_id": "1ad6850c000dddda8c9febb604921d634dae94433e5ab3c2"
+    },
+    {
+      "case_id": "actual-corpus-2",
+      "execution_record": "docs/governance/sprint21-runtime-recheck.executed-20261114.json",
+      "execution_record_sha256": "23baa5fecef589e5103d0a54d97baf34a3f75e9a5a2d84c99e9cd48cc4b39f5b",
+      "html_sha256": "9f7bc939b76588658c7293c86543f3506fbc3e18da1b70fcba35d89baf9e3300",
+      "json_sha256": "e13e604e83ba458741b146c70b8d9c800766e1e87e9b712ca74dbe78fe166099",
+      "publication_id": "8ac7b51876b55b4293aeb05b85b6cad1153e3931229f3c92"
+    }
+  ],
+  "accepted_review_index_sha256": "4b0492c32932da9738ffe313ad85e910d1a1e7076c39c5513b50e0a3309f0836",
+  "adr_037_status": "Proposed",
+  "approval_text": "sprint 21 runtime-output is accepted lets do next step",
+  "complete_ocr_transcription_approved": false,
+  "limitations": [
+    "Does not accept complete OCR transcription or promote quarantined material.",
+    "Does not resolve deployed transport versus tested checkout drift.",
+    "Does not authorize broker connectivity, live trading or autonomous execution.",
+    "Prior execution and audit artifacts remain historical and unchanged."
+  ],
+  "ocr_disposition": "pending_owner_decision",
+  "prior_structure_rejection_preserved": true,
+  "production_enabled": false,
+  "production_presentation_review_approved": false,
+  "proposition_to_inference": "closed",
+  "recorded_at_utc": "2026-11-15T16:23:31Z",
+  "recorded_local_date": "2026-11-15",
+  "release_authorized": false,
+  "reviewer": "workspace_owner",
+  "reviewer_identity_source": "Explicit user statement in current conversation; no independent identity attestation",
+  "runtime_output_review_accepted": true,
+  "scope": "Exact original successful actual-corpus case 1 and corrected recheck case 2, including displayed sources, qualifications and limitations. Historical exports; no general accuracy or production acceptance.",
+  "semantic_grounding_verified": false,
+  "status": "accepted_with_inspection_limitations",
+  "version": "sprint21-runtime-output-owner-acceptance-v1"
+}

@@ -1,11 +1,36 @@
-# Sprint 21 current completion status — updated 2026-11-13
+# Sprint 21 current completion status — updated 2026-11-15
 
 **Sprint remains open.** Implementation authorization is not a measurement,
 independent semantic acceptance, migration approval on an exact final target,
 or acceptance of unseen runtime answers. Production answering remains disabled;
 ADR-037 stays Proposed and proposition-to-inference stays closed.
 
-## Latest engineering checkpoint
+## Current owner decision — November 15
+
+The owner explicitly accepted the two exact actual-corpus runtime outputs: the
+original successful case 1 and corrected recheck case 2. The new hash-bound
+[acceptance record](../governance/sprint21-runtime-output.accepted-20261115.json)
+preserves the original structural rejection and all earlier execution receipts.
+This accepts bounded inspection exports, not production answer authorization.
+
+The remaining human closeout decision is complete 18-page OCR review or explicit
+deferral with the original quarantine preserved. That disposition is pending;
+Sprint 21 is not yet declared closed. Latest recorded source evidence has
+71 active documents, five archived and 50,281 active index points; see the
+[November 14 source receipt](../governance/sprint21-source-closeout.installed-20261114.json).
+The November 15 audit also observed deployed transport versus tested-checkout
+drift. No deployment or model call follows from this acceptance.
+
+The proposed next development increment is a deterministic, offline, account-scoped
+paper-oversight contract/report. It does not need broker connectivity, new agents,
+production governed answering or changes to Trading's entry lock. Implementation
+awaits the current closeout/scope disposition; no execution capability is granted.
+
+## Historical engineering checkpoints
+
+The entries below preserve their original dates and evidence scopes. Historical
+pending-review statements are superseded only by explicit later acceptance records.
+
 
 [The governed source-inspection rollout is now verified complete](Sprint-21-Governed-Workspace-Completed-2026-11-13.md): 69 active documents, five archived, two quarantined, and all 46,299 migrated chunks retained. Final full-corpus and 42-check HTTP verification passed. Production answering remains disabled.
 

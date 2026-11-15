@@ -32,3 +32,13 @@ across the original and recheck runs. The original failed record remains intact.
 Both actual-corpus cases now have private inspection exports pending human review;
 this bounded result does not establish general accuracy or production acceptance.
 See `sprint21-runtime-recheck.executed-20261114.json`. Production remains disabled.
+
+
+## Owner output acceptance, November 15
+
+The owner accepted the exact original successful case 1 and corrected case 2
+exports. `sprint21-runtime-output.accepted-20261115.json` binds both JSON/HTML pairs,
+the execution receipts and combined review page. Earlier pending-review statements
+remain historical. Complete OCR disposition is still pending. This bounded output
+acceptance does not approve production presentation, ADR-037, broker access or
+execution, and does not resolve deployment/source drift.
