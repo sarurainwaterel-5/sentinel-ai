@@ -12,7 +12,6 @@
   },
   "extraction_policy_sha256": "5d4b8217f1bdcb72d1fcca80ef5b241a39b5a57a251440791a36765b125e15ad",
   "human_review_pending": [
-    "explicit_external_excerpt_dispatch_permission",
     "actual_corpus_runtime_output_acceptance",
     "complete_18_page_ocr_transcription_review"
   ],
@@ -37,6 +36,7 @@
   },
   "release_authorized": false,
   "retained_chunks": 50298,
+  "runtime_followup": "One of two actual-corpus cases was withheld: structure_rejected; see sprint21-runtime-review.executed-20261114.json. No retry attempted.",
   "test_results": {
     "passed": 2431,
     "skipped": 8,

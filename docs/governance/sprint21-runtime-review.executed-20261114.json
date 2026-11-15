@@ -1,0 +1,33 @@
+{
+  "attempted_calls": 4,
+  "cases": [
+    {
+      "attempted_calls": 3,
+      "case_id": "actual-corpus-1",
+      "document_id": "9e5be25d-e5f4-50d2-831a-84b54c7a0653",
+      "html_sha256": "6d2b7e699ddfdaaf08c604d689f1184740256c58a975ab34dd8f70979ea0f4be",
+      "json_sha256": "bf878da80553e356676f0469db8c844eb56c9d81a3c43e589c73d0448bfae368",
+      "publication_id": "1ad6850c000dddda8c9febb604921d634dae94433e5ab3c2",
+      "status": "inspection_only"
+    },
+    {
+      "attempted_calls": 1,
+      "case_id": "actual-corpus-2",
+      "document_id": "582216e3-9c29-5de8-b51e-ef00dc28b2e5",
+      "reason": "structure_rejected",
+      "status": "withheld"
+    }
+  ],
+  "external_dispatch_explicitly_approved": true,
+  "gate_sha256": "7eda4610cebeddd8b6ead68f913e27dc94484d43c5c23c9345a16ec9b3a10a62",
+  "human_review": "pending",
+  "max_calls": 6,
+  "private_review_index_sha256": "6a3efcd7c851da220f6dec9e8d0392221033bb72b3946a8bc2b67e3d05caa7c7",
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "recorded_local_date": "2026-11-14",
+  "release_authorized": false,
+  "retry_attempted": false,
+  "two_case_evaluation_passed": false,
+  "version": "sprint21-actual-corpus-runtime-review-v1"
+}

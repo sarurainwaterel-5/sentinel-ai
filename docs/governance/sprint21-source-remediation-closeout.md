@@ -91,6 +91,10 @@ All retained source/chunk CAS hashes and the original public tables were checked
 
 The private 18-page OCR review packet is assembled; complete transcription
 acceptance remains pending. The actual-corpus model review is implemented and
-locally tested; external dispatch requires explicit approval of its prepared
-four excerpts and at most six model calls. No production authority follows from
-these source changes or local tests.
+locally tested. On November 14 the owner explicitly approved the prepared four
+excerpts and at most six calls. The bounded execution attempted four calls: one
+case produced a checked inspection-only publication; the second was withheld
+after generation with `structure_rejected`. No retry was attempted. The two-case
+evaluation is incomplete and human output review remains pending. See
+`sprint21-runtime-review.executed-20261114.json`. No production authority follows
+from these source changes, local tests or the partial runtime result.
