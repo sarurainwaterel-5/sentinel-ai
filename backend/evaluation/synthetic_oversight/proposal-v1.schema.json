@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sentinel:synthetic:proposal:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "environment",
+    "event_id",
+    "proposal_id",
+    "correlation_id",
+    "account_id",
+    "event_type",
+    "revision",
+    "occurred_at",
+    "market_data_as_of",
+    "instrument",
+    "direction",
+    "entry_ticks",
+    "stop_ticks",
+    "target_ticks",
+    "quantity",
+    "risk",
+    "strategy",
+    "evidence",
+    "authority"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "sentinel.synthetic.proposal.v1"
+    },
+    "environment": {
+      "const": "SYNTHETIC"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_.:-]+$"
+    },
+    "proposal_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_.:-]+$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_.:-]+$"
+    },
+    "account_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_.:-]+$"
+    },
+    "event_type": {
+      "enum": [
+        "PROPOSAL_SUBMITTED",
+        "PROPOSAL_REVISED",
+        "PROPOSAL_WITHDRAWN"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "occurred_at": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "market_data_as_of": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "instrument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "symbol",
+        "contract_month"
+      ],
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "contract_month": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+        }
+      }
+    },
+    "direction": {
+      "enum": [
+        "long",
+        "short"
+      ]
+    },
+    "entry_ticks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "stop_ticks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "target_ticks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "max_loss_cents",
+        "expected_costs_cents",
+        "evidence_refs"
+      ],
+      "properties": {
+        "policy_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "max_loss_cents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000000
+        },
+        "expected_costs_cents": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000
+        },
+        "evidence_refs": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy_id",
+        "version",
+        "evidence_refs"
+      ],
+      "properties": {
+        "strategy_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "evidence_refs": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sha256",
+          "body"
+        ],
+        "properties": {
+          "sha256": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "body": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "policy_id",
+              "assertion"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "STRATEGY",
+                  "RISK"
+                ]
+              },
+              "policy_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "assertion": {
+                "const": "SYNTHETIC_FIXTURE"
+              }
+            }
+          }
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "advisory_only",
+        "execution_authorized",
+        "live_authorized"
+      ],
+      "properties": {
+        "advisory_only": {
+          "const": true
+        },
+        "execution_authorized": {
+          "const": false
+        },
+        "live_authorized": {
+          "const": false
+        }
+      }
+    }
+  }
+}

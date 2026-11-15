@@ -4,6 +4,11 @@ Status: first bounded implementation, November 15, 2026. Human report review and
 actual TradingView export mapping remain pending. This is not a connected trading
 integration or production authorization.
 
+The later [Phase 1 synthetic integration harness](../integration/phase1/RUNBOOK.md)
+is a separate additive proposal-event protocol. It is implemented and tested across
+both repositories, but does not map real TradingView CSVs, change this snapshot
+contract, reconstruct real strategy evidence or authorize any trading.
+
 Follow-up status: [Sprint 22 completion record](../sprints/Sprint-22-Completion-Status.md).
 The capture manifest is now v0.2, adding operator-supplied per-file export tab
 labels while keeping coverage UNKNOWN and semantic mapping NOT_IMPLEMENTED.
