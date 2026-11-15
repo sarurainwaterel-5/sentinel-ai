@@ -1,5 +1,9 @@
 # IMAF canonical specification v0.2 — doctrine reconciliation draft
 
+**DRAFT — NOT APPROVED FOR EXECUTION.**
+
+Historical partial review retained from commit 4a7fab5. The full mission was later supplied; current completed review package starts at [IMAF_CANONICAL_SPEC_V0.2_DRAFT.md](IMAF_CANONICAL_SPEC_V0.2_DRAFT.md). Statements below about missing instructions describe that earlier review only.
+
 Date: 2026-11-15. Status: PARTIAL_REVIEW_DRAFT_AWAITING_MISSION_REMAINDER.
 Conceptual owner decisions are authoritative preferences, not approved executable
 predicates. No strategy, schema, pin, registry, calendar or authority change.
@@ -30,7 +34,7 @@ Source keys below are repository-relative, with exact SHA-256 in SOURCE_MANIFEST
 - **R**: Trading `research/governance/IMAF-OPERATIONAL-QUESTIONS.json`;
   four question IDs remain unapproved. `boundaries` remain separate hard limits.
 - **T**: Trading `services/governance/imaf.js`, `IMAF_CANON`, `ICT_TIMEFRAMES`,
-  `evaluateImaf` records; `docs/architecture/ADR-005-imaf-governance.md`.
+  `buildImafDecision` records; `docs/architecture/ADR-005-imaf-governance.md`.
 - **S**: Sentinel `backend/evaluation/synthetic_oversight/strategy/specification-v1.json`;
   `rules`, `mission_policy`, `hierarchy`, `unresolved`, `additional_unresolved`.
 - **E**: adjacent `evaluator.mjs`, `evaluateStrategyReview`, observation rule IDs

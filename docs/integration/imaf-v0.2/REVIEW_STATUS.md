@@ -1,26 +1,45 @@
-# Review status — canonical v0.2
+# Canonical v0.2 review status
 
-Completed bounded work: source review, exact manuscript hash verification, visually
-checked canon sequence/worksheet, eleven-to-ten-stage mapping, and reconciliation
-of all twelve owner decisions against manuscript, existing v0.1 proposal, pinned
-Phase 3 specification, evaluator and governance registry.
+**DRAFT — NOT APPROVED FOR EXECUTION.**
 
-Partial deliverable: [DOCTRINE_RECONCILIATION.md](DOCTRINE_RECONCILIATION.md).
-[Source manifest](SOURCE_MANIFEST.json) pins the inspected inputs. This is a review
-companion to Trading's existing operational proposal lineage, not approved doctrine.
+Documentation mission complete; executable canonical specification remains unapproved.
+The full M2 mission supplied the missing sections 5–11. The earlier partial review
+from local commit 4a7fab5 is retained and clearly labeled historical.
 
-Checks executed: twelve decision sections present; source manifest hashes verified;
-four registry questions still approvedDefinition:null; all inspected tracked source
-files byte-identical to Sentinel 70d5bd9 / Trading a726709; git diff whitespace check.
-No runtime tests run because no executable logic, policy or configuration changed.
-Previous Phase 3 tests do not validate future v0.2 predicates.
+Start at [IMAF_CANONICAL_SPEC_V0.2_DRAFT.md](IMAF_CANONICAL_SPEC_V0.2_DRAFT.md) for the
+seven required deliverables. Source manifest preserves every original source entry
+and adds the complete replacement mission hash. All conceptual decisions remain
+separate from approved executable semantics.
 
-Blocking missing information: the supplied mission ends at the heading
-“5. FORMAL PREDICATE DESIGN.” The formal-design instructions, possible later sections,
-deliverables and completion criteria were not supplied. Remainder requested; no
-assumption made about that missing scope. Full mission completion is not claimed.
+## Executed documentation verification
 
-Next action: obtain the remaining mission text, then complete its formal design and
-specified review artifacts without activating policy or modifying strategy logic.
-No executable approvals, registry resolution, thresholds, deployments, broker/data
-connections, pushes or merges. Existing Trading user edits preserved.
+- Seven required named documents exist with the exact draft/no-execution banner.
+- Twenty-two unique predicate records each contain all fifteen requested fields
+  plus a literal `Executable predicate: null`.
+- Twelve structured owner decisions include source, gap, conflict, exact question
+  and implementation/approval status.
+- Eight conflict classes and six circularity cases are recorded.
+- Sixteen pinned sources match their recorded SHA-256; previous manifest source
+  entries are preserved. The authoritative manuscript identity is unchanged.
+- Four existing governance approvedDefinition values remain null.
+- Local Markdown links resolve. Git diff whitespace check passes.
+- Tracked changes are confined to this documentation directory. Trading's worktree
+  status matches the initial user-edit inventory; no Trading files were written.
+
+Raw structural-check summary is retained outside Git at workspace
+`outputs/imaf-canonical-v0.2/review-validation.json`. Checks were executed using a
+one-off local documentation validation script, not added to either runtime.
+No runtime/strategy tests were run for this documentation-only change; historical
+Phase3 test results do not validate future canonical predicates.
+
+## Remaining owner decision
+
+D12 first: choose the causal discovery event/window-endpoint convention and the
+source/rule for a finite nonextending expiry. OWNER_DECISION_REGISTER.md gives the
+exact question and narrower proposed initial synthetic scope. D1 can follow for
+initial rejection observations; all other substantive choices are recorded, not
+asked as simultaneous approval questions. No implementation begins in this mission.
+
+Execution DENIED; no strategy/contract/pin/risk/registry changes, new thresholds,
+calendar retrieval, broker/live data, deployments, pushes or merges. Historical
+commits/evaluators/replay artifacts and unrelated user edits are preserved.

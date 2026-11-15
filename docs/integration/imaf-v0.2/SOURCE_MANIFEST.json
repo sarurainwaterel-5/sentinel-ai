@@ -1,12 +1,12 @@
 {
   "id": "IMAF-CANONICAL-v0.2-RECONCILIATION-SOURCES",
-  "status": "PARTIAL_REVIEW_DRAFT_AWAITING_MISSION_REMAINDER",
+  "status": "DOCUMENTATION_REVIEW_COMPLETE_DRAFT_NOT_APPROVED_FOR_EXECUTION",
   "baselines": {
     "sentinel": "70d5bd9",
     "trading": "a726709"
   },
-  "mission_last_heading": "5. FORMAL PREDICATE DESIGN",
-  "mission_complete": false,
+  "mission_last_heading": "11. COMPLETION CRITERIA",
+  "mission_complete": true,
   "executable_predicates_approved": false,
   "execution_authorized": false,
   "sources": {
@@ -69,6 +69,11 @@
     "sentinel:docs/integration/phase3/READINESS.md": {
       "path": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/sentinel-ai/docs/integration/phase3/READINESS.md",
       "sha256": "3e5aedd292c058d84b34b17b82a87b1fc6e60aaa4d8545d26a8877df269c0e14"
+    },
+    "M2": {
+      "path": "/home/rain/.codex/attachments/8517abb9-7902-408a-9c6f-febff29c189a/Pasted text.txt",
+      "sha256": "df65047dcf3dc507102fc7554591ba5a7119ad14d83893cdeff0b47ff94c317a"
     }
-  }
+  },
+  "mission_complete_meaning": "Full mission text received; documentation review complete, executable predicates unapproved"
 }
