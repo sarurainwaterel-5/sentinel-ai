@@ -8,7 +8,7 @@ import {initializeStore,openDurableStore} from './durable.mjs';
 import {canonical,syntheticProposal} from './protocol.mjs';
 test('Durable runtime import graph excludes network, broker, execution and credential clients',()=>{
  const source=readFileSync(new URL('./durable.mjs',import.meta.url),'utf8');
- assert.deepEqual([...source.matchAll(/from\s+'([^']+)'/g)].map(x=>x[1]),['node:sqlite','node:fs','node:path','node:crypto','./protocol.mjs']);
+ assert.deepEqual([...source.matchAll(/from\s+'([^']+)'/g)].map(x=>x[1]),['node:sqlite','node:fs','node:path','node:crypto','./protocol.mjs','./strategy/evaluator.mjs']);
  assert.equal(/process\.env|fetch\s*\(|\bspawn\s*\(|\bexecFile\s*\(/.test(source),false);
 });
 test('Durable security tests run with active socket and fetch denial',()=>{

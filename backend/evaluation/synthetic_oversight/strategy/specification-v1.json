@@ -1,0 +1,103 @@
+{
+  "id": "sentinel.imaf.research-subset.v1",
+  "status": "RESEARCH_RULES_NOT_APPROVED_CANON",
+  "source_commit": "61bb7dd",
+  "source_files": {
+    "packages/ict-model/index.js": "c06a17e37139ad93ad997761b91f1bee3d79fa0608ca86d915c756a6806c8a1b",
+    "packages/ict-model/context.js": "299a8bf8586d5b1a69421d18891913af45d59eea5b0371d207829ac743ae6818",
+    "packages/config/ict-research.js": "a757c04f002e44da5985961a4fa282c4c5fea80c7af0e13b085d5801162c8fd1",
+    "services/signal-engine/ict-proposal.js": "86f0928716f4647ffa2b91be2bd9d5b252b5dbd8a8397a2c9029a0a0882a22a5",
+    "services/governance/imaf.js": "3008967aa3e170fcc75ab5baf21c576bbe81097af8aa0ba1313e4e43759cf05c",
+    "research/governance/IMAF-OPERATIONAL-QUESTIONS.json": "cc940b00390a6bd9c18aadafc1c6a8f9631e499a3ab2bebb1f8440f100e1439e",
+    "research/governance/proposals/imaf-operational-v0.1.json": "44ce12ee508a6382e6c8caae444b360d1a09882eaf2d793d84f255561c3f9d60",
+    "docs/strategy/STRATEGY-001.md": "4faa796a1d3a74632cec9cb98074b9cdf420137a060f4e0595fbafd0dffd0442",
+    "docs/architecture/ADR-005-imaf-governance.md": "70d315d5c512b313b1b5d452dfd5825390b3d6786b19d6f1695f4d4b25ea8ee9",
+    "docs/architecture/IMAF-GAP-001.md": "66d1c25159578aa5bf9ebbcb64f295a7ae3b8c2f3948991cdd0fdd1f98d0ecfd"
+  },
+  "research_strategy": "ict-paper-validation-v1",
+  "rules": {
+    "swing_left": 1,
+    "swing_right": 1,
+    "baseline_bars": 3,
+    "min_body_ticks": 1,
+    "min_gap_ticks": 1,
+    "stop_buffer_ticks": 1,
+    "body_ratio_num": 7,
+    "body_ratio_den": 10,
+    "range_multiple_num": 3,
+    "range_multiple_den": 2,
+    "ote_min_num": 62,
+    "ote_max_num": 79,
+    "ote_den": 100,
+    "net_reward_risk": 2,
+    "tick_value_cents": 50,
+    "max_quantity": 1,
+    "planned_risk_cents": 5000,
+    "daily_loss_cents": 10000
+  },
+  "mission_policy": {
+    "timezone": "America/New_York",
+    "early_windows": [
+      [
+        "08:30:00",
+        "08:35:00"
+      ],
+      [
+        "08:50:00",
+        "08:55:00"
+      ],
+      [
+        "09:10:00",
+        "09:15:00"
+      ]
+    ],
+    "window_boundary": "START_INCLUSIVE_END_EXCLUSIVE_SYNTHETIC_CONVENTION",
+    "after_0930": "EXPLICIT_OPPORTUNITY_AND_SESSION_BOUNDARIES_REQUIRED",
+    "max_trades_per_ny_day": 1,
+    "execution_error_pause_hours": 48,
+    "source": "Owner Phase 3 mission, 2026-11-15; not a change to Trading runtime governance"
+  },
+  "hierarchy": {
+    "14400000": 900000,
+    "3600000": 300000,
+    "900000": 60000,
+    "300000": 15000
+  },
+  "unresolved": [
+    {
+      "id": "LIQUIDITY_ACCEPTANCE_REJECTION_OPERATIONAL_DEFINITION",
+      "source": "Current Canon 2 and 9",
+      "question": "What observable closed-price conditions establish acceptance or rejection after acquisition, including persistence, follow-through, contradictory evidence and invalidation?",
+      "approvedDefinition": null
+    },
+    {
+      "id": "ACCEPTED_STRUCTURAL_TRANSITION_OPERATIONAL_DEFINITION",
+      "source": "Current Canon 4",
+      "question": "What observable sequence establishes acceptance of new auction structure, beyond a line break, and when does it become invalid?",
+      "approvedDefinition": null
+    },
+    {
+      "id": "NARRATIVE_COHERENCE_OPERATIONAL_DEFINITION",
+      "source": "Current Canon 5, 6 and 9",
+      "question": "What deterministic evidence relations support a coherent falsifiable narrative, including conflicting higher timeframes and contradictory participation?",
+      "approvedDefinition": null
+    },
+    {
+      "id": "DISCOVERY_WINDOW_AND_SETUP_EXPIRY_POLICY",
+      "source": "Owner implementation directive; Current Canon Time",
+      "question": "Confirm discovery timezone, post-09:30 cutoff, setup expiry, and the production definition of meaningful windows. How does expiry propagate across each required setup/execution timeframe pair?",
+      "approvedDefinition": null
+    }
+  ],
+  "additional_unresolved": [
+    "HTF_DIRECTIONAL_BIAS_AND_CONFLICT_RESOLUTION",
+    "PD_ARRAY_SELECTION_AND_NARRATIVE_ALIGNMENT",
+    "OUT_OF_BALANCE_OPERATIONAL_DEFINITION",
+    "LIQUIDITY_SIGNIFICANCE_AND_TARGET_RANKING",
+    "INDEPENDENT_PARTICIPATION_CRITERIA",
+    "TRADING_DAY_ROLLOVER_AND_CALENDAR_AUTHORITY"
+  ],
+  "execution_authorized": false,
+  "live_authorized": false,
+  "mission_sha256": "6723749a71d5fe71ecb07719b5068d461d0afb7254f8f12975892461daebfd0d"
+}

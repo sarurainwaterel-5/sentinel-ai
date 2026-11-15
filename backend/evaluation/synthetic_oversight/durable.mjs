@@ -4,6 +4,7 @@ import {readFileSync,openSync,closeSync,lstatSync,unlinkSync,realpathSync} from 
 import {resolve,dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {validateWire,createHarness,verifyJournal,VERSION} from './protocol.mjs';
+import {evaluateStrategyReview,verifyStrategyAssessment} from './strategy/evaluator.mjs';
 const authority=()=>({advisory_only:true,execution_authorized:false,live_authorized:false});
 const hash=s=>createHash('sha256').update(s).digest('hex');
 // Storage envelopes include canonical wire as a string and a larger history array.
@@ -26,6 +27,8 @@ const MAX_RECORDS=4096;
 function dependencies() {
  return {evaluator_sha256:hash(readFileSync(new URL('./protocol.mjs',import.meta.url))),schema_sha256:hash(readFileSync(new URL('./proposal-v1.schema.json',import.meta.url))),wrapper_sha256:hash(readFileSync(new URL('./durable.mjs',import.meta.url))),node_version:process.versions.node};
 }
+function strategyDependencies(){return {evaluator_sha256:hash(readFileSync(new URL('./strategy/evaluator.mjs',import.meta.url))),specification_sha256:hash(readFileSync(new URL('./strategy/specification-v1.json',import.meta.url))),node_version:process.versions.node,icu_version:process.versions.icu??'UNKNOWN',tz_version:process.versions.tz??'UNKNOWN'};}
+function validStrategyArchive(review){return review&&review.bindings.snapshot_sha256===hash(canonical(review.snapshot))&&review.bindings.assessment_sha256===hash(canonical(review.assessment))&&review.bindings.specification_sha256===hash(review.specification_text)&&verifyStrategyAssessment(review.assessment);}
 function filePath(path,exists=true) {
  if(typeof path!=='string'||!path||path===':memory:')throw Error('EXPLICIT_DISK_PATH_REQUIRED');
  const full=resolve(path),parent=dirname(full);
@@ -72,6 +75,7 @@ function inspect(db) {
   if(row.kind==='DECISION'||row.kind==='INVALID'){
    if(typeof payload.wire!=='string'||hash(payload.wire)!==payload.input_hash||!verifyJournal([payload.assessment])||payload.assessment.input_hash!==payload.input_hash)throw Error('PAYLOAD_INTEGRITY');
   }
+  if(payload.strategy_review&&(!validStrategyArchive(payload.strategy_review)||canonical(payload.strategy_review.snapshot.proposal)!==payload.wire||payload.strategy_review.assessment.proposal_id!==payload.proposal_id))throw Error('STRATEGY_ARCHIVE_INTEGRITY');
   if(row.kind==='DECISION'){
    const p=JSON.parse(payload.wire);
    if(p.proposal_id!==payload.proposal_id||p.event_id!==payload.event_id||p.correlation_id!==payload.correlation_id||p.proposal_id!==payload.assessment.proposal_id)throw Error('IDENTITY_INTEGRITY');
@@ -81,7 +85,7 @@ function inspect(db) {
   if(row.kind==='REPLAY'||row.kind==='CONFLICT'){
    const original=records.find(r=>r.kind==='DECISION'&&r.record_id===payload.original_record_id);
    if(!original||original.payload.assessment.assessment_id!==payload.original_assessment_id)throw Error('HISTORICAL_REFERENCE_INTEGRITY');
-   if(row.kind==='REPLAY'&&(!['REPLAY_MATCH','REPLAY_MISMATCH','REPLAY_UNAVAILABLE'].includes(payload.status)||(payload.reproduced_assessment!==null&&!verifyJournal([payload.reproduced_assessment]))))throw Error('REPLAY_INTEGRITY');
+   if(row.kind==='REPLAY'&&(!['REPLAY_MATCH','REPLAY_MISMATCH','REPLAY_UNAVAILABLE'].includes(payload.status)||(payload.reproduced_assessment!==null&&!verifyJournal([payload.reproduced_assessment]))||(payload.reproduced_strategy_assessment&&!verifyStrategyAssessment(payload.reproduced_strategy_assessment))))throw Error('REPLAY_INTEGRITY');
   }
   records.push({...base,record_hash:row.record_hash});previous=row.record_hash;
  }
@@ -95,7 +99,8 @@ function append(db,records,kind,payload) {
  const seq=records.length+1,previous_hash=records.at(-1)?.record_hash??'0'.repeat(64);
  const record_id='record:'+digest({kind,payload,seq,previous_hash});
  const base={seq,kind,record_id,payload,previous_hash},record_hash=digest(base);
- db.prepare('INSERT INTO audit_records(seq,kind,record_id,payload,previous_hash,record_hash) VALUES(?,?,?,?,?,?)').run(seq,kind,record_id,canonical(payload),previous_hash,record_hash);
+ const encoded=canonical(payload);if(encoded.length>131072)throw Error('STORE_BOUNDS');
+ db.prepare('INSERT INTO audit_records(seq,kind,record_id,payload,previous_hash,record_hash) VALUES(?,?,?,?,?,?)').run(seq,kind,record_id,encoded,previous_hash,record_hash);
  return {...base,record_hash};
 }
 export function openDurableStore({path}={}) {
@@ -109,8 +114,9 @@ export function openDurableStore({path}={}) {
  }
  function submit(wire,options={}){
   if(!options||typeof options!=='object'||Array.isArray(options))return denied('INVALID_REQUEST');
-  const {evaluationTime,serviceAvailable=true,supersedes=null}=options;
+  const {evaluationTime,serviceAvailable=true,supersedes=null,strategyReview=null}=options;
   if(typeof wire!=='string'||Buffer.byteLength(wire)>32768||!utc(evaluationTime)||typeof serviceAvailable!=='boolean'||(supersedes!==null&&typeof supersedes!=='string'))return denied('INVALID_REQUEST');
+  try{if(strategyReview!==null&&(Buffer.byteLength(canonical(strategyReview))>65536||canonical(strategyReview.proposal)!==wire))return denied('STRATEGY_PROPOSAL_OR_BOUNDS_MISMATCH');}catch{return denied('INVALID_REQUEST');}
   return transaction(({records,claims})=>{
    const {value:p}=validateWire(wire),input_hash=hash(wire);
    let identity=p;
@@ -121,18 +127,20 @@ export function openDurableStore({path}={}) {
     if(identical){
      const original=records[identical.record_seq-1];
      if(original.payload.supersedes!==supersedes)return conflict('SUPERSESSION_CONTEXT_CONFLICT',original);
-     return {status:'DUPLICATE',assessment:copy(original.payload.assessment),record:copy(original),authority:authority()};
+     if(canonical(original.payload.strategy_review?.snapshot??null)!==canonical(strategyReview))return conflict('STRATEGY_SNAPSHOT_CONFLICT',original);
+     return {status:'DUPLICATE',assessment:copy(original.payload.assessment),strategy_assessment:original.payload.strategy_review?copy(original.payload.strategy_review.assessment):null,record:copy(original),authority:authority()};
     }
     if(existing||event)return conflict(existing?'PROPOSAL_ID_CONFLICT':'EVENT_ID_CONFLICT',records[(existing??event).record_seq-1]);
    }
-   function conflict(reason,original){const record=append(db,records,'CONFLICT',{reason,input_hash,original_record_id:original.record_id,original_assessment_id:original.payload.assessment.assessment_id,proposal_id:identity.proposal_id??null,evaluated_at:evaluationTime,authority:authority()});return denied('CONFLICT',{reason,record});}
+   function conflict(reason,original){const record=append(db,records,'CONFLICT',{reason,input_hash,strategy_snapshot:strategyReview,strategy_snapshot_sha256:hash(canonical(strategyReview)),original_record_id:original.record_id,original_assessment_id:original.payload.assessment.assessment_id,proposal_id:identity.proposal_id??null,evaluated_at:evaluationTime,authority:authority()});return denied('CONFLICT',{reason,record});}
    if(supersedes!==null&&!records.some(r=>r.kind==='DECISION'&&r.payload.assessment.assessment_id===supersedes))return denied('SUPERSEDED_RECORD_NOT_FOUND');
    const assessment=createHarness({evaluationTime,serviceAvailable}).assess(wire).assessment;
    const context={contract_version:VERSION,...dependencies(),evidence_inventory_sha256:hash(canonical(p?.evidence??[])),evaluation_time:evaluationTime,service_available:serviceAvailable,evaluator_context:'ISOLATED_INITIAL_PROPOSAL'};
    const payload={wire,input_hash,proposal_id:p?.proposal_id??null,event_id:p?.event_id??null,correlation_id:p?.correlation_id??null,contract_version:VERSION,context,assessment,supersedes,authority:authority()};
+   if(strategyReview!==null){const strategyAssessment=evaluateStrategyReview(strategyReview,{evaluatedAt:evaluationTime});payload.strategy_review={snapshot:copy(strategyReview),assessment:strategyAssessment,specification_text:readFileSync(new URL('./strategy/specification-v1.json',import.meta.url),'utf8'),bindings:{...strategyDependencies(),snapshot_sha256:hash(canonical(strategyReview)),assessment_sha256:hash(canonical(strategyAssessment))}};}
    const record=append(db,records,p?'DECISION':'INVALID',payload);
    if(p)db.prepare('INSERT INTO proposal_claims(proposal_id,event_id,input_hash,assessment_id,record_seq,correlation_id) VALUES(?,?,?,?,?,?)').run(p.proposal_id,p.event_id,input_hash,assessment.assessment_id,record.seq,p.correlation_id);
-   return {status:p?'STORED':'INVALID',assessment,record,authority:authority()};
+   return {status:p?'STORED':'INVALID',assessment,strategy_assessment:payload.strategy_review?.assessment??null,record,authority:authority()};
   });
  }
  function replay(assessmentId,options={}){
@@ -142,7 +150,7 @@ export function openDurableStore({path}={}) {
   const outcome=transaction(({records})=>{
    const original=records.find(r=>r.kind==='DECISION'&&r.payload.assessment.assessment_id===assessmentId);
    if(!original)return denied('ASSESSMENT_NOT_FOUND');
-   const p=original.payload;let status='REPLAY_UNAVAILABLE',reason='HISTORICAL_DEPENDENCIES_UNAVAILABLE',reproduced=null;
+   const p=original.payload;let status='REPLAY_UNAVAILABLE',reason='HISTORICAL_DEPENDENCIES_UNAVAILABLE',reproduced=null,reproducedStrategy=null;
    try{
     if(p.context.contract_version!==VERSION||p.contract_version!==VERSION)reason='UNSUPPORTED_HISTORICAL_CONTRACT';
     else if(canonical(dependencies())!==canonical({evaluator_sha256:p.context.evaluator_sha256,schema_sha256:p.context.schema_sha256,wrapper_sha256:p.context.wrapper_sha256,node_version:p.context.node_version}))reason='EVALUATOR_OR_SCHEMA_UNAVAILABLE';
@@ -150,11 +158,16 @@ export function openDurableStore({path}={}) {
     else {
      const result=createHarness({evaluationTime:p.context.evaluation_time,serviceAvailable:p.context.service_available}).assess(p.wire).assessment;
      reproduced=result;status=canonical(result)===canonical(p.assessment)?'REPLAY_MATCH':'REPLAY_MISMATCH';reason=status==='REPLAY_MATCH'?'EXACT_HISTORICAL_MATCH':'ASSESSMENT_DIFFERS';
+     if(p.strategy_review){
+      const review=p.strategy_review,deps=strategyDependencies();
+      if(canonical(deps)!==canonical({evaluator_sha256:review.bindings.evaluator_sha256,specification_sha256:review.bindings.specification_sha256,node_version:review.bindings.node_version,icu_version:review.bindings.icu_version,tz_version:review.bindings.tz_version})){status='REPLAY_UNAVAILABLE';reason='STRATEGY_DEPENDENCIES_UNAVAILABLE';}
+      else{reproducedStrategy=evaluateStrategyReview(review.snapshot,{evaluatedAt:p.context.evaluation_time});if(canonical(reproducedStrategy)!==canonical(review.assessment)){status='REPLAY_MISMATCH';reason='STRATEGY_ASSESSMENT_DIFFERS';}}
+     }
     }
    }catch{}
-   const payload={original_record_id:original.record_id,original_assessment_id:assessmentId,replayed_at:replayedAt,status,reason,reproduced_assessment:reproduced,authority:authority()};
+   const payload={original_record_id:original.record_id,original_assessment_id:assessmentId,replayed_at:replayedAt,status,reason,reproduced_assessment:reproduced,reproduced_strategy_assessment:reproducedStrategy,authority:authority()};
    const record=append(db,records,'REPLAY',payload);
-   return {status,reason,assessment:null,reproduced_assessment:reproduced,record,recorded:true,authority:authority()};
+   return {status,reason,assessment:null,reproduced_assessment:reproduced,reproduced_strategy_assessment:reproducedStrategy,record,recorded:true,authority:authority()};
   });
   return outcome.status==='STORAGE_FAILURE_OR_INTEGRITY_ERROR'||outcome.status==='STORAGE_UNAVAILABLE'?denied('REPLAY_UNAVAILABLE',{reason:outcome.status,recorded:null}):outcome;
  }
