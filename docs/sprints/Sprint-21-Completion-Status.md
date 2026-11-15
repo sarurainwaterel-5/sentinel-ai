@@ -1,39 +1,45 @@
 # Sprint 21 current completion status — updated 2026-11-15
 
-**Sprint remains open.** Implementation authorization is not a measurement,
-independent semantic acceptance, migration approval on an exact final target,
-or acceptance of unseen runtime answers. Production answering remains disabled;
-ADR-037 stays Proposed and proposition-to-inference stays closed.
+**Sprint 21's bounded nonproduction source-inspection/runtime-review milestone is
+complete, with documented limits.** This closes the engineering/review scope;
+it does not authorize production answering, live trading or autonomous execution.
+ADR-037 remains Proposed and proposition-to-inference stays closed.
 
-## Current owner decision — November 15
+## Final bounded closeout — November 15
 
-The owner explicitly accepted the two exact actual-corpus runtime outputs: the
-original successful case 1 and corrected recheck case 2. The new hash-bound
-[acceptance record](../governance/sprint21-runtime-output.accepted-20261115.json)
-preserves the original structural rejection and all earlier execution receipts.
-This accepts bounded inspection exports, not production answer authorization.
+The owner accepted both exact actual-corpus outputs and completed/approved the
+18-page OCR review. The reviewed correction candidates were materialized without
+new text edits, bound to their original PDF and exact acceptance receipt, and
+ingested with Rain's existing `default/history/history/general` grant.
 
-The owner has now also completed and approved the exact 18-page OCR review.
-The [complete OCR acceptance record](../governance/sprint21-complete-ocr.accepted-20261115.json)
-binds all page images, raw OCR and linked partial-correction candidates. Both human
-review decisions are complete. Historical preparation manifests remain unchanged.
+The OCR version is active with all 55 chunks verified through complete index
+manifest inspection and CAS reads. Cross-scope access was denied. The original PDF
+and four legacy public tables remain unchanged. A fresh database backup was
+restored successfully into an isolated PostgreSQL container with all 16 current
+tables matching. The workspace now has 72 active documents, five archived, 50,353
+retained non-tombstoned document chunks and 50,336 active index points, with zero
+pending/leased outbox operations. The old bulk migration quarantine list remains
+unchanged; the separately approved governed OCR version is active.
 
-The technical OCR follow-up remains: materialize a single immutable accepted
-text derivative with an explicit correction recipe, then governed intake/reindex
-and complete manifest readback. The PDF remains quarantined until that succeeds;
-acceptance alone does not make it searchable. Sprint 21 stays open for this
-technical follow-up; no production activation is authorized.
+Evidence:
 
-Latest recorded source evidence has 71 active documents, five archived and 50,281
-active index points; see the [November 14 source receipt](../governance/sprint21-source-closeout.installed-20261114.json).
-The November 15 audit also observed deployed transport versus tested-checkout
-drift. No deployment, source indexing or model call occurred while recording these
-acceptances. Production answering remains disabled.
+- [Final closeout receipt](../governance/sprint21-bounded-closeout-20261115.json).
+- [Runtime output acceptance](../governance/sprint21-runtime-output.accepted-20261115.json).
+- [Complete OCR acceptance](../governance/sprint21-complete-ocr.accepted-20261115.json).
+- [Approved OCR installed verification](../governance/sprint21-approved-ocr.installed-20261115.json).
 
-The proposed next development increment is a deterministic, offline, account-scoped
-paper-oversight contract/report. It does not need broker connectivity, new agents,
-production governed answering or changes to Trading's entry lock. Implementation
-awaits the current closeout/scope disposition; no execution capability is granted.
+The audit's transport deployment/source drift remains explicitly recorded. Earlier
+regression evidence is 2,431 passed/eight skipped/eight warnings and 75 prompt-fix
+focused passes; no new full suite was run for this artifact-only operational step.
+The chart remains held label-only. General constitutional assessment, production
+answer presentation/authorization, trading integration and genuine-market readiness
+are separate gates and are not implied by closing this bounded milestone.
+
+The proposed next sprint is an offline deterministic account-scoped paper-oversight
+contract/report, reusing existing snapshot/audit/risk evidence. No trading repository
+changes, broker connection, deployment or model call occurred during OCR closeout.
+The November 15 audit reports remain historical records; this closeout supersedes
+only their then-pending owner review and OCR intake items.
 
 ## Historical engineering checkpoints
 

@@ -1,0 +1,56 @@
+{
+  "acceptance_sha256": "1272161095e955f391146383b7965a36b02088c5c224cc450f47b292902d5996",
+  "active_catalog_listing_verified": true,
+  "audit_note": "Initial verification script looked for extraction policy in intake receipt; corrected checker resolves it from the hash-bound recipe. Prior diagnostic retained; no stored source or policy was changed.",
+  "backup_restore_verified": true,
+  "cas": {
+    "active_index_points": 50336,
+    "all_new_chunk_cas_verified": 55,
+    "derivative_verified": true,
+    "original_cas_verified": true
+  },
+  "chunk_count": 55,
+  "complete_manifest_index_inspection_verified": true,
+  "counts": {
+    "active": 72,
+    "archived": 5,
+    "pending_operations": 0,
+    "retained_document_chunks": 50353
+  },
+  "cross_scope_denied": true,
+  "document_id": "68e6b39b-eef0-5882-a150-16c743eac1f1",
+  "extraction_policy_sha256": "349491436ac0efbbcbdb7ab3f147816ab027731b4d8bee8412c2d130f15cd2ef",
+  "governed_source_quarantine_resolved": true,
+  "legacy_bulk_quarantine_list_unchanged": true,
+  "legacy_public_tables_unchanged": [
+    "public.alembic_version",
+    "public.documents",
+    "public.reflection_history",
+    "public.teaching_missions"
+  ],
+  "manifest_sha256": "0b3db9d051a1d17dcb22a3d5723911f4d8da5b51d47e983c1512f8cee7a256ec",
+  "page_count": 18,
+  "private_artifact_sha256": {
+    "before-ocr-backup.json": "06ca384b6df567def741a9bf5919bce2bc03e462b78f2dea7ce36d1b23203763",
+    "builder.py": "888f9141db5f37c2afa19115bdadb18c7bdb38b7a2d9d3847635813cbb612d87",
+    "installed-verification.json": "0149e4d849d727385a316c9857399bd7afd795d5ee9ed43c53b487eb073a4c0b",
+    "intake.json": "422108e85f8c1620ac421bd1f5a64c22e472597de27f2030b248e793e6507ca2",
+    "recipe.json": "567ee8325e2fbe0a35b89c8352d29bd14618d6063117f8a29dfdfc746e698b2b"
+  },
+  "production_enabled": false,
+  "proposition_to_inference": "closed",
+  "provider_calls": 0,
+  "recipe_sha256": "567ee8325e2fbe0a35b89c8352d29bd14618d6063117f8a29dfdfc746e698b2b",
+  "recorded_local_date": "2026-11-15",
+  "release_authorized": false,
+  "scope": {
+    "collection": "history",
+    "module": "history",
+    "organization_id": "default",
+    "topic": "general"
+  },
+  "source_sha256": "fc6e847c46494d2f75d934e878291d9706ef01c5d9c1d10d3686d421ce86604f",
+  "text_sha256": "3f5c11cc952a77da9117beb2fff0aac7865c929b397b342e26a7363d19870d02",
+  "version": "sprint21-approved-ocr-installed-verification-v1",
+  "version_id": "7e9c0a07-fe2b-54fe-8307-e86fc6df6023"
+}
