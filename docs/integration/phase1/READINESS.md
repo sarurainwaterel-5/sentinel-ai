@@ -1,5 +1,9 @@
 # Phase 1 readiness assessment
 
+Historical Phase 1 report. The later [Phase 2 durable store](../phase2/READINESS.md)
+implements and tests the local persistence/restart increment recommended below.
+Phase 1's original wire contract and API remain unchanged.
+
 **Phase 1 is complete for the bounded deterministic, offline synthetic harness.**
 Both entry points validate the same additive versioned protocol and run the same
 45 shared cases; Trading's pinned adapter adds actual cross-repository equivalence,

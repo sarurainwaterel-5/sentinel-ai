@@ -1,5 +1,9 @@
 # Synthetic oversight Phase 1 runbook
 
+For durable local history and offline replay use the additive
+[Phase 2 runbook](../phase2/RUNBOOK.md). This page documents the separate original
+in-memory API; it is never a fallback for Phase 2 database failures.
+
 This is an in-process, read-only external-state harness, not a network service.
 No credential, database, account session, broker, market feed or model is needed.
 Requires Node 22+; dependencies are Node built-ins and the local schema.
