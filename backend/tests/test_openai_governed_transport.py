@@ -51,6 +51,11 @@ def test_actual_sdk_request_configuration_without_network():
     assert call["timeout"] == 30 and call["max_output_tokens"] == 4096
     assert call["truncation"] == "disabled"
     assert call["input"][1]["content"] == '{"premises":[],"relationships":[]}'
+    instructions = call["input"][0]["content"]
+    assert "every supplied premise_id exactly once" in instructions
+    assert "every supplied relationship exactly once" in instructions
+    assert "preserve direction and kind" in instructions
+    assert "does not assert that a hypothesis is true" in instructions
     assert clients[1].calls == clients[2].calls == []
     assert transport.execution_source != "unit_test"
     assert not transport.production_enabled and not transport.release_authorized
