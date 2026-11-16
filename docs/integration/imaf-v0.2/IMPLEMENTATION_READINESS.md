@@ -2,6 +2,12 @@
 
 **DRAFT — NOT APPROVED FOR EXECUTION.**
 
+> Current first-model consolidation: [IMAF canonical v0.3 audit](../imaf-v0.3/IMAF_CANONICAL_SPEC_V0.3_DRAFT.md)
+> records Decisions17–36 and the four newly selected Chicago discovery windows.
+> This v0.2 document describes its original scope; passing its tests does not establish
+> v0.3 compliance. Executable versions, null definitions and historical results remain unchanged.
+
+
 ## Verdict
 
 The **session specification and supported offline fixture increment is complete**.
