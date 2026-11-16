@@ -1,0 +1,29 @@
+{
+  "status": "ENGINEERING_COMPLETE / EMPIRICAL_VALIDATION_BLOCKED",
+  "calibration_executed_on_supplied_data": false,
+  "eligible_authorized_acquisitions": 0,
+  "underlying_market_acquisitions": "NOT_ASSESSED",
+  "return_inside_count": null,
+  "return_qualification_rate": null,
+  "expired_observations": null,
+  "unresolved_observations": null,
+  "median_return_latency": null,
+  "return_latency_distribution": null,
+  "session_or_mapping_effects": null,
+  "statistical_uncertainty": "NOT_ESTIMABLE_NO_AUTHORIZED_SAMPLE",
+  "sample_status": "INSUFFICIENT_SAMPLE_SIZE",
+  "numerical_recommendations": [],
+  "reasons": [
+    "PROVENANCE_UNRESOLVED",
+    "LICENSE_UNRESOLVED",
+    "DATED_CONTRACT_UNRESOLVED",
+    "HISTORICAL_AVAILABILITY_UNRESOLVED",
+    "EXCHANGE_CALENDAR_NOT_AUTHENTICATED",
+    "ADJUSTED_PRICE_METHODOLOGY_NOT_APPROVED_FOR_PHASE54_CONTRACT_CALIBRATION"
+  ],
+  "active_models": 3,
+  "active_configurations": 12,
+  "fifteen_second_model": "SUSPENDED",
+  "execution_authorization": "DENIED",
+  "production_deployment_authorization": "DENIED"
+}

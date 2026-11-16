@@ -1,0 +1,89 @@
+{
+  "version": "imaf.phase55b.provenance.v2",
+  "datasets": [
+    {
+      "dataset_id": "dataset-a",
+      "provider_claim": "Historical Futures Data",
+      "source_acquisition_url_or_reference": null,
+      "original_filename": "cme.mnq.bars.1m.2026-11.parquet",
+      "sha256": "895eb89a467ca191391d1e88684298c2e79311c432d8061d405987e391bb7954",
+      "acquisition_date": null,
+      "recorded_coverage_utc": {
+        "first_observation": "2026-11-01T23:00:00+00:00",
+        "last_observation": "2026-11-12T04:08:00+00:00"
+      },
+      "instrument": {
+        "claimed": "MNQ",
+        "intrinsic_root_symbol_present": false,
+        "dated_contract": null
+      },
+      "selected_one_minute_rows": 11349,
+      "resolution": "1M",
+      "price_adjustment": "FILE_UNRESOLVED_PROVIDER_DOC_DESCRIBES_ADDITIVE_BACK_ADJUSTED_CONTINUOUS",
+      "applicable_license": "UNRESOLVED_FILE_SPECIFIC_SCOPE",
+      "permitted_research_uses": "INSPECTION_AND_ENGINEERING_VALIDATION_AUTHORIZED_BY_OWNER_MISSION; AUTOMATED_STRATEGY_CALIBRATION_BLOCKED",
+      "redistribution": "NO_RAW_OR_TRIVIALLY_TRANSFORMED_DATA_COMMITTED_OR_REDISTRIBUTED",
+      "provenance_status": "PROVENANCE_UNRESOLVED",
+      "license_status": "LICENSE_UNRESOLVED",
+      "research_use": "RESEARCH_USE_BLOCKED",
+      "source_urls_reviewed": [
+        "https://historicalfuturesdata.com/en/docs",
+        "https://historicalfuturesdata.com/en/pricing",
+        "https://historicalfuturesdata.com/en/samples"
+      ],
+      "source_review_date": "2026-11-16"
+    },
+    {
+      "dataset_id": "dataset-b",
+      "provider_claim": "MarketParquet",
+      "source_acquisition_url_or_reference": null,
+      "original_filename": "intraday_sample.zip",
+      "sha256": "2869fbf0e11a0f416013d6a9b4a79380a21e1e3ec464b5275eb3c944fc673e30",
+      "acquisition_date": null,
+      "recorded_coverage_utc": {
+        "first_observation": "2026-04-06T04:00:00+00:00",
+        "last_observation": "2026-04-10T20:59:00+00:00"
+      },
+      "instrument": {
+        "claimed": "MNQ",
+        "intrinsic_root_symbol_present": true,
+        "dated_contract": null
+      },
+      "selected_one_minute_rows": 6540,
+      "resolution": "1M",
+      "price_adjustment": "RATIO_ADJUSTED_CONTINUOUS_AS_DECLARED_IN_ARCHIVE_README_NOT_INDEPENDENTLY_AUTHENTICATED",
+      "applicable_license": "UNRESOLVED_FILE_SPECIFIC_SCOPE",
+      "permitted_research_uses": "INSPECTION_AND_ENGINEERING_VALIDATION_AUTHORIZED_BY_OWNER_MISSION; AUTOMATED_STRATEGY_CALIBRATION_BLOCKED",
+      "redistribution": "NO_RAW_OR_TRIVIALLY_TRANSFORMED_DATA_COMMITTED_OR_REDISTRIBUTED",
+      "provenance_status": "PROVENANCE_UNRESOLVED",
+      "license_status": "LICENSE_UNRESOLVED",
+      "research_use": "RESEARCH_USE_BLOCKED",
+      "source_urls_reviewed": [
+        "https://marketparquet.com/documentation",
+        "https://marketparquet.com/data-quality",
+        "https://marketparquet.com/license",
+        "https://marketparquet.com/terms"
+      ],
+      "source_review_date": "2026-11-16"
+    }
+  ],
+  "reader": {
+    "pyarrow": "23.0.1",
+    "python": "3.14.4",
+    "dependency_installation": "ISOLATED_PRIVATE_OUTPUT_DIRECTORY",
+    "wheel_sha256": "4982d71350b1a6e5cfe1af742c53dfb759b11ce14141870d05d9e540d13bc5d1"
+  },
+  "evidence_sha256": {
+    "data/independent-observations.json": "3d4ed976a25ba4b342f2b6a9eb4aed9b3b4658ed52e441e05351589c7102f345",
+    "data/marketparquet-normalized.engineering-only.json": "bd68df5e2cbf5d212565ced8f89c489b12bbb835c7551fbc773f7ba33ce62062",
+    "data/fresh-reconstruction.engineering-only.json": "1fc3525e2f0176b10912bc91a21b2c76e8cdc86283accd37bed7507f8a7d044d",
+    "licensing/licensing-manifest.json": "503b55d5864edb0da3abafb2da5ff832a09f2f946a7d06ea24f4c641f556cbc3",
+    "acceptance-results.json": "6c78cb5dfafaae86f65b4fe0a54ea63c359e4828d35114df2e0671c829bbdcf8"
+  },
+  "ACTIVE_IMAF_MODELS": 3,
+  "ACTIVE_CALIBRATION_CONFIGURATIONS": 12,
+  "FIFTEEN_SECOND_MODEL": "SUSPENDED",
+  "NUMERICAL_RETURN_INTERVAL_APPROVAL": "PENDING",
+  "LIVE_EXECUTION_AUTHORIZATION": "DENIED",
+  "PRODUCTION_DEPLOYMENT_AUTHORIZATION": "DENIED"
+}
