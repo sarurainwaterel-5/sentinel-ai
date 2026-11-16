@@ -1,0 +1,223 @@
+{
+  "version": "imaf.phase55c.qualification-manifest.v1",
+  "review_date": "2026-11-16",
+  "phase_status": "EVIDENCE_QUALIFICATION_COMPLETE_WITH_BLOCKERS",
+  "baseline_commits": {
+    "trading": "d728edea6311b49ff0f43cdef842eab3af04f960",
+    "sentinel": "512570d4d39d66008722ef97031703570cb26c17"
+  },
+  "evidence_status_vocabulary": [
+    "VERIFIED",
+    "DOCUMENTED_BUT_NOT_INDEPENDENTLY_VERIFIED",
+    "UNRESOLVED",
+    "CONTRADICTED"
+  ],
+  "classification_vocabulary": [
+    "APPROVED_FOR_RESEARCH",
+    "RESTRICTED_TO_ENGINEERING_TESTS",
+    "INSUFFICIENT_EVIDENCE",
+    "REJECTED"
+  ],
+  "datasets": [
+    {
+      "dataset_id": "dataset-a",
+      "provider": "Historical Futures Data",
+      "original_filename": "cme.mnq.bars.1m.2026-11.parquet",
+      "raw_sha256": "895eb89a467ca191391d1e88684298c2e79311c432d8061d405987e391bb7954",
+      "size_bytes": 267214,
+      "selected_mnq_or_filename_claim_rows": 11349,
+      "coverage_utc": {
+        "first_observation": "2026-11-01T23:00:00+00:00",
+        "last_observation": "2026-11-12T04:08:00+00:00"
+      },
+      "original_acquisition_method": "UNKNOWN",
+      "original_acquisition_date": null,
+      "current_official_retrieval": null,
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "permitted_research_scopes": [],
+      "empirical_calibration": "BLOCKED",
+      "external_provider_engineering_permission": "UNRESOLVED_EXACT_SAMPLE_SCOPE",
+      "owner_authorized_actions": [
+        "EVIDENCE_INSPECTION",
+        "OFFLINE_ENGINEERING_VALIDATION_WITH_NO_REDISTRIBUTION"
+      ],
+      "dimensions": {
+        "provenance": {
+          "status": "UNRESOLVED",
+          "basis": "A exact filename published but no official byte/manifest binding obtained",
+          "evidence_refs": [
+            "DATASET_PROVENANCE_EVIDENCE.md",
+            "https://historicalfuturesdata.com/en/browse/MNQ"
+          ]
+        },
+        "licensing": {
+          "status": "UNRESOLVED",
+          "basis": "Monthly free-sample grant applicability not established",
+          "evidence_refs": [
+            "RESEARCH_LICENSE_MATRIX.md",
+            "https://historicalfuturesdata.com/en/samples",
+            "https://historicalfuturesdata.com/en/pricing"
+          ]
+        },
+        "instrument": {
+          "status": "UNRESOLVED",
+          "basis": "Filename only; no intrinsic symbol/contract",
+          "evidence_refs": [
+            "DATASET_PROVENANCE_EVIDENCE.md",
+            "MNQ_CONTRACT_AND_CALENDAR_VERIFICATION.md"
+          ]
+        },
+        "contract": {
+          "status": "UNRESOLVED",
+          "basis": "Provider describes additive continuous bars but exact generation/contract/adjustment binding absent",
+          "evidence_refs": [
+            "MNQ_CONTRACT_AND_CALENDAR_VERIFICATION.md",
+            "https://historicalfuturesdata.com/en/docs"
+          ]
+        },
+        "calendar": {
+          "status": "UNRESOLVED",
+          "basis": "Scheduled CME hours and DST verified; exact file bar label/availability and reviewed dataset window binding absent",
+          "evidence_refs": [
+            "MNQ_CONTRACT_AND_CALENDAR_VERIFICATION.md",
+            "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-02&foi=F&pageNumber=1&search=MNQ",
+            "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-05&foi=F&pageNumber=1&search=MNQ",
+            "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-08&foi=F&pageNumber=1&search=MNQ",
+            "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-11&foi=F&pageNumber=1&search=MNQ"
+          ]
+        }
+      },
+      "unresolved_restrictions": [
+        "PROVENANCE_QUALIFICATION_REQUIRED",
+        "LICENSING_QUALIFICATION_REQUIRED",
+        "INSTRUMENT_QUALIFICATION_REQUIRED",
+        "CONTRACT_QUALIFICATION_REQUIRED",
+        "CALENDAR_QUALIFICATION_REQUIRED"
+      ],
+      "execution_authorization": "DENIED",
+      "production_deployment_authorization": "DENIED"
+    },
+    {
+      "dataset_id": "dataset-b",
+      "provider": "MarketParquet",
+      "original_filename": "intraday_sample.zip",
+      "raw_sha256": "2869fbf0e11a0f416013d6a9b4a79380a21e1e3ec464b5275eb3c944fc673e30",
+      "size_bytes": 4328558,
+      "selected_mnq_or_filename_claim_rows": 6540,
+      "coverage_utc": {
+        "first_observation": "2026-04-06T04:00:00+00:00",
+        "last_observation": "2026-04-10T20:59:00+00:00"
+      },
+      "original_acquisition_method": "UNKNOWN",
+      "original_acquisition_date": null,
+      "current_official_retrieval": {
+        "source_documentation": "https://marketparquet.com/documentation",
+        "download_url": "https://marketparquet.com/api/data/sample/intraday_sample.zip",
+        "retrieved_at_utc": "2026-11-16T21:32:59.106832+00:00",
+        "download_sha256": "2869fbf0e11a0f416013d6a9b4a79380a21e1e3ec464b5275eb3c944fc673e30",
+        "supplied_sha256": "2869fbf0e11a0f416013d6a9b4a79380a21e1e3ec464b5275eb3c944fc673e30",
+        "download_bytes": 4328558,
+        "byte_identical": true,
+        "method": "HTTPS anonymous GET following official download redirect; no credentials/purchase/account; original acquisition date remains unknown"
+      },
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "permitted_research_scopes": [],
+      "empirical_calibration": "BLOCKED",
+      "external_provider_engineering_permission": "UNRESOLVED_EXACT_SAMPLE_SCOPE",
+      "owner_authorized_actions": [
+        "EVIDENCE_INSPECTION",
+        "OFFLINE_ENGINEERING_VALIDATION_WITH_NO_REDISTRIBUTION"
+      ],
+      "dimensions": {
+        "provenance": {
+          "status": "VERIFIED",
+          "basis": "Official generic anonymous sample endpoint returned identical bytes; verifies current provider artifact identity, not upstream exchange truth or original acquisition",
+          "evidence_refs": [
+            "DATASET_PROVENANCE_EVIDENCE.md",
+            "https://marketparquet.com/documentation",
+            "https://marketparquet.com/api/data/sample/intraday_sample.zip"
+          ]
+        },
+        "licensing": {
+          "status": "UNRESOLVED",
+          "basis": "Anonymous sample is documented; general license account/payment scope leaves exact sample grant ambiguous",
+          "evidence_refs": [
+            "RESEARCH_LICENSE_MATRIX.md",
+            "https://marketparquet.com/terms",
+            "https://marketparquet.com/license"
+          ]
+        },
+        "instrument": {
+          "status": "DOCUMENTED_BUT_NOT_INDEPENDENTLY_VERIFIED",
+          "basis": "Verified official artifact contains MNQ root; provider identification documented, upstream exchange origin not independently verified",
+          "evidence_refs": [
+            "DATASET_PROVENANCE_EVIDENCE.md",
+            "MNQ_CONTRACT_AND_CALENDAR_VERIFICATION.md"
+          ]
+        },
+        "contract": {
+          "status": "UNRESOLVED",
+          "basis": "Official ratio-adjusted continuous bars; dated components/April roll factors/basis-as-of lineage absent; cannot enter unadjusted tick engine",
+          "evidence_refs": [
+            "MNQ_CONTRACT_AND_CALENDAR_VERIFICATION.md",
+            "https://marketparquet.com/documentation",
+            "https://marketparquet.com/data-quality"
+          ]
+        },
+        "calendar": {
+          "status": "UNRESOLVED",
+          "basis": "Scheduled CME hours/DST verified, official Eastern bar-open semantics documented; provider availability, partial-session handling and reviewed window binding still required",
+          "evidence_refs": [
+            "MNQ_CONTRACT_AND_CALENDAR_VERIFICATION.md",
+            "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-04-06&foi=F&pageNumber=1&search=MNQ",
+            "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-04-09&foi=F&pageNumber=1&search=MNQ"
+          ]
+        }
+      },
+      "unresolved_restrictions": [
+        "LICENSING_QUALIFICATION_REQUIRED",
+        "INSTRUMENT_QUALIFICATION_REQUIRED",
+        "CONTRACT_QUALIFICATION_REQUIRED",
+        "CALENDAR_QUALIFICATION_REQUIRED"
+      ],
+      "execution_authorization": "DENIED",
+      "production_deployment_authorization": "DENIED"
+    }
+  ],
+  "scheduled_exchange_calendar": {
+    "status": "VERIFIED",
+    "instrument": "MNQ",
+    "sources": [
+      "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-04-06&foi=F&pageNumber=1&search=MNQ",
+      "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-04-09&foi=F&pageNumber=1&search=MNQ",
+      "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-02&foi=F&pageNumber=1&search=MNQ",
+      "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-05&foi=F&pageNumber=1&search=MNQ",
+      "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-08&foi=F&pageNumber=1&search=MNQ",
+      "https://www.cmegroup.com/trading-hours.html#tradeDate=2026-11-11&foi=F&pageNumber=1&search=MNQ"
+    ],
+    "exceptional_event_completeness": "UNRESOLVED",
+    "dataset_calendar_qualification": "SEPARATE_REVIEW_REQUIRED"
+  },
+  "governance": {
+    "ACTIVE_IMAF_MODELS": 3,
+    "ACTIVE_CALIBRATION_CONFIGURATIONS": 12,
+    "FIFTEEN_SECOND_MODEL": "SUSPENDED",
+    "NUMERICAL_RETURN_INTERVAL_APPROVAL": "PENDING",
+    "LIVE_EXECUTION_AUTHORIZATION": "DENIED",
+    "PRODUCTION_DEPLOYMENT_AUTHORIZATION": "DENIED",
+    "EMPIRICAL_CALIBRATION": "BLOCKED"
+  },
+  "trust_boundary": "Qualification attestations are separately supplied reviewed workflow records, not untrusted request statuses or cryptographic provider authentication",
+  "supported_historical_entry": "services/historical-research/adapter.mjs evaluateHistorical; experiment and historical replay invoke this entry",
+  "kernel_boundary": "Phase54 pure evaluator remains unchanged, descriptive/unverified, not an authorized direct dataset entry",
+  "qualification_schema": "services/historical-research/qualification.mjs; APPROVED_FOR_RESEARCH plus five VERIFIED dimensions with refs, exact normalized-dataset/manifest hashes, reviewer/date, supported scope, MNQ quarterly unadjusted contract and reviewed session/window binding; no unresolved restrictions",
+  "permitted_engine_scope": "UNADJUSTED_DATED_CONTRACT_RESEARCH",
+  "adjusted_pattern_scope": "NOT_IMPLEMENTED_OR_APPROVED",
+  "evidence_sha256": {
+    "test-results.json": "ad7cfcca105e967487fa7d4f83835f20278d81b67285eb80cbf256d92a192d2e",
+    "independent-observations.json": "3d4ed976a25ba4b342f2b6a9eb4aed9b3b4658ed52e441e05351589c7102f345",
+    "cme-observed-schedules.json": "1e2dd5acd58cb2d6d65063ad04c0336fecfedbd865e7a0ed47f2a5e986c1bacd",
+    "marketparquet-public-byte-comparison.json": "65e3e74df62a4b4b97398716e2d9ed348a1e44b34d986db87568505db44794e5"
+  },
+  "implementation_commit_trading": "4b11094033d8ab4a8c666a564851f50afc5a8ed3"
+}
