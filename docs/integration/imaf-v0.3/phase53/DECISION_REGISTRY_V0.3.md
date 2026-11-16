@@ -402,8 +402,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 37”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Select potential MSS structural references hierarchically using the controlling HTF range, eligible previously confirmed structurally significant swings, and liquidity/narrative context. Record pivot, confirmation, selection, and evaluation timestamps. The reference must be established and selected before the MSS being evaluated. The MSS cannot establish its own reference's significance.  
+**Owner selection:** D.
+**Rule:** Select potential MSS structural references hierarchically using the controlling HTF range, eligible previously confirmed structurally significant swings, and liquidity/narrative context. Record pivot, confirmation, selection, and evaluation timestamps. The reference must be established and selected before the MSS being evaluated. The MSS cannot establish its own reference's significance.
 **Unresolved:** Exact eligible-reference selection/ranking and measurable significance predicates.
 
 - **Canonical support / classification:** C-AST/C-LADDER; D23/D24/D28; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -419,8 +419,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 38”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Separate objective geometric candidate swings from confirmed swings and structurally significant swings. Only a causally selected, confirmed significant swing may serve as an MSS reference. Geometric appearance is not structural confirmation.  
+**Owner selection:** D.
+**Rule:** Separate objective geometric candidate swings from confirmed swings and structurally significant swings. Only a causally selected, confirmed significant swing may serve as an MSS reference. Geometric appearance is not structural confirmation.
 **Unresolved:** Candidate geometry, confirmation criteria, and significance thresholds (partially scoped by subsequent decisions).
 
 - **Canonical support / classification:** C-LADDER/C-AST; D23; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -436,9 +436,9 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 39”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Observe three-candle and five-candle pivot geometries as separately labeled patterns. Neither pattern independently proves a structurally confirmed swing. A three-candle pivot can be recognized only after its right-hand candle closes; a five-candle pivot only after its second right-hand candle closes. A pivot meeting both patterns is not two independent confirmations.  
-**Provisional geometry:** Three-candle center high/low versus one neighbor on either side; five-candle center versus two neighbors on either side. Strict inequalities and handling of equal highs/lows are **not yet owner-approved executable comparison rules**.  
+**Owner selection:** D.
+**Rule:** Observe three-candle and five-candle pivot geometries as separately labeled patterns. Neither pattern independently proves a structurally confirmed swing. A three-candle pivot can be recognized only after its right-hand candle closes; a five-candle pivot only after its second right-hand candle closes. A pivot meeting both patterns is not two independent confirmations.
+**Provisional geometry:** Three-candle center high/low versus one neighbor on either side; five-candle center versus two neighbors on either side. Strict inequalities and handling of equal highs/lows are **not yet owner-approved executable comparison rules**.
 **Unresolved:** Ties, exact comparison semantics, missing-bar behavior.
 
 - **Canonical support / classification:** C-LADDER; D23; exact3/5 cardinality owner extension; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -454,8 +454,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 40”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Geometric completion establishes a geometrically confirmed pivot, not a structurally confirmed swing. Promotion to structural confirmation requires additional, independently evaluated, model-specific evidence, established before MSS reference selection. Distinguish candidate pivot → geometric pivot → structurally confirmed swing → structurally significant swing → selected MSS reference.  
+**Owner selection:** D.
+**Rule:** Geometric completion establishes a geometrically confirmed pivot, not a structurally confirmed swing. Promotion to structural confirmation requires additional, independently evaluated, model-specific evidence, established before MSS reference selection. Distinguish candidate pivot → geometric pivot → structurally confirmed swing → structurally significant swing → selected MSS reference.
 **Unresolved:** Exact evidence combinations and significance requirements.
 
 - **Canonical support / classification:** C-LADDER/C-AST; D23; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -471,8 +471,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 41”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** The approved model/timeframe/context may permit displacement, liquidity, or structural-departure routes to confirm a structural swing. Route eligibility must be fixed from causally available context, not selected retrospectively to fit a successful outcome. Preserve contradictory evidence.  
+**Owner selection:** D.
+**Rule:** The approved model/timeframe/context may permit displacement, liquidity, or structural-departure routes to confirm a structural swing. Route eligibility must be fixed from causally available context, not selected retrospectively to fit a successful outcome. Preserve contradictory evidence.
 **Unresolved:** Route-specific predicates, route eligibility, and conflict resolution.
 
 - **Canonical support / classification:** C-PART/C-AST; D23/D27/D30; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -488,8 +488,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 42”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Construct candidate dealing ranges from previously confirmed structural boundaries. Select a controlling HTF range by previously established liquidity objectives, accepted structural context, and narrative. Interpret nested/internal and displacement ranges in context. Timestamp selection before range-dependent MSS, premium/discount, or OTE evaluation. Avoid circularly using a new transition to justify the range against which that transition is evaluated.  
+**Owner selection:** D.
+**Rule:** Construct candidate dealing ranges from previously confirmed structural boundaries. Select a controlling HTF range by previously established liquidity objectives, accepted structural context, and narrative. Interpret nested/internal and displacement ranges in context. Timestamp selection before range-dependent MSS, premium/discount, or OTE evaluation. Avoid circularly using a new transition to justify the range against which that transition is evaluated.
 **Unresolved:** Candidate range construction, exact selection and replacement criteria.
 
 - **Canonical support / classification:** C-LIQ/C-PD; D19/D24; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -505,8 +505,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 43”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Compare plausible ranges using the controlling HTF liquidity objective, previously accepted structure, session context, and independent price delivery. Preserve competing hypotheses if no range is demonstrably controlling; return `STAND_ASIDE` for range-dependent qualification rather than arbitrarily choosing one. Supervisory Sentinel may reject unsupported Trading AI range selections.  
+**Owner selection:** D.
+**Rule:** Compare plausible ranges using the controlling HTF liquidity objective, previously accepted structure, session context, and independent price delivery. Preserve competing hypotheses if no range is demonstrably controlling; return `STAND_ASIDE` for range-dependent qualification rather than arbitrarily choosing one. Supervisory Sentinel may reject unsupported Trading AI range selections.
 **Unresolved:** Comparison criteria, sufficiency, and tie resolution.
 
 - **Canonical support / classification:** C-LIQ/C-PD/C-WORK; D19/D24; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -522,8 +522,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 44”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Replace the controlling range only when fresh, independent liquidity, structural, and price-delivery evidence supports a new controlling auction. A new swing, displacement, boundary breach, or MSS alone is insufficient. Retain previous range, evidence, and replacement timestamp immutably. If authority is materially disputed, withhold range-dependent trade qualification.  
+**Owner selection:** D.
+**Rule:** Replace the controlling range only when fresh, independent liquidity, structural, and price-delivery evidence supports a new controlling auction. A new swing, displacement, boundary breach, or MSS alone is insufficient. Retain previous range, evidence, and replacement timestamp immutably. If authority is materially disputed, withhold range-dependent trade qualification.
 **Unresolved:** Replacement thresholds and internal-versus-controlling evolution.
 
 - **Canonical support / classification:** C-LIQ/C-AST/C-PD; D24; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -539,8 +539,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 45”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Classify transitions relative to the pre-established controlling HTF range, selected references, liquidity objectives, and independent price delivery. An LTF MSS may be an internal retracement or a developing reversal; it is not automatically an HTF reversal. An external liquidity sweep is distinct from an accepted external structural transition. Materially unresolved classification withholds setup qualification.  
+**Owner selection:** D.
+**Rule:** Classify transitions relative to the pre-established controlling HTF range, selected references, liquidity objectives, and independent price delivery. An LTF MSS may be an internal retracement or a developing reversal; it is not automatically an HTF reversal. An external liquidity sweep is distinct from an accepted external structural transition. Materially unresolved classification withholds setup qualification.
 **Unresolved:** Precise internal/external reference and crossing criteria.
 
 - **Canonical support / classification:** C-LIQ/C-AST/C-PD; D24/D28; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -556,8 +556,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 46”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Promote an internal transition to external significance only with independent structural acceptance, liquidity behavior, and subsequent price-delivery evidence that materially challenges the HTF context. Preserve the original event's internal classification at its original timestamp; promotion has a later evidence-supported timestamp. External significance is distinct from an accepted HTF transition and from narrative revision.  
+**Owner selection:** D.
+**Rule:** Promote an internal transition to external significance only with independent structural acceptance, liquidity behavior, and subsequent price-delivery evidence that materially challenges the HTF context. Preserve the original event's internal classification at its original timestamp; promotion has a later evidence-supported timestamp. External significance is distinct from an accepted HTF transition and from narrative revision.
 **Unresolved:** Promotion sufficiency, persistence, timeframe-specific thresholds.
 
 - **Canonical support / classification:** C-AST/C-PD; D28/D31; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -573,9 +573,9 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 47”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Revise the controlling HTF narrative only when accepted structural transition, liquidity acceptance/rejection, observable participation evidence, and independent subsequent price delivery support a coherent interpretation. Invalidating bullish does not automatically confirm bearish, or vice versa. Contradictory or insufficient evidence yields `UNRESOLVED` and stand-aside. Preserve prior narrative and timestamps. Do not claim institutional order attribution from OHLCV.  
-**Proposed research states:** `BULLISH`, `BEARISH`, `UNRESOLVED`, and `TRANSITION_UNDER_REVIEW` (the last is proposed, not approved as executable).  
+**Owner selection:** D.
+**Rule:** Revise the controlling HTF narrative only when accepted structural transition, liquidity acceptance/rejection, observable participation evidence, and independent subsequent price delivery support a coherent interpretation. Invalidating bullish does not automatically confirm bearish, or vice versa. Contradictory or insufficient evidence yields `UNRESOLVED` and stand-aside. Preserve prior narrative and timestamps. Do not claim institutional order attribution from OHLCV.
+**Proposed research states:** `BULLISH`, `BEARISH`, `UNRESOLVED`, and `TRANSITION_UNDER_REVIEW` (the last is proposed, not approved as executable).
 **Unresolved:** Measurable evidence standards and transitions.
 
 - **Canonical support / classification:** C-LIQ/C-PART/C-AST/C-PD; D35; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -591,8 +591,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 48”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Each setup retains its discovery-time narrative and evidence. If that supporting narrative is invalidated or materially unresolved before entry, revoke setup eligibility. Later narrative revisions cannot revive or retroactively validate the setup. Existing open-position management is a separate governance area; this decision does not authorize order closures.  
+**Owner selection:** D.
+**Rule:** Each setup retains its discovery-time narrative and evidence. If that supporting narrative is invalidated or materially unresolved before entry, revoke setup eligibility. Later narrative revisions cannot revive or retroactively validate the setup. Existing open-position management is a separate governance area; this decision does not authorize order closures.
 **Unresolved:** Exact narrative invalidation and dependency predicates.
 
 - **Canonical support / classification:** C-EX/C-LADDER; D18; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -608,8 +608,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 49”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** A revised narrative does not create a trade. Require a genuinely new, independently qualified setup under the revised narrative, within approved discovery windows and existing expiry/risk restrictions. Prior observations may remain historical context but cannot be relabeled as fresh setup events. Assign distinct setup identity and evidence history.  
+**Owner selection:** D.
+**Rule:** A revised narrative does not create a trade. Require a genuinely new, independently qualified setup under the revised narrative, within approved discovery windows and existing expiry/risk restrictions. Prior observations may remain historical context but cannot be relabeled as fresh setup events. Assign distinct setup identity and evidence history.
 **Unresolved:** Model-specific minimum fresh evidence and evidence-reuse boundaries.
 
 - **Canonical support / classification:** C-TIME/C-EX/C-REV; D17/D36; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -625,9 +625,9 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 50”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Permit historical observations to inform multiple hypotheses where causally appropriate, with stable event/observation IDs, source and availability timestamps, model version, evidence roles, and dependencies. Shared evidence cannot be double-counted as independent confirmation. Evidence reuse cannot revive invalidated or expired setups.  
-**Proposed fields:** `observation_id`, `source_timestamp`, `available_at`, `setup_id`, `evidence_role`, `dependency_ids`, `model_version` (schema proposal, not yet owner-approved implementation).  
+**Owner selection:** D.
+**Rule:** Permit historical observations to inform multiple hypotheses where causally appropriate, with stable event/observation IDs, source and availability timestamps, model version, evidence roles, and dependencies. Shared evidence cannot be double-counted as independent confirmation. Evidence reuse cannot revive invalidated or expired setups.
+**Proposed fields:** `observation_id`, `source_timestamp`, `available_at`, `setup_id`, `evidence_role`, `dependency_ids`, `model_version` (schema proposal, not yet owner-approved implementation).
 **Unresolved:** Evidence independence and fresh-qualification predicates.
 
 - **Canonical support / classification:** C-LADDER/C-REV; D32/D36; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -643,8 +643,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 51”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Evaluate whether observations derive from distinct underlying market events or depend on one another. Different technical labels, candles, or timeframes do not automatically establish independence. A single MSS/displacement/FVG candle may produce three observations but not three independent confirmations. Subsequent delivery must be independently evaluated under approved criteria.  
+**Owner selection:** D.
+**Rule:** Evaluate whether observations derive from distinct underlying market events or depend on one another. Different technical labels, candles, or timeframes do not automatically establish independence. A single MSS/displacement/FVG candle may produce three observations but not three independent confirmations. Subsequent delivery must be independently evaluated under approved criteria.
 **Unresolved:** Objective event boundaries, dependency and aggregation rules, minimum independent evidence.
 
 - **Canonical support / classification:** C-LADDER/C-PART; D31/D32; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
@@ -660,8 +660,8 @@ D17 exact current windows and protections: [consolidated first-model session spe
 - **Source:** actual supplied decision record, section “Decision 52”; source hash above.
 - **Governing principle and preserved selection:**
 
-**Owner selection:** D.  
-**Rule:** Permit continuation, structural-retest, and FVG-delivery routes only where the approved model and causally available context establish route eligibility before the outcome. Confirmation must use subsequent evidence independent of the original MSS/break event. No route automatically proves accepted structural transition. Keep MSS observation, structural persistence, subsequent delivery, and accepted transition as separate determinations.  
+**Owner selection:** D.
+**Rule:** Permit continuation, structural-retest, and FVG-delivery routes only where the approved model and causally available context establish route eligibility before the outcome. Confirmation must use subsequent evidence independent of the original MSS/break event. No route automatically proves accepted structural transition. Keep MSS observation, structural persistence, subsequent delivery, and accepted transition as separate determinations.
 **Unresolved:** Exact continuation/retest/FVG predicates, route selection, sufficiency thresholds.
 
 - **Canonical support / classification:** C-AST/C-PD; D31; **SUPPORTED_BUT_UNDERSPECIFIED** at conceptual level. Specific3/5-cardinality, route choices, state taxonomy and schema conventions are owner engineering extensions; no exact numerical/promotion sufficiency is manuscript-approved by this record.
