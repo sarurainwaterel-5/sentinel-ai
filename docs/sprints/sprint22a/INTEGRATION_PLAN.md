@@ -1,0 +1,9 @@
+# Single Sprint 22A integration plan
+
+Baseline Sentinel 73305bb, related Trading 4b11094; Sentinel clean before work. No related-repository changes. Existing FastAPI/React, governed PostgreSQL/SQLAlchemy, isolated durable SQLite, and offline 21-F answer coordinator inspected. Registry/observation infrastructure does not exist in those operational DTOs.
+
+Root owns SRE contracts, authorization, explicit local durable store, SQL migrations, integration and acceptance. Observability engineer owns pure health evaluation, bounded local liveness adapter, separate known development liveness callable and tests. Architect owns schema/security/future integration specs. Independent security verifier challenges boundaries and adds adversarial tests. All reconcile against these contracts; no second scheduler or network routes.
+
+Use a dedicated explicitly created private SQLite file, reusing established offline technology, not the installed application database. Transactions cover records and audit; each read/write requires exact existing authenticated handle/current epoch plus separately configured SRE tenant/application grants. Source claims require explicit authorized validation. Dependencies are context, incidents manual readiness only. Registration has no monitoring side effect. Local one-shot collection observes process liveness only. Future integration exports scoped evidence packages without activating investigators or promoting source claims to semantic facts.
+
+Run new tests, complete backend suite with synthetic environment values and networking blocked, frontend suite, restart/crash/migration checks. Create private local Sentinel development registry and one real process-liveness observation only through the explicit composition. Keep no credentials/runtime DB inGit. Commit scoped changes locally after reconciliation; no infrastructure modifications/deploy/push/brokers/strategy changes.
