@@ -1,0 +1,35 @@
+# Incident investigation specification
+
+Sprint 22B adds an opt-in, deterministic, recommendation-only pipeline to the Sprint 22A store. Importing it starts no observer, scheduler, provider, or investigation. `run_investigation` requires an issued authentication handle and exactly one explicit selection: existing observation IDs belonging to the requested service, or an existing manually created DRAFT incident. It does not declare incidents, update incident state, or modify infrastructure.
+
+## Evidence and stages
+
+`SREStore.investigation_snapshot` reads one authorized SQLite transaction, verifies the schema and scoped audit chain, and obtains the service, selected observations, review receipts effective at the evaluation time, touching dependency relationships, optional selected incident, and current audit head. Health evaluation uses the complete service observation context, so selecting an older successful record cannot hide a later failing check. It returns the complete evaluated health result, rather than presenting selected evidence as a complete operational history. Missing explicit IDs or resource overflow fail instead of silently truncating. An as-of evaluation does not claim historical receipt availability: the snapshot uses current stored configuration and audit state; current configuration must not be mistaken for a historical configuration reconstruction.
+
+The Observer role retrieves that snapshot. The Investigator correlates source-time order and matching source-provided correlation identifiers; neither establishes causality. Fixed rules propose up to four bounded explanations: reported check impairment, a dependency failure alongside configured relationships, collection/validation gaps, and a deployment-event association. Only explanations with relevant selected records are emitted. Multiple explanations are produced when multiple rule predicates have support, rather than inventing alternatives for every input. Deployment events alone establish no temporal proximity to a failure. Dependency event records do not identify which edge failed; all cited touching edges are context pending diagnostic verification.
+
+Each hypothesis includes its identifier, constrained description, supporting observation IDs, contradictory PASS observation IDs where relevant, dependency IDs where applicable, missing evidence, suggested verification steps, and `PLAUSIBLE_NOT_CAUSALLY_VERIFIED` assessment. PASS records are retained as potentially contrary context; distinct checks/times may coexist with a real failure. There are no numerical confidence scores. Reported failure/collection status is a source claim even where a review receipt establishes structural validation.
+
+The separately defined Verifier imports no generator implementation. It independently checks snapshot/record hashes, scope, effective review binding, source/evidence references, selected IDs, citation relevance, explicit contrary evidence, constrained presentation, and unsupported causal assertions. `VERIFIED_STRUCTURAL_POLICY` means those checks passed, never that operational claims are semantically true. Logical-role separation is not independent human/model verification and synthetic tests establish no empirical diagnostic accuracy.
+
+The Supervisor rechecks current issued-handle authorization and cancellation/time limits before retrieval, verification, and publication. An error, revocation, timeout, failed verification, or cancellation releases no partial report. No arbitrary model prose, tool invocation, callback diagnostic, or external evidence is executed. The trusted composition may supply a cancellation predicate/clock for bounded orchestration and deterministic tests; these are not HTTP request fields.
+
+## Report and replay
+
+The report contains the selected incident summary, service, source-time timeline, evidence inventory with record/review references, health result, dependencies, correlations, hypotheses, structural verification, limited record-binding findings, unresolved questions, diagnostic recommendations, and governance. The original evidence payload is not rendered as instructions. Evidence is bounded structured 22A data, not arbitrary logs.
+
+`root_cause.status` is always `WITHHELD` under `CAUSAL_VERIFICATION_UNAVAILABLE_V1`. No causal verification policy is available in this sprint; reviewed receipts, healthy/unhealthy evaluations and temporal relationships cannot close that gap. ADR-037 remains Proposed and the proposition-to-inference boundary remains closed.
+
+The canonical snapshot digest binds the current authorized snapshot. The report digest binds all report bytes excluding its own digest; exact inputs and unchanged storage reproduce the result, including across reopening the database. Evaluation time is supplied explicitly; wall-clock timing is not serialized. Hashes prove consistency, not semantic truth or independent timestamp authenticity. Privileged local filesystem rewriting remains a trusted-host limitation inherited from 22A. Current authorization rechecks and publication are not one atomic distributed transaction.
+
+## Bounds and integration
+
+Default/maximum selected observations are 100, touching dependencies 128, hypotheses 4, and timeout 5 seconds (configurable up to 30). A zero dependency budget permits services with no touching relationships and fails when a relationship exists. Complete health context is bounded by the existing 22A store limit of 10,000 observations per application; it is not reduced to the selected investigation budget. Cancellation/deadlines are cooperative stage boundaries and cannot preempt an individual SQLite read or finite local computation. The store retains its existing two-second lock wait.
+
+The existing Sprint 21-F coordinator is a fixture-answer harness, not a general incident scheduler. This synchronous read-only compatibility pipeline adds no agent runtime and does not weaken its governed-answer controls. The conversation/API composition may present the structured results after its own ownership, retrieval, citation, and authorization checks; discussion and recommendation confer no execution authority.
+
+No live model, provider quality, external collector, remediation, deployment, persistent operational memory, or causal root-cause certification is established. Production deployment, external monitoring activation, repository push, trading, and autonomous remediation remain denied.
+
+## Verification
+
+Deterministic tests cover competing explanations, contradictory checks, incomplete reviews, dependency/change associations, explicit/manual selection, complete health context, exact restart replay, cross-application/service isolation, missing IDs, forged evidence and review binding, unsupported causal prose/citations, omitted contradictions, future observations/reviews, cancellation at every publication stage, deadline/resource failure, and authorization revocation before publication. Actual suite totals belong in the final implementation report; repeated targeted runs are not additional accepted cases.

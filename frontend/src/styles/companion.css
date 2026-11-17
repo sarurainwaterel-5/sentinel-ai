@@ -1,0 +1,13 @@
+.companion-grid { display:grid; grid-template-columns:minmax(180px, 260px) minmax(0, 1fr); gap:20px; }
+.companion-grid > * { min-width:0; }
+.companion aside button, .companion aside select { display:block; margin:10px 0; max-width:100%; }
+.companion aside ul { padding-left:18px; }
+.companion select { font:inherit; padding:8px; }
+.companion-messages { padding:0; list-style:none; }
+.companion-message { margin:14px 0; border-left:3px solid var(--accent-cyan); padding:4px 16px; overflow-wrap:anywhere; }
+.companion-user { border-color:var(--text-secondary); }
+.companion-message p { white-space:pre-wrap; }
+.companion details, .companion code { overflow-wrap:anywhere; }
+.companion summary { cursor:pointer; }
+.companion button:focus-visible, .companion summary:focus-visible, .companion select:focus-visible { outline:2px solid var(--accent-cyan); outline-offset:3px; }
+@media (max-width:760px) { .companion-grid { grid-template-columns:minmax(0, 1fr); } }

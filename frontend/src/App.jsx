@@ -10,6 +10,7 @@ import Reason from "./pages/Reason";
 import Intelligence from "./pages/Intelligence";
 import Governance from "./pages/Governance";
 import Systems from "./pages/Systems";
+import Companion from "./pages/Companion";
 import "./styles/workspaces.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
     intelligence: <Intelligence onTeach={() => setActivePage("teach")} />,
     governance: <Governance onTeach={() => setActivePage("teach")} />,
     systems: <Systems />,
+    companion: <Companion />,
   };
 
   return (

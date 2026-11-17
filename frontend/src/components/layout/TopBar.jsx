@@ -3,6 +3,7 @@ import { useWorkspaceData } from "../workspaces/useWorkspaceData";
 import { useDomain } from "../../context/useDomain";
 
 const pageTitles = {
+  companion: { eyebrow: "Companion", title: "Sentinel Companion", subtitle: "Evidence-grounded conversation and investigation" },
   bridge: {
     eyebrow: "Bridge",
     title: "Bridge",

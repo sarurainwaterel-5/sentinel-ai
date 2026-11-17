@@ -336,3 +336,31 @@ class SREStore:
             observations=[json.loads(r[0]) for r in self._db.execute('SELECT document FROM sre_observations WHERE tenant=? AND app=? AND service=? ORDER BY source_time DESC,id DESC LIMIT 100',(tenant,app,service_id))]
             body={'schema_version':1,'tenant_id':tenant,'application_id':app,'service':service,'source_claims':list(reversed(observations)),'audit_head':self._verify(tenant,app),'capabilities_active':False,'governance':dict(GOVERNANCE)}
             return {'package':body,'sha256':digest(body)}
+
+    def investigation_snapshot(self,access,tenant,application,service_id,*,evaluated_at,observation_ids=None,incident_id=None,max_observations=100,max_dependencies=128):
+        """Atomic explicit selection; health uses complete service context."""
+        from .health import evaluate_health
+        at=timestamp(evaluated_at)
+        if (observation_ids is None)==(incident_id is None):raise SREError('EXPLICIT_SELECTION_REQUIRED')
+        if type(max_observations) is not int or not 1<=max_observations<=100 or type(max_dependencies) is not int or not 0<=max_dependencies<=128:raise SREError('QUERY_LIMIT')
+        with self._transaction(access,tenant,application,'read'):
+            service=json.loads(self._service(tenant,application,service_id)['document']);incident=None
+            if incident_id is not None:
+                identifier(incident_id)
+                row=self._db.execute('SELECT document FROM sre_incidents WHERE tenant=? AND app=? AND id=? AND service=?',(tenant,application,incident_id,service_id)).fetchone()
+                if not row:raise SREError('INCIDENT_UNAVAILABLE')
+                incident=json.loads(row[0]);observation_ids=incident['initial_observation_ids']
+            if type(observation_ids) is not list or not 1<=len(observation_ids)<=max_observations or any(type(x) is not str for x in observation_ids) or len(set(observation_ids))!=len(observation_ids):raise SREError('INVALID_SELECTION')
+            for value in observation_ids:identifier(value)
+            all_observations=[];selected=[]
+            for row in self._db.execute('SELECT o.*,v.document AS review FROM sre_observations o LEFT JOIN sre_validations v ON v.tenant=o.tenant AND v.app=o.app AND v.id=o.id WHERE o.tenant=? AND o.app=? AND o.service=? ORDER BY o.source_time,o.id',(tenant,application,service_id)):
+                doc=json.loads(row['document']);doc['source_data_quality']=doc['data_quality'];doc['record_sha256']=row['digest']
+                if row['review'] and json.loads(row['review'])['reviewed_at']<=at:
+                    doc['validation']=json.loads(row['review']);doc['data_quality']='VALIDATED'
+                all_observations.append(doc)
+                if doc['observation_id'] in observation_ids:selected.append(doc)
+            if len(selected)!=len(observation_ids):raise SREError('EVIDENCE_UNAVAILABLE')
+            dependencies=[json.loads(row[0]) for row in self._db.execute('SELECT document FROM sre_dependencies WHERE tenant=? AND app=? AND (source=? OR dependent=?) ORDER BY id',(tenant,application,service_id,service_id))]
+            if len(dependencies)>max_dependencies:raise SREError('QUERY_LIMIT')
+            body={'schema_version':1,'scope':{'tenant_id':tenant,'application_id':application,'service_id':service_id},'service':service,'evaluated_at':at,'selection':{'kind':'INCIDENT' if incident_id else 'OBSERVATIONS','observation_ids':sorted(observation_ids),'incident_id':incident_id},'observations':selected,'health':evaluate_health(service,all_observations,evaluated_at=at),'dependencies':dependencies,'incident':incident,'audit_head':self._verify(tenant,application)}
+            return dict(body,snapshot_sha256=digest(body))

@@ -1,0 +1,652 @@
+{
+  "schema_version": "22B-capabilities-v1",
+  "registry_version": "22B-repository-baseline-2",
+  "sources": [
+    {
+      "source_id": "sre-store",
+      "path": "backend/app/services/sre/store.py",
+      "kind": "python_definition",
+      "symbols": [
+        "SREStore",
+        "SREStore.register_service",
+        "SREStore.observations",
+        "SREStore.create_incident",
+        "SREStore.add_dependency"
+      ],
+      "required_markers": [],
+      "sha256": "aa83af44ea274f2e30b19101acd46fda06abc7b722ccb0f283c9dade6376d878",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree"
+    },
+    {
+      "source_id": "sre-health",
+      "path": "backend/app/services/sre/health.py",
+      "kind": "python_definition",
+      "symbols": [
+        "evaluate_health"
+      ],
+      "required_markers": [],
+      "sha256": "e53ca4d9edf40344543a6c9090e85c8c39aa0a8af3b38210fd477e8b756c8a71",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "sre-auth",
+      "path": "backend/app/services/sre/authorization.py",
+      "kind": "python_definition",
+      "symbols": [
+        "SREAuthorizer",
+        "SREAuthorizer.check"
+      ],
+      "required_markers": [],
+      "sha256": "17234ac3ea99608a4edd5ad430180feffcdc5df69db90b2df2095a0bca71c133",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "sre-local",
+      "path": "backend/app/services/sre/local_adapter.py",
+      "kind": "python_definition",
+      "symbols": [
+        "collect_local_observation"
+      ],
+      "required_markers": [],
+      "sha256": "87d606839bb604c2253eddbc5998d341ca4da469a5ac11de051ac33cf2f85e41",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "sre-policy",
+      "path": "backend/app/services/sre/__init__.py",
+      "kind": "python_definition",
+      "symbols": [],
+      "required_markers": [
+        "AUTONOMOUS_REMEDIATION",
+        "DENIED",
+        "EXTERNAL_MONITORING",
+        "DISABLED"
+      ],
+      "sha256": "ec66de32607677b640f6e7e9da93072b05de86c9afda0572c10a5bfbe8324dd5",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "sre-report",
+      "path": "docs/sprints/sprint22a/SPRINT_22A_IMPLEMENTATION_REPORT.md",
+      "kind": "implementation_report",
+      "symbols": [],
+      "required_markers": [
+        "2,650 passed",
+        "not installed API daemon",
+        "production deployment"
+      ],
+      "sha256": "b32a5dc00898cf191329acd91e85a98e48861a2cda9bbddee2bf34c79e326127",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "sre-schema",
+      "path": "backend/app/services/sre/migrations/001_foundation.sql",
+      "kind": "schema",
+      "symbols": [],
+      "required_markers": [
+        "CREATE TABLE sre_observations",
+        "CREATE TABLE sre_validations",
+        "CREATE TABLE sre_incidents"
+      ],
+      "sha256": "4379223c0e9b071f3b48cf9a6986873d24866044168d9f32d65cad42dd93ad6d",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "coordinator",
+      "path": "backend/evaluation/governed_answers/async_coordinator.py",
+      "kind": "python_definition",
+      "symbols": [
+        "OfflineAsyncAnswerCoordinator"
+      ],
+      "required_markers": [],
+      "sha256": "1b422d2fcfb49c922f8de7c10734f2869b9d286f2fe96d142dec2155ded8a8cf",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "governed-http",
+      "path": "backend/app/routes/governed_answers.py",
+      "kind": "python_definition",
+      "symbols": [
+        "answer_readiness",
+        "governed_answer"
+      ],
+      "required_markers": [
+        "production_release_disabled",
+        "503"
+      ],
+      "sha256": "eb34734c65af72e49c372d087d8f632bb1db5628fda05819d07fb1d5a43fd285",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "provider",
+      "path": "backend/app/services/providers/openai_governed_transport.py",
+      "kind": "python_definition",
+      "symbols": [
+        "OpenAIGovernedTransport",
+        "OpenAIGovernedTransport.call"
+      ],
+      "required_markers": [
+        "production_enabled = False",
+        "release_authorized = False"
+      ],
+      "sha256": "2dc4cf97c4b9a51bfd30aff09001ef9dff3726ff111ba3b5b93813d2ded08c7a",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "self-ontology",
+      "path": "backend/app/core/self/registry.py",
+      "kind": "python_definition",
+      "symbols": [
+        "SelfRegistry",
+        "IdentityRegistry",
+        "BoundariesRegistry"
+      ],
+      "required_markers": [],
+      "sha256": "75d5de9609f3737eb13af56d4471aa8e95ca0dc870c23d120dc9bd0959d275b9",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "self-discovery",
+      "path": "backend/app/core/self/discover.py",
+      "kind": "python_definition",
+      "symbols": [
+        "discover_self_registry",
+        "discover_routes",
+        "discover_workspaces"
+      ],
+      "required_markers": [],
+      "sha256": "e3dfb109d4547f1e983643b9a61b59aea5da6a5e0c8268bb85296292bf41549c",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "adr037",
+      "path": "docs/architecture/decisions/ADR-037-Governed-Semantic-Proposition-Generation.md",
+      "kind": "architectural_decision",
+      "symbols": [],
+      "required_markers": [
+        "Proposed.",
+        "future inference boundary"
+      ],
+      "sha256": "a41ee1e88233e714f5f4297631fcb1acf8473d40abf679cdb7bf306b34cc9dc9",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "dependency-manifest",
+      "path": "backend/requirements.txt",
+      "kind": "dependency_manifest",
+      "symbols": [],
+      "required_markers": [
+        "SQLAlchemy",
+        "qdrant-client"
+      ],
+      "sha256": "4339afe512557526483d4495c8df219f95d7cda55dcc20764076b3b3b40bedee",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b"
+    },
+    {
+      "source_id": "companion-store",
+      "path": "backend/app/services/companion/store.py",
+      "kind": "python_definition",
+      "symbols": [
+        "ConversationStore",
+        "ConversationAuthority"
+      ],
+      "required_markers": [],
+      "sha256": "ab65f91fb4a38f7c83e5694adaa6176e83e5a0c486517aec0f851113fd1a3704",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree"
+    },
+    {
+      "source_id": "companion-manager",
+      "path": "backend/app/services/companion/manager.py",
+      "kind": "python_definition",
+      "symbols": [
+        "ConversationManager",
+        "ConversationProvider"
+      ],
+      "required_markers": [],
+      "sha256": "a1496ebb849e8aac4d343a7053ee08df12af8db5ee63b294ad60773d9846df0d",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree"
+    },
+    {
+      "source_id": "companion-api",
+      "path": "backend/app/services/companion/api.py",
+      "kind": "python_definition",
+      "symbols": [
+        "create_companion_app"
+      ],
+      "required_markers": [],
+      "sha256": "bdd55dcf3c6c5abfac78f363307a047914475c657a83ac8f0e8ccdeab7ccdb0a",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree"
+    },
+    {
+      "source_id": "investigation",
+      "path": "backend/app/services/sre/investigation.py",
+      "kind": "python_definition",
+      "symbols": [
+        "run_investigation"
+      ],
+      "required_markers": [],
+      "sha256": "95c7037badf68bcff468591d4ad330650476d33be9ee16ccf78b36db51e47ca2",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree"
+    },
+    {
+      "source_id": "investigation-verifier",
+      "path": "backend/app/services/sre/investigation_verifier.py",
+      "kind": "python_definition",
+      "symbols": [
+        "verify_snapshot",
+        "verify_hypotheses"
+      ],
+      "required_markers": [],
+      "sha256": "f92ec0a93a7324d71a789487382d7089e186d96eaca70cc3edcf6a451b452049",
+      "version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree"
+    }
+  ],
+  "capabilities": [
+    {
+      "capability_id": "sre.registry",
+      "name": "Universal SRE registry",
+      "description": "The SRE subsystem stores scoped service registrations, observations, validation records, dependencies and manually selected incident drafts in a dedicated private local SQLite store.",
+      "owning_subsystem": "SRE",
+      "implementation_status": "IMPLEMENTED",
+      "authorization_status": "LOCAL_POLICY_REQUIRED",
+      "evidence_references": [
+        "sre-store",
+        "sre-schema",
+        "sre-auth",
+        "sre-report"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [],
+      "limitations": [
+        "Repository implementation evidence does not establish a running installed service or active monitoring.",
+        "Each request still requires explicit current tenant/application permissions."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree",
+      "keywords": [
+        "sre",
+        "registry",
+        "service",
+        "services",
+        "observation",
+        "observations",
+        "database",
+        "databases",
+        "sqlite",
+        "storage",
+        "incident",
+        "incidents",
+        "sprint",
+        "22a",
+        "changes",
+        "latest"
+      ]
+    },
+    {
+      "capability_id": "sre.health",
+      "name": "Deterministic health evaluation",
+      "description": "The SRE health evaluator derives HEALTHY, DEGRADED, UNHEALTHY or UNKNOWN from explicitly configured checks, validated observations and source-time freshness. Dependency context is not proof of causation.",
+      "owning_subsystem": "SRE",
+      "implementation_status": "IMPLEMENTED",
+      "authorization_status": "LOCAL_POLICY_REQUIRED",
+      "evidence_references": [
+        "sre-health",
+        "sre-report"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [
+        "sre.registry"
+      ],
+      "limitations": [
+        "Missing, stale, contradictory or unvalidated evidence can produce UNKNOWN.",
+        "No current health status is asserted by repository inspection."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "sre",
+        "health",
+        "unhealthy",
+        "degraded",
+        "unknown",
+        "checks",
+        "freshness",
+        "failure",
+        "failed"
+      ]
+    },
+    {
+      "capability_id": "sre.liveness",
+      "name": "One-shot local process liveness",
+      "description": "The local Sentinel adapter can explicitly collect a one-shot development process-callable liveness claim. This does not establish HTTP, database, vector-store or model readiness.",
+      "owning_subsystem": "SRE",
+      "implementation_status": "IMPLEMENTED",
+      "authorization_status": "LOCAL_POLICY_REQUIRED",
+      "evidence_references": [
+        "sre-local",
+        "sre-report"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [
+        "sre.registry"
+      ],
+      "limitations": [
+        "No background collector is started.",
+        "No installed daemon or external application is probed."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "sre",
+        "monitoring",
+        "monitor",
+        "liveness",
+        "readiness",
+        "running",
+        "active",
+        "process",
+        "local"
+      ]
+    },
+    {
+      "capability_id": "sre.external",
+      "name": "External application collectors",
+      "description": "External application collectors and production application access remain future integrations; Sprint 22A did not establish access to Mozart Clip or the related external applications.",
+      "owning_subsystem": "SRE",
+      "implementation_status": "PLANNED",
+      "authorization_status": "DENIED",
+      "evidence_references": [
+        "sre-policy",
+        "sre-report"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [
+        "sre.registry"
+      ],
+      "limitations": [
+        "A service registration would not by itself connect, authenticate or monitor an application."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "mozart",
+        "clip",
+        "external",
+        "applications",
+        "integration",
+        "integrations",
+        "monitor",
+        "monitoring",
+        "trading"
+      ]
+    },
+    {
+      "capability_id": "reasoning.coordinator",
+      "name": "Governed asynchronous coordinator",
+      "description": "Sprint 21-F supplies a bounded offline governed-answer coordinator with separately injected generation, statement assessment and relevance roles. Its fixture previews are not production answering acceptance.",
+      "owning_subsystem": "Governed answers",
+      "implementation_status": "EXPERIMENTAL",
+      "authorization_status": "OFFLINE_FIXTURES_ONLY",
+      "evidence_references": [
+        "coordinator",
+        "adr037"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [],
+      "limitations": [
+        "Synthetic tests do not prove semantic accuracy or empirical independence.",
+        "The proposition-to-inference boundary remains closed."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "coordinator",
+        "governed",
+        "reasoning",
+        "asynchronous",
+        "21f",
+        "agents",
+        "roles",
+        "supervisor",
+        "observer",
+        "investigator",
+        "verifier",
+        "architect",
+        "conversation"
+      ]
+    },
+    {
+      "capability_id": "reasoning.http",
+      "name": "Governed answer release boundary",
+      "description": "The governed HTTP answer endpoint returns a disabled release response while semantic benchmark and answer presentation acceptance remain required. Existing Reason is a separate capability, not a fallback.",
+      "owning_subsystem": "Governed answers",
+      "implementation_status": "DISABLED",
+      "authorization_status": "DENIED",
+      "evidence_references": [
+        "governed-http",
+        "adr037"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [
+        "reasoning.coordinator"
+      ],
+      "limitations": [
+        "A conversation cannot grant release authorization or bypass this boundary."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "governed",
+        "answer",
+        "answers",
+        "disabled",
+        "release",
+        "restrictions",
+        "limitations",
+        "inference"
+      ]
+    },
+    {
+      "capability_id": "models.transport",
+      "name": "Structured model transport",
+      "description": "The existing explicitly configured model transport supports bounded generation, statement assessment and relevance requests with injected clients. Provider results are untrusted and carry no release authority.",
+      "owning_subsystem": "Model providers",
+      "implementation_status": "IMPLEMENTED",
+      "authorization_status": "EXPLICIT_APPROVED_PROVIDER_REQUIRED",
+      "evidence_references": [
+        "provider"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [
+        "reasoning.coordinator"
+      ],
+      "limitations": [
+        "Repository inspection does not demonstrate a configured provider or live-model performance.",
+        "No credentials are acquired and no inference call is made by self-knowledge inspection."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "model",
+        "models",
+        "provider",
+        "providers",
+        "llm",
+        "inference",
+        "hosted",
+        "local",
+        "integration",
+        "integrations"
+      ]
+    },
+    {
+      "capability_id": "self.ontology",
+      "name": "Architectural self ontology",
+      "description": "Sentinel already has identity, structure, function, knowledge, boundaries and evidence registries, with separate route/workspace discovery. The new capability inspection supplements that vocabulary with exact repository evidence.",
+      "owning_subsystem": "Architectural knowledge",
+      "implementation_status": "IMPLEMENTED",
+      "authorization_status": "LOCAL_READ_ONLY",
+      "evidence_references": [
+        "self-ontology",
+        "self-discovery"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [],
+      "limitations": [
+        "The legacy self-validator alone does not certify semantic support.",
+        "Live discovery imports the application; the bounded inspection path does not invoke it."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "identity",
+        "ontology",
+        "built",
+        "organization",
+        "repository",
+        "components",
+        "structure",
+        "self",
+        "knowledge"
+      ]
+    },
+    {
+      "capability_id": "governance.actions",
+      "name": "Production changes and remediation",
+      "description": "Production deployment, autonomous remediation, repository push and live trading remain denied. Explaining or recommending an operation supplies no permission or execution capability.",
+      "owning_subsystem": "Governance",
+      "implementation_status": "DISABLED",
+      "authorization_status": "DENIED",
+      "evidence_references": [
+        "sre-policy",
+        "adr037"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [],
+      "limitations": [
+        "No tool dispatch, deployment, restart, broker connection or trading order is exposed by repository inspection."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "deploy",
+        "deployment",
+        "yourself",
+        "restart",
+        "remediation",
+        "execute",
+        "execution",
+        "trade",
+        "trading",
+        "orders",
+        "production",
+        "permission",
+        "authorization"
+      ]
+    },
+    {
+      "capability_id": "dependencies.manifest",
+      "name": "Application dependency declarations",
+      "description": "The backend dependency manifest declares SQLAlchemy and Qdrant client packages. The SRE foundation separately implements a local SQLite observation store; declarations do not establish running dependency readiness.",
+      "owning_subsystem": "Dependencies",
+      "implementation_status": "IMPLEMENTED",
+      "authorization_status": "LOCAL_READ_ONLY",
+      "evidence_references": [
+        "dependency-manifest",
+        "sre-schema",
+        "sre-report"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [],
+      "limitations": [
+        "No configured connection URL, credential or current database/vector-store status is disclosed.",
+        "No package import or dependency connection is required for inspection."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b",
+      "keywords": [
+        "database",
+        "databases",
+        "postgres",
+        "postgresql",
+        "sqlalchemy",
+        "sqlite",
+        "qdrant",
+        "dependency",
+        "dependencies",
+        "packages",
+        "requirements"
+      ]
+    },
+    {
+      "capability_id": "companion.context",
+      "name": "Bounded companion conversation",
+      "description": "The opt-in Companion layer stores private owner-scoped conversation context and renders source-bound repository records with simple follow-up handling. Generated model prose remains withheld.",
+      "owning_subsystem": "Companion",
+      "implementation_status": "EXPERIMENTAL",
+      "authorization_status": "EXPLICIT_LOCAL_GRANT_REQUIRED",
+      "evidence_references": [
+        "companion-store",
+        "companion-manager",
+        "companion-api"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [
+        "sre.registry"
+      ],
+      "limitations": [
+        "Offline deterministic implementation only; no live model quality or production acceptance."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree",
+      "keywords": [
+        "conversation",
+        "conversational",
+        "companion",
+        "22b",
+        "latest",
+        "changes",
+        "history",
+        "chat",
+        "memory"
+      ]
+    },
+    {
+      "capability_id": "sre.investigation",
+      "name": "Incident intelligence",
+      "description": "Explicitly selected authorized SRE evidence can produce deterministic timelines, competing rule hypotheses and a separately verified structural report. Root cause remains withheld.",
+      "owning_subsystem": "SRE",
+      "implementation_status": "EXPERIMENTAL",
+      "authorization_status": "EXPLICIT_LOCAL_GRANT_REQUIRED",
+      "evidence_references": [
+        "investigation",
+        "investigation-verifier",
+        "sre-store"
+      ],
+      "verification_status": "REPOSITORY_BOUND",
+      "dependencies": [
+        "sre.registry"
+      ],
+      "limitations": [
+        "Offline deterministic implementation only; no live model quality or production acceptance."
+      ],
+      "last_verified_version": "3202bf7f2e02fe3b1e93f75ff5ec85873ab1219b+22B-reviewed-working-tree",
+      "keywords": [
+        "incident",
+        "investigate",
+        "investigation",
+        "failure",
+        "hypotheses",
+        "22b",
+        "latest",
+        "changes"
+      ]
+    }
+  ],
+  "governance": {
+    "production_deployment": "DENIED",
+    "autonomous_remediation": "DENIED",
+    "repository_push": "DENIED",
+    "live_trading": "DENIED",
+    "external_monitoring": "DISABLED",
+    "proposition_to_inference": "CLOSED",
+    "adr037": "PROPOSED",
+    "model_inference_activated": false
+  },
+  "limitations": [
+    "Repository-bound curated records describe reviewed implementation, not current operational health or semantic truth.",
+    "Authorization statuses are policy ceilings, never grants; current request authorization is rechecked.",
+    "Source hashes detect changes relative to this reviewed registry, not privileged-owner tampering or external attestation.",
+    "The version is the inspected baseline commit; new source changes require explicit reviewed registry refresh.",
+    "No arbitrary raw source, runtime configuration, private uploads, external histories or personal profiles are searched."
+  ]
+}
