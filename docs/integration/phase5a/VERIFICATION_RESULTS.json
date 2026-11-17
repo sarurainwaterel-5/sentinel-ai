@@ -1,0 +1,63 @@
+{
+  "decision": "FULL_ACCEPTANCE_WITHHELD",
+  "reason": "Directive truncated at Guarantee A item5; report audit/human approval state absent",
+  "baseline_commit": "fb275edc581504f45d0f85922f1e41fefcea105e",
+  "validation_tag_object": "6967960ef08232bf33d1c80baf03cb5975c3f22b",
+  "validation_tag_commit": "fb275edc581504f45d0f85922f1e41fefcea105e",
+  "fresh_sre_companion": {
+    "passed": 173,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": "34.872"
+  },
+  "historical_phase4": {
+    "passed": 2711,
+    "failed": 0,
+    "skipped": 0,
+    "independently_reexecuted_here": false,
+    "log_sha256": "fb1f116f0d2a00d7d3f8726f48c0eb38a0b2ec492215da2e6755c97720c11523"
+  },
+  "source_pins": {
+    "sre-store": true,
+    "sre-health": true,
+    "sre-auth": true,
+    "sre-local": true,
+    "sre-policy": true,
+    "sre-report": true,
+    "sre-schema": true,
+    "coordinator": true,
+    "governed-http": true,
+    "provider": true,
+    "self-ontology": true,
+    "self-discovery": true,
+    "adr037": true,
+    "dependency-manifest": true,
+    "companion-store": true,
+    "companion-manager": true,
+    "companion-api": true,
+    "investigation": true,
+    "investigation-verifier": true
+  },
+  "new_tests": {
+    "authorization": 12,
+    "failure_normalization": 5
+  },
+  "failure_reproduction_before_fix": {
+    "failed": 5
+  },
+  "production_actions": "NONE",
+  "authorization_boundary_changes": "NONE",
+  "scope": "Offline SRE/Companion acceptance checkpoint; not full backend or live-service rerun",
+  "private_evidence_directory": "/home/rain/Documents/ChatGPT/Sentinel IR SRE/outputs/phase5a-verification-20261117",
+  "evidence_sha256": {
+    "final-focused.xml": "b65327c58b89cec381d29792bb763b48a49807f65b06f9a8906e5b2be144b460",
+    "final-focused.log": "f6f61eaef19962823fb3f1c3a96ebf74321aca2f99a72a9983df3f871582bfb8",
+    "focused.xml": "f9731e0f1f8f8832d3bf51e7108370f7ce6bb8ff945442058d53d66137126948",
+    "run-focused-offline.py": "4df1edbdb648b07cb2a2a704debef41c6e422d7d2d920f15cd94d7c962ce092f",
+    "failure-before.log": "698a342fa9e46e6f613c3080d51cde8c38f9e523e8d0a9f634c47f7f70659894",
+    "focused.log": "4182c663ed235ea01df529cd6f1af6c862520fcf724b9ff931fe82c6a173301c",
+    "baseline.log": "21d67004ac6a4582f06b532772378c6869fa3a44f8f8fbac59abc6a50544d53f",
+    "failure-after.log": "41b7035629a291b83be2addd0ca0479e8dd833109a589d147de703ba4128aaf6"
+  }
+}

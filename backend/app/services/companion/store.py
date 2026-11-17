@@ -54,9 +54,10 @@ class ConversationStore:
         try:
             self.db.execute('BEGIN IMMEDIATE');self._verify();yield owner
             self.authority.check(access,t,a,action);self.db.execute('COMMIT')
-        except Exception:
+        except Exception as error:
             if self.db.in_transaction:self.db.execute('ROLLBACK')
-            raise
+            if isinstance(error,SREError):raise
+            raise SREError('CONVERSATION_OPERATION_FAILED') from None
         finally:self.lock.release()
     def _verify(self):
         schema=[tuple(row) for row in self.db.execute("SELECT name,sql FROM sqlite_master WHERE name NOT LIKE 'sqlite_%' ORDER BY name")]
