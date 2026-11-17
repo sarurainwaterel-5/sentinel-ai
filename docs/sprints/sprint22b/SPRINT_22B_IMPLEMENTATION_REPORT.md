@@ -36,4 +36,4 @@ Recommended next sprint: 22C approved local composition, explicit incident picke
 
 ## Local commits
 
-Baseline commit is recorded above. The completed implementation commit and final evidence receipt are recorded after verification; no push is authorized.
+Baseline commit is recorded above. Implementation commit: `e265c9908c838cf9ef0f592c9cf133c453e3567a`. A subsequent documentation-only commit records this identifier; its final HEAD is recorded in the private verification receipt and final response. No push is authorized.
