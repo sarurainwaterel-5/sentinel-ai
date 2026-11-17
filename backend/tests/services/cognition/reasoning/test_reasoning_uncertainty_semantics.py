@@ -153,6 +153,20 @@ def test_insufficient_evidence_keeps_limitations_distinct_from_missing_informati
     - confidence uncertainty may also reference those gaps.
     """
 
+    # Keep this uncertainty-semantics test independent of OpenAI.
+    # The formatter's narrative output is mocked below.
+    class OfflineFormatter:
+        def format(self, **kwargs):
+            raise AssertionError(
+                "Formatter must be mocked before reasoning."
+            )
+
+    monkeypatch.setattr(
+        "app.services.cognition.reasoning.reasoning_orchestrator."
+        "LLMReasoningFormatter",
+        OfflineFormatter,
+    )
+
     orchestrator = ReasoningOrchestrator()
 
     evidence_bundle = EvidenceBundle(
