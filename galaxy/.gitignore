@@ -1,0 +1,7 @@
+config.json
+.venv/
+__pycache__/
+viewer/graph-data.js
+.models/
+local-llm/
+heat-log.jsonl

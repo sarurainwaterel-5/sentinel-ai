@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+  // ---- Voice tuning: the one place to adjust timing ----
+  // How long a pause must last before a spoken thought is considered finished and sent.
+  // Speech recognition finalizes a phrase at every short pause; we buffer finals and only
+  // send once no new speech has arrived for FINISH_MS.
+  const FINISH_MS = 900;
+  // Short commands that bypass the buffer and act instantly (stop talking, drop pending speech).
+  const INTERRUPT_WORDS = ["stop", "wait", "cancel", "quiet", "hold on", "pause", "shush"];
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentinel · Knowledge Galaxy</title>
+<style>
+  :root { --fg:#e6ecff; --dim:#8a93b8; --panel:rgba(10,12,28,.82); --edge:rgba(140,160,255,.25); }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:#000; color:var(--fg);
+    font:14px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; overflow:hidden; }
+  #graph { position:fixed; inset:0; }
+  #title { position:fixed; top:18px; left:22px; pointer-events:none; }
+  #title h1 { margin:0; font-size:15px; letter-spacing:.32em; text-transform:uppercase; font-weight:600; }
+  #title p { margin:4px 0 0; color:var(--dim); font-size:12px; }
+  #legend { position:fixed; top:70px; left:22px; max-height:50vh; overflow:auto; font-size:12px; color:var(--dim); }
+  #legend div { display:flex; align-items:center; gap:8px; margin:3px 0; cursor:pointer; }
+  #legend i { width:9px; height:9px; border-radius:50%; display:inline-block; box-shadow:0 0 8px currentColor; }
+  #panel { position:fixed; top:0; right:0; height:100%; width:min(420px,92vw); padding:26px 26px 110px;
+    background:var(--panel); backdrop-filter:blur(10px); border-left:1px solid var(--edge);
+    transform:translateX(100%); transition:transform .45s cubic-bezier(.2,.8,.2,1); overflow:auto; }
+  #panel.open { transform:none; }
+  #panel h2 { margin:6px 0 4px; font-size:20px; font-weight:600; }
+  #panel .meta { color:var(--dim); font-size:12px; word-break:break-all; }
+  #panel .tag { display:inline-block; padding:2px 9px; border-radius:99px; font-size:11px;
+    text-transform:uppercase; letter-spacing:.08em; border:1px solid currentColor; }
+  #panel .excerpt { margin-top:18px; color:#cdd5f5; white-space:pre-wrap; font-size:13px; }
+  #panel .nbrs { margin-top:20px; font-size:12px; color:var(--dim); }
+  #panel .nbrs a { color:var(--fg); cursor:pointer; display:block; padding:2px 0; text-decoration:none; }
+  #panel .nbrs a:hover { color:#9fb4ff; }
+  #close { position:absolute; top:14px; right:16px; background:none; border:0; color:var(--dim); font-size:22px; cursor:pointer; }
+  #chat { position:fixed; left:50%; bottom:22px; transform:translateX(-50%); width:min(720px,94vw); z-index:5; }
+  #answer { display:none; margin-bottom:10px; padding:14px 18px; border-radius:14px; background:var(--panel);
+    border:1px solid var(--edge); backdrop-filter:blur(10px); max-height:34vh; overflow:auto; }
+  #answer.show { display:block; }
+  #answer .q { color:var(--dim); font-size:12px; margin-bottom:6px; }
+  #answer.err .a { color:#ffb3b3; }
+  #answer .src { margin-top:8px; font-size:12px; color:var(--dim); }
+  #answer .src a { color:#9fb4ff; cursor:pointer; margin-right:10px; }
+  form { display:flex; gap:8px; padding:6px; border-radius:99px; background:var(--panel);
+    border:1px solid var(--edge); backdrop-filter:blur(10px); }
+  input { flex:1; background:none; border:0; outline:0; color:var(--fg); font:inherit; padding:10px 16px; }
+  input::placeholder { color:var(--dim); }
+  button.send { border:0; border-radius:99px; padding:0 20px; font:inherit; font-weight:600; cursor:pointer;
+    color:#0a0c1c; background:linear-gradient(135deg,#9fb4ff,#c99fff); }
+  button.send:disabled { opacity:.5; cursor:wait; }
+  #toast { position:fixed; top:18px; left:50%; transform:translate(-50%,-80px); transition:transform .4s;
+    padding:10px 16px; border-radius:99px; background:var(--panel); border:1px solid var(--edge);
+    backdrop-filter:blur(10px); font-size:13px; z-index:6; }
+  #toast.show { transform:translate(-50%,0); }
+  #toast button { margin-left:10px; border:0; border-radius:99px; padding:4px 12px; cursor:pointer;
+    font:inherit; font-weight:600; color:#0a0c1c; background:linear-gradient(135deg,#9fb4ff,#c99fff); }
+  button.mic { width:40px; border:1px solid var(--edge); border-radius:99px; background:none; color:var(--fg);
+    cursor:pointer; display:grid; place-items:center; transition:all .2s; }
+  button.mic svg { width:18px; height:18px; }
+  button.mic.on { background:#ff4d6d; border-color:#ff4d6d; color:#fff; box-shadow:0 0 16px #ff4d6d; }
+  button.mic:disabled { opacity:.35; cursor:not-allowed; }
+  #status { margin:8px 0 0 18px; font-size:12px; color:var(--dim); display:flex; align-items:center; gap:8px; min-height:18px; }
+  #status i { width:8px; height:8px; border-radius:50%; background:#5b6285; display:inline-block; transition:background .2s; }
+  #status[data-s="listening"] i { background:#ff4d6d; box-shadow:0 0 8px #ff4d6d; animation:pulse 1.2s infinite; }
+  #status[data-s="thinking"] i { background:#ffcf5c; box-shadow:0 0 8px #ffcf5c; animation:pulse .6s infinite; }
+  #status[data-s="speaking"] i { background:#5ef2c4; box-shadow:0 0 8px #5ef2c4; animation:pulse .9s infinite; }
+  #status b { color:var(--fg); font-weight:600; }
+  #brain { min-width:70px; }
+  /* Screen sharing must be impossible to miss: a red bar, a red frame round the window, a red button. */
+  #sharebar { position:fixed; top:0; left:50%; transform:translate(-50%,-110%); transition:transform .25s; z-index:20;
+    display:flex; align-items:center; gap:12px; padding:9px 16px; border-radius:0 0 12px 12px;
+    background:#e0193a; color:#fff; font-size:13px; box-shadow:0 4px 24px #ff335588; }
+  #sharebar.show { transform:translate(-50%,0); }
+  #sharebar b { letter-spacing:.06em; animation:pulse 1.2s infinite; }
+  #sharebar button { border:0; border-radius:99px; padding:4px 12px; font:inherit; font-weight:700; cursor:pointer;
+    background:#fff; color:#e0193a; }
+  body.sharing::after { content:""; position:fixed; inset:0; border:3px solid #ff3355; pointer-events:none; z-index:19;
+    box-shadow:inset 0 0 28px #ff335566; }
+  button.mic#screen.on { background:#e0193a; border-color:#e0193a; color:#fff; box-shadow:0 0 16px #ff3355; }
+  #sharevid { position:fixed; width:1px; height:1px; opacity:0; pointer-events:none; left:0; top:0; }
+  #heat { margin-left:auto; margin-right:18px; font-variant-numeric:tabular-nums; }
+  #heat[data-level="warning"] { color:#ffcf5c; font-weight:600; }
+  #heat[data-level="critical"] { color:#ff4d6d; font-weight:700; animation:pulse .8s infinite; }
+  #toast.hot { border-color:#ffcf5c; } #toast.critical { border-color:#ff4d6d; box-shadow:0 0 18px #ff4d6d66; }
+  #brain[data-mode="local"] { color:#5ef2c4; border-color:#5ef2c4; }
+  #brain[data-mode="claude"] { color:#c99fff; border-color:#c99fff; }
+  .src .by { display:block; margin-top:6px; color:var(--dim); font-size:11px; }
+  @keyframes pulse { 50% { opacity:.35; } }
+  button.ghost { border:0; background:none; color:var(--dim); cursor:pointer; font:inherit; padding:0 10px; }
+</style>
+</head>
+<body>
+<div id="graph"></div>
+<div id="title"><h1>Sentinel Galaxy</h1><p id="stats"></p></div>
+<div id="legend"></div>
+
+<aside id="panel">
+  <button id="close" aria-label="Close">×</button>
+  <span class="tag" id="p-group"></span>
+  <h2 id="p-label"></h2>
+  <div class="meta" id="p-path"></div>
+  <div class="excerpt" id="p-excerpt"></div>
+  <div class="nbrs" id="p-nbrs"></div>
+</aside>
+
+<div id="sharebar" role="alert"><b>● SCREEN SHARED</b><span>Sentinel grabs one frame each time you ask</span><button id="share-stop">Stop sharing</button></div>
+<video id="sharevid" muted playsinline></video>
+<div id="toast"><span id="toast-msg"></span><button id="toast-go">Refresh</button></div>
+<div id="chat">
+  <div id="answer"><div class="q"></div><div class="a"></div><div class="src"></div></div>
+  <form id="ask">
+    <input id="q" autocomplete="off" placeholder="Ask your notes anything…">
+    <button type="button" class="ghost" id="reset" title="Forget the conversation">new</button>
+    <button type="button" class="ghost" id="brain" title="Which brain answers. Click to switch.">auto</button>
+    <button type="button" class="mic" id="mic" title="Talk to Sentinel" aria-label="Microphone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg>
+    </button>
+    <button type="button" class="mic" id="screen" title="Share your screen with Sentinel" aria-label="Share screen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    </button>
+    <button class="send" id="send">Ask</button>
+  </form>
+  <div id="status" data-s="idle"><i></i><span id="status-text">Ready</span><span id="heat" title="CPU temperature"></span></div>
+</div>
+
+<script src="graph-data.js"></script>
+<script type="module">
+import ForceGraph3D from "https://esm.sh/3d-force-graph@1.80.2?deps=three@0.187.0";
+import * as THREE from "https://esm.sh/three@0.187.0";
+import { UnrealBloomPass } from "https://esm.sh/three@0.187.0/examples/jsm/postprocessing/UnrealBloomPass.js";
+{
+  const PALETTE = ["#7aa2ff","#ff7ac6","#5ef2c4","#ffcf5c","#b48cff","#ff8f6b","#62d6ff",
+                   "#a6ff7a","#ff6b8f","#f5a3ff","#7affe0","#ffd9a0","#9a9cff","#ffa6a6"];
+  const groups = [...new Set(GRAPH.nodes.map(n => n.group))].sort();
+  const color = g => { if (!groups.includes(g)) groups.push(g); return PALETTE[groups.indexOf(g) % PALETTE.length]; };
+
+  const nbrs = GRAPH.nodes.map(() => new Set());
+  GRAPH.links.forEach(l => { nbrs[l.source].add(l.target); nbrs[l.target].add(l.source); });
+  const linkKey = (a, b) => a < b ? a + "-" + b : b + "-" + a;
+
+  let lit = new Set(), litLinks = new Set(), focus = null;
+  let pulse = null;   // {id, start}: a newborn star's glow
+  const PULSE_MS = 1600;
+  const pulseScale = id => {
+    if (!pulse || pulse.id !== id) return 1;
+    const t = (performance.now() - pulse.start) / PULSE_MS;
+    return t >= 1 ? 1 : 1 + 7 * Math.sin(Math.PI * t) * (1 - t * 0.5);
+  };
+  const setLit = (ids, centre) => {
+    lit = new Set(ids); litLinks = new Set(); focus = centre ?? null;
+    GRAPH.links.forEach(l => {
+      const s = l.source.id ?? l.source, t = l.target.id ?? l.target;
+      if (centre != null ? (s === centre || t === centre) : (lit.has(s) && lit.has(t))) litLinks.add(linkKey(s, t));
+    });
+    refresh();
+  };
+
+  const updateStats = () => { document.getElementById("stats").textContent =
+    `${GRAPH.nodes.filter(n => !n.taught).length} notes indexed · ${GRAPH.nodes.filter(n => n.taught).length} taught sources · ${GRAPH.links.length} links`; };
+  updateStats();
+  const legend = document.getElementById("legend");
+  const addLegendRow = g => {
+    const row = document.createElement("div");
+    row.innerHTML = `<i style="background:${color(g)};color:${color(g)}"></i>${g}`;
+    row.onclick = () => setLit(GRAPH.nodes.filter(n => n.group === g).map(n => n.id));
+    legend.appendChild(row);
+  };
+  groups.forEach(addLegendRow);
+
+  const Graph = new ForceGraph3D(document.getElementById("graph"), { controlType: "orbit" })
+    .backgroundColor("#000003")
+    .graphData(GRAPH)
+    .nodeId("id")
+    .nodeLabel(n => `<b>${n.label}</b><br><span style="opacity:.7">${n.group}</span>`)
+    .nodeVal(n => (1 + nbrs[n.id].size * 0.6) * (focus == null && lit.size && lit.has(n.id) ? 5 : 1) * pulseScale(n.id))
+    .nodeRelSize(3.2)
+    .nodeOpacity(0.95)
+    .nodeColor(n => pulseScale(n.id) > 1.05 ? "#ffffff"
+      : !lit.size || lit.has(n.id) ? (n.id === focus ? "#ffffff" : color(n.group)) : "rgba(70,78,110,0.25)")
+    .linkColor(l => litLinks.has(linkKey(l.source.id, l.target.id)) ? "#cfe0ff" : "rgba(120,140,220,0.07)")
+    .linkWidth(l => litLinks.has(linkKey(l.source.id, l.target.id)) ? 1.4 : 0)
+    .linkOpacity(0.35)
+    .linkDirectionalParticles(l => litLinks.has(linkKey(l.source.id, l.target.id)) ? 3 : 0)
+    .linkDirectionalParticleWidth(1.6)
+    .onNodeClick(n => selectNode(n.id))
+    .onBackgroundClick(() => { closePanel(); setLit([]); });
+  const refresh = () => Graph.nodeVal(Graph.nodeVal()).nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor())
+    .linkWidth(Graph.linkWidth()).linkDirectionalParticles(Graph.linkDirectionalParticles());
+
+  // Glow (bloom) and a starfield shell around the galaxy.
+  Graph.postProcessingComposer().addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.85, 0.5, 0.35));
+  {
+    const N = 7000, p = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      const r = 2500 + Math.random() * 5000, u = Math.random() * 2 - 1, t = Math.random() * Math.PI * 2;
+      const s2 = Math.sqrt(1 - u * u);
+      p.set([r * s2 * Math.cos(t), r * u, r * s2 * Math.sin(t)], i * 3);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(p, 3));
+    Graph.scene().add(new THREE.Points(g, new THREE.PointsMaterial({
+      color: 0xb8c4ff, size: 3, sizeAttenuation: true, transparent: true, opacity: 0.75, depthWrite: false })));
+  }
+
+  // Slow idle rotation; pauses while the user interacts or a node is focused.
+  let idle = true, angle = 0, lastTouch = 0, movingUntil = 0;  // movingUntil: a camera move is animating
+  const dist = Math.max(500, Math.sqrt(GRAPH.nodes.length) * 38);
+  Graph.cameraPosition({ x: 0, y: 0, z: dist });
+  ["pointerdown", "wheel"].forEach(ev => document.getElementById("graph")
+    .addEventListener(ev, () => { lastTouch = Date.now(); }));
+  (function spin() {
+    if (idle && focus == null && Date.now() > movingUntil && Date.now() - lastTouch > 4000) {
+      const cam = Graph.camera().position;
+      const r = Math.hypot(cam.x, cam.z) || dist;
+      angle = Math.atan2(cam.x, cam.z) + 0.0012;
+      Graph.cameraPosition({ x: r * Math.sin(angle), y: cam.y, z: r * Math.cos(angle) });
+    }
+    requestAnimationFrame(spin);
+  })();
+
+  const panel = document.getElementById("panel");
+  function selectNode(id) {
+    const n = GRAPH.nodes[id];
+    const k = 1 + 90 / Math.hypot(n.x || 1, n.y || 1, n.z || 1);
+    Graph.cameraPosition({ x: (n.x || 1) * k, y: (n.y || 1) * k, z: (n.z || 1) * k }, n, 1800);
+    setLit([id, ...nbrs[id]], id);
+    document.getElementById("p-group").textContent = n.group;
+    document.getElementById("p-group").style.color = color(n.group);
+    document.getElementById("p-label").textContent = n.label;
+    document.getElementById("p-path").textContent = n.path;
+    const used = lastPassages.filter(p => p.node === id);
+    document.getElementById("p-excerpt").textContent = used.length
+      ? used.map(p => `Passage ${p.chunk} (used in the last answer):\n${p.text}`).join("\n\n— — —\n\n")
+      : (n.excerpt || "(empty note)");
+    const list = document.getElementById("p-nbrs");
+    list.innerHTML = nbrs[id].size ? `<div>Connected (${nbrs[id].size})</div>` : "<div>No connections</div>";
+    [...nbrs[id]].sort((a, b) => GRAPH.nodes[a].label.localeCompare(GRAPH.nodes[b].label)).forEach(j => {
+      const a = document.createElement("a"); a.textContent = "→ " + GRAPH.nodes[j].label;
+      a.onclick = () => selectNode(j); list.appendChild(a);
+    });
+    panel.classList.add("open");
+  }
+  window.galaxy = { selectNode,   // read-only hooks for testing/debugging
+    get cameraDistance() { const c = Graph.camera().position; return Math.round(Math.hypot(c.x, c.y, c.z)); },
+    get lit() { return [...lit]; }, get focus() { return focus; } };
+  function closePanel() { panel.classList.remove("open"); focus = null; }
+  document.getElementById("close").onclick = () => { closePanel(); setLit([]); };
+
+  // Chat
+  const form = document.getElementById("ask"), q = document.getElementById("q"),
+        send = document.getElementById("send"), box = document.getElementById("answer");
+  let lastPassages = [];
+  function show(question, text, ids, isErr) {
+    box.className = "show" + (isErr ? " err" : "");
+    box.querySelector(".q").textContent = question;
+    box.querySelector(".a").textContent = text;
+    const src = box.querySelector(".src"); src.innerHTML = "";
+    if (ids && ids.length) {
+      src.append("Sources: ");
+      ids.forEach(i => { const a = document.createElement("a"); a.textContent = GRAPH.nodes[i].label;
+        a.onclick = () => selectNode(i); src.appendChild(a); });
+    }
+  }
+  async function post(body) {
+    const r = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    return r.json();
+  }
+  let thinking = false, interruptedAsk = false, queuedVoice = "";
+  async function ask(question) {
+    question = question.trim(); if (!question) return;
+    if (thinking) { queuedVoice = question; return; }  // one question at a time; next waits
+    if (REMEMBER_RE.test(question)) return capture(question, arguments[1] || "typed");
+    if (shareLive()) return look(question);                    // sharing: every question is about the screen
+    if (SCREEN_Q_RE.test(question)) {                         // a screen question with no live share:
+      const line = shareEnded ? seeLines.ended : seeLines.noShare;   // say so, never answer from memory
+      show(question, line, [], true); speak(line); return;
+    }
+    thinking = true; interruptedAsk = false; send.disabled = true; renderStatus();
+    stopSpeaking();
+    show(question, brainBtn.dataset.mode === "local"
+      ? "Thinking… (local model on this computer, this can take a minute)" : "Thinking…", []);
+    let reply, result = null;
+    // The local model runs on the same CPU as this 3D view: freeze the scene while it thinks.
+    const freeze = brainBtn.dataset.mode !== "claude";
+    if (freeze) Graph.pauseAnimation();
+    try {
+      const d = await post({ question });
+      if (d.error) { show(question, d.error, [], true); reply = d.error; }
+      else {
+        result = d; lastPassages = d.passages || [];
+        show(question, d.answer, d.intent === "knowledge" ? d.nodes : []);
+        if (d.brain) {                     // say which brain answered (and why, if it fell back)
+          const by = document.createElement("span"); by.className = "by";
+          by.textContent = (d.brain === "local" ? "Answered by the local model" : "Answered by Claude")
+            + (d.brain_note ? " — " + d.brain_note.replace(/ Answered by the local model instead\.$/, "") : "");
+          box.querySelector(".src").appendChild(by);
+        }
+        reply = d.spoken || d.answer;    // the short spoken version; notes are never read aloud
+      }
+      q.value = "";
+    } catch (err) { reply = "Couldn't reach the server."; show(question, reply, [], true); }
+    if (freeze) Graph.resumeAnimation();
+    thinking = false; send.disabled = false; renderStatus();
+    if (!interruptedAsk) speak(reply);   // "stop"/"wait" during thinking: show, don't speak
+    if (result) proveSources(result);    // camera moves while the answer is being spoken
+    if (!micOn) q.focus();
+    if (queuedVoice) { const next = queuedVoice; queuedVoice = ""; ask(next); }
+  }
+  form.onsubmit = e => { e.preventDefault(); ask(q.value); };
+
+  // ---- Sight: share the screen; each question grabs ONE fresh frame and sends it to /see. ----
+  const screenBtn = document.getElementById("screen"), shareBar = document.getElementById("sharebar");
+  const shareVid = document.getElementById("sharevid");
+  const SCREEN_Q_RE = /\b(on (my|the) screen|my screen|what am i looking at|what do you (think|make) of this|what('?s| is) this|look at this|can you see|what do you see)\b/i;
+  const FRAME_MAX_EDGE = 1568;          // longest side sent to Claude; larger frames are downscaled
+  let share = null, shareEnded = false;
+  let seeLines = { noShare: "Negative. No screen share is live. Press the screen button, then ask again.",
+                   ended: "Negative. The screen share has ended, so I can't see your screen. Share again and ask.",
+                   fail: "Negative. I couldn't see the screen: {reason}." };   // replaced from /persona
+  const shareLive = () => !!share && share.getVideoTracks().some(t => t.readyState === "live");
+  function renderShare() {
+    const on = shareLive();
+    document.body.classList.toggle("sharing", on);
+    shareBar.classList.toggle("show", on);
+    screenBtn.classList.toggle("on", on);
+    screenBtn.title = on ? "Stop sharing your screen" : "Share your screen with Sentinel";
+  }
+  async function startShare() {
+    let s;
+    try { s = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false }); }
+    catch (e) {
+      const line = e.name === "NotAllowedError" ? "Copy. Screen share cancelled." : seeLines.fail.replace("{reason}", "the browser refused the share");
+      show("Screen share", line, [], e.name !== "NotAllowedError"); speak(line); return;
+    }
+    share = s; shareEnded = false;
+    shareVid.srcObject = s; shareVid.play().catch(() => {});
+    s.getVideoTracks()[0].addEventListener("ended", endShare);   // stopped from the browser's own bar
+    renderShare();
+  }
+  function endShare() {
+    if (share) share.getTracks().forEach(t => t.stop());
+    share = null; shareVid.srcObject = null; shareEnded = true;  // remembered only as "it ended", no pixels
+    renderShare();
+  }
+  if (navigator.mediaDevices?.getDisplayMedia) screenBtn.onclick = () => shareLive() ? endShare() : startShare();
+  else { screenBtn.disabled = true; screenBtn.title = "This browser can't share the screen"; }
+  document.getElementById("share-stop").onclick = endShare;
+
+  // Grab a frame NOW from the live track (never a cached one), draw it, encode a JPEG.
+  async function grabFrame() {
+    const track = share?.getVideoTracks()[0];
+    if (!track || track.readyState !== "live") return null;
+    let bitmap = null;
+    if ("ImageCapture" in window) {
+      try {
+        bitmap = await Promise.race([new ImageCapture(track).grabFrame(),
+          new Promise((_, no) => setTimeout(() => no(new Error("timeout")), 1500))]);
+      } catch (_) { bitmap = null; }       // static screens may not emit a new frame: use the live video
+    }
+    const w0 = bitmap ? bitmap.width : shareVid.videoWidth, h0 = bitmap ? bitmap.height : shareVid.videoHeight;
+    if (!w0 || !h0) return null;
+    const capturedAt = Date.now();
+    const k = Math.min(1, FRAME_MAX_EDGE / Math.max(w0, h0));
+    const c = document.createElement("canvas");
+    c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
+    c.getContext("2d").drawImage(bitmap || shareVid, 0, 0, c.width, c.height);
+    if (bitmap) bitmap.close();
+    const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.85));
+    if (!blob) return null;
+    const image = await new Promise(r => { const fr = new FileReader();
+      fr.onload = () => r(String(fr.result).split(",")[1]); fr.readAsDataURL(blob); });
+    // blob.type is what was actually encoded; the server also checks the bytes themselves.
+    return { image, media_type: blob.type, width: c.width, height: c.height, captured_at: capturedAt };
+  }
+  async function look(question) {
+    thinking = true; interruptedAsk = false; send.disabled = true; renderStatus(); stopSpeaking();
+    show(question, "Looking…", []);
+    let d, frame = null;
+    try { frame = await grabFrame(); } catch (_) { frame = null; }
+    if (!frame) {
+      const line = shareLive() ? seeLines.fail.replace("{reason}", "I couldn't grab a frame from the share") : seeLines.ended;
+      d = { error: "no frame", spoken: line };
+    } else {
+      try {
+        const r = await fetch("/see", { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question, ...frame }) });
+        d = await r.json();
+      } catch (_) { d = { error: "unreachable", spoken: seeLines.fail.replace("{reason}", "the server is unreachable") }; }
+    }
+    thinking = false; send.disabled = false; q.value = ""; renderStatus();
+    if (d.error) { show(question, d.spoken || d.error, [], true); console.error("[see]", d.error); }
+    else {
+      show(question, d.answer, []);
+      const by = document.createElement("span"); by.className = "by";
+      const f = d.frame;
+      const who = d.brain === "claude" ? "Claude"                       // say who actually looked
+        : `the small local vision model (${d.vision_model || "local"})${d.brain_note ? ", because " + d.brain_note : ""}`;
+      by.textContent = `Seen by ${who}: one ${f.width}×${f.height} ${f.media_type.split("/")[1].toUpperCase()} frame, captured ${f.age_s}s before sending`
+        + (d.legible === false ? " · frame too unclear to judge" : "");
+      box.querySelector(".src").appendChild(by);
+    }
+    if (!interruptedAsk) speak(d.spoken || d.answer || d.error);
+    if (!micOn) q.focus();
+    if (queuedVoice) { const next = queuedVoice; queuedVoice = ""; ask(next); }
+  }
+  window.sight = { get live() { return shareLive(); }, grabFrame };   // test hook
+
+  // ---- Captures: "remember that …" writes a note, and the galaxy grows a star for it live. ----
+  const REMEMBER_RE = /^\W*(?:please\s+)?remember\s+that\b/i;
+  let rememberFail = "Negative. Capture failed: {reason}. Nothing was saved.";   // replaced from /persona
+  async function capture(text, via) {
+    thinking = true; send.disabled = true; renderStatus(); stopSpeaking();
+    show(text, "Logging…", []);
+    let d;
+    try {
+      const r = await fetch("/remember", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, via }) });
+      d = await r.json();
+    } catch (_) {                                         // never fail silently, even with no server
+      d = { ok: false, error: "the server is unreachable",
+            spoken: rememberFail.replace("{reason}", "the server is unreachable") };
+    }
+    thinking = false; send.disabled = false; q.value = ""; renderStatus();
+    if (!d.ok) {
+      const line = d.spoken || rememberFail.replace("{reason}", d.error || "unknown error");
+      show(text, line, [], true);
+      speak(line);                                        // a failed capture is always said out loud
+      console.error("[remember] failed:", d.error);
+    } else {
+      if (d.reload || d.node.id !== GRAPH.nodes.length) {  // ids shifted (or this tab was stale): rebuild view
+        show(text, d.spoken, []);
+        setTimeout(() => location.reload(), 4000);
+      } else { birth(d); show(text, d.spoken, [d.node.id]); }
+      speak(d.spoken);
+    }
+    if (!micOn) q.focus();
+    if (queuedVoice) { const next = queuedVoice; queuedVoice = ""; ask(next); }
+  }
+  function birth(d) {
+    const data = Graph.graphData();
+    const near = d.related != null ? data.nodes[d.related] : null;
+    const j = () => (Math.random() - 0.5) * 10;
+    const n = { ...d.node, x: (near?.x ?? 0) + j(), y: (near?.y ?? 0) + j(), z: (near?.z ?? 0) + j() };
+    const links = data.links.concat(d.links.map(l => ({ source: l.source, target: l.target })));
+    const nodes = data.nodes.concat(n);
+    nbrs.push(new Set());
+    d.links.forEach(l => { nbrs[l.source].add(l.target); nbrs[l.target].add(l.source); });
+    GRAPH.nodes = nodes; GRAPH.links = links; GRAPH.version = d.version;   // the page now matches the server
+    if (![...legend.children].some(r => r.textContent === n.group)) addLegendRow(n.group);
+    Graph.graphData({ nodes, links });
+    updateStats();
+    pulse = { id: n.id, start: performance.now() };      // glow, then fly there
+    const tick = setInterval(() => { refresh(); if (performance.now() - pulse.start > PULSE_MS) { clearInterval(tick); pulse = null; refresh(); } }, 60);
+    movingUntil = Date.now() + 2600;
+    setTimeout(() => selectNode(n.id), 700);
+  }
+
+  // Brain switch: auto (Claude, local model when Claude can't answer) → claude → local.
+  const brainBtn = document.getElementById("brain");
+  const BRAIN_NEXT = { auto: "claude", claude: "local", local: "auto" };
+  function renderBrain(b) {
+    brainBtn.dataset.mode = b.mode;
+    brainBtn.textContent = b.mode;
+    brainBtn.title = {
+      auto: "Auto: Claude, or the local model when Claude can't answer (no key, no credit, offline)",
+      claude: "Claude only (Anthropic API)",
+      local: "Local only: " + (b.local_model || "no model installed") + " running on this computer",
+    }[b.mode] + (b.claude_out_of_credit ? "\nClaude is out of credit right now." : "") + "\nClick to switch.";
+  }
+  fetch("/brain").then(r => r.json()).then(renderBrain).catch(() => {});
+  brainBtn.onclick = async () => {
+    const next = BRAIN_NEXT[brainBtn.dataset.mode || "auto"];
+    try {
+      const r = await fetch("/brain", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mode: next }) });
+      renderBrain(await r.json());
+    } catch (_) {}
+  };
+
+  // Show where an answer came from. Order matters:
+  //   1. Was it about the notes at all?  (server-side intent, decided before the answer)
+  //   2. Only then: how many sources, and so how to show them.
+  const CLUSTER_AT = 4;   // this many sources or more: light the cluster, never fly to one of them
+  function proveSources(d) {
+    if (d.intent !== "knowledge") return;                       // small talk: the graph holds still
+    if (d.version && GRAPH.version && d.version !== GRAPH.version) return;  // stale page: ids may differ
+    const ids = (d.nodes || []).filter(i => GRAPH.nodes[i]);
+    if (!ids.length) return;                                    // not covered: nothing to point at
+    if (ids.length >= CLUSTER_AT) {                             // many sources: show them all, fly to none
+      closePanel(); setLit(ids);
+      const c = Graph.camera().position, d = Math.hypot(c.x, c.y, c.z);
+      if (d < dist * 0.6) {                                     // zoomed in on an old note: pull back to the
+        const k = dist / d;                                     // overview (centred on the galaxy, not a node)
+        movingUntil = Date.now() + 1700;
+        Graph.cameraPosition({ x: c.x * k, y: c.y * k, z: c.z * k }, { x: 0, y: 0, z: 0 }, 1500);
+      }
+      return;
+    }
+    const top = ids[0];                                         // the model lists sources most important first
+    selectNode(top);                                            // fly + panel + neighbours
+    setLit([top, ...nbrs[top], ...ids.slice(1)], top);          // keep any other cited sources lit too
+  }
+  document.getElementById("reset").onclick = async () => {
+    await post({ reset: true }); box.className = ""; setLit([]);
+  };
+  addEventListener("keydown", e => { if (e.key === "Escape") { closePanel(); setLit([]); stopSpeaking(); } });
+
+  // ======================= VOICE =======================
+  // Status line: who the machine thinks is talking.
+  const statusEl = document.getElementById("status"), statusText = document.getElementById("status-text");
+  let speaking = false, micOn = false, heard = "", micNote = "";
+  const MUTED = new URLSearchParams(location.search).get("mute") === "1";
+  function renderStatus() {
+    const s = speaking ? "speaking" : thinking ? "thinking" : micOn ? "listening" : "idle";
+    statusEl.dataset.s = s;
+    const label = { speaking: "Speaking", thinking: "Thinking…",
+      listening: heard ? "Listening — " : "Listening…", idle: "Ready" }[s];
+    statusText.innerHTML = "";
+    statusText.append(label);
+    if (s === "listening" && heard) { const b = document.createElement("b"); b.textContent = heard; statusText.append(b); }
+    if (MUTED) statusText.append(" · muted (?mute=1)");
+    if (s === "idle" && micNote) statusText.append(" · " + micNote);
+  }
+
+  // ---- SPEAKING: the ONE function that ever produces speech. ----
+  // Browsers block speech until the user has interacted with the page. Until the first click
+  // or keypress, speak() only remembers the latest line; the first gesture unlocks audio
+  // (a silent primer spoken inside the gesture) and then plays it.
+  let audioUnlocked = false, pendingLine = null, ttsVoice = null, speakGen = 0;
+  const ECHO_GUARD_MS = 800;      // after speech ends, ignore the mic's late transcript of our own voice
+  let echoGuardUntil = 0;
+  function pickVoice() {
+    const vs = ("speechSynthesis" in window) ? speechSynthesis.getVoices() : [];
+    ttsVoice = vs.find(v => /^en[-_]GB$/i.test(v.lang) && /google|natural|neural/i.test(v.name))
+      || vs.find(v => /^en[-_]GB$/i.test(v.lang))
+      || vs.find(v => /^en\b/i.test(v.lang)) || null;
+  }
+  if ("speechSynthesis" in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+
+  function speak(text, { primer = false } = {}) {
+    if (MUTED) return;                                  // ?mute=1: this tab never speaks. No exceptions.
+    if (!("speechSynthesis" in window)) return;
+    if (!primer && !audioUnlocked) { pendingLine = text; return; }  // never before the first gesture
+    const synth = window.speechSynthesis;
+    if (primer) {                                       // runs inside the user's gesture to unlock audio
+      const u = new SpeechSynthesisUtterance(" "); u.volume = 0; synth.speak(u); return;
+    }
+    if (!text) return;
+    const gen = ++speakGen;
+    synth.cancel(); synth.resume();
+    // Speak sentence by sentence: Chrome silently cuts off single utterances after ~15s.
+    // Split only at punctuation followed by a space, so "Sprint 20.1" and "v0.3" stay whole.
+    const parts = text.replace(/\s+/g, " ").trim().split(/(?<=[.!?;:])\s+/).filter(Boolean);
+    parts.forEach((part, i) => {
+      const u = new SpeechSynthesisUtterance(part.trim());
+      if (ttsVoice) { u.voice = ttsVoice; u.lang = ttsVoice.lang; } else u.lang = "en-GB";
+      u.rate = 1.02;
+      u.onstart = () => { if (gen === speakGen) { speaking = true; renderStatus(); } };
+      if (i === parts.length - 1) u.onend = u.onerror = () => {
+        if (gen === speakGen) { speaking = false; echoGuardUntil = Date.now() + ECHO_GUARD_MS; renderStatus(); }
+      };
+      synth.speak(u);
+    });
+  }
+  function stopSpeaking() {
+    speakGen++;
+    if ("speechSynthesis" in window) speechSynthesis.cancel();
+    if (speaking) { speaking = false; echoGuardUntil = Date.now() + ECHO_GUARD_MS; renderStatus(); }
+  }
+  // The boot greeting comes from the PERSONA block in server.py. It's one short line, no status
+  // report; the counts are on screen instead. Browsers allow speech only after the first gesture.
+  let greeting = "Hello, sir.";
+  fetch("/persona").then(r => r.json()).then(p => {
+    if (p.greeting) greeting = p.greeting;
+    if (p.remember_fail) rememberFail = p.remember_fail;
+    if (p.see_no_share) seeLines = { noShare: p.see_no_share, ended: p.see_ended, fail: p.see_fail };
+  }).catch(() => {});
+  function unlockAudio(e) {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+    speak("", { primer: true });                       // inside the gesture: unlocks audio
+    const queued = pendingLine; pendingLine = null;
+    const genAtUnlock = speakGen;
+    setTimeout(() => {
+      if (speakGen !== genAtUnlock || thinking) return; // something newer is speaking or coming: stay quiet
+      if (queued) speak(queued);
+      else speak(greeting);
+    }, 120);
+  }
+  addEventListener("pointerdown", unlockAudio, { capture: true });
+  addEventListener("keydown", unlockAudio, { capture: true });
+
+  // ---- LISTENING: mic -> buffered transcript -> the same ask() as typing. ----
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const micBtn = document.getElementById("mic");
+  const interruptRe = new RegExp("^(?:" + INTERRUPT_WORDS.map(w => w.replace(/ /g, "\\s+")).join("|") + ")[.!,]?$", "i");
+  let rec = null, buffer = "", finishTimer = null, lastInterruptAt = 0;
+
+  function interrupt(word) {
+    const now = Date.now();
+    if (now - lastInterruptAt < 1500) return;          // interim + final of the same word: act once
+    lastInterruptAt = now;
+    stopSpeaking();
+    clearTimeout(finishTimer); finishTimer = null; buffer = ""; heard = "";
+    if (thinking) interruptedAsk = true;               // answer still shows, but isn't read out
+    queuedVoice = "";
+    q.value = ""; renderStatus();
+    console.info("[voice] interrupt:", word);
+  }
+  function armFinish() {
+    clearTimeout(finishTimer);
+    finishTimer = setTimeout(() => {                    // the pause that truly ends the thought
+      finishTimer = null;
+      const sentence = buffer.trim(); buffer = ""; heard = "";
+      if (sentence) { q.value = sentence; ask(sentence, "voice"); }
+      renderStatus();
+    }, FINISH_MS);
+  }
+  function startRecognition() {
+    rec = new SR();
+    rec.lang = navigator.language || "en-GB";
+    rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
+    rec.onresult = e => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const r = e.results[i], text = r[0].transcript.trim();
+        if (!text) continue;
+        if (interruptRe.test(text)) { interrupt(text); continue; }  // bypasses the buffer
+        if (speaking || Date.now() < echoGuardUntil) continue;  // don't transcribe our own voice
+        if (r.isFinal) { buffer = (buffer + " " + text).trim(); armFinish(); }
+        else interim += " " + text;
+      }
+      if (interim.trim()) { clearTimeout(finishTimer); finishTimer = null; }  // still talking
+      heard = (buffer + " " + interim).trim();
+      if (!thinking) q.value = heard;
+      renderStatus();
+      if (!interim.trim() && buffer && !finishTimer) armFinish();
+    };
+    rec.onerror = e => {
+      const why = {
+        "not-allowed": "Microphone blocked — allow it in the address bar and try again",
+        "service-not-allowed": "This browser's speech service is turned off — use Google Chrome",
+        "network": "Speech service unreachable — this browser has no working speech recognition; use Google Chrome",
+        "audio-capture": "No microphone found — plug one in or check your sound settings",
+      }[e.error];
+      if (why) {                                         // fatal: stop retrying and say why
+        micOn = false; micBtn.classList.remove("on");
+        const r = rec; rec = null; if (r) r.onend = null;
+        micNote = why; renderStatus();
+      }
+      console.warn("[voice] recognition error:", e.error);
+    };
+    rec.onend = () => {                                  // Chrome ends sessions on its own; keep going
+      if (buffer && !finishTimer) armFinish();
+      if (micOn) { try { rec.start(); } catch (_) { setTimeout(() => micOn && rec.start(), 250); } }
+    };
+    rec.start();
+  }
+  if (!SR) {
+    micBtn.disabled = true;
+    micBtn.title = "Voice input needs Google Chrome or Edge (this browser has no speech recognition)";
+    micNote = "voice input needs Google Chrome or Edge — this browser can't listen";
+  } else {
+    micBtn.onclick = () => {
+      micOn = !micOn;
+      micBtn.classList.toggle("on", micOn);
+      if (micOn) { micNote = ""; stopSpeaking(); startRecognition(); }
+      else {
+        const r = rec; rec = null; if (r) { r.onend = null; r.abort(); }
+        clearTimeout(finishTimer); finishTimer = null; buffer = ""; heard = "";
+      }
+      renderStatus();
+    };
+  }
+  renderStatus();
+  window.voice = { speak, stopSpeaking, get state() { return statusEl.dataset.s; }, FINISH_MS, MUTED };
+
+  // Heat monitor: the server watches the CPU sensor; the page shows it and speaks level changes.
+  const heatEl = document.getElementById("heat");
+  const hToast = document.getElementById("toast"), toastMsg = document.getElementById("toast-msg"),
+        toastGo = document.getElementById("toast-go");
+  let heatSeq = null;
+  async function pollHeat() {
+    try {
+      const h = await (await fetch("/heat")).json();
+      if (h.temp == null) return;
+      heatEl.dataset.level = h.level;
+      heatEl.textContent = `CPU ${Math.round(h.temp)}°C` + (h.fan_rpm ? ` · fan ${h.fan_rpm}` : "")
+        + (h.simulated != null ? " (simulated)" : "");
+      heatEl.title = `CPU package temperature. Warning at ${h.warn_at}°C, critical at ${h.critical_at}°C.`
+        + (h.mhz ? ` Running at ${h.mhz} MHz.` : "");
+      const fresh = heatSeq == null
+        ? (h.level !== "ok" ? h.events.slice(-1) : [])          // page opened mid-alert: say it once
+        : h.events.filter(e => e.seq > heatSeq);
+      heatSeq = h.seq;
+      const e = fresh[fresh.length - 1];
+      if (e) {
+        toastMsg.textContent = (e.level === "ok" ? "✓ " : "⚠ ") + e.message;
+        hToast.classList.remove("hot", "critical");
+        if (e.level !== "ok") hToast.classList.add(e.level === "critical" ? "critical" : "hot");
+        toastGo.style.display = "none"; hToast.classList.add("show");
+        clearTimeout(pollHeat.hide);         // critical stays up until it clears; others fade
+        if (e.level !== "critical") pollHeat.hide = setTimeout(() => hToast.classList.remove("show"), 12000);
+        if (!thinking) speak(e.message);                       // speak() honours ?mute=1
+      }
+    } catch (_) {}
+  }
+  pollHeat(); setInterval(pollHeat, 5000);
+
+  // Live updates: when Sentinel is taught something new (or notes change), the server
+  // rebuilds the graph. Reload automatically when idle; otherwise offer a refresh.
+  const myVersion = GRAPH.version || "";
+  const myTaught = GRAPH.nodes.filter(n => n.taught).length;
+  const toast = document.getElementById("toast");
+  document.getElementById("toast-go").onclick = () => location.reload();
+  const idleNow = () => !panel.classList.contains("open") && !box.classList.contains("show")
+    && !q.value.trim() && !send.disabled && document.activeElement !== q && !micOn && !speaking;
+  setInterval(async () => {
+    try {
+      const v = await (await fetch("/graph-version", { cache: "no-store" })).json();
+      if (!v.version || v.version === GRAPH.version) return;   // captures keep GRAPH.version current
+      if (idleNow()) return location.reload();
+      const diff = v.taught - myTaught;
+      document.getElementById("toast-msg").textContent = diff > 0
+        ? `Sentinel learned ${diff} new source${diff > 1 ? "s" : ""}.` : "The galaxy has been updated.";
+      document.getElementById("toast-go").style.display = "";
+      toast.classList.remove("hot", "critical"); toast.classList.add("show");
+    } catch (_) { /* server restarting; try again next tick */ }
+  }, 30000);
+}
+</script>
+</body>
+</html>
