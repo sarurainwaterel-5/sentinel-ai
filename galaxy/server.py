@@ -847,7 +847,7 @@ def notes_root():
 
 
 build_lock = threading.Lock()   # one rebuild at a time: the watcher or a capture, never both
-last_taught = []                # the last good Teach catalog, for when Sentinel blips
+last_taught = list(load_graph().get("taught_docs") or [])   # last good Teach catalog, survives restarts
 
 
 def refresh_index(force=False):
@@ -1093,7 +1093,15 @@ def index_capture(root, rel):
     """Rebuild with build.py's own linker, but keep every existing node id and append the new
     one, so the running page can add a single star instead of reloading."""
     global INDEX
-    taught = galaxy_build.fetch_taught_documents() or list(last_taught)
+    taught = galaxy_build.fetch_taught_documents()
+    if taught:
+        last_taught[:] = taught
+    else:
+        taught = list(last_taught)
+    if not taught and INDEX.taught_by_file:
+        # Same guard as the watcher: never rebuild away taught sources just because Sentinel blipped.
+        raise RuntimeError(f"Sentinel is unreachable and its catalog isn't cached, so indexing now "
+                           f"would drop {len(INDEX.taught_by_file)} taught sources")
     full = galaxy_build.build(root, taught)
     version = galaxy_build.signature(root, taught)
     old_keys = [node_key(n) for n in INDEX.nodes]
@@ -1108,7 +1116,8 @@ def index_capture(root, rel):
         full_keys = [node_key(n) for n in full["nodes"]]
         pairs = {tuple(sorted((pos[full_keys[l["source"]]], pos[full_keys[l["target"]]]))) for l in full["links"]}
         graph = {"nodes": [{**by_key[k], "id": i} for i, k in enumerate(order)],
-                 "links": [{"source": a, "target": b} for a, b in sorted(pairs)]}
+                 "links": [{"source": a, "target": b} for a, b in sorted(pairs)],
+                 "taught_docs": full["taught_docs"]}
     else:  # other notes changed too: ids may shift, so the page must reload
         graph = full
     galaxy_build.write_graph(graph, version)
@@ -1185,6 +1194,23 @@ class Handler(SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header("Cache-Control", "no-store")
         super().end_headers()
+
+    def send_head(self):
+        """Static files (GET and HEAD): only from viewer/, and a bad path is a 400, never a crash.
+        A NUL byte used to raise ValueError in the stdlib and drop the connection unanswered."""
+        raw = urllib.parse.unquote(self.path.split("?", 1)[0].split("#", 1)[0])
+        if "\x00" in raw:
+            self.send_error(HTTPStatus.BAD_REQUEST, "Bad path")
+            return None
+        try:
+            target = Path(self.translate_path(self.path)).resolve()
+            if target != VIEWER and VIEWER not in target.parents:
+                self.send_error(HTTPStatus.NOT_FOUND, "File not found")
+                return None
+            return super().send_head()
+        except (ValueError, OSError):
+            self.send_error(HTTPStatus.BAD_REQUEST, "Bad path")
+            return None
 
     def _json(self, status, payload):
         body = json.dumps(payload).encode()

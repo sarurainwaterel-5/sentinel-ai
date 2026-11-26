@@ -178,7 +178,10 @@ def build(root: Path, taught=None):
     link_list = [{"source": a, "target": b} for a, b in sorted(links)]
     for idx, n in enumerate(nodes):
         assert n["id"] == idx
-    return {"nodes": nodes, "links": link_list}
+    # The raw catalog rides along in graph-data.js, so a restarted server can rebuild (e.g. for a
+    # capture) while Sentinel is down without dropping every taught source.
+    catalog = [{k: d.get(k) for k in ("filename", "module", "topic", "chunk_count", "status")} for d in taught]
+    return {"nodes": nodes, "links": link_list, "taught_docs": catalog}
 
 
 def main():
