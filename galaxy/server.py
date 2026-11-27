@@ -62,7 +62,44 @@ No emoji, no exclamation marks, no filler.
 Not in the notes: say "Negative" and that it isn't in the notes. Never invent or stretch a source.
 Small talk: one short, friendly line.
 """
+MODEL_OK = "Copy. Now running on {label}."
+MODEL_RESET = "Copy. Back on my normal brain, {label}."
+MODEL_UNKNOWN = "Negative. I don't have {asked} yet, sir. I have {have}."
+MODEL_GARBLED = "Negative. I heard {asked} and then more numbers, so I won't guess. Say the version again."
+MODEL_WHICH = "Negative. Which {family}? I have {versions}."
+MODEL_UNCLEAR = "Negative. I didn't catch a model I have. I have {have}."
+MODEL_NO_KEY = "Negative. {label} needs an OpenRouter key in config.json (openrouter_api_key). Staying on {current}."
+MODEL_LOCAL_NOTE = " The brain switch is on Local, so text answers still come from the local model."
 # ═══════════════════════════════ end of PERSONA ══════════════════════════════════════════
+
+# ════════════════════════════════════════════════════════════════════════════════════════
+#  MODELS: every brain a voice command can load. This dict IS the set of real model ids:
+#  a spoken "family + version" ("opus 5.5", "opus5") is turned into an id and must match a
+#  key here EXACTLY, or the swap is refused. Never the nearest match. A new model ships =
+#  add one line. Swaps are runtime only; a restart always returns to "model" in config.json.
+#
+#  provider   "anthropic": Anthropic API with anthropic_api_key, exact id.
+#             "openrouter": OpenRouter with openrouter_api_key (one key reaches all of them).
+#  effort     sends output_config.effort.  (Haiku 4.5 has no effort setting: a 400.)
+#  fallbacks  accepts the server-side refusal fallback beta.  (Only these five do.)
+#  aliases    bare spoken names with no version.  ("haiku" alone means Haiku 4.5.)
+# ════════════════════════════════════════════════════════════════════════════════════════
+MODELS = {
+    "claude-opus-5-5":    {"provider": "anthropic", "effort": True,  "fallbacks": True},
+    "claude-opus-5":      {"provider": "anthropic", "effort": True,  "fallbacks": True},
+    "claude-opus-4-8":    {"provider": "anthropic", "effort": True,  "fallbacks": False},
+    "claude-opus-4-7":    {"provider": "anthropic", "effort": True,  "fallbacks": False},
+    "claude-opus-4-6":    {"provider": "anthropic", "effort": True,  "fallbacks": False},
+    "claude-fable-5-2":   {"provider": "anthropic", "effort": True,  "fallbacks": True},
+    "claude-fable-5-1":   {"provider": "anthropic", "effort": True,  "fallbacks": True},
+    "claude-fable-5":     {"provider": "anthropic", "effort": True,  "fallbacks": False},
+    "claude-sonnet-5-5":  {"provider": "anthropic", "effort": True,  "fallbacks": True},
+    "claude-sonnet-5":    {"provider": "anthropic", "effort": True,  "fallbacks": False},
+    "claude-sonnet-4-6":  {"provider": "anthropic", "effort": True,  "fallbacks": False},
+    "claude-haiku-5-5":   {"provider": "anthropic", "effort": True,  "fallbacks": False},
+    "claude-haiku-4-5":   {"provider": "anthropic", "effort": False, "fallbacks": False, "aliases": ["haiku"]},
+    "openai/gpt-6-astra": {"provider": "openrouter", "aliases": ["astra"]},
+}
 import atexit
 import base64
 import json
@@ -621,20 +658,21 @@ def build_turn(ix, question, idxs, passages, note_chars=None, passage_chars=None
 def call_claude(key, model, messages, system=None, fmt=None):
     """Return the raw JSON text from Claude, or raise BrainError."""
     client = anthropic.Anthropic(api_key=key, max_retries=1, timeout=90)
+    quirks = MODELS.get(model, {"effort": True, "fallbacks": False})   # unknown config model: safe defaults
+    output_config = {"format": fmt or ANSWER_FORMAT}
+    if quirks.get("effort", True):
+        output_config["effort"] = CHAT_EFFORT
     try:
         raw = ""
         for budget in (CHAT_MAX_TOKENS, RETRY_MAX_TOKENS):
-            # Opus 5.5: thinking is always on (no thinking param sent), no forced
-            # tool_choice. Server-side fallback reroutes a policy refusal.
-            resp = client.beta.messages.create(
-                model=model,
-                max_tokens=budget,
-                system=system or SYSTEM_PROMPT,
-                output_config={"effort": CHAT_EFFORT, "format": fmt or ANSWER_FORMAT},
-                betas=["server-side-fallback-2026-07-01"],
-                fallbacks="default",
-                messages=messages,
-            )
+            # No thinking param (models that think, think by default), no forced tool_choice.
+            kw = dict(model=model, max_tokens=budget, system=system or SYSTEM_PROMPT,
+                      output_config=output_config, messages=messages)
+            if quirks.get("fallbacks"):   # server-side fallback reroutes a policy refusal
+                resp = client.beta.messages.create(**kw, betas=["server-side-fallback-2026-07-01"],
+                                                   fallbacks="default")
+            else:
+                resp = client.messages.create(**kw)
             if resp.stop_reason == "refusal":
                 return None
             raw = "".join(b.text for b in resp.content if b.type == "text").strip()
@@ -657,6 +695,176 @@ def call_claude(key, model, messages, system=None, fmt=None):
         raise BrainError(HTTPStatus.BAD_GATEWAY, f"Anthropic API error {e.status_code}.")
     except anthropic.APIConnectionError:
         raise BrainError(HTTPStatus.BAD_GATEWAY, "Couldn't reach the Anthropic API.")
+
+
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+
+def call_openrouter(key, model, messages, system=None, fmt=None):
+    """Same contract as call_claude, through OpenRouter's OpenAI-style API."""
+    def part(b):
+        if b.get("type") == "image":
+            s = b["source"]
+            return {"type": "image_url", "image_url": {"url": f"data:{s['media_type']};base64,{s['data']}"}}
+        return {"type": "text", "text": b.get("text", "")}
+    conv = [{"role": m["role"], "content": m["content"] if isinstance(m["content"], str)
+             else [part(b) for b in m["content"]]} for m in messages]
+    body = json.dumps({
+        "model": model, "max_tokens": RETRY_MAX_TOKENS,
+        "messages": [{"role": "system", "content": system or SYSTEM_PROMPT}] + conv,
+        "response_format": {"type": "json_schema", "json_schema": {
+            "name": "answer", "strict": True, "schema": (fmt or ANSWER_FORMAT)["schema"]}},
+    }).encode()
+    req = urllib.request.Request(OPENROUTER_URL, data=body, headers={
+        "Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+    try:
+        with urllib.request.urlopen(req, timeout=90) as r:
+            reply = json.load(r)
+    except urllib.error.HTTPError as e:
+        msg = e.read().decode("utf-8", "replace")[:200]
+        status = {401: HTTPStatus.UNAUTHORIZED, 402: HTTPStatus.PAYMENT_REQUIRED,
+                  429: HTTPStatus.TOO_MANY_REQUESTS}.get(e.code, HTTPStatus.BAD_GATEWAY)
+        raise BrainError(status, f"OpenRouter returned {e.code} for {model}: {msg}")
+    except (OSError, ValueError) as e:
+        raise BrainError(HTTPStatus.BAD_GATEWAY, f"Couldn't reach OpenRouter ({e.__class__.__name__}).")
+    raw = ((reply.get("choices") or [{}])[0].get("message") or {}).get("content") or ""
+    if not raw.strip():
+        raise BrainError(HTTPStatus.BAD_GATEWAY, f"{model_label(model)} returned no text.")
+    return raw.strip()
+
+
+# ---- Runtime model swap ("try on Opus 5"). Lives only in memory: config.json is never written,
+# so a restart always comes back on config.json's model.
+model_override = None
+NUM_WORDS = {w: str(i) for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten".split())}
+RESET_RE = re.compile(r"\b(normal|usual|default|regular|original|standard|config)\s+(brain|model)\b"
+                      r"|\bback to (your|my) ?self\b", re.I)
+
+
+def default_model():
+    return load_config().get("model", "claude-opus-5-5")
+
+
+def current_model():
+    with brain_lock:
+        return model_override or default_model()
+
+
+def model_label(model_id):
+    """'claude-opus-5-5' -> 'OPUS 5.5'. Only a hyphen between two digits is a version dot."""
+    s = model_id.split("/")[-1].removeprefix("claude-")
+    return re.sub(r"(?<=\d)-(?=\d)", ".", s).replace("-", " ").upper()
+
+
+def spoken_label(model_id):
+    return " ".join(w if len(w) <= 3 and w.isalpha() else w.capitalize() for w in model_label(model_id).split())
+
+
+def model_families():
+    """Family words read from the ids themselves ('opus' from 'claude-opus-5-5'), plus aliases."""
+    fam = {m.split("-")[1] for m in MODELS if m.startswith("claude-")}
+    return fam, {a: m for m, q in MODELS.items() for a in q.get("aliases", [])}
+
+
+def remote_key(model):
+    if MODELS.get(model, {}).get("provider", "anthropic") == "openrouter":
+        return (load_config().get("openrouter_api_key") or "").strip()
+    return claude_key()
+
+
+def call_remote(model, messages, system=None, fmt=None):
+    key = remote_key(model)
+    if MODELS.get(model, {}).get("provider", "anthropic") == "openrouter":
+        if not key:
+            raise BrainError(HTTPStatus.SERVICE_UNAVAILABLE, "There's no OpenRouter key in config.json.")
+        return call_openrouter(key, model, messages, system, fmt)
+    if not key:
+        raise BrainError(HTTPStatus.SERVICE_UNAVAILABLE, "There's no Anthropic API key in config.json.")
+    return call_claude(key, model, messages, system, fmt)
+
+
+def remote_brain(model):
+    """What the 'brain' field says for a remote answer: never 'claude' for a non-Claude model."""
+    return "openrouter" if MODELS.get(model, {}).get("provider") == "openrouter" else "claude"
+
+
+def parse_model_request(text):
+    """Spoken request -> ("reset", None) | ("swap", model_id) | ("refuse", reason line).
+    The version is read right after the family word and must build an id in MODELS exactly."""
+    have = ", ".join(spoken_label(m) for m in MODELS)
+    s = " " + text.lower() + " "
+    for w, d in NUM_WORDS.items():
+        s = re.sub(rf"\b{w}\b", d, s)
+    if RESET_RE.search(s):
+        return "reset", None
+    families, aliases = model_families()
+    words = sorted(families | set(aliases), key=len, reverse=True)
+    hits = list(re.finditer(r"\b(" + "|".join(words) + r")\s*(\d+)(?:\s*(?:\.|point|-)\s*(\d+))?", s)) + \
+        [m for m in re.finditer(r"\b(" + "|".join(words) + r")\b(?!\s*\d)", s)]
+    named = {h.group(1) for h in hits}
+    if not hits:
+        return "refuse", MODEL_UNCLEAR.format(have=have)
+    if len(named) > 1:
+        return "refuse", MODEL_UNCLEAR.format(have=have) + " Name one model."
+    h = min(hits, key=lambda m: m.start())
+    family = h.group(1)
+    major = h.group(2) if h.re.groups >= 2 else None
+    minor = h.group(3) if h.re.groups >= 3 else None
+    if major is None:                                       # bare word: only an exact alias counts
+        if family in aliases:
+            return "swap", aliases[family]
+        versions = [spoken_label(m) for m in MODELS if m.startswith(f"claude-{family}-")]
+        return "refuse", MODEL_WHICH.format(family=family.capitalize(), versions=", ".join(versions))
+    asked = f"{family.capitalize()} {major}" + (f".{minor}" if minor else "")
+    if re.match(r"\s*(?:\.|point|-)?\s*\d", s[h.end():]):   # "opus 5 5", "opus 5.5.1": never truncate
+        return "refuse", MODEL_GARBLED.format(asked=asked)
+    candidate = f"claude-{family}-{major}" + (f"-{minor}" if minor else "")
+    if family in families and candidate in MODELS:
+        return "swap", candidate
+    return "refuse", MODEL_UNKNOWN.format(asked=asked, have=have)
+
+
+def model_status():
+    m, d = current_model(), default_model()
+    families, aliases = model_families()
+    with brain_lock:
+        mode = brain_mode
+    return {"model": m, "label": model_label(m), "default": d, "default_label": model_label(d),
+            "swapped": m != d, "provider": MODELS.get(m, {}).get("provider", "anthropic"), "mode": mode,
+            "words": sorted(families | set(aliases)), "models": list(MODELS)}
+
+
+def set_model(say=None, model=None, reset=False):
+    """Returns (HTTP status, payload with a 'spoken' line). Refusals change nothing."""
+    global model_override
+    before = current_model()
+    if model is None and not reset:
+        action, value = parse_model_request(say or "")
+        if action == "refuse":
+            print(f"[model] refused {say!r}: staying on {before}", flush=True)
+            return HTTPStatus.BAD_REQUEST, {**model_status(), "ok": False, "error": value, "spoken": value}
+        reset, model = action == "reset", value
+    if reset:
+        with brain_lock:
+            model_override = None
+        line = MODEL_RESET.format(label=spoken_label(default_model()))
+    else:
+        if model not in MODELS:                              # an exact id from a client: same rule
+            have = ", ".join(spoken_label(m) for m in MODELS)
+            line = MODEL_UNKNOWN.format(asked=model, have=have)
+            return HTTPStatus.BAD_REQUEST, {**model_status(), "ok": False, "error": line, "spoken": line}
+        if not remote_key(model):
+            line = MODEL_NO_KEY.format(label=spoken_label(model), current=spoken_label(before))
+            return HTTPStatus.BAD_REQUEST, {**model_status(), "ok": False, "error": line, "spoken": line}
+        with brain_lock:
+            model_override = None if model == default_model() else model
+        line = MODEL_OK.format(label=spoken_label(model))
+    st = model_status()
+    if st["mode"] == "local":
+        line += MODEL_LOCAL_NOTE
+    print(f"[model] {before} -> {st['model']} ({say or model or 'reset'!r})", flush=True)
+    return HTTPStatus.OK, {**st, "ok": True, "spoken": line}
 
 
 def call_local(messages):
@@ -736,12 +944,14 @@ def ask_brain(question):
 
     with brain_lock:
         mode, skip_until = brain_mode, claude_skip_until
-    key, cfg = claude_key(), load_config()
+    model = current_model()            # config.json model, or a runtime swap ("try on Opus 5")
+    key, cfg = remote_key(model), load_config()
     order = {"claude": ["claude"], "local": ["local"],
              "auto": (["claude"] if key and time.time() >= skip_until else []) + ["local"]}[mode]
     if mode == "claude" and not key:
         return HTTPStatus.SERVICE_UNAVAILABLE, {
-            "error": "No API key yet. Put your Anthropic key in config.json (anthropic_api_key), "
+            "error": f"No API key for {model_label(model)} in config.json "
+                     f"({'openrouter_api_key' if remote_brain(model) == 'openrouter' else 'anthropic_api_key'}), "
                      "or switch the brain to Local.", "nodes": []}
 
     raw, brain, note, last_err = None, None, "", None
@@ -749,11 +959,11 @@ def ask_brain(question):
         try:
             if brain == "claude":
                 sid, user_turn = build_turn(ix, question, idxs, passages)
-                raw = call_claude(key, cfg.get("model", "claude-opus-5-5"),
-                                  past + [{"role": "user", "content": user_turn}])
+                raw = call_remote(model, past + [{"role": "user", "content": user_turn}])
                 if raw is None:
-                    return HTTPStatus.OK, {"answer": "The model declined to answer that one.",
-                                           "nodes": [], "brain": "claude"}
+                    return HTTPStatus.OK, {"answer": "The model declined to answer that one.", "nodes": [],
+                                           "brain": remote_brain(model), "model": model,
+                                           "model_label": model_label(model)}
             else:
                 sid, user_turn = build_turn(ix, question, idxs[:LOCAL_NOTES], passages[:LOCAL_PASSAGES],
                                             LOCAL_NOTE_CHARS, LOCAL_PASSAGE_CHARS)
@@ -819,7 +1029,9 @@ def ask_brain(question):
         "passages": [{"node": ix.taught_by_file.get(p["filename"]), "source": p["filename"],
                       "chunk": p["chunk"], "text": p["text"]} for p in used_passages],
         "taught_checked": not sentinel_down,
-        "brain": brain,
+        "brain": remote_brain(model) if brain == "claude" else brain,
+        "model": model if brain == "claude" else None,     # the model that actually answered
+        "model_label": model_label(model) if brain == "claude" else None,
         "brain_note": note,
     }
 
@@ -935,44 +1147,45 @@ def see(question, image_b64, claimed_type, width, height, captured_at):
         print(f"[see] browser said {claimed_type} but the bytes are {media_type}; sending {media_type}", flush=True)
     frame = {"width": width, "height": height, "bytes": len(data), "media_type": media_type, "age_s": round(age, 1)}
     print(f"[see] {media_type} {width}x{height} {len(data) // 1024} KB, {age:.1f}s old: {question!r}", flush=True)
-    key = claude_key()
+    model = current_model()
+    key, label = remote_key(model), model_label(model)
     with brain_lock:
         mode, skip_until = brain_mode, claude_skip_until
-    # Sight always goes to Claude (the config.json model) whatever the text brain is set to; the
+    # Sight always goes to the remote model (config.json's, or a runtime swap) whatever the text brain is set to; the
     # small local vision model is only a fallback when Claude can't look, and is labelled as such.
     claude_ok = bool(key) and time.time() >= skip_until
     order = ["claude"] if mode == "claude" else (["claude"] if claude_ok else []) + ["local"]
     note = "" if claude_ok or mode == "claude" else (
-        "no Anthropic API key in config.json" if not key else "Claude is out of API credits")
+        f"no API key for {label} in config.json" if not key else "Claude is out of API credits")
     last_err = None
     for brain in order:
         try:
             if brain == "claude":
-                if not key:
-                    raise BrainError(HTTPStatus.SERVICE_UNAVAILABLE, "there's no Anthropic API key in config.json")
                 content = [
                     {"type": "image", "source": {"type": "base64", "media_type": media_type,
                                                  "data": base64.b64encode(data).decode()}},
                     {"type": "text", "text": f"Frame: {width or '?'}x{height or '?'} pixels, captured "
                                              f"{age:.1f}s ago.\n\nQUESTION: {question}"},
                 ]
-                raw = call_claude(key, load_config().get("model", "claude-opus-5-5"),
-                                  [{"role": "user", "content": content}], system=SEE_SYSTEM_PROMPT, fmt=SEE_FORMAT)
+                raw = call_remote(model, [{"role": "user", "content": content}],
+                                  system=SEE_SYSTEM_PROMPT, fmt=SEE_FORMAT)
                 if raw is None:
                     return HTTPStatus.OK, {"intent": "screen", "answer": "Declined to comment on that one.",
                                            "spoken": "Declined to comment on that one.", "nodes": [],
-                                           "brain": "claude", "frame": frame}
+                                           "brain": remote_brain(model), "model": model,
+                                           "model_label": label, "frame": frame}
                 try:
                     reply = json.loads(raw)
                 except json.JSONDecodeError:
-                    raise BrainError(HTTPStatus.BAD_GATEWAY, "Claude's reply came back unreadable")
+                    raise BrainError(HTTPStatus.BAD_GATEWAY, f"{label}'s reply came back unreadable")
                 answer = str(reply.get("answer") or "").strip()
                 if not answer:
-                    raise BrainError(HTTPStatus.BAD_GATEWAY, "Claude returned no answer")
+                    raise BrainError(HTTPStatus.BAD_GATEWAY, f"{label} returned no answer")
                 return HTTPStatus.OK, {"intent": "screen", "answer": answer,
                                        "spoken": str(reply.get("spoken") or "").strip() or answer,
                                        "legible": bool(reply.get("legible", True)), "nodes": [],
-                                       "brain": "claude", "frame": frame}
+                                       "brain": remote_brain(model), "model": model,
+                                       "model_label": label, "frame": frame}
             text = call_local_vision(data, media_type, question)
             model, _ = vision_files()
             return HTTPStatus.OK, {"intent": "screen", "answer": tidy(text, 3) or text,
@@ -1228,6 +1441,8 @@ class Handler(SimpleHTTPRequestHandler):
                 "notes": len(ix.nodes) - len(ix.taught_by_file)})
         if self.path.split("?")[0] == "/brain":
             return self._json(HTTPStatus.OK, brain_status())
+        if self.path.split("?")[0] == "/model":
+            return self._json(HTTPStatus.OK, model_status())
         if self.path.split("?")[0] == "/heat":
             return self._json(HTTPStatus.OK, heat_status())
         if self.path.split("?")[0] == "/persona":
@@ -1257,6 +1472,17 @@ class Handler(SimpleHTTPRequestHandler):
                 return self._json(HTTPStatus.BAD_REQUEST, {"error": f"mode must be one of {BRAINS}"})
             set_brain(mode)
             return self._json(HTTPStatus.OK, brain_status())
+        if self.path == "/model":  # {"say": "try on opus 5"} | {"model": "<exact id>"} | {"reset": true}
+            try:
+                length = min(int(self.headers.get("Content-Length", 0)), 2000)
+                data = json.loads(self.rfile.read(length) or b"{}")
+                say, model = data.get("say"), data.get("model")
+                if (say is not None and not isinstance(say, str)) or (model is not None and not isinstance(model, str)):
+                    raise ValueError("say/model must be strings")
+            except (ValueError, json.JSONDecodeError, AttributeError):
+                return self._json(HTTPStatus.BAD_REQUEST, {"ok": False, "error": "Send {\"say\": \"try on opus 5\"}"})
+            status, payload = set_model(say=say, model=model, reset=bool(data.get("reset")))
+            return self._json(status, payload)
         if self.path == "/see":
             try:
                 length = int(self.headers.get("Content-Length", 0))

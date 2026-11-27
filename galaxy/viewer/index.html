@@ -71,6 +71,11 @@
   #status[data-s="speaking"] i { background:#5ef2c4; box-shadow:0 0 8px #5ef2c4; animation:pulse .9s infinite; }
   #status b { color:var(--fg); font-weight:600; }
   #brain { min-width:70px; }
+  /* Current brain chip: which model answers. Lit when swapped at runtime (a restart undoes it). */
+  #modelchip { font-size:11px; font-weight:700; letter-spacing:.08em; padding:3px 9px; border-radius:99px;
+    border:1px solid #c99fff; color:#c99fff; white-space:nowrap; cursor:default; user-select:none; }
+  #modelchip.swapped { background:#c99fff; color:#120a24; box-shadow:0 0 10px #c99fff88; }
+  #modelchip.idle { opacity:.45; }
   /* Screen sharing must be impossible to miss: a red bar, a red frame round the window, a red button. */
   #sharebar { position:fixed; top:0; left:50%; transform:translate(-50%,-110%); transition:transform .25s; z-index:20;
     display:flex; align-items:center; gap:12px; padding:9px 16px; border-radius:0 0 12px 12px;
@@ -116,6 +121,7 @@
   <form id="ask">
     <input id="q" autocomplete="off" placeholder="Ask your notes anything…">
     <button type="button" class="ghost" id="reset" title="Forget the conversation">new</button>
+    <span id="modelchip" title="Current brain">…</span>
     <button type="button" class="ghost" id="brain" title="Which brain answers. Click to switch.">auto</button>
     <button type="button" class="mic" id="mic" title="Talk to Sentinel" aria-label="Microphone">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg>
@@ -275,6 +281,7 @@ import { UnrealBloomPass } from "https://esm.sh/three@0.187.0/examples/jsm/postp
     question = question.trim(); if (!question) return;
     if (thinking) { queuedVoice = question; return; }  // one question at a time; next waits
     if (REMEMBER_RE.test(question)) return capture(question, arguments[1] || "typed");
+    if (isModelCmd(question)) return swapModel(question);     // "try on opus 5": the server decides
     if (shareLive()) return look(question);                    // sharing: every question is about the screen
     if (SCREEN_Q_RE.test(question)) {                         // a screen question with no live share:
       const line = shareEnded ? seeLines.ended : seeLines.noShare;   // say so, never answer from memory
@@ -296,7 +303,7 @@ import { UnrealBloomPass } from "https://esm.sh/three@0.187.0/examples/jsm/postp
         show(question, d.answer, d.intent === "knowledge" ? d.nodes : []);
         if (d.brain) {                     // say which brain answered (and why, if it fell back)
           const by = document.createElement("span"); by.className = "by";
-          by.textContent = (d.brain === "local" ? "Answered by the local model" : "Answered by Claude")
+          by.textContent = (d.brain === "local" ? "Answered by the local model" : `Answered by ${d.model_label || d.brain}`)
             + (d.brain_note ? " — " + d.brain_note.replace(/ Answered by the local model instead\.$/, "") : "");
           box.querySelector(".src").appendChild(by);
         }
@@ -308,6 +315,7 @@ import { UnrealBloomPass } from "https://esm.sh/three@0.187.0/examples/jsm/postp
     thinking = false; send.disabled = false; renderStatus();
     if (!interruptedAsk) speak(reply);   // "stop"/"wait" during thinking: show, don't speak
     if (result) proveSources(result);    // camera moves while the answer is being spoken
+    refreshModel();
     if (!micOn) q.focus();
     if (queuedVoice) { const next = queuedVoice; queuedVoice = ""; ask(next); }
   }
@@ -398,7 +406,7 @@ import { UnrealBloomPass } from "https://esm.sh/three@0.187.0/examples/jsm/postp
       show(question, d.answer, []);
       const by = document.createElement("span"); by.className = "by";
       const f = d.frame;
-      const who = d.brain === "claude" ? "Claude"                       // say who actually looked
+      const who = d.brain !== "local" ? (d.model_label || d.brain)       // say who actually looked
         : `the small local vision model (${d.vision_model || "local"})${d.brain_note ? ", because " + d.brain_note : ""}`;
       by.textContent = `Seen by ${who}: one ${f.width}×${f.height} ${f.media_type.split("/")[1].toUpperCase()} frame, captured ${f.age_s}s before sending`
         + (d.legible === false ? " · frame too unclear to judge" : "");
@@ -478,9 +486,47 @@ import { UnrealBloomPass } from "https://esm.sh/three@0.187.0/examples/jsm/postp
     try {
       const r = await fetch("/brain", { method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: next }) });
-      renderBrain(await r.json());
+      renderBrain(await r.json()); refreshModel();
     } catch (_) {}
   };
+
+  // Brain chip + voice model swap. The server owns the model list and the parsing; the page only
+  // routes "switch to <model word>" phrases there and shows what the server says is loaded.
+  const modelChip = document.getElementById("modelchip");
+  let modelWords = [];
+  function renderModel(m) {
+    if (!m || !m.label) return;
+    modelWords = m.words || modelWords;
+    modelChip.textContent = m.label;
+    modelChip.classList.toggle("swapped", !!m.swapped);
+    modelChip.classList.toggle("idle", m.mode === "local");
+    modelChip.title = `Brain: ${m.model}` + (m.swapped ? `\nSwapped at runtime; a restart returns to ${m.default_label}.` : "\nFrom config.json.")
+      + (m.mode === "local" ? "\nThe brain switch is on Local, so text answers come from the local model." : "");
+  }
+  const refreshModel = () => fetch("/model").then(r => r.json()).then(renderModel).catch(() => {});
+  refreshModel();
+  const RESET_MODEL_RE = /\b(normal|usual|default|regular|original|standard|config)\s+(brain|model)\b/i;
+  function isModelCmd(q) {
+    if (RESET_MODEL_RE.test(q)) return true;
+    if (!modelWords.length) return false;
+    // The verb must sit right before the model word: "a haiku to use" is a question, not a swap.
+    const words = modelWords.join("|");
+    return new RegExp(`\\b(try on|try|switch to|switch over to|swap to|change to|load|put on|run on|use)\\s+(the\\s+)?(claude\\s+)?(${words})`, "i").test(q);
+  }
+  async function swapModel(question) {
+    stopSpeaking();
+    let d;
+    try {
+      const r = await fetch("/model", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ say: question }) });
+      d = await r.json();
+    } catch (_) { d = { ok: false, spoken: "Negative. The server is unreachable; brain unchanged." }; }
+    show(question, d.spoken || d.error, [], !d.ok);
+    renderModel(d);
+    q.value = "";
+    speak(d.spoken || d.error);
+  }
+  window.brainModel = { refresh: refreshModel, isModelCmd };   // test hook
 
   // Show where an answer came from. Order matters:
   //   1. Was it about the notes at all?  (server-side intent, decided before the answer)

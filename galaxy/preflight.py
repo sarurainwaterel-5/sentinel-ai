@@ -25,6 +25,8 @@ INCIDENT LOG (date: what broke -> check that now catches it)
   2026-11-25: Sentinel API crash-looped (Postgres password auth failed after a setup script
               regenerated .env.local) -> "Taught sources are live" names the container's error
   2026-11-25: edits to server.py had no effect until a restart -> "Running server code matches"
+  2026-11-26: (from the brief) a loose matcher hears "opus 5.5", keeps only the 5, loads Opus 5 and
+              says it did as asked -> "/model swaps only to real models"
 """
 import argparse
 import base64
@@ -268,6 +270,77 @@ def check_model():
     return f"Models API knows {m.id!r} ({getattr(m, 'display_name', '') or 'no display name'})"
 
 
+def check_model_set():
+    """Every Anthropic id the voice swap can load must be real for this key, per the Models API."""
+    anthropic, client = anthropic_client()
+    _, st = get_json("GET", "/model")
+    ids = st.get("models") or []
+    if not ids:
+        raise Fail("GET /model listed no models")
+    missing, resolved = [], 0
+    for mid in ids:
+        if "/" in mid:                    # OpenRouter ids are checked against its catalog below
+            continue
+        try:
+            client.models.retrieve(mid)
+            resolved += 1
+        except anthropic.NotFoundError:
+            missing.append(mid)
+    if missing:
+        raise Fail(f"in the server's MODELS set but unknown to the Models API for this key: {', '.join(missing)}")
+    others = [m for m in ids if "/" in m]
+    detail = f"all {resolved} Anthropic ids in MODELS are real for this key"
+    if others:
+        try:
+            with urllib.request.urlopen("https://openrouter.ai/api/v1/models", timeout=20) as r:
+                catalog = {m["id"] for m in json.load(r)["data"]}
+        except (OSError, ValueError, KeyError) as e:
+            raise Warn(detail + f"; couldn't fetch the OpenRouter catalog to check {', '.join(others)} ({e})")
+        gone = [m for m in others if m not in catalog]
+        if gone:
+            raise Fail(detail + f"; but not in OpenRouter's catalog: {', '.join(gone)}")
+        detail += f"; {', '.join(others)} in OpenRouter's catalog"
+        if not (load_config().get("openrouter_api_key") or "").strip():
+            raise Warn(detail + " (no openrouter_api_key in config.json, so those swaps are refused)")
+    return detail
+
+
+def check_model_swap():
+    _, st = get_json("GET", "/model")
+    before, default = st["model"], st["default"]
+    cfg_before = CONFIG.read_bytes()
+    if default != load_config().get("model"):
+        raise Fail(f"server's default model {default!r} isn't config.json's {load_config().get('model')!r}")
+    say = lambda text: get_json("POST", "/model", {"say": text})
+    try:
+        status, d = say("try on opus 5.5")
+        if status != 200 or d.get("model") != "claude-opus-5-5":
+            raise Fail(f"'try on opus 5.5' loaded {d.get('model')!r} (HTTP {status}), not claude-opus-5-5")
+        if d.get("label") != "OPUS 5.5":
+            raise Fail(f"chip label for claude-opus-5-5 is {d.get('label')!r}, not 'OPUS 5.5'")
+        for bad in ("switch to opus 6", "switch to opus 5 5", "switch to opus"):
+            status, d = say(bad)
+            if status == 200 or d.get("ok") or d.get("model") != "claude-opus-5-5":
+                raise Fail(f"{bad!r} wasn't refused cleanly: HTTP {status}, now on {d.get('model')!r}")
+        refusal = d.get("spoken", "")
+        status, d = say("switch to haiku 4.5")
+        if status != 200 or d.get("model") != "claude-haiku-4-5":
+            raise Fail(f"'switch to haiku 4.5' gave HTTP {status}: {d.get('error') or d.get('model')}")
+        if CONFIG.read_bytes() != cfg_before:
+            raise Fail("a runtime swap wrote config.json; swaps must be runtime-only")
+        detail = "opus 5.5 -> claude-opus-5-5 (OPUS 5.5); opus 6, 'opus 5 5', bare opus refused"
+        if d.get("mode") == "local":
+            raise Warn(detail + "; brain switch is Local, so a swapped model can't be asked a real question")
+        status, c, dt = ask_chat("Say hello in five words.")
+        if status != 200 or c.get("error"):
+            raise Fail(detail + f"; but /chat on Haiku 4.5 failed: HTTP {status} {c.get('error') or c}")
+        if c.get("model") != "claude-haiku-4-5":
+            raise Fail(detail + f"; but /chat after the swap was answered by {c.get('model') or c.get('brain')!r}")
+        return detail + f"; /chat answered on HAIKU 4.5 (no effort setting) in {dt:.1f}s; config.json untouched"
+    finally:                               # put back exactly what was loaded before the check
+        get_json("POST", "/model", {"reset": True} if before == default else {"model": before})
+
+
 def notes_root():
     custom = load_config().get("notes_dir")
     return Path(custom).expanduser() if custom else DEFAULT_NOTES
@@ -344,7 +417,9 @@ def check_see():
     if str(number) not in answer.replace(",", ""):
         raise Fail(f"/see answered but didn't read the probe's {number}: {answer[:120]!r}")
     detail = f"{d.get('brain')} read {number} off a {w}x{h} JPEG ({len(data) // 1024} KB) in {dt:.1f}s"
-    if d.get("brain") != "claude":
+    _, st = get_json("GET", "/model")
+    expected = "openrouter" if st.get("provider") == "openrouter" else "claude"
+    if d.get("brain") != expected:
         why = d.get("brain_note") or "no reason given"
         if STATE.get("claude_ok"):   # Claude just answered the key check, so skipping it is a routing bug
             raise Fail(detail + f", but Claude is healthy and was skipped ({why}). Screen questions must go to Claude")
@@ -460,6 +535,8 @@ CHECKS = [
     ("Taught sources are live (Sentinel API reachable)", check_taught, False),
     ("API key in config.json is valid (one real call)", check_key, True),
     ("Model in config.json is reachable via the Models API", check_model, True),
+    ("Every model in the swap set is real (Models API)", check_model_set, False),
+    ("/model swaps only to real models, refuses the rest", check_model_swap, False),
     ("/remember writes a real note that /chat retrieves", check_remember, False),
     ("/see answers a real JPEG (image/jpeg)", check_see, False),
     ("Viewer names who actually answered a screen question", check_sight_label, False),
