@@ -82,7 +82,7 @@ MODEL_LOCAL_NOTE = " The brain switch is on Local, so text answers still come fr
 #             "openrouter": OpenRouter with openrouter_api_key (one key reaches all of them).
 #  effort     sends output_config.effort.  (Haiku 4.5 has no effort setting: a 400.)
 #  fallbacks  accepts the server-side refusal fallback beta.  (Only these five do.)
-#  aliases    bare spoken names with no version.  ("haiku" alone means Haiku 4.5.)
+#  aliases    bare spoken names with no version.  ("haiku" alone means Haiku 5.5.)
 # ════════════════════════════════════════════════════════════════════════════════════════
 MODELS = {
     "claude-opus-5-5":    {"provider": "anthropic", "effort": True,  "fallbacks": True},
@@ -96,8 +96,8 @@ MODELS = {
     "claude-sonnet-5-5":  {"provider": "anthropic", "effort": True,  "fallbacks": True},
     "claude-sonnet-5":    {"provider": "anthropic", "effort": True,  "fallbacks": False},
     "claude-sonnet-4-6":  {"provider": "anthropic", "effort": True,  "fallbacks": False},
-    "claude-haiku-5-5":   {"provider": "anthropic", "effort": True,  "fallbacks": False},
-    "claude-haiku-4-5":   {"provider": "anthropic", "effort": False, "fallbacks": False, "aliases": ["haiku"]},
+    "claude-haiku-5-5":   {"provider": "anthropic", "effort": True,  "fallbacks": False, "aliases": ["haiku"]},
+    "claude-haiku-4-5":   {"provider": "anthropic", "effort": False, "fallbacks": False},
     "openai/gpt-6-astra": {"provider": "openrouter", "aliases": ["astra"]},
 }
 import atexit

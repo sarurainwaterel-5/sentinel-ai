@@ -323,12 +323,15 @@ def check_model_swap():
             if status == 200 or d.get("ok") or d.get("model") != "claude-opus-5-5":
                 raise Fail(f"{bad!r} wasn't refused cleanly: HTTP {status}, now on {d.get('model')!r}")
         refusal = d.get("spoken", "")
+        status, d = say("switch to haiku")
+        if status != 200 or d.get("model") != "claude-haiku-5-5":
+            raise Fail(f"bare 'haiku' loaded {d.get('model')!r} (HTTP {status}), not claude-haiku-5-5")
         status, d = say("switch to haiku 4.5")
         if status != 200 or d.get("model") != "claude-haiku-4-5":
             raise Fail(f"'switch to haiku 4.5' gave HTTP {status}: {d.get('error') or d.get('model')}")
         if CONFIG.read_bytes() != cfg_before:
             raise Fail("a runtime swap wrote config.json; swaps must be runtime-only")
-        detail = "opus 5.5 -> claude-opus-5-5 (OPUS 5.5); opus 6, 'opus 5 5', bare opus refused"
+        detail = "opus 5.5 -> claude-opus-5-5 (OPUS 5.5); haiku -> claude-haiku-5-5; opus 6, 'opus 5 5', bare opus refused"
         if d.get("mode") == "local":
             raise Warn(detail + "; brain switch is Local, so a swapped model can't be asked a real question")
         status, c, dt = ask_chat("Say hello in five words.")
