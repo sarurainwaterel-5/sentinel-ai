@@ -11,6 +11,38 @@ function Sources({ sources = [] }) {
   </ul></details>;
 }
 
+const ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
+
+function InvestigationReport({ report }) {
+  const health = report.health || {};
+  return <section className="companion-report" aria-label="Investigation report">
+    <h3>Investigation report · {report.affected_service}</h3>
+    <p>Recommendation only. Execution authority: {report.execution_authority}. Root cause: {report.root_cause.status}.</p>
+    <dl>
+      <dt>Report SHA-256</dt><dd><code>{report.report_sha256}</code></dd>
+      <dt>Snapshot SHA-256</dt><dd><code>{report.snapshot_sha256}</code></dd>
+      <dt>Evaluated at</dt><dd>{report.evaluated_at}</dd>
+      {health.state && <><dt>Health</dt><dd>{health.state}{health.reason ? ` (${health.reason})` : ''}</dd></>}
+    </dl>
+    {report.incident_summary && <p>{report.incident_summary}</p>}
+    <h4>Competing hypotheses ({report.hypotheses.length})</h4>
+    {report.hypotheses.length ? <ul>{report.hypotheses.map(item => <li key={item.hypothesis_id}>
+      <strong>{item.description}</strong> <small>{item.assessment_status}</small><br />
+      <span>Supporting: {item.supporting_observation_ids.join(', ') || 'none'}</span><br />
+      <span>Contradicting: {item.contradictory_observation_ids.join(', ') || 'none'}</span>
+    </li>)}</ul> : <p>No hypothesis is supported by the selected evidence.</p>}
+    <details><summary>Evidence inventory ({report.evidence_inventory.length})</summary><ul>
+      {report.evidence_inventory.map(item => <li key={item.observation_id}>
+        <strong>{item.observation_id}</strong> · {item.data_quality} · semantic truth {item.semantic_truth}<br />
+        <span>SHA-256: {item.record_sha256}</span>
+      </li>)}
+    </ul></details>
+    <h4>Unresolved questions</h4><ul>{report.unresolved_questions.map(text => <li key={text}>{text}</li>)}</ul>
+    <h4>Recommended next diagnostic steps</h4><ul>{report.recommended_next_diagnostic_steps.map(text => <li key={text}>{text}</li>)}</ul>
+    <p>Conversation follow-ups are not bound to this report: the Companion API does not yet accept a report reference.</p>
+  </section>;
+}
+
 export default function Companion({ client = companionClient }) {
   const [history, setHistory] = useState([]);
   const [conversation, setConversation] = useState(null);
@@ -20,6 +52,9 @@ export default function Companion({ client = companionClient }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [selection, setSelection] = useState({ service: '', incident: '', observations: '' });
+  const [report, setReport] = useState(null);
+  const [investigating, setInvestigating] = useState(false);
   const pending = useRef(null);
   const epoch = useRef(0);
 
@@ -71,6 +106,23 @@ export default function Companion({ client = companionClient }) {
       await refresh(signal, current);
     });
   }
+  function investigate(event) {
+    event.preventDefault();
+    if (busy) return;
+    const service = selection.service.trim(), incident = selection.incident.trim();
+    const observations = selection.observations.split(/[\s,]+/).filter(Boolean);
+    const invalid = [service, incident, ...observations].filter(Boolean).find(value => !ID.test(value));
+    if (!service) { setError('Select a service identifier to investigate.'); return; }
+    if (invalid) { setError(`Identifier is not valid: ${invalid.slice(0, 40)}`); return; }
+    if (observations.length > 100) { setError('Select at most 100 observations.'); return; }
+    setReport(null);
+    perform(async (signal, current) => {
+      const result = await client.investigate({ service_id: service, evaluated_at: new Date().toISOString(),
+        ...(incident ? { incident_id: incident } : {}), ...(observations.length ? { observation_ids: observations } : {}) }, signal);
+      if (current()) setReport(result);
+    });
+  }
+  const field = key => event => setSelection(value => ({ ...value, [key]: event.target.value }));
   return <section className="workspace-page companion" aria-label="Sentinel companion">
     <article className="panel"><p className="eyebrow">Sentinel companion · local opt-in</p>
       <h2>Discuss, inspect, investigate</h2>
@@ -84,7 +136,7 @@ export default function Companion({ client = companionClient }) {
       <div className="companion-grid">
         <aside className="panel" aria-label="Conversation history">
           <h3>Conversations</h3>
-          <p>Incident investigation currently requires explicit selection through the local investigation API.</p>
+          <p>Investigate explicitly selected evidence in the investigation panel.</p>
           <label htmlFor="companion-tone">New conversation tone</label>
           <select id="companion-tone" value={tone} onChange={event => setTone(event.target.value)} disabled={busy}>
             <option value="direct">Direct</option><option value="friendly">Friendly</option><option value="technical">Technical</option>
@@ -124,6 +176,24 @@ export default function Companion({ client = companionClient }) {
           </>}
         </article>
       </div>
+      <article className="panel" aria-label="Investigate selected evidence">
+        <h3>Investigate selected evidence</h3>
+        <button className="secondary-action" type="button" aria-expanded={investigating}
+          onClick={() => setInvestigating(open => !open)}>{investigating ? 'Close investigation' : 'Open investigation'}</button>
+        {investigating && <>
+        <p>Explicit selection only: name the service, then an incident or specific observations. Sentinel reviews only what you select and never declares a root cause.</p>
+        <form className="workspace-form" onSubmit={investigate}>
+          <label htmlFor="investigate-service">Service identifier
+            <input id="investigate-service" value={selection.service} maxLength={128} disabled={busy} onChange={field('service')} /></label>
+          <label htmlFor="investigate-incident">Incident identifier (optional)
+            <input id="investigate-incident" value={selection.incident} maxLength={128} disabled={busy} onChange={field('incident')} /></label>
+          <label htmlFor="investigate-observations">Observation identifiers (optional, comma or space separated)
+            <textarea id="investigate-observations" value={selection.observations} maxLength={13000} disabled={busy} onChange={field('observations')} /></label>
+          <button className="primary-action" type="submit" disabled={busy || !selection.service.trim()}>Run investigation</button>
+        </form>
+        {report && <InvestigationReport report={report} />}
+        </>}
+      </article>
       <details className="panel"><summary>Inspect capability evidence</summary><p>Implementation and authorization are separate. Listed capabilities are server-reported records.</p>
         {capabilities.map((capability, index) => <section key={capability.capability_id || index}>
           <h3>{capability.name || capability.capability_id}</h3><p>{capability.description}</p>

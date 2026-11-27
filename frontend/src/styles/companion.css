@@ -11,3 +11,9 @@
 .companion summary { cursor:pointer; }
 .companion button:focus-visible, .companion summary:focus-visible, .companion select:focus-visible { outline:2px solid var(--accent-cyan); outline-offset:3px; }
 @media (max-width:760px) { .companion-grid { grid-template-columns:minmax(0, 1fr); } }
+
+/* Investigation report: hashes wrap instead of overflowing the panel. */
+.companion-report dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; }
+.companion-report dt { font-weight: 600; }
+.companion-report dd { margin: 0; min-width: 0; }
+.companion-report code, .companion-report span { overflow-wrap: anywhere; }
